@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend/:/backend/
+    ports:
+      - 8001:8000
+    depends_on:
+      - unknown_mongo
+    env_file:
+      - .env
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    command: pnpm run dev -- --open --host 0.0.0.0
+    volumes:
+      - ./frontend/:/frontend/
+    depends_on:
+      - unknown_mongo
+    ports:
+      - 5173:5173
+    env_file:
+      - .env
+  unknown_mongo:
+    image: mongo
+    container_name: unknown_mongo
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - "./data:/data/db"

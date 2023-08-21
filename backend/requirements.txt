@@ -1,0 +1,9 @@
+asyncpg
+fastapi
+starlette
+aiofiles
+uvicorn
+httpx
+pymongo
+jinja2
+pyjwt
