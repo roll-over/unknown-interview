@@ -12,9 +12,7 @@ export const load: PageLoad = async ({ parent, fetch }) => {
 	return { post };
 };
 
-export function _getPosts(post: number, _fetch?: typeof fetch) {
+export function _getPosts(post: number, _fetch = fetch) {
 	if (!post) return null;
-	return (_fetch ?? fetch)(`https://jsonplaceholder.typicode.com/posts/${post}`).then((x) =>
-		x.text()
-	);
+	return _fetch(`https://jsonplaceholder.typicode.com/posts/${post}`).then((x) => x.text());
 }
