@@ -21,7 +21,6 @@ services:
     volumes:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
-      - ./frontend/package.json:/frontend/package.json
     depends_on:
       - unknown_mongo
     ports:
