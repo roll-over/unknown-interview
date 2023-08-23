@@ -19,7 +19,9 @@ services:
     working_dir: /frontend
     command: pnpm run dev -- --open --host 0.0.0.0
     volumes:
-      - ./frontend/:/frontend/
+      - ./frontend/src/:/frontend/src/
+      - ./frontend/static/:/frontend/static/
+      - ./frontend/package.json:/frontend/package.json
     depends_on:
       - unknown_mongo
     ports:
