@@ -10,14 +10,15 @@ import jwt
 
 templates = Jinja2Templates(directory="app/templates")
 
-
 app = FastAPI(
     openapi_url="/api/v1/users/openapi.json", docs_url="/api/v1/users/docs", debug=True
 )
 
-@app.get("/", )
+
+@app.get("/")
 async def hello_world():
     return 'hello world'
+
 
 @app.on_event("startup")
 async def startup():
