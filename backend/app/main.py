@@ -1,6 +1,7 @@
 import asyncio
 import json
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 from starlette.staticfiles import StaticFiles
 from starlette.responses import FileResponse
@@ -15,9 +16,22 @@ app = FastAPI(
     openapi_url="/api/v1/users/openapi.json", docs_url="/api/v1/users/docs", debug=True
 )
 
+
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/", )
 async def hello_world():
     return 'hello world'
+
 
 @app.on_event("startup")
 async def startup():
