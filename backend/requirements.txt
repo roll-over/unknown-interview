@@ -7,3 +7,5 @@ httpx
 pymongo
 jinja2
 pyjwt
+mongoengine
+pydantic[email]
