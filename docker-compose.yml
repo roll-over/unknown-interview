@@ -16,6 +16,7 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
+    working_dir: /frontend
     command: pnpm run dev -- --open --host 0.0.0.0
     volumes:
       - ./frontend/:/frontend/
