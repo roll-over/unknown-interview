@@ -4,4 +4,6 @@ COPY ./ /frontend
 
 WORKDIR /frontend
 
-RUN  npm install -g pnpm     
+RUN npm install -g pnpm     
+
+RUN pnpm install
