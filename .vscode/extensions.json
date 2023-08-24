@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "svelte.svelte-vscode",
+    "bradlc.vscode-tailwindcss",
+    "kevinrose.vsc-python-indent",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "yoavbls.pretty-ts-errors",
+    "esbenp.prettier-vscode",
+    "vunguyentuan.vscode-postcss",
+    "cpylua.language-postcss",
+    "figma.figma-vscode-extension",
+    "ms-azuretools.vscode-docker"
+  ]
+}
