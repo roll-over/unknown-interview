@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend/:/backend
     ports:
-      - '8001:8000'
+      - "8001:8000"
     depends_on:
       - unknown_mongo
     env_file:
@@ -18,15 +18,11 @@ services:
     build: ./frontend
     container_name: frontend
     working_dir: /frontend
-    command: node dev-entry.mjs
+    command: pnpm docker-dev
     volumes:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
-      - ./frontend/package-lock.json:/frontend/package-lock.json
-      - ./frontend/pnpm-lock.yaml:/frontend/pnpm-lock.yaml
-      - ./frontend/tsconfig.json:/frontend/tsconfig.json
-
     depends_on:
       - unknown_mongo
     ports:
