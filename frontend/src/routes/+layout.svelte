@@ -6,5 +6,14 @@
 </script>
 
 <QueryClientProvider client={data.queryClient}>
-	<slot />
+	<main>
+		<slot />
+	</main>
 </QueryClientProvider>
+
+<style>
+	:global(html) {
+		background-color: theme('colors.slate.700');
+		color: theme('colors.white');
+	}
+</style>
