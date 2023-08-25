@@ -18,11 +18,11 @@
 	});
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>
-	Visit <a href="https://kit.svelte.dev" class="bg-green-400 text-red-500">kit.svelte.dev</a> to read
-	the documentation
-</p>
+<a href="/auth/login">Log-in</a>
 <p>{$clientQuery.data}</p>
 <p>{$hybridQuery.data}</p>
-<input bind:value={post} class="m-4 outline outline-black" placeholder="post id" />
+<input
+	bind:value={post}
+	class="m-4 outline outline-black"
+	placeholder="post id"
+/>
