@@ -7,9 +7,9 @@ services:
     container_name: backend
     command: python3 dev-entry.py
     volumes:
-      - ./backend/:/backend/
+      - ./backend/:/backend
     ports:
-      - 8001:8000
+      - '8001:8000'
     depends_on:
       - unknown_mongo
     env_file:
