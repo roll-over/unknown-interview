@@ -3,8 +3,9 @@ version: "3.7"
 services:
   backend:
     build: ./backend
+    working_dir: /backend
     container_name: backend
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    command: python3 dev-entry.py
     volumes:
       - ./backend/:/backend/
     ports:
@@ -17,10 +18,15 @@ services:
     build: ./frontend
     container_name: frontend
     working_dir: /frontend
-    command: pnpm run dev -- --open --host 0.0.0.0
+    command: node dev-entry.mjs
     volumes:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
+      - ./frontend/package.json:/frontend/package.json
+      - ./frontend/package-lock.json:/frontend/package-lock.json
+      - ./frontend/pnpm-lock.yaml:/frontend/pnpm-lock.yaml
+      - ./frontend/tsconfig.json:/frontend/tsconfig.json
+
     depends_on:
       - unknown_mongo
     ports:
