@@ -9,3 +9,4 @@ jinja2
 pyjwt
 motor
 pydantic[email]
+black
