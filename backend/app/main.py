@@ -9,6 +9,7 @@ from starlette.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import jwt
 
+from app.api.routers.cv import cv_router
 from app.api.routers.user import user_router
 
 templates = Jinja2Templates(directory="app/templates")
@@ -19,6 +20,7 @@ app = FastAPI(
 )
 
 app.include_router(user_router)
+app.include_router(cv_router)
 
 
 origins = ['*']

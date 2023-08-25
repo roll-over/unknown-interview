@@ -4,7 +4,7 @@ from pydantic import BaseModel, EmailStr
 
 from app.db.engine import database
 
-users = database['users']  # create users collection (table)
+users_collection = database['users']  # create users collection (table)
 
 
 # fields that must be in the users collection
