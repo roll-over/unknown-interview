@@ -1,9 +1,8 @@
-import type { PageLoad } from './$types';
-
-export const load: PageLoad = async ({ parent, fetch }) => {
+export const load = async ({ parent, fetch }) => {
 	const { queryClient } = await parent();
 
 	const post = 20;
+
 	await queryClient.prefetchQuery({
 		queryKey: ['hybridQuery', post],
 		queryFn: () => _getPosts(post, fetch)

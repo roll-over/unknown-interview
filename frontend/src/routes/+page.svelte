@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createQuery } from '@tanstack/svelte-query';
-	import type { PageData } from './$types';
 	import { _getPosts } from './+page';
 	const clientQuery = createQuery({
 		queryKey: ['cliendQuery'],
@@ -11,7 +10,7 @@
 		}
 	});
 
-	export let data: PageData;
+	export let data;
 	let post = data.post;
 	$: hybridQuery = createQuery({
 		queryKey: ['hybridQuery', post],
