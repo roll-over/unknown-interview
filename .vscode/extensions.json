@@ -11,5 +11,8 @@
     "cpylua.language-postcss",
     "figma.figma-vscode-extension",
     "ms-azuretools.vscode-docker"
-  ]
+  ],
+  "settings": {
+    "python.formatting.provider": "black"
+  }
 }
