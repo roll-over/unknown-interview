@@ -5,4 +5,5 @@ COPY ./ /frontend
 WORKDIR /frontend
 
 RUN corepack enable    
+RUN npm install -g nodemon
 RUN pnpm install
