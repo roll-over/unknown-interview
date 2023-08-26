@@ -21,6 +21,7 @@ services:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
+      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
     depends_on:
       - unknown_mongo
     env_file:
