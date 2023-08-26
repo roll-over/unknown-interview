@@ -1,5 +1,5 @@
 // THIS IS A TEMP FILE WITH CHAT FIXTURES.
-// DELETE WHEN BACKEND FILL IMPLEMENT THIS FEATURE
+// DELETE WHEN BACKEND WILL IMPLEMENT THIS FEATURE
 import type { StrictOmit } from '$lib/utils/types';
 import { faker } from '@faker-js/faker';
 
