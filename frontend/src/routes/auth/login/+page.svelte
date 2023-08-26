@@ -9,7 +9,7 @@
 			Login with provider
 		</p>
 		<button
-			class="current:tracking-widest w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing]"
+			class="w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing] current:tracking-widest"
 			on:click={() => {
 				console.log('Google OAuth2');
 			}}
