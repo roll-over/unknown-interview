@@ -25,7 +25,7 @@ app.include_router(cv_router)
 app.include_router(vacancy_router)
 
 
-origins = ['*']
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,9 +36,9 @@ app.add_middleware(
 )
 
 
-@app.get("/", )
+@app.get("/")
 async def hello_world():
-    return 'hello world'
+    return "hello world"
 
 
 @app.on_event("startup")
