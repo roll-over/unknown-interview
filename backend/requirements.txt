@@ -9,4 +9,5 @@ jinja2
 pyjwt
 motor
 pydantic[email]
+watchdog
 black
