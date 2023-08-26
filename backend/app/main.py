@@ -49,8 +49,3 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     print("Shutting down...")
-
-
-@app.get("/")
-async def read_index():
-    return FileResponse("index.html")

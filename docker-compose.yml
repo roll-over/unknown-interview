@@ -8,8 +8,6 @@ services:
     command: python3 dev-entry.py
     volumes:
       - ./backend/:/backend
-    ports:
-      - "8001:8000"
     depends_on:
       - unknown_mongo
     env_file:
@@ -23,10 +21,9 @@ services:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
+      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
     depends_on:
       - unknown_mongo
-    ports:
-      - 5173:5173
     env_file:
       - .env
   unknown_mongo:
@@ -37,3 +34,15 @@ services:
       - .env
     volumes:
       - "./data:/data/db"
+  client:
+    image: nginx
+    ports:
+      - 2080:80
+    volumes:
+      - type: bind
+        source: ./dev-proxy/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    depends_on:
+      - frontend
+      - backend
