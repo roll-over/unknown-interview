@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { tick } from 'svelte';
+	import { scale } from 'svelte/transition';
 	import { YourID, getChat } from '../getChats';
 
 	const dateFormatter = new Intl.DateTimeFormat('ru');
@@ -18,52 +19,68 @@
 			return relativeDateFormatter.format(-Math.round(msDiff / msInHour), 'hour');
 		return relativeDateFormatter.format(-Math.round(msDiff / msInMinute), 'minute');
 	}
-	let chatContainer: HTMLUListElement;
+	let chatContainer: HTMLDivElement;
+	let prevData: Awaited<ReturnType<typeof getChat>>;
 	$: chatQuery = createQuery({
 		async queryFn() {
 			const id = $page.params.id;
 			if (!id) return goto('/profile/matches'), null;
 			const chat = await getChat(id);
 			if (!chat || chat.id !== id) return goto('/profile/matches'), null;
+			prevData = chat;
 			return chat;
 		},
-		queryKey: ['chat', $page.params.id]
+		queryKey: ['chat', $page.params.id],
+		placeholderData: prevData
 	});
-	$: isChatLoading = $chatQuery.isLoading;
 
-	async function ScrollToBottom(isLoading: boolean, id: string | undefined) {
+	$: isPlaceholder = $chatQuery.isPlaceholderData;
+	async function ScrollToBottom(isPlaceHolder: boolean, id: string | undefined) {
 		id;
-		if (!chatContainer || isLoading) return;
+		if (!chatContainer || isPlaceHolder) return;
 
 		await tick();
 		chatContainer.scrollTo({ top: chatContainer.scrollHeight });
 	}
-	$: ScrollToBottom(isChatLoading, $page.params.id);
+	$: ScrollToBottom(isPlaceholder, $page.params.id);
+
+	let initialLoad = true;
 </script>
 
 <div class="flex h-full flex-col">
-	<ul
+	<div
+		class="h-full overflow-y-scroll"
 		bind:this={chatContainer}
-		class="flex h-full flex-col items-start gap-2 overflow-y-scroll p-1"
 	>
-		{#if $chatQuery.isSuccess && $chatQuery.data}
-			{#each $chatQuery.data.messages as message (message.id)}
-				<li
-					class="max-w-lg rounded-lg p-3
-                    {message.author.id === YourID
-						? 'bg-slate-500 max-xl:self-end'
-						: 'bg-neutral-500'}"
+		<div class="relative min-h-full">
+			{#if $chatQuery.isSuccess && $chatQuery.data}
+				<ul
+					class="flex origin-[center_calc(100%-50vh)] flex-col items-start gap-2 p-1 transition-opacity"
+					class:opacity-40={$chatQuery.isPlaceholderData && !initialLoad}
+					in:scale={{ start: 0.7 }}
+					on:introstart={() => (initialLoad = false)}
 				>
-					<div class="text-sm text-white/80">
-						by {message.author.name} - {formatDate(message.timestamp)}
-					</div>
-					<div>{message.content}</div>
-				</li>
-			{/each}
-		{:else}
-			<div class="flex h-full items-center justify-center self-stretch">Loading...</div>
-		{/if}
-	</ul>
+					{#each $chatQuery.data.messages as message (message.id)}
+						<li
+							class="max-w-lg rounded-lg p-3
+							{message.author.id === YourID ? 'bg-slate-500 max-xl:self-end' : 'bg-neutral-500'}"
+						>
+							<div class="text-sm text-white/80">
+								by {message.author.name} - {formatDate(message.timestamp)}
+							</div>
+							<div>{message.content}</div>
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				<div
+					class="absolute bottom-[50vh] flex w-full origin-[center_calc(100%-50vh)] justify-center"
+				>
+					<span out:scale={{ start: 3 }}> Loading... </span>
+				</div>
+			{/if}
+		</div>
+	</div>
 	<div class="flex p-1">
 		<textarea
 			class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50"
