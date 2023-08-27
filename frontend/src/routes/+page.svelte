@@ -17,8 +17,6 @@
 	});
 </script>
 
-<a href="/auth/login">Log-in</a>
-<br />
 <input
 	bind:value={post}
 	class="m-4 text-black outline outline-black"

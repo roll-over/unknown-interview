@@ -6,9 +6,20 @@
 </script>
 
 <QueryClientProvider client={data.queryClient}>
-	<main>
-		<slot />
-	</main>
+	<div class="flex h-screen flex-col">
+		<header class='bg-slate-400'>
+			<nav class="flex gap-3 ">
+				<a href="/">Home</a>
+				<a href="/auth/login">Log-in</a>
+				<a href="/profile/matches">Matches</a>
+			</nav>
+		</header>
+		<!-- min-h-0 overwrites default behavior of min-h-auto on flex elements -->
+		<main class="min-h-0 grow">
+			<slot />
+		</main>
+	</div>
+	<footer class="bg-slate-400">feet</footer>
 </QueryClientProvider>
 
 <style>
