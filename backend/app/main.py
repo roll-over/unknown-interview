@@ -1,6 +1,6 @@
 import asyncio
 import json
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 from starlette.staticfiles import StaticFiles
@@ -16,14 +16,15 @@ from app.api.routers.vacancy import vacancy_router
 templates = Jinja2Templates(directory="app/templates")
 
 
-app = FastAPI(
-    openapi_url="/api/v1/users/openapi.json", docs_url="/api/v1/users/docs", debug=True
-)
+app = FastAPI(openapi_url="/api/openapi.json", docs_url="/api/docs", debug=True)
 
-app.include_router(user_router)
-app.include_router(cv_router)
-app.include_router(vacancy_router)
+v1 = APIRouter(prefix="/api/v1", tags=["V1"])
 
+v1.include_router(user_router)
+v1.include_router(cv_router)
+v1.include_router(vacancy_router)
+
+app.include_router(v1)
 
 origins = ["*"]
 
@@ -36,9 +37,9 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-async def hello_world():
-    return "hello world"
+@app.get("/api/ping")
+async def ping():
+    return "pong"
 
 
 @app.on_event("startup")
