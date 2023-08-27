@@ -18,7 +18,8 @@ templates = Jinja2Templates(directory="app/templates")
 
 app = FastAPI(openapi_url="/api/openapi.json", docs_url="/api/docs", debug=True)
 
-v1 = APIRouter(prefix="/api/v1", tags=["V1"])
+# TODO: "Move v1 to separate file and import it here"
+v1 = APIRouter(prefix="/api/v1")
 
 v1.include_router(user_router)
 v1.include_router(cv_router)
