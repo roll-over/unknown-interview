@@ -1,19 +1,12 @@
-from uuid import UUID, uuid4
+from pydantic import EmailStr
 
-from beanie import Document
-from pydantic import EmailStr, model_validator
+from app.models.mixin import UUIDMixin
 
 
-class User(Document):
-    custom_id: UUID
+class User(UUIDMixin):  # inherit from the UUIDMixin, since it generates our identifier
     name: str
     email: EmailStr
     password_hash: str
 
     class Settings:
-        name = 'users'
-
-    @model_validator(mode='before')
-    def generate_uuid(cls, values):
-        values['custom_id'] = str(uuid4())
-        return values
+        name = 'users'  # collection name
