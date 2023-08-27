@@ -1,17 +1,11 @@
-import asyncio
-import json
-from fastapi import FastAPI, Request, APIRouter
-from fastapi.middleware.cors import CORSMiddleware
-
-from starlette.staticfiles import StaticFiles
-from starlette.responses import FileResponse
+from fastapi import FastAPI, APIRouter
+from starlette.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-import jwt
 
 from app.api.routers.cv import cv_router
 from app.api.routers.user import user_router
 from app.api.routers.vacancy import vacancy_router
+from app.db.engine import init_db
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -45,6 +39,7 @@ async def ping():
 
 @app.on_event("startup")
 async def startup():
+    await init_db()
     print("Starting up...")
 
 

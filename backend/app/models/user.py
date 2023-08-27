@@ -1,15 +1,12 @@
-from uuid import UUID
+from pydantic import EmailStr
 
-from pydantic import BaseModel, EmailStr
-
-from app.db.engine import database
-
-users_collection = database['users']  # create users collection (table)
+from app.models.mixin import UUIDMixin
 
 
-# fields that must be in the users collection
-class UserModel(BaseModel):
-    id: UUID = None
+class User(UUIDMixin):  # inherit from the UUIDMixin, since it generates our identifier
     name: str
     email: EmailStr
     password_hash: str
+
+    class Settings:
+        name = 'users'  # collection name
