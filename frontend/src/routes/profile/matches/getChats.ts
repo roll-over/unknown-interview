@@ -19,7 +19,7 @@ type Chat = {
 	label: string;
 	messages: Message[];
 };
-type ChatGist = StrictOmit<Chat, 'messages'> & { lastMessage?: Message };
+export type ChatGist = StrictOmit<Chat, 'messages'> & { lastMessage?: Message };
 export async function getChatList(): Promise<ChatGist[]> {
 	await delay();
 	return chats.map(({ id, label, messages }) => ({ id, label, lastMessage: messages.at(-1) }));
