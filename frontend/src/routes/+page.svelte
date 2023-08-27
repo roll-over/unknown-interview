@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createQuery, keepPreviousData } from '@tanstack/svelte-query';
 	import { _getPosts } from './+page';
+	import { blueLinkLikeButtonClass, h1Class } from '$lib/components/classes';
 
 	export let data;
 	let post = data.post;
@@ -18,15 +19,10 @@
 </script>
 
 <div class="flex h-full flex-col items-center justify-center">
-	<h1
-		class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xlmb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-whitemb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-	>
-		Home
-	</h1>
+	<h1 class={h1Class}>Home</h1>
 	<a
 		href="/hello"
-		class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-		>Hello</a
+		class={blueLinkLikeButtonClass}>Hello</a
 	>
 </div>
 <input
