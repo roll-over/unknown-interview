@@ -1,1 +1,1 @@
-<div class='flex items-center justify-center h-full'>Select a chat</div>
+<div class="flex h-full items-center justify-center">Select a chat</div>
