@@ -1,15 +1,19 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
-from pydantic import BaseModel, EmailStr
-
-from app.db.engine import database
-
-users_collection = database['users']  # create users collection (table)
+from beanie import Document
+from pydantic import EmailStr, model_validator
 
 
-# fields that must be in the users collection
-class UserModel(BaseModel):
-    id: UUID = None
+class User(Document):
+    custom_id: UUID
     name: str
     email: EmailStr
     password_hash: str
+
+    class Settings:
+        name = 'users'
+
+    @model_validator(mode='before')
+    def generate_uuid(cls, values):
+        values['custom_id'] = str(uuid4())
+        return values

@@ -11,6 +11,8 @@ import jwt
 
 from app.api.routers.cv import cv_router
 from app.api.routers.user import user_router
+from app.db.engine import init_db
+
 from app.api.routers.vacancy import vacancy_router
 
 templates = Jinja2Templates(directory="app/templates")
@@ -45,6 +47,7 @@ async def ping():
 
 @app.on_event("startup")
 async def startup():
+    await init_db()
     print("Starting up...")
 
 

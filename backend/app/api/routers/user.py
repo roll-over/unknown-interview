@@ -1,21 +1,17 @@
-import uuid
-
 from fastapi import APIRouter
 
-from app.api.schemas.user import UserCreateResponseSchema
-from app.models.user import UserModel, users_collection
+from app.api.schemas.user import UserCreateResponseSchema, UserCreateRequestSchema
+from app.models.user import User
 
 user_router = APIRouter(prefix='/users', tags=['Users'])
 
 
 @user_router.post('/', response_model=UserCreateResponseSchema)
-async def create_user(user: UserModel):
-    user.id = str(uuid.uuid4())
+async def create_user(user: UserCreateRequestSchema):
+    # create new user
+    new_user = User(**user.model_dump())
 
-    # insert a user into the users collection
-    result = await users_collection.insert_one(user.model_dump())
+    # save in database
+    await new_user.create()
 
-    # get the created user
-    created_user = await users_collection.find_one({"_id": result.inserted_id})
-
-    return created_user
+    return new_user
