@@ -1,22 +1,41 @@
-import uuid
-
+from uuid import UUID
 from fastapi import APIRouter
 
-from app.api.schemas.cv import CvCreateResponseSchema
-from app.models.cv import cv_collection, CvModel
+from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
+from app.models.cv import CV
 
-cv_router = APIRouter(prefix='/cv', tags=['Cv'])
+cv_router = APIRouter(prefix="/cv", tags=["CV"])
 
 
-@cv_router.post('/', response_model=CvCreateResponseSchema)
-async def create_cv(cv: CvModel):
-    cv.id = str(uuid.uuid4())
-    cv.owner_id = str(uuid.uuid4())  # must be the current user id from request
+@cv_router.post(
+    "/",
+    response_model=CVResponseSchema,
+    summary="Create new CV for user",
+)
+async def create_cv(user_cv: CVRequestSchema):
+    new_user_cv = CV(**user_cv.model_dump())
+    await new_user_cv.create()
 
-    # insert a cv into the cv collection
-    result = await cv_collection.insert_one(cv.model_dump())
+    return new_user_cv
 
-    # get the created cv
-    created_cv = await cv_collection.find_one({'_id': result.inserted_id})
 
-    return created_cv
+@cv_router.get(
+    "/random_cv",
+    response_model=CVResponseSchema,
+    summary="Return random user CV",
+)
+async def get_random_cv():
+    random_user_cv = await CV.aggregate([{"$sample": {"size": 1}}]).to_list(1)
+
+    return random_user_cv[0]
+
+
+@cv_router.get(
+    "/{cv_id}",
+    response_model=CVResponseSchema,
+    summary="Return user CV by ID",
+)
+async def get_cv(cv_id: UUID):
+    user_cv = await CV.find_one({"custom_id": cv_id})
+
+    return user_cv

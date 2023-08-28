@@ -9,4 +9,4 @@ class User(UUIDMixin):  # inherit from the UUIDMixin, since it generates our ide
     password_hash: str
 
     class Settings:
-        name = 'users'  # collection name
+        name = "users"  # collection name
