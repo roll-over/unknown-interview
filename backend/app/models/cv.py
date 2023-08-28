@@ -1,14 +1,19 @@
-from uuid import UUID
+from uuid import UUID, uuid4
+from typing import Optional
+from pydantic import Field
 
-from pydantic import BaseModel
-
-from app.db.engine import database
-
-cv_collection = database['cv']  # create cv collection (table)
+from app.models.mixin import UUIDMixin, Grade, Profession, Salary, Title
 
 
-# fields that must be in the cv collection
-class CvModel(BaseModel):
-    id: UUID = None
-    title: str
-    owner_id: UUID = None
+class CV(UUIDMixin):
+    cv_owner_id: UUID = Field(
+        default_factory=uuid4,
+    )
+    title: Title
+    salary: Optional[Salary] = Field(None)
+    grade: Grade
+    profession: Profession
+    skillset: str
+
+    class Settings:
+        name = "CV"
