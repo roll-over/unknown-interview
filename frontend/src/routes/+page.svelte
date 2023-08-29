@@ -17,6 +17,16 @@
 	});
 </script>
 
+<div class="flex h-full flex-col items-center justify-center">
+	<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl">
+		Home
+	</h1>
+	<a
+		href="/hello"
+		class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+		>Hello</a
+	>
+</div>
 <input
 	bind:value={post}
 	class="m-4 text-black outline outline-black"
