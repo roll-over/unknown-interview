@@ -1,8 +1,7 @@
 const positions = [
 	'member',
 	'leader',
-	'team',
-	'leader',
+	'team leader',
 	'manager',
 	'director',
 	'vp',
@@ -20,54 +19,50 @@ const skills = {
 const currencies = ['USD', 'EUR'] as const;
 
 type NewJobState = {
-	position?: (typeof positions)[number];
-	grade?: (typeof grades)[number];
-	salaryFork?: {
-		min?: number;
-		max?: number;
+	position: (typeof positions)[number] | '';
+	grade: (typeof grades)[number] | '';
+	salaryFork: {
+		min: number;
+		max: number;
 		currency: (typeof currencies)[number];
-		applied: boolean;
 	};
-	profession?: (typeof professions)[number];
-	skills?: string[];
+	profession: (typeof professions)[number] | '';
+	skills: string[];
 };
 
 type NewEmployeState = {
-	position?: (typeof positions)[number];
-	grade?: (typeof grades)[number];
-	salaryFork?: {
-		min?: number;
-		max?: number;
+	position: (typeof positions)[number] | '';
+	grade: (typeof grades)[number] | '';
+	salaryFork: {
+		min: number;
+		max: number;
 		currency: (typeof currencies)[number];
-		applied: boolean;
 	};
-	profession?: (typeof professions)[number];
-	skills?: string[];
+	profession: (typeof professions)[number] | '';
+	skills: string[];
 };
 
 const defaultNewJobState: NewJobState = {
-	position: undefined,
-	grade: undefined,
+	position: '',
+	grade: '',
 	salaryFork: {
-		min: undefined,
-		max: undefined,
-		currency: 'USD',
-		applied: false
+		min: 0,
+		max: 0,
+		currency: 'USD'
 	},
-	profession: undefined,
+	profession: '',
 	skills: []
 };
 
 const defaultNewEmployeState: NewEmployeState = {
-	position: undefined,
-	grade: undefined,
+	position: '',
+	grade: '',
 	salaryFork: {
-		min: undefined,
-		max: undefined,
-		currency: 'USD',
-		applied: false
+		min: 0,
+		max: 0,
+		currency: 'USD'
 	},
-	profession: undefined,
+	profession: '',
 	skills: []
 };
 
