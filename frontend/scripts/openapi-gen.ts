@@ -8,8 +8,8 @@ async function generateOpenAPI() {
 }
 
 let retries = 0;
-async function getOpenAPISpec(): Promise<OpenAPI3> {
-	return new Promise((resolve) => {
+function getOpenAPISpec() {
+	return new Promise<OpenAPI3>((resolve) => {
 		fetch(
 			new URL(
 				'api/openapi.json',
