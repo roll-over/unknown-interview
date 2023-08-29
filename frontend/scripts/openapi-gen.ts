@@ -7,14 +7,25 @@ async function generateOpenAPI() {
 	writeFile('./src/openapi.d.ts', types);
 }
 
+let retries = 0;
 async function getOpenAPISpec(): Promise<OpenAPI3> {
-	return new Promise((r) => {
-		fetch('http://localhost:2080/api/openapi.json')
+	return new Promise((resolve) => {
+		fetch(
+			new URL(
+				'api/openapi.json',
+				process.env.isDocker ? 'http://client:80' : 'http://localhost:2080'
+			)
+		)
 			.then((x) => x.json())
-			.then(r)
+			.then(resolve)
 			.catch(() => {
-				console.error("Couldn't reacth the server, retrying in 1 second");
-				setTimeout(() => r(getOpenAPISpec()), 1000);
+				if (++retries >= 5) {
+					throw new Error(
+						"Couldn't reach the server in 5 retries. Aborting generating openAPI types"
+					);
+				}
+				console.error("Couldn't reach the server, retrying in 10 seconds");
+				setTimeout(() => resolve(getOpenAPISpec()), 10000);
 			});
 	});
 }

@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  openapi-fetch@0.7.4:
+    hash: s3g66rke3b2i4mtj7exmnnd27m
+    path: patches/openapi-fetch@0.7.4.patch
+
 dependencies:
   '@tanstack/svelte-query':
     specifier: 5.0.0-beta.20
@@ -13,7 +18,7 @@ dependencies:
     version: 10.4.15(postcss@8.4.28)
   openapi-fetch:
     specifier: ^0.7.4
-    version: 0.7.4
+    version: 0.7.4(patch_hash=s3g66rke3b2i4mtj7exmnnd27m)
   postcss:
     specifier: ^8.4.28
     version: 8.4.28
@@ -1826,11 +1831,12 @@ packages:
     dependencies:
       wrappy: 1.0.2
 
-  /openapi-fetch@0.7.4:
+  /openapi-fetch@0.7.4(patch_hash=s3g66rke3b2i4mtj7exmnnd27m):
     resolution: {integrity: sha512-ACoSikOuFO3sMROtqritJAsGd694gRNXFnWpYAqi+tQzowLOkcQ6SbeAvS+T6qNS92y/OLiiYcNrb/Rh/MrEVw==}
     dependencies:
       openapi-typescript-helpers: 0.0.1
     dev: false
+    patched: true
 
   /openapi-typescript-helpers@0.0.1:
     resolution: {integrity: sha512-WDmxej0eHSZtLgCuyPEn2NXRV7tcvUnBBNP/0c/U66mOlxs6Yn0/dHuWlkVKdHGNahSUwG57A1tyutHWRpWqFg==}

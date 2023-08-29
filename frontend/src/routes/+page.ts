@@ -1,17 +1,12 @@
+import api from '$lib/api/index.js';
+
 export const load = async ({ parent, fetch }) => {
 	const { queryClient } = await parent();
 
-	const post = 20;
-
 	await queryClient.prefetchQuery({
-		queryKey: ['hybridQuery', post],
-		queryFn: () => _getPosts(post, fetch)
+		queryKey: ['prefetchedQuery'],
+		queryFn: () => api.GET('/api/ping', {}, fetch)
 	});
 
-	return { post };
+	return {};
 };
-
-export function _getPosts(post: number, _fetch = fetch) {
-	if (!post) return null;
-	return _fetch(`https://jsonplaceholder.typicode.com/posts/${post}`).then((x) => x.text());
-}

@@ -7,6 +7,7 @@
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"docker-dev": "tsx scripts/docker-dev.ts",
+		"openapi-gen": "tsx scripts/openapi-gen.ts",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -43,5 +44,10 @@
 		"tsx": "^3.12.7",
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9"
+	},
+	"pnpm": {
+		"patchedDependencies": {
+			"openapi-fetch@0.7.4": "patches/openapi-fetch@0.7.4.patch"
+		}
 	}
 }

@@ -19,17 +19,19 @@ services:
     command: pnpm docker-dev
     volumes:
       - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
+      - ./frontend/patches/:/frontend/patches/
+      - ./frontend/scripts/:/frontend/scripts/
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
       - ./frontend/postcss.config.js:/frontend/postcss.config.js
       - ./frontend/svelte.config.js:/frontend/svelte.config.js
       - ./frontend/tailwind.config.js:/frontend/tailwind.config.js
-      - ./frontend/vite.config.js:/frontend/vite.config.js
-    depends_on:
-      - unknown_mongo
+      - ./frontend/vite.config.ts:/frontend/vite.config.ts
     env_file:
       - .env
+    environment:
+      - isDocker=true
   unknown_mongo:
     image: mongo
     container_name: unknown_mongo
