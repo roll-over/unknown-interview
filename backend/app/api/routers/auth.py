@@ -1,62 +1,53 @@
 from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request
-from starlette.config import Config
 from starlette.responses import HTMLResponse, RedirectResponse
+
+from app.config import settings
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-@auth_router.get('/')
-async def home(request: Request):
+# УДАЛИТЬ
+@auth_router.get('/htmlpage')
+async def htmlpage(request: Request):
     user = request.session.get('user')
 
     if user is not None:
         email = user['email']
         html = (
             f'<pre>Email: {email}</pre><br>'
-            '<a href="/docs">documentation</a><br>'
-            '<a href="/logout">logout</a>'
+            '<a href="http://localhost:2080/api/docs">documentation</a><br>'
+            # '<a href="/logout">logout</a>'
         )
         return HTMLResponse(html)
-    return HTMLResponse('<a href="login">login</a>')
+    return HTMLResponse('<a href="http://localhost:2080/api/v1/auth/login/google">login</a>')
 
 
-config = Config('.env')
-oauth = OAuth(config)
+oauth = OAuth()
 
-CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
 oauth.register(
     name='google',
-    server_metadata_url=CONF_URL,
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_id=settings.GOOGLE_CLIENT_ID,
+    client_secret=settings.GOOGLE_CLIENT_SECRET,
     client_kwargs={
         'scope': 'openid email profile'
     }
 )
 
 
-@auth_router.get('/login')  # Tag it as "authentication" for our docs
-async def login(request: Request):
+@auth_router.get('/login/google')
+async def google_login(request: Request):
     # Redirect Google OAuth back to our application
-    redirect_uri = 'http://localhost:2080/api/v1/auth/'
+    redirect_uri = 'http://localhost:2080/api/v1/auth/google'
 
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-@auth_router.route('/auth')
-async def auth(request: Request):
-    # Perform Google OAuth
+@auth_router.get('/google')
+async def google_auth(request: Request):
     token = await oauth.google.authorize_access_token(request)
-    user = await oauth.google.parse_id_token(request, token)
-
-    # Save the user
-    request.session['user'] = dict(user)
-
-    return RedirectResponse(url='/')
-
-
-@auth_router.get('/logout')  # Tag it as "authentication" for our docs
-async def logout(request: Request):
-    # Remove the user
-    request.session.pop('user', None)
-
-    return RedirectResponse(url='/')
+    user = token.get('userinfo')
+    if user:
+        request.session['user'] = user
+    return RedirectResponse(url='http://localhost:2080/api/v1/auth/htmlpage')
