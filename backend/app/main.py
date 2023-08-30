@@ -2,11 +2,11 @@ from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from app.exceptions import response_validation_exception_handler
-from app.api.routers.cv import cv_router
-from app.api.routers.user import user_router
 from fastapi.exceptions import ResponseValidationError
 
-# from app.api.routers.vacancy import vacancy_router
+from app.api.routers.cv import cv_router
+from app.api.routers.user import user_router
+from app.api.routers.vacancy import vacancy_router
 from app.db.engine import init_db
 
 templates = Jinja2Templates(directory="app/templates")
@@ -19,7 +19,7 @@ v1 = APIRouter(prefix="/api/v1")
 
 v1.include_router(user_router)
 v1.include_router(cv_router)
-# v1.include_router(vacancy_router)
+v1.include_router(vacancy_router)
 
 app.include_router(v1)
 
