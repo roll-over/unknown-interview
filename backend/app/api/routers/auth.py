@@ -1,9 +1,8 @@
 from authlib.integrations.starlette_client import OAuth
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from app.config import settings
-from app.permissions import is_authenticated
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -19,7 +18,7 @@ async def htmlpage(request: Request):
         html = (
             f'<pre>Email: {email}</pre><br>'
             '<a href="http://localhost:2080/api/docs">documentation</a><br>'
-            # '<a href="/logout">logout</a>'
+            '<a href="http://localhost:2080/api/v1/auth/logout">logout</a>'
         )
         return HTMLResponse(html)
 
@@ -54,7 +53,13 @@ async def google_auth(request: Request):
     user = token.get('userinfo')
     if user:
         request.session['user'] = user
+
     return RedirectResponse(url='http://localhost:2080/api/v1/auth/htmlpage')
 
 
-# user: dict = Depends(is_authenticated)
+@auth_router.get('/logout')
+async def logout(request: Request):
+    if 'user' in request.session:
+        del request.session['user']
+
+    return RedirectResponse(url='http://localhost:2080/api/v1/auth/htmlpage')
