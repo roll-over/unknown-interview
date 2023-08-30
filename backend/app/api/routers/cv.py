@@ -52,6 +52,6 @@ async def delete_user_cv(cv_id: UUID):
     if user_cv:
         await user_cv.delete()
 
-        return {"message": "User CV delete successfully"}
+        return {"message": "User CV deleted successfully"}
 
     return {"error": "There is no user CV with such ID"}
