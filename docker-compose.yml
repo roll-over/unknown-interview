@@ -35,7 +35,7 @@ services:
   unknown_mongo:
     image: mongo
     container_name: unknown_mongo
-    restart: always
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
