@@ -7,6 +7,7 @@ from fastapi.exceptions import ResponseValidationError
 from app.api.routers.cv import cv_router
 from app.api.routers.user import user_router
 from app.api.routers.vacancy import vacancy_router
+from app.api.routers.cv_note import cv_note_router
 from app.db.engine import init_db
 
 templates = Jinja2Templates(directory="app/templates")
@@ -19,6 +20,7 @@ v1 = APIRouter(prefix="/api/v1")
 
 v1.include_router(user_router)
 v1.include_router(cv_router)
+v1.include_router(cv_note_router)
 v1.include_router(vacancy_router)
 
 app.include_router(v1)
