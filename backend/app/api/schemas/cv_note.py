@@ -1,8 +1,7 @@
 from uuid import UUID
 from app.models.mixin import Note
-from typing import Optional, List
+from typing import List
 from pydantic import BaseModel, Field
-from enum import Enum
 
 
 class CVNoteRequestSchema(BaseModel):

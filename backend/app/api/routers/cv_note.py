@@ -37,9 +37,6 @@ async def add_new_note(data: CVNoteRequestSchema):
 )
 async def get_cv_notes(cv_id: UUID):
     cv_notes = await CVNote.find_one({"cv_id": cv_id})
-    import sys
-
-    print(cv_notes, file=sys.stderr)
     return cv_notes
 
 
