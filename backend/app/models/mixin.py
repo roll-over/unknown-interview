@@ -6,7 +6,12 @@ from pydantic import model_validator, BaseModel, Field
 
 
 class UUIDMixin(Document):
-    custom_id: UUID = Field(default_factory=uuid4)
+    custom_id: UUID
+
+    @model_validator(mode='before')
+    def generate_uuid(cls, values):
+        values['custom_id'] = str(uuid4())
+        return values
 
 
 class Salary(BaseModel):

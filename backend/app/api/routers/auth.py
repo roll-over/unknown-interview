@@ -3,6 +3,7 @@ from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from app.config import settings
+from app.models.user import User
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -50,9 +51,16 @@ async def google_login(request: Request):
 @auth_router.get('/google')
 async def google_auth(request: Request):
     token = await oauth.google.authorize_access_token(request)
-    user = token.get('userinfo')
-    if user:
-        request.session['user'] = user
+    request_user = token.get('userinfo')
+
+    # get a user from db if it exists, otherwise create it
+    user_in_db = await User.find_one(User.email == request_user['email'])
+
+    if not user_in_db:
+        user_in_db = User(email=request_user['email'], name=request_user['name'])
+        await user_in_db.create()
+
+    request.session['user'] = request_user
 
     return RedirectResponse(url='http://localhost:2080/api/v1/auth/htmlpage')
 
