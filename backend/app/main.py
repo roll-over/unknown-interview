@@ -7,7 +7,7 @@ from starlette.templating import Jinja2Templates
 from app.api.routers.auth import auth_router
 from app.api.routers.cv import cv_router
 from app.api.routers.user import user_router
-# from app.api.routers.vacancy import vacancy_router
+from app.api.routers.vacancy import vacancy_router
 from app.config import settings
 from app.db.engine import init_db
 from app.exceptions import response_validation_exception_handler
@@ -24,9 +24,10 @@ v1 = APIRouter(prefix="/api/v1")
 v1.include_router(user_router)
 v1.include_router(cv_router)
 v1.include_router(auth_router)
-# v1.include_router(vacancy_router)
+v1.include_router(vacancy_router)
 
 app.include_router(v1)
+
 
 origins = ["*"]
 
