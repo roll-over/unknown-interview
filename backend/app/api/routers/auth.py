@@ -1,6 +1,6 @@
 from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request
-from starlette.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import JSONResponse, HTMLResponse, RedirectResponse
 
 from app.config import settings
 from app.models.user import User
@@ -70,4 +70,4 @@ async def logout(request: Request):
     if 'user' in request.session:
         del request.session['user']
 
-    return RedirectResponse(url='http://localhost:2080/api/v1/auth/htmlpage')
+    return JSONResponse(content={'detail': 'Successful logout'})
