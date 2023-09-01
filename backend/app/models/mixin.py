@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Optional
 from beanie import Document
 from pydantic import model_validator, BaseModel, Field
+from datetime import datetime
 
 
 class UUIDMixin(Document):
@@ -46,3 +47,9 @@ class Profession(Enum):
     developer = "разработчик"
     designer = "дизайнер"
     manager = "менеджер"
+
+
+class Note(BaseModel):
+    content_type: str = Field(default="text", frozen=True)
+    note_text: str = Field(..., max_length=250)
+    created_at: datetime = Field(default_factory=datetime.utcnow, frozen=True)
