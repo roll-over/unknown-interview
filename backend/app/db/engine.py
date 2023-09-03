@@ -5,6 +5,7 @@ from app.models.user import User
 from app.models.cv import CV
 from app.models.vacancy import Vacancy
 from app.models.cv_note import CVNote
+from app.models.vacancy_note import VacancyNote
 
 
 async def init_db():
@@ -15,5 +16,5 @@ async def init_db():
 
     # Initialize beanie with the User document class and a database
     await init_beanie(
-        database=client.db_name, document_models=[User, CV, CVNote, Vacancy]
+        database=client.db_name, document_models=[User, CV, CVNote, Vacancy, VacancyNote]
     )
