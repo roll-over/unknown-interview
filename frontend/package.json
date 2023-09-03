@@ -6,8 +6,8 @@
 	"packageManager": "pnpm@8.6.12",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
-		"docker-dev": "tsx scripts/docker-dev.ts",
-		"openapi-gen": "tsx scripts/openapi-gen.ts",
+		"docker-dev": "tsx --tsconfig scripts/tsconfig.json scripts/docker-dev.ts",
+		"openapi-gen": "tsx --tsconfig scripts/tsconfig.json scripts/openapi-gen.ts",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
