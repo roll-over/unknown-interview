@@ -8,8 +8,6 @@ from app.models.user import User
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-# УДАЛИТЬ
-# --------------------
 @auth_router.get('/htmlpage')
 async def htmlpage(request: Request):
     user = request.session.get('user')
@@ -24,7 +22,6 @@ async def htmlpage(request: Request):
         return HTMLResponse(html)
 
     return HTMLResponse('<a href="http://localhost:2080/api/v1/auth/login/google">login</a>')
-# --------------------
 
 
 oauth = OAuth()
