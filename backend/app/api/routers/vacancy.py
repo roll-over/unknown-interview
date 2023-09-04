@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.models.vacancy import Vacancy
+from app.db.models.vacancy import Vacancy
 
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -44,8 +44,8 @@ async def get_company_vacancy(vacancy_id: UUID):
     return found_vacancy
 
 
-@vacancy_router.get(
-    "/delete/{vacancy_id}",
+@vacancy_router.delete(
+    "/{vacancy_id}",
     summary="Delete company vacancy by ID",
 )
 async def delete_company_vacancy(vacancy_id: UUID):

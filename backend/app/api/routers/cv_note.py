@@ -3,16 +3,19 @@ from fastapi import APIRouter
 
 from app.api.schemas.cv_note import (
     CVNoteRequestSchema,
-    CVNotesResponseSchema,
+    CVNoteResponseSchema,
 )
-from app.models.cv_note import CVNote, Note
+from app.api.schemas.base import BaseNoteSchema
+from app.db.models.cv_note import CVNote
+from app.db.models.mixins.mixin import Note
+
 
 cv_note_router = APIRouter(prefix="/cv_note", tags=["CV Notes"])
 
 
 @cv_note_router.post(
     "/",
-    response_model=Note,
+    response_model=BaseNoteSchema,
     summary="Add new HR note to the CV",
 )
 async def add_new_note(data: CVNoteRequestSchema):
@@ -32,7 +35,7 @@ async def add_new_note(data: CVNoteRequestSchema):
 
 @cv_note_router.get(
     "/{cv_id}",
-    response_model=CVNotesResponseSchema,
+    response_model=CVNoteResponseSchema,
     summary="Returns all HR notes on the specified CV",
 )
 async def get_cv_notes(cv_id: UUID):
@@ -40,8 +43,8 @@ async def get_cv_notes(cv_id: UUID):
     return cv_notes
 
 
-@cv_note_router.get(
-    "/delete/{cv_id}",
+@cv_note_router.delete(
+    "/{cv_id}",
     summary="Delete all HR notes to the CV",
 )
 async def delete_cv_notes(cv_id: UUID):

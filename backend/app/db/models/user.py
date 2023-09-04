@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 
-from app.models.mixin import UUIDMixin
+from app.db.models.mixins import UUIDMixin
 
 
 class User(UUIDMixin):  # inherit from the UUIDMixin, since it generates our identifier

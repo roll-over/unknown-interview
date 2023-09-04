@@ -1,22 +1,9 @@
-from uuid import UUID
-from app.models.mixin import Salary, Title, Grade, Profession
-from typing import Optional
-from pydantic import BaseModel
+from .base import RequestBaseSchema, ResponseBaseSchema
 
 
-class VacancyRequestSchema(BaseModel):
-    title: Title
-    grade: Grade
-    salary: Optional[Salary]
-    profession: Profession
-    skillset: str
+class VacancyRequestSchema(RequestBaseSchema):
+    pass
 
 
-class VacancyResponseSchema(BaseModel):
-    custom_id: UUID
-    vacancy_owner_id: UUID
-    title: Title
-    grade: Grade
-    salary: Optional[Salary]
-    profession: Profession
-    skillset: str
+class VacancyResponseSchema(ResponseBaseSchema):
+    pass

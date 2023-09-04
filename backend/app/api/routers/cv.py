@@ -2,9 +2,9 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
-from app.models.cv import CV
+from app.db.models.cv import CV
 
-cv_router = APIRouter(prefix="/cv", tags=["CV"])
+cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
 
 @cv_router.post(
@@ -42,8 +42,8 @@ async def get_user_cv(cv_id: UUID):
     return user_cv
 
 
-@cv_router.get(
-    "/delete/{cv_id}",
+@cv_router.delete(
+    "/{cv_id}",
     summary="Delete user CV by ID",
 )
 async def delete_user_cv(cv_id: UUID):

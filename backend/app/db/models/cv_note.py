@@ -1,11 +1,11 @@
 from uuid import UUID
 from typing import List
 
-from app.models.mixin import UUIDMixin, Note
+from app.db.models.mixins import UUIDMixin, Note
 
 
 class CVNote(UUIDMixin):
-    cv_id: UUID
+    related_id: UUID
     notes: List[Note]
 
     class Settings:
