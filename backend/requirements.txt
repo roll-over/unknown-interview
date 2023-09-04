@@ -12,3 +12,5 @@ pydantic[email]
 watchdog
 black
 beanie
+authlib
+itsdangerous

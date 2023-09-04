@@ -3,13 +3,12 @@ from uuid import UUID
 from pydantic import BaseModel, EmailStr
 
 
-class UserCreateResponseSchema(BaseModel):
+class UserResponseSchema(BaseModel):
     custom_id: UUID
     name: str
     email: EmailStr
 
 
-class UserCreateRequestSchema(BaseModel):
+class UserCreateSchema(BaseModel):
     name: str
     email: EmailStr
-    password_hash: str
