@@ -6,11 +6,6 @@ class VacancyCVService:
         self.repo: AbstractBaseRepository = repo_model()
 
     async def create_one(self, data):
-        import sys
-
-        print("-----------------------", data, file=sys.stderr)
-        print("-----------------------", type(data), file=sys.stderr)
-
         return await self.repo.create_one(data)
 
     async def get_one(self, data_id):
