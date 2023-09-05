@@ -12,7 +12,7 @@
 	});
 </script>
 
-<ul class="overflow-y-scroll p-1">
+<ul class="h-full overflow-y-scroll p-1">
 	{#each chats as chat, i (chat.id)}
 		<li class="border-b border-b-blue-500 last:border-b-0">
 			<a

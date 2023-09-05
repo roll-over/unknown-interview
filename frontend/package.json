@@ -16,6 +16,8 @@
 		"format": "prettier . -l -w --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss"
 	},
 	"dependencies": {
+		"@skeletonlabs/skeleton": "^2.0.0",
+		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@tanstack/svelte-query": "5.0.0-beta.20",
 		"autoprefixer": "^10.4.15",
 		"openapi-fetch": "^0.7.4",
