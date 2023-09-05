@@ -1,25 +1,37 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
+from fastapi.responses import JSONResponse
 
-from app.api.schemas.user import UserCreateSchema, UserResponseSchema
-from app.models.user import User
+from app.api.schemas.user import UserRequestSchema, UserResponseSchema
+from app.repository import UserRepository
+
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @user_router.get("/", response_model=list[UserResponseSchema])
-async def get_users():
-    # get all users
-    users = await User.all().to_list()
-
-    return users
+async def get_users(User: UserRepository):
+    return await User.get_all_users()
 
 
 @user_router.post("/", response_model=UserResponseSchema)
-async def create_user(user: UserCreateSchema):
-    # create new user
-    new_user = User(**user.model_dump())
+async def create_user(data: UserRequestSchema, User: UserRepository):
+    return await User.create_one(data)
 
-    # save in database
-    await new_user.create()
 
-    return new_user
+@user_router.delete(
+    "/{user_id}",
+    summary="Delete user by ID",
+)
+async def delete_user_cv(data: UserRequestSchema, User: UserRepository):
+    deleted_cv = await User.delete_user(data)
+
+    if deleted_cv:
+        return JSONResponse(
+            content={"message": "User deleted successfully"},
+            status_code=status.HTTP_200_OK,
+        )
+
+    return JSONResponse(
+        content={"message": "There is no user with such email"},
+        status_code=status.HTTP_404_NOT_FOUND,
+    )

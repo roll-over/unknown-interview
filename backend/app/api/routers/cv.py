@@ -1,10 +1,11 @@
 from uuid import UUID
-from fastapi import APIRouter
-
+from fastapi import APIRouter, status
+from fastapi.responses import JSONResponse
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
-from app.models.cv import CV
 
-cv_router = APIRouter(prefix="/cv", tags=["CV"])
+from app.repository import CVsRepository
+
+cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
 
 @cv_router.post(
@@ -12,11 +13,8 @@ cv_router = APIRouter(prefix="/cv", tags=["CV"])
     response_model=CVResponseSchema,
     summary="Create new CV for user",
 )
-async def create_cv(user_cv: CVRequestSchema):
-    new_user_cv = CV(**user_cv.model_dump())
-    await new_user_cv.create()
-
-    return new_user_cv
+async def create_cv(user_cv: CVRequestSchema, CV: CVsRepository):
+    return await CV.create_one(user_cv)
 
 
 @cv_router.get(
@@ -24,11 +22,8 @@ async def create_cv(user_cv: CVRequestSchema):
     response_model=CVResponseSchema,
     summary="Return random user CV",
 )
-async def get_random_cv():
-    random_user_cv = await CV.aggregate([{"$sample": {"size": 1}}]).to_list(1)
-
-    if random_user_cv:
-        return random_user_cv[0]
+async def get_random_cv(CV: CVsRepository):
+    return await CV.get_random()
 
 
 @cv_router.get(
@@ -36,21 +31,24 @@ async def get_random_cv():
     response_model=CVResponseSchema,
     summary="Return user CV by ID",
 )
-async def get_user_cv(cv_id: UUID):
-    user_cv = await CV.find_one({"custom_id": cv_id})
-
-    return user_cv
+async def get_user_cv(cv_id: UUID, CV: CVsRepository):
+    return await CV.get_one(cv_id)
 
 
-@cv_router.get(
-    "/delete/{cv_id}",
+@cv_router.delete(
+    "/{cv_id}",
     summary="Delete user CV by ID",
 )
-async def delete_user_cv(cv_id: UUID):
-    user_cv = await CV.find_one({"custom_id": cv_id})
-    if user_cv:
-        await user_cv.delete()
+async def delete_user_cv(cv_id: UUID, CV: CVsRepository):
+    deleted_cv = await CV.delete_one(cv_id)
 
-        return {"message": "User CV deleted successfully"}
+    if deleted_cv:
+        return JSONResponse(
+            content={"message": "User CV deleted successfully"},
+            status_code=status.HTTP_200_OK,
+        )
 
-    return {"error": "There is no user CV with such ID"}
+    return JSONResponse(
+        content={"message": "There is no user CV with such ID"},
+        status_code=status.HTTP_404_NOT_FOUND,
+    )

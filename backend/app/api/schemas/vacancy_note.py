@@ -1,15 +1,9 @@
-from uuid import UUID
-from typing import List
-from pydantic import BaseModel, Field
-
-from app.models.mixin import Note
+from .base import NoteRequestSchema, NoteResponseSchema
 
 
-class VacancyNoteRequestSchema(BaseModel):
-    vacancy_id: UUID
-    note_text: str = Field(..., max_length=250)
+class VacancyNoteRequestSchema(NoteRequestSchema):
+    pass
 
 
-class VacancyNotesResponseSchema(BaseModel):
-    vacancy_id: UUID
-    notes: List[Note]
+class VacancyNoteResponseSchema(NoteResponseSchema):
+    pass
