@@ -14,9 +14,7 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
     summary="Create new CV for user",
 )
 async def create_cv(user_cv: CVRequestSchema, CV: CVsRepository):
-    new_user_cv = await CV.create(user_cv)
-
-    return new_user_cv
+    return await CV.create_one(user_cv)
 
 
 @cv_router.get(
@@ -34,9 +32,7 @@ async def get_random_cv(CV: CVsRepository):
     summary="Return user CV by ID",
 )
 async def get_user_cv(cv_id: UUID, CV: CVsRepository):
-    user_cv = await CV.get(cv_id)
-
-    return user_cv
+    return await CV.get_one(cv_id)
 
 
 @cv_router.delete(
@@ -44,7 +40,7 @@ async def get_user_cv(cv_id: UUID, CV: CVsRepository):
     summary="Delete user CV by ID",
 )
 async def delete_user_cv(cv_id: UUID, CV: CVsRepository):
-    deleted_cv = await CV.delete(cv_id)
+    deleted_cv = await CV.delete_one(cv_id)
 
     if deleted_cv:
         return JSONResponse(

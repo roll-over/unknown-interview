@@ -18,7 +18,7 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 async def create_vacancy(
     job_vacancy: VacancyRequestSchema, Vacancy: VacanciesRepository
 ):
-    return await Vacancy.create(job_vacancy)
+    return await Vacancy.create_one(job_vacancy)
 
 
 @vacancy_router.get(
@@ -36,7 +36,7 @@ async def get_random_vacancy(Vacancy: VacanciesRepository):
     summary="Return company vacancy by ID",
 )
 async def get_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
-    return await Vacancy.get(vacancy_id)
+    return await Vacancy.get_one(vacancy_id)
 
 
 @vacancy_router.delete(
@@ -44,7 +44,7 @@ async def get_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
     summary="Delete company vacancy by ID",
 )
 async def delete_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
-    deleted_vacancy = await Vacancy.delete(vacancy_id)
+    deleted_vacancy = await Vacancy.delete_one(vacancy_id)
 
     if deleted_vacancy:
         return JSONResponse(
