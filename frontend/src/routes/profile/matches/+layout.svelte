@@ -2,6 +2,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import Chats from './Chats.svelte';
 	import { getChatList } from './getChats';
+	import { AppRail } from '@skeletonlabs/skeleton';
 
 	const chatsQuery = createQuery({
 		queryFn() {
@@ -12,13 +13,16 @@
 </script>
 
 <div class="flex h-full">
-	<div class="flex h-full min-w-0 shrink-0 basis-80 flex-col border-r border-r-blue-500">
+	<AppRail
+		width="w-80"
+		regionDefault="h-full"
+	>
 		{#if $chatsQuery.isSuccess}
 			<Chats chats={$chatsQuery.data} />
 		{:else}
-			<div class="flex h-full items-center justify-center">Loading...</div>
+			<div class="flex h-full items-center justify-center overflow-y-scroll">Loading...</div>
 		{/if}
-	</div>
+	</AppRail>
 	<div class="grow">
 		<slot />
 	</div>
