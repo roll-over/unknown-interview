@@ -6,8 +6,6 @@
 		queryKey: ['userInfo'],
 		queryFn: () => api.GET('/api/v1/auth/user_info', {})
 	});
-
-	$: email = $userInfo.data?.data?.email;
 </script>
 
 <header class="bg-slate-400">
@@ -20,8 +18,8 @@
 			<div>loading...</div>
 		{:else if $userInfo.status === 'error'}
 			<div>error</div>
-		{:else if $userInfo.isSuccess && $email}
-			{email}
+		{:else if $userInfo.isSuccess && $userInfo.data?.data?.email}
+			{$userInfo.data?.data?.email}
 			<a href="/api/v1/auth/logout">Logout</a>
 		{:else}
 			<a href="/auth/login">Log-in</a>
