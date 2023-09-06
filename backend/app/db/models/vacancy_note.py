@@ -1,7 +1,7 @@
 from uuid import UUID
 from typing import List
 
-from app.db.models.mixins.mixin import UUIDMixin, Note
+from app.db.models.mixins import UUIDMixin, Note
 
 
 class VacancyNote(UUIDMixin):
