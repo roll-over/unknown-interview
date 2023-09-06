@@ -2,7 +2,7 @@ from uuid import UUID, uuid4
 from typing import Optional
 from pydantic import Field
 
-from app.db.models.mixins.mixin import UUIDMixin, Grade, Profession, Salary, Title
+from app.db.models.mixins import UUIDMixin, Grade, Profession, Salary, Title
 
 
 class Vacancy(UUIDMixin):

@@ -35,14 +35,6 @@ class Title(str, Enum):
     director = "директор"
 
 
-class Grade(Enum):
-    junior = "junior"
-    middle = "middle"
-    senior = "senior"
-    lead = "lead"
-    principal = "principal"
-
-
 class Profession(Enum):
     developer = "разработчик"
     designer = "дизайнер"
