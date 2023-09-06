@@ -27,14 +27,6 @@ class Salary(BaseModel):
             return values
 
 
-class Title(str, Enum):
-    member = "мембер"
-    lead = "лид"
-    teamlead = "тимлид"
-    manager = "менеджер"
-    director = "директор"
-
-
 class Profession(Enum):
     developer = "разработчик"
     designer = "дизайнер"
