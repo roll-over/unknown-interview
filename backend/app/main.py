@@ -29,13 +29,13 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=settings.SECRET_KEY
+    secret_key=settings.SECRET_KEY,
 )
 
 
 app.add_exception_handler(
     ResponseValidationError,
-    response_validation_exception_handler
+    response_validation_exception_handler,
 )
 
 
