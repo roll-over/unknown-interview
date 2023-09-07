@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
+	import Header from '$lib/components/header.svelte';
 	import { AppShell } from '@skeletonlabs/skeleton';
 
 	export let data;
@@ -14,11 +15,7 @@
 		slotPageContent="h-full w-full"
 	>
 		<svelte:fragment slot="header">
-			<nav class="flex gap-3">
-				<a href="/">Home</a>
-				<a href="/auth/login">Log-in</a>
-				<a href="/profile/matches">Matches</a>
-			</nav>
+			<Header />
 		</svelte:fragment>
 		<slot />
 		<svelte:fragment slot="footer">feet</svelte:fragment>
