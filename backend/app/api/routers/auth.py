@@ -1,5 +1,5 @@
 from authlib.integrations.starlette_client import OAuth
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse, HTMLResponse, RedirectResponse
 
 from app.config import settings
@@ -45,6 +45,17 @@ async def google_login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
+@auth_router.get("/user_info")
+async def user_info(request: Request):
+    user = request.session.get("user")
+
+    if user is not None:
+        email = user["email"]
+        return JSONResponse({"email": email})
+
+    return JSONResponse({"email": None})
+
+
 @auth_router.get("/google")
 async def google_auth(request: Request):
     token = await oauth.google.authorize_access_token(request)
@@ -59,12 +70,13 @@ async def google_auth(request: Request):
 
     request.session["user"] = request_user
 
-    return RedirectResponse(url="http://localhost:2080/api/v1/auth/htmlpage")
+    return RedirectResponse(url="/")
 
 
 @auth_router.get("/logout")
-async def logout(request: Request):
+async def logout(request: Request, response: Response):
     if "user" in request.session:
         del request.session["user"]
+        return RedirectResponse(url="/")
 
-    return JSONResponse(content={"detail": "Successful logout"})
+    return RedirectResponse(url="/")
