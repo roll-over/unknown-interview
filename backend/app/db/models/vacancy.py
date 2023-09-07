@@ -6,9 +6,7 @@ from app.db.models.mixins import UUIDMixin, Grade, Profession, Salary, Title
 
 
 class Vacancy(UUIDMixin):
-    owner_id: UUID = Field(
-        default_factory=uuid4,
-    )
+    owner_id: UUID
     title: Title
     grade: Grade
     salary: Optional[Salary] = Field(None)
