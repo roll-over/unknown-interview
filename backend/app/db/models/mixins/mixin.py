@@ -35,12 +35,6 @@ class Title(str, Enum):
     director = "директор"
 
 
-class Profession(Enum):
-    developer = "разработчик"
-    designer = "дизайнер"
-    manager = "менеджер"
-
-
 class Note(BaseModel):
     content_type: str = Field(default="text", frozen=True)
     note_text: str = Field(..., max_length=250)
