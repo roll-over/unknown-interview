@@ -11,6 +11,8 @@
 	});
 </script>
 
+
+
 <div class="flex h-full">
 	<div class="flex h-full min-w-0 shrink-0 basis-80 flex-col border-r border-r-blue-500">
 		{#if $chatsQuery.isSuccess}
