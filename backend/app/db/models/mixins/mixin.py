@@ -1,5 +1,4 @@
 from uuid import UUID, uuid4
-from enum import Enum
 from typing import Optional
 from beanie import Document
 from pydantic import model_validator, BaseModel, Field
@@ -25,14 +24,6 @@ class Salary(BaseModel):
                 raise ValueError("Maximum salary level mast be higher than minimum")
 
             return values
-
-
-class Title(str, Enum):
-    member = "мембер"
-    lead = "лид"
-    teamlead = "тимлид"
-    manager = "менеджер"
-    director = "директор"
 
 
 class Note(BaseModel):

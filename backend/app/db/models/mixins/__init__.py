@@ -1,6 +1,7 @@
-from .mixin import UUIDMixin, Salary, Title, Note
+from .mixin import UUIDMixin, Salary, Note
 from .grade import Grade
 from .profession import Profession
+from .title import Title
 
 __all__ = (
     "UUIDMixin",

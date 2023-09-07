@@ -1,12 +1,12 @@
 from enum import Enum
 
 
-class Grade(str, Enum):
-    junior = "junior"
-    middle = "middle"
-    senior = "senior"
+class Title(str, Enum):
+    member = "member"
     lead = "lead"
-    principal = "principal"
+    teamlead = "teamlead"
+    manager = "manager"
+    director = "director"
 
     @classmethod
     def __iter__(cls):
