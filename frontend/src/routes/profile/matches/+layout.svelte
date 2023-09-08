@@ -14,8 +14,8 @@
 
 <div class="flex h-full">
 	<AppRail
-		width="w-80"
-		regionDefault="h-full"
+		width="w-80 overflow-x-hidden"
+		regionDefault="h-full w-80"
 	>
 		{#if $chatsQuery.isSuccess}
 			<Chats chats={$chatsQuery.data} />

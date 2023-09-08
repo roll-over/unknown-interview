@@ -9,7 +9,13 @@ export default {
 		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
 	theme: {
-		extend: {}
+		extend: {
+			colors: {
+				app: {
+					blue: '#2B93E1'
+				}
+			}
+		}
 	},
 	plugins: [
 		plugin(({ addVariant }) => {
