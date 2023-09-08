@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.db.models.mixins import Grade, Title, Profession
+from app.db.models.mixins import Grade, Title
 
 
 collection_router = APIRouter(prefix="/collections", tags=["Collections"])
@@ -17,8 +17,3 @@ async def get_grades(limit: int = 10):
 )
 async def get_titles(limit: int = 10):
     return list(Title)[:limit]
-
-
-@collection_router.get("/profession", summary="Return the collection of existing professions in DB")
-async def get_professions(limit: int = 10):
-    return list(Profession)[:limit]
