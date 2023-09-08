@@ -1,30 +1,13 @@
 from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request, Response
-from fastapi.responses import JSONResponse, HTMLResponse, RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from app.config import settings
-from app.db.models.user import User
+from app.repository import UserRepository
+from app.api.schemas.user import UserEmailSchema
+from app.exceptions import UserNotAuthenticated
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
-
-
-@auth_router.get("/htmlpage")
-async def htmlpage(request: Request):
-    user = request.session.get("user")
-
-    if user is not None:
-        email = user["email"]
-        html = (
-            f"<pre>Email: {email}</pre><br>"
-            '<a href="http://localhost:2080/api/docs">documentation</a><br>'
-            '<a href="http://localhost:2080/api/v1/auth/logout">logout</a>'
-        )
-        return HTMLResponse(html)
-
-    return HTMLResponse(
-        '<a href="http://localhost:2080/api/v1/auth/login/google">login</a>'
-    )
-
 
 oauth = OAuth()
 
@@ -45,28 +28,24 @@ async def google_login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-@auth_router.get("/user_info")
+@auth_router.get("/user_info", response_model=UserEmailSchema)
 async def user_info(request: Request):
     user = request.session.get("user")
-
-    if user is not None:
-        email = user["email"]
+    if user:
+        email = user.get("email", None)
         return JSONResponse({"email": email})
 
-    return JSONResponse({"email": None})
+    raise UserNotAuthenticated
 
 
 @auth_router.get("/google")
-async def google_auth(request: Request):
+async def google_auth(request: Request, User: UserRepository):
     token = await oauth.google.authorize_access_token(request)
     request_user = token.get("userinfo")
 
-    # get a user from db if it exists, otherwise create it
-    user_in_db = await User.find_one(User.email == request_user["email"])
-
-    if not user_in_db:
-        user_in_db = User(email=request_user["email"], name=request_user["name"])
-        await user_in_db.create()
+    existing_user = await User.get_user(request_user)
+    if not existing_user:
+        await User.create_one(request_user)
 
     request.session["user"] = request_user
 
@@ -77,6 +56,5 @@ async def google_auth(request: Request):
 async def logout(request: Request, response: Response):
     if "user" in request.session:
         del request.session["user"]
-        return RedirectResponse(url="/")
 
     return RedirectResponse(url="/")

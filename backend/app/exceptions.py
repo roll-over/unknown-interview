@@ -1,5 +1,5 @@
 from fastapi.responses import JSONResponse
-from fastapi import status
+from fastapi import status, HTTPException
 from fastapi.encoders import jsonable_encoder
 
 
@@ -14,3 +14,19 @@ async def response_validation_exception_handler(request, exc):
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content=jsonable_encoder({"detail": exc.errors()}),
     )
+
+
+class UserEmailAlreadyExist(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User with this email is already exists",
+        )
+
+
+class UserNotAuthenticated(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User unauthorized, need to login to continue",
+        )

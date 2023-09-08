@@ -8,7 +8,7 @@ class VacancyCVNoteService:
 
     async def add_note(self, data):
         related_id = data.related_id
-        existing_notes = await self.repo.fetch_one({"related_id": related_id})
+        existing_notes = await self.get_notes(related_id)
         note_to_add = self.sub_repo(note_text=data.note_text)
 
         if existing_notes:
