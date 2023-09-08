@@ -16,7 +16,7 @@
 	};
 </script>
 
-<header class="bg-app-blue-100 px-2 shadow-sm shadow-white">
+<header class="bg-app-blue-100 px-2">
 	<nav class="flex gap-3">
 		<a href="/">Home</a>
 		<a href="/profile/matches">Matches</a>
