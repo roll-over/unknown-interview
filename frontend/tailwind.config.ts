@@ -12,7 +12,13 @@ export default {
 		extend: {
 			colors: {
 				app: {
-					blue: '#2B93E1'
+					blue: {
+						100: '#EAF4FD',
+						300: '#CBE6F7',
+						500: '#4DA9E9',
+						700: '#2B93E1',
+						900: '#1985E2'
+					}
 				}
 			}
 		}

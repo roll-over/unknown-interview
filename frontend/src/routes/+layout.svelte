@@ -19,7 +19,7 @@
 		</svelte:fragment>
 		<slot />
 		<svelte:fragment slot="footer">
-			<footer class="shadow-[white_0px_-1px_2px]">feet</footer>
+			<footer class="bg-app-blue-100 shadow-[white_0px_-1px_2px]">feet</footer>
 		</svelte:fragment>
 	</AppShell>
 </QueryClientProvider>
