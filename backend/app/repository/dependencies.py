@@ -8,6 +8,7 @@ from .repositories import (
     cv_note_repo,
     vacancy_note_repo,
     user_repo,
+    profession_repo,
 )
 
 
@@ -16,3 +17,4 @@ VacanciesRepository = Annotated[AbstractBaseRepository, Depends(vacancy_repo)]
 CVNotesRepository = Annotated[AbstractBaseRepository, Depends(cv_note_repo)]
 VacancyNotesRepository = Annotated[AbstractBaseRepository, Depends(vacancy_note_repo)]
 UserRepository = Annotated[AbstractBaseRepository, Depends(user_repo)]
+ProfessionsRepository = Annotated[AbstractBaseRepository, Depends(profession_repo)]

@@ -1,6 +1,7 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from app.db.models.profession import Profession
 from app.db.models.user import User
 from app.db.models.cv import CV
 from app.db.models.vacancy import Vacancy
@@ -17,5 +18,5 @@ async def init_db():
     # Initialize beanie with the User document class and a database
     await init_beanie(
         database=client.db_name,
-        document_models=[User, CV, CVNote, Vacancy, VacancyNote],
+        document_models=[User, CV, CVNote, Vacancy, VacancyNote, Profession],
     )
