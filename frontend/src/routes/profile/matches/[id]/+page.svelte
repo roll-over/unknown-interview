@@ -113,12 +113,10 @@
 			</div>
 		{/if}
 		</div>
-	
 		<div class="flex p-1">
 			<textarea
 				class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50" />
 			<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
 		</div>
-		
 	</div>
 </div>
