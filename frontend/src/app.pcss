@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 /* Please think twice before editing this file 
-unless you're absolutely sure global styles are warranted */
+	unless you're absolutely sure global styles are warranted */
 
+/* todo - these are placeholders until we decide on a theme
+	then these should be handled by SkeletonUI 
+*/
 ::-webkit-scrollbar-thumb {
 	background-color: theme('colors.black/0.5');
 	border-radius: theme('borderRadius.md');
@@ -12,4 +15,7 @@ unless you're absolutely sure global styles are warranted */
 ::-webkit-scrollbar {
 	background-color: theme('colors.white/0.1');
 	width: theme('width.2');
+}
+::selection {
+	background-color: theme('colors.black/0.2');
 }

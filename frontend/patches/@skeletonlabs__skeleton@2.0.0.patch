@@ -1,0 +1,129 @@
+diff --git a/dist/components/Autocomplete/Autocomplete.svelte.d.ts b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
+index e4f3b4dd9ae4983bba4c7c84fa807ea68d03d07e..8027b4d218ab1969f3a9b15c0dc343d0e36a21b4 100644
+--- a/dist/components/Autocomplete/Autocomplete.svelte.d.ts
++++ b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
+@@ -1,40 +1,63 @@
+-import { SvelteComponentTyped } from "svelte";
+-import { slide } from 'svelte/transition';
+-import { type Transition, type TransitionParams } from '../../index.js';
++import { SvelteComponent } from "svelte";
++import { slide } from "svelte/transition";
++import { type Transition, type TransitionParams } from "../../index.js";
++import type { AutocompleteOption } from "./types.js";
+ type SlideTransition = typeof slide;
+-import type { AutocompleteOption } from './types.js';
+-declare class __sveltets_Render<TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> {
+-    props(): {
+-        [x: string]: any;
+-        input?: unknown;
+-        options?: AutocompleteOption[] | undefined;
+-        limit?: number | undefined;
+-        allowlist?: unknown[] | undefined;
+-        denylist?: unknown[] | undefined;
+-        emptyState?: string | undefined;
+-        regionNav?: string | undefined;
+-        regionList?: string | undefined;
+-        regionItem?: string | undefined;
+-        regionButton?: string | undefined;
+-        regionEmpty?: string | undefined;
+-        transitions?: boolean | undefined;
+-        transitionIn?: TransitionIn | undefined;
+-        transitionInParams?: TransitionParams<TransitionIn> | undefined;
+-        transitionOut?: TransitionOut | undefined;
+-        transitionOutParams?: TransitionParams<TransitionOut> | undefined;
+-    };
+-    events(): {
+-        click: MouseEvent;
+-        keypress: KeyboardEvent;
+-        selection: CustomEvent<AutocompleteOption>;
+-    } & {
+-        [evt: string]: CustomEvent<any>;
+-    };
+-    slots(): {};
+-}
+-export type AutocompleteProps<TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<TransitionIn, TransitionOut>['props']>;
+-export type AutocompleteEvents<TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<TransitionIn, TransitionOut>['events']>;
+-export type AutocompleteSlots<TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<TransitionIn, TransitionOut>['slots']>;
+-export default class Autocomplete<TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> extends SvelteComponentTyped<AutocompleteProps<TransitionIn, TransitionOut>, AutocompleteEvents<TransitionIn, TransitionOut>, AutocompleteSlots<TransitionIn, TransitionOut>> {
++declare class __sveltets_Render<
++  Value,
++  TransitionIn extends Transition = SlideTransition,
++  TransitionOut extends Transition = SlideTransition
++> {
++  props(): {
++    [x: string]: any;
++    input?: unknown;
++    options?: AutocompleteOption<Value>[] | undefined;
++    limit?: number | undefined;
++    allowlist?: unknown[] | undefined;
++    denylist?: unknown[] | undefined;
++    emptyState?: string | undefined;
++    regionNav?: string | undefined;
++    regionList?: string | undefined;
++    regionItem?: string | undefined;
++    regionButton?: string | undefined;
++    regionEmpty?: string | undefined;
++    transitions?: boolean | undefined;
++    transitionIn?: TransitionIn | undefined;
++    transitionInParams?: TransitionParams<TransitionIn> | undefined;
++    transitionOut?: TransitionOut | undefined;
++    transitionOutParams?: TransitionParams<TransitionOut> | undefined;
++  };
++  events(): {
++    click: MouseEvent;
++    keypress: KeyboardEvent;
++    selection: CustomEvent<AutocompleteOption<Value>>;
++  } & {
++    [evt: string]: CustomEvent<any>;
++  };
++  slots(): {};
+ }
++export type AutocompleteProps<
++  Value,
++  TransitionIn extends Transition = SlideTransition,
++  TransitionOut extends Transition = SlideTransition
++> = ReturnType<__sveltets_Render<Value, TransitionIn, TransitionOut>["props"]>;
++export type AutocompleteEvents<
++  Value,
++  TransitionIn extends Transition = SlideTransition,
++  TransitionOut extends Transition = SlideTransition
++> = ReturnType<__sveltets_Render<Value, TransitionIn, TransitionOut>["events"]>;
++export type AutocompleteSlots<
++  Value,
++  TransitionIn extends Transition = SlideTransition,
++  TransitionOut extends Transition = SlideTransition
++> = ReturnType<__sveltets_Render<Value, TransitionIn, TransitionOut>["slots"]>;
++export default class Autocomplete<
++  Value = unknown,
++  TransitionIn extends Transition = SlideTransition,
++  TransitionOut extends Transition = SlideTransition
++> extends SvelteComponent<
++  AutocompleteProps<Value, TransitionIn, TransitionOut>,
++  AutocompleteEvents<Value, TransitionIn, TransitionOut>,
++  AutocompleteSlots<Value, TransitionIn, TransitionOut>
++> {}
+ export {};
+diff --git a/dist/components/Autocomplete/types.d.ts b/dist/components/Autocomplete/types.d.ts
+index f3c35163bc4d6c9b20a7fd2e29a0b8b98cdf3f25..7052f34896296380cdfc0b337948537c8bd5527a 100644
+--- a/dist/components/Autocomplete/types.d.ts
++++ b/dist/components/Autocomplete/types.d.ts
+@@ -1,10 +1,10 @@
+-export interface AutocompleteOption {
+-    /** provide a unique display label per option. Supports HTML. */
+-    label: string;
+-    /** Provide a unique option value. */
+-    value: unknown;
+-    /** Provide a comma separated list of keywords. */
+-    keywords?: any;
+-    /** Pass arbitrary data per option. */
+-    meta?: any;
++export interface AutocompleteOption<Value = unknown> {
++  /** provide a unique display label per option. Supports HTML. */
++  label: string;
++  /** Provide a unique option value. */
++  value: Value;
++  /** Provide a comma separated list of keywords. */
++  keywords?: any;
++  /** Pass arbitrary data per option. */
++  meta?: any;
+ }

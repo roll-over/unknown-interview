@@ -1,4 +1,4 @@
-const positions = [
+export const positions = [
 	'member',
 	'leader',
 	'team leader',
@@ -6,43 +6,29 @@ const positions = [
 	'director',
 	'vp',
 	'c-level'
-] as const;
+];
 
-const grades = ['junior', 'middle', 'senior', 'presenter', 'director'] as const;
+export const grades = ['junior', 'middle', 'senior', 'presenter', 'director'];
 
-const professions = ['programmer', 'designer', 'Project manager'] as const;
+export const professions = ['programmer', 'designer', 'Project manager'];
 
-const skills = {
-	programmer: ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift']
-} as const;
+export const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift'];
 
-const currencies = ['USD', 'EUR'] as const;
+export const currencies = ['USD', 'EUR'];
 
-type NewJobState = {
-	position: (typeof positions)[number] | '';
-	grade: (typeof grades)[number] | '';
+export type CVState = {
+	position: (typeof positions)[number];
+	grade: (typeof grades)[number];
 	salaryFork: {
 		min: number;
 		max: number;
 		currency: (typeof currencies)[number];
 	};
-	profession: (typeof professions)[number] | '';
+	profession: (typeof professions)[number];
 	skills: string[];
 };
 
-type NewEmployeState = {
-	position: (typeof positions)[number] | '';
-	grade: (typeof grades)[number] | '';
-	salaryFork: {
-		min: number;
-		max: number;
-		currency: (typeof currencies)[number];
-	};
-	profession: (typeof professions)[number] | '';
-	skills: string[];
-};
-
-const defaultNewJobState: NewJobState = {
+export const defaultCVState: CVState = {
 	position: '',
 	grade: '',
 	salaryFork: {
@@ -54,26 +40,5 @@ const defaultNewJobState: NewJobState = {
 	skills: []
 };
 
-const defaultNewEmployeState: NewEmployeState = {
-	position: '',
-	grade: '',
-	salaryFork: {
-		min: 0,
-		max: 0,
-		currency: 'USD'
-	},
-	profession: '',
-	skills: []
-};
-
-export {
-	positions,
-	grades,
-	professions,
-	skills,
-	currencies,
-	defaultNewJobState,
-	defaultNewEmployeState,
-	type NewJobState,
-	type NewEmployeState
-};
+export type JobOfferState = CVState;
+export const defaultJobOfferState: JobOfferState = defaultCVState;
