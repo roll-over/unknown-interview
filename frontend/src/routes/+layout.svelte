@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Header from '$lib/components/header.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import { AppShell, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';

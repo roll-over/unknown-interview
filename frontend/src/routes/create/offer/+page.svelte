@@ -9,6 +9,7 @@
 		positions,
 		type JobOfferState
 	} from '../common';
+	import RadioGroup from '$lib/components/RadioGroup.svelte';
 
 	const jobOfferData = persisted<JobOfferState>('jobOfferState', defaultJobOfferState);
 </script>
@@ -17,43 +18,17 @@
 	<h1>Job Posting</h1>
 	<fieldset>
 		<legend>Necessary position</legend>
-		<div class="flex gap-4">
-			{#each positions as position}
-				<label
-					class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-					class:shadow-md={$jobOfferData.position === position}
-				>
-					{position}
-					<input
-						type="radio"
-						name="position"
-						bind:group={$jobOfferData.position}
-						value={position}
-						class="absolute w-0 opacity-0"
-					/>
-				</label>
-			{/each}
-		</div>
+		<RadioGroup
+			options={positions}
+			bind:value={$jobOfferData.position}
+		/>
 	</fieldset>
 	<fieldset>
 		<legend>Necessary grade</legend>
-		<div class="flex gap-4">
-			{#each grades as grade}
-				<label
-					class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-					class:shadow-md={$jobOfferData.grade === grade}
-				>
-					{grade}
-					<input
-						type="radio"
-						name="grade"
-						bind:group={$jobOfferData.grade}
-						value={grade}
-						class="absolute w-0 opacity-0"
-					/>
-				</label>
-			{/each}
-		</div>
+		<RadioGroup
+			options={grades}
+			bind:value={$jobOfferData.grade}
+		/>
 	</fieldset>
 	<fieldset>
 		<legend>Available salary</legend>

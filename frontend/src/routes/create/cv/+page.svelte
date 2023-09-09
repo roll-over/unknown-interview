@@ -3,6 +3,7 @@
 	import Profession from '../Profession.svelte';
 	import Skills from '../Skills.svelte';
 	import { currencies, defaultCVState, grades, positions, type CVState } from '../common';
+	import RadioGroup from '$lib/components/RadioGroup.svelte';
 
 	const CVStateData = persisted<CVState>('CVState', defaultCVState);
 </script>
@@ -11,43 +12,17 @@
 	<h1>Your Resume</h1>
 	<fieldset>
 		<legend>Necessary position</legend>
-		<div class="flex gap-4">
-			{#each positions as position}
-				<label
-					class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-					class:shadow-md={$CVStateData.position === position}
-				>
-					{position}
-					<input
-						type="radio"
-						name="position"
-						bind:group={$CVStateData.position}
-						value={position}
-						class="absolute w-0 opacity-0"
-					/>
-				</label>
-			{/each}
-		</div>
+		<RadioGroup
+			options={positions}
+			bind:value={$CVStateData.position}
+		/>
 	</fieldset>
 	<fieldset>
 		<legend>Necessary grade</legend>
-		<div class="flex gap-4">
-			{#each grades as grade}
-				<label
-					class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-					class:shadow-md={$CVStateData.grade === grade}
-				>
-					{grade}
-					<input
-						type="radio"
-						name="grade"
-						bind:group={$CVStateData.grade}
-						value={grade}
-						class="absolute w-0 opacity-0"
-					/>
-				</label>
-			{/each}
-		</div>
+		<RadioGroup
+			options={grades}
+			bind:value={$CVStateData.grade}
+		/>
 	</fieldset>
 	<fieldset>
 		<legend>Available salary</legend>
