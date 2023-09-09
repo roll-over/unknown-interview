@@ -1,13 +1,20 @@
-export const positions = [
+import type { components } from '../../openapi';
+
+export const positions: components['schemas']['CVRequestSchema']['title'][] = [
 	'member',
-	'leader',
-	'team leader',
+	'lead',
+	'teamlead',
 	'manager',
-	'director',
-	'vp',
-	'c-level'
+	'director'
 ];
-export const grades = ['junior', 'middle', 'senior', 'presenter', 'director'];
+export const grades: components['schemas']['CVRequestSchema']['grade'][] = [
+	'junior',
+	'middle',
+	'senior',
+	'lead',
+	'principal'
+];
+
 export const professions = [
 	'programmer',
 	'designer',
@@ -22,8 +29,8 @@ export const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swif
 export const currencies = ['USD', 'EUR'];
 
 export type CVState = {
-	position: (typeof positions)[number];
-	grade: (typeof grades)[number];
+	position: (typeof positions)[number] | '';
+	grade: (typeof grades)[number] | '';
 	salaryFork: {
 		min: number;
 		max: number;
