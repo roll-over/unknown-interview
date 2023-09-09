@@ -13,8 +13,6 @@
 		value: skill,
 		label: skill
 	})) satisfies AutocompleteOption[];
-
-	$: filteredSkills = autocompleteSkills.filter((x) => !selectedSkills.includes(x.value));
 </script>
 
 <div class="flex flex-col gap-2">
@@ -52,12 +50,10 @@
 	<div>
 		<Autocomplete
 			input={newSkill}
-			options={filteredSkills}
+			options={autocompleteSkills}
+			denylist={selectedSkills}
 			on:selection={(e) => {
-				const { value } = e.detail;
-				if (selectedSkills.includes(value)) return;
-
-				selectedSkills.push(value);
+				selectedSkills.push(e.detail.value);
 				selectedSkills = selectedSkills;
 			}}
 			class="bg-app-blue-100 rounded-xl p-8"
