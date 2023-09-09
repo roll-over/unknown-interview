@@ -1,19 +1,12 @@
-import type { components } from '../../openapi';
+import type { StrictOmit } from '$lib/utils/types';
+import type { components } from '$lib/openapi';
 
-export const positions: components['schemas']['CVRequestSchema']['title'][] = [
-	'member',
-	'lead',
-	'teamlead',
-	'manager',
-	'director'
-];
-export const grades: components['schemas']['CVRequestSchema']['grade'][] = [
-	'junior',
-	'middle',
-	'senior',
-	'lead',
-	'principal'
-];
+type _CVState = components['schemas']['CVRequestSchema'];
+// todo - remove, this is temporary
+export type CVState = StrictOmit<_CVState, 'skillset'> & { skillset: string[] };
+
+export const titles: CVState['title'][] = ['member', 'lead', 'teamlead', 'manager', 'director'];
+export const grades: CVState['grade'][] = ['junior', 'middle', 'senior', 'lead', 'principal'];
 
 export const professions = [
 	'programmer',
@@ -28,29 +21,17 @@ export const professions = [
 export const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift'];
 export const currencies = ['USD', 'EUR'];
 
-export type CVState = {
-	position: (typeof positions)[number] | '';
-	grade: (typeof grades)[number] | '';
-	salaryFork: {
-		min: number;
-		max: number;
-		currency: (typeof currencies)[number];
-	};
-	profession: (typeof professions)[number];
-	skills: string[];
-};
-
-export const defaultCVState: CVState = {
-	position: '',
-	grade: '',
-	salaryFork: {
-		min: 0,
-		max: 0,
+export const defaultCVState = {
+	title: 'member',
+	grade: 'junior',
+	salary: {
+		min_level: 0,
+		max_level: 0,
 		currency: 'USD'
 	},
-	profession: '',
-	skills: []
-};
+	profession: { name: '' },
+	skillset: [] as string[]
+} satisfies StrictOmit<CVState, 'skillset'> & { skillset: string[] };
 
 export type JobOfferState = CVState;
-export const defaultJobOfferState: JobOfferState = defaultCVState;
+export const defaultJobOfferState = defaultCVState satisfies JobOfferState;

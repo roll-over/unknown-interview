@@ -1,6 +1,16 @@
-<script lang="ts">
-	export let options: unknown[];
-	export let value: unknown;
+<script
+	lang="ts"
+	context="module"
+>
+	type V = unknown;
+</script>
+
+<script
+	lang="ts"
+	generics="V"
+>
+	export let options: V[];
+	export let value: V;
 </script>
 
 <div class="flex gap-2">

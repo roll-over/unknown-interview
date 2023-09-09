@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@8.6.12",
+	"packageManager": "pnpm@8.7.4",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"docker-dev": "tsx --tsconfig scripts/tsconfig.json scripts/docker-dev.ts",

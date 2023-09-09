@@ -4,7 +4,7 @@ import openApiTs, { type OpenAPI3 } from 'openapi-typescript';
 async function generateOpenAPI() {
 	const spec = await getOpenAPISpec();
 	const types = await openApiTs(spec);
-	writeFile('./src/openapi.d.ts', types);
+	writeFile('./src/lib/openapi.d.ts', types);
 }
 
 let retries = 0;

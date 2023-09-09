@@ -1,5 +1,5 @@
 import createClient from 'openapi-fetch';
-import type { paths } from '../../openapi'; // generated from openapi-typescript
+import type { paths } from '$lib/openapi'; // generated from openapi-typescript
 import { browser } from '$app/environment';
 
 const api = createClient<paths>({
