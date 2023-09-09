@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@skeletonlabs/skeleton@2.0.0':
-    hash: vl3rme4cl76wo3v47joltnzw44
+    hash: buzjrol7ump2djmft3r3kygeje
     path: patches/@skeletonlabs__skeleton@2.0.0.patch
   '@sveltejs/kit@1.23.0':
     hash: vra2r7fvwhg4pza7a47mqc2vja
@@ -21,7 +21,7 @@ dependencies:
     version: 1.5.1
   '@skeletonlabs/skeleton':
     specifier: ^2.0.0
-    version: 2.0.0(patch_hash=vl3rme4cl76wo3v47joltnzw44)(svelte@4.2.0)
+    version: 2.0.0(patch_hash=buzjrol7ump2djmft3r3kygeje)(svelte@4.2.0)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.1.0
     version: 0.1.0(tailwindcss@3.3.3)
@@ -674,7 +674,7 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@skeletonlabs/skeleton@2.0.0(patch_hash=vl3rme4cl76wo3v47joltnzw44)(svelte@4.2.0):
+  /@skeletonlabs/skeleton@2.0.0(patch_hash=buzjrol7ump2djmft3r3kygeje)(svelte@4.2.0):
     resolution: {integrity: sha512-8SaDK3kEUU57cSb/5a984EbINgnOPzShlkwPkduAhqc71SEqhRvx+RlLEpe1174NAYi00oi//LguIAYuVrSfBA==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0

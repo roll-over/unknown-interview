@@ -1,5 +1,18 @@
+diff --git a/dist/components/Autocomplete/Autocomplete.svelte b/dist/components/Autocomplete/Autocomplete.svelte
+index 75b8b949c1e26d9c7b78ff01fb99140ce4ac983e..a68d4b3c2ddc75b7d7165c643334346c72ddaecb 100644
+--- a/dist/components/Autocomplete/Autocomplete.svelte
++++ b/dist/components/Autocomplete/Autocomplete.svelte
+@@ -81,7 +81,7 @@ $:
+ 						out:dynamicTransition|local={{ transition: transitionOut, params: transitionOutParams, enabled: transitions }}
+ 					>
+ 						<button class="autocomplete-button {classesButton}" type="button" on:click={() => onSelection(option)} on:click on:keypress>
+-							{@html option.label}
++							{option.label}
+ 						</button>
+ 					</li>
+ 				{/each}
 diff --git a/dist/components/Autocomplete/Autocomplete.svelte.d.ts b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
-index e4f3b4dd9ae4983bba4c7c84fa807ea68d03d07e..8027b4d218ab1969f3a9b15c0dc343d0e36a21b4 100644
+index e4f3b4dd9ae4983bba4c7c84fa807ea68d03d07e..a23ee4ae8ae1bbc848f315d60230ad5a78150483 100644
 --- a/dist/components/Autocomplete/Autocomplete.svelte.d.ts
 +++ b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
 @@ -1,40 +1,63 @@
@@ -52,11 +65,11 @@ index e4f3b4dd9ae4983bba4c7c84fa807ea68d03d07e..8027b4d218ab1969f3a9b15c0dc343d0
 +> {
 +  props(): {
 +    [x: string]: any;
-+    input?: unknown;
++    input?: Value;
 +    options?: AutocompleteOption<Value>[] | undefined;
 +    limit?: number | undefined;
-+    allowlist?: unknown[] | undefined;
-+    denylist?: unknown[] | undefined;
++    allowlist?: Value[] | undefined;
++    denylist?: Value[] | undefined;
 +    emptyState?: string | undefined;
 +    regionNav?: string | undefined;
 +    regionList?: string | undefined;
