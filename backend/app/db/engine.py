@@ -18,32 +18,20 @@ class DatabaseInitializer:
         self.__stage = stage
         self.__client = AsyncIOMotorClient(mongodb_url, uuidRepresentation="standard")  # Create Motor client
 
-    async def __init_development_database(self):
+    async def __init_database(self, stage):
         await init_beanie(
-            database=self.__client['unknown_mongo_development'],
-            document_models=self.__models,
-        )
-
-    async def __init_test_database(self):
-        await init_beanie(
-            database=self.__client['unknown_mongo_test'],
-            document_models=self.__models,
-        )
-
-    async def __init_production_database(self):
-        await init_beanie(
-            database=self.__client['unknown_mongo_production'],
+            database=self.__client[f'unknown_mongo_{stage}'],
             document_models=self.__models,
         )
 
     async def get_database_stage(self):
         match self.__stage:
             case 'dev':
-                await self.__init_development_database()
+                await self.__init_database('development')
             case 'test':
-                await self.__init_test_database()
+                await self.__init_database('testing')
             case 'prod':
-                await self.__init_production_database()
+                await self.__init_database('production')
             case _:
                 raise 'Unknown database stage. The stage can be one of: dev, test or prod'
 
