@@ -46,7 +46,7 @@ async def ping():
 
 @app.on_event("startup")
 async def startup():
-    await init_db()
+    await init_db
     print("Starting up...")
 
 
