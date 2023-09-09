@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { persisted } from 'svelte-local-storage-store';
+	import Profession from '../Profession.svelte';
 	import Skills from '../Skills.svelte';
-	import {
-		currencies,
-		defaultCVState,
-		grades,
-		positions,
-		professions,
-		type CVState
-	} from '../common';
+	import { currencies, defaultCVState, grades, positions, type CVState } from '../common';
 
 	const CVStateData = persisted<CVState>('CVState', defaultCVState);
 </script>
@@ -89,27 +83,11 @@
 			</label>
 		</div>
 	</fieldset>
-	<fieldset>
+	<fieldset class="w-80">
 		<legend>Necessary profession</legend>
-		<div class="flex gap-4">
-			{#each professions as profession}
-				<label
-					class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-					class:shadow-md={$CVStateData.profession === profession}
-				>
-					{profession}
-					<input
-						type="radio"
-						name="profession"
-						bind:group={$CVStateData.profession}
-						value={profession}
-						class="absolute w-0 opacity-0"
-					/>
-				</label>
-			{/each}
-		</div>
+		<Profession bind:selectedProfession={$CVStateData.profession} />
 	</fieldset>
-	<fieldset>
+	<fieldset class="w-80">
 		<h2>Necessary skills</h2>
 		<Skills bind:selectedSkills={$CVStateData.skills} />
 	</fieldset>

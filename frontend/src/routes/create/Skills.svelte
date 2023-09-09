@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { AutocompleteOption } from '@skeletonlabs/skeleton';
-	import { Autocomplete } from '@skeletonlabs/skeleton';
+	import { Autocomplete, type AutocompleteOption } from '@skeletonlabs/skeleton';
 	import { skills } from './common';
 	import { slide } from 'svelte/transition';
 
@@ -16,7 +15,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="bg-app-blue-100 w-80 rounded-xl p-4">
+	<div class="bg-app-blue-100 rounded-xl px-2 py-1">
 		<div class="flex flex-wrap gap-2">
 			{#each selectedSkills as skill, i (skill)}
 				<button
@@ -32,7 +31,7 @@
 				</button>
 			{/each}
 			<input
-				class="caret-app-blue-900 w-11 rounded px-2 text-xs text-black/[.64]"
+				class="caret-app-blue-900 w-11 rounded p-2 text-xs text-black/60"
 				bind:value={newSkill}
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {
@@ -56,9 +55,10 @@
 				selectedSkills.push(e.detail.value);
 				selectedSkills = selectedSkills;
 			}}
-			class="bg-app-blue-100 rounded-xl p-8"
+			class="bg-app-blue-100 rounded-xl p-4"
 			regionList="flex flex-col gap-1"
 			regionItem="bg-app-blue-500 rounded-lg"
+			regionButton="w-full text-left px-3"
 		/>
 	</div>
 </div>

@@ -7,13 +7,18 @@ export const positions = [
 	'vp',
 	'c-level'
 ];
-
 export const grades = ['junior', 'middle', 'senior', 'presenter', 'director'];
-
-export const professions = ['programmer', 'designer', 'Project manager'];
-
+export const professions = [
+	'programmer',
+	'designer',
+	'project manager',
+	'engineer',
+	'devops',
+	'full-stack',
+	'frontend',
+	'backend'
+];
 export const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift'];
-
 export const currencies = ['USD', 'EUR'];
 
 export type CVState = {
