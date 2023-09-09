@@ -4,9 +4,8 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.repository import VacanciesRepository, UserRepository
 from app.exceptions import UserNotAuthenticated
-
+from app.repository import UserRepository, VacanciesRepository
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 

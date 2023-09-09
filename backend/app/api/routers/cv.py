@@ -1,10 +1,11 @@
 from uuid import UUID
+
 from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
-from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 
-from app.repository import CVsRepository, UserRepository
+from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.exceptions import UserNotAuthenticated
+from app.repository import CVsRepository, UserRepository
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 

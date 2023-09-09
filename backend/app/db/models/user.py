@@ -1,5 +1,7 @@
-from pydantic import EmailStr, Field
 from datetime import datetime
+
+from pydantic import EmailStr, Field
+
 from app.db.models.mixins import UUIDMixin
 
 

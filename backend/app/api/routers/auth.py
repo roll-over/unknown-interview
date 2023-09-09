@@ -2,10 +2,10 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from app.config import settings
-from app.repository import UserRepository
 from app.api.schemas.user import UserEmailSchema
+from app.config import settings
 from app.exceptions import UserNotAuthenticated
+from app.repository import UserRepository
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
