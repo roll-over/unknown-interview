@@ -4,6 +4,7 @@ from .dependencies import (
     CVNotesRepository,
     VacancyNotesRepository,
     UserRepository,
+    SkillsRepository
 )
 
 __all__ = (
@@ -12,4 +13,5 @@ __all__ = (
     "CVNotesRepository",
     "VacancyNotesRepository",
     "UserRepository",
+    "SkillsRepository",
 )

@@ -2,8 +2,8 @@ from beanie import Document
 from pydantic import Field
 
 
-class Profession(Document):
+class Skill(Document):
     name: str = Field(..., max_length=20)
 
     class Settings:
-        name = "professions"  # collection name
+        name = "skills"  # collection name

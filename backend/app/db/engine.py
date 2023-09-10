@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.config import settings
 from app.db.models.profession import Profession
+from app.db.models.skill import Skill
 from app.db.models.user import User
 from app.db.models.cv import CV
 from app.db.models.vacancy import Vacancy
@@ -12,7 +13,7 @@ from app.db.models.vacancy_note import VacancyNote
 
 class DatabaseInitializer:
     # Initialize models in database
-    __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession]
+    __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession, Skill]
 
     def __init__(self, stage, mongodb_url):
         self.__stage = stage
