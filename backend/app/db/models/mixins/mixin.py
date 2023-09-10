@@ -1,9 +1,9 @@
-from uuid import UUID, uuid4
-from enum import Enum
-from typing import Optional
-from beanie import Document
-from pydantic import model_validator, BaseModel, Field
 from datetime import datetime
+from typing import Optional
+from uuid import UUID, uuid4
+
+from beanie import Document
+from pydantic import BaseModel, Field, model_validator
 
 
 class UUIDMixin(Document):
@@ -25,12 +25,6 @@ class Salary(BaseModel):
                 raise ValueError("Maximum salary level mast be higher than minimum")
 
             return values
-
-
-class Profession(Enum):
-    developer = "разработчик"
-    designer = "дизайнер"
-    manager = "менеджер"
 
 
 class Note(BaseModel):

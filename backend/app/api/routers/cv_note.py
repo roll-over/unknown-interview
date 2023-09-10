@@ -1,14 +1,14 @@
 from uuid import UUID
+
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import BaseNoteSchema
 from app.api.schemas.cv_note import (
     CVNoteRequestSchema,
     CVNoteResponseSchema,
 )
-from app.api.schemas.base import BaseNoteSchema
 from app.repository import CVNotesRepository
-
 
 cv_note_router = APIRouter(prefix="/cv_note", tags=["CV Notes"])
 

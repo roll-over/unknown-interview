@@ -1,9 +1,11 @@
 from uuid import UUID
-from fastapi import APIRouter, status
-from fastapi.responses import JSONResponse
-from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 
-from app.repository import CVsRepository
+from fastapi import APIRouter, Request, status
+from fastapi.responses import JSONResponse
+
+from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
+from app.exceptions import UserNotAuthenticated
+from app.repository import CVsRepository, UserRepository
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
@@ -13,8 +15,19 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
     response_model=CVResponseSchema,
     summary="Create new CV for user",
 )
-async def create_cv(user_cv: CVRequestSchema, CV: CVsRepository):
-    return await CV.create_one(user_cv)
+async def create_cv(
+    request: Request,
+    data: CVRequestSchema,
+    CV: CVsRepository,
+    User: UserRepository,
+):
+    user_data = request.session.get("user")
+    if user_data:
+        cv_owner = await User.get_user(user_data)
+
+        return await CV.create_one(data, owner_data=cv_owner)
+
+    raise UserNotAuthenticated
 
 
 @cv_router.get(

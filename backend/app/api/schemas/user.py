@@ -14,3 +14,7 @@ class UserResponseSchema(BaseModel):
 class UserRequestSchema(BaseModel):
     name: str
     email: EmailStr
+
+
+class UserEmailSchema(BaseModel):
+    email: EmailStr

@@ -1,9 +1,9 @@
 import subprocess
 from os import getcwd
 from sys import executable
+
 from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
-import time
 
 process = None
 

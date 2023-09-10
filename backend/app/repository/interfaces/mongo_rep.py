@@ -1,12 +1,11 @@
 from .base import AbstractBaseRepository
-from uuid import UUID
 
 
 class MongoBeanieRepository(AbstractBaseRepository):
     model = None
 
-    async def fetch_all(self):
-        found_data = await self.model.all().to_list()
+    async def fetch_all(self, limit=None):
+        found_data = await self.model.all().to_list(limit)
 
         return found_data
 

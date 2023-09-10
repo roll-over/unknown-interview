@@ -1,11 +1,11 @@
 from uuid import UUID
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.repository import VacanciesRepository
-
+from app.exceptions import UserNotAuthenticated
+from app.repository import UserRepository, VacanciesRepository
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 
@@ -16,9 +16,18 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
     summary="Create new company vacancy",
 )
 async def create_vacancy(
-    job_vacancy: VacancyRequestSchema, Vacancy: VacanciesRepository
+    request: Request,
+    vacancy_data: VacancyRequestSchema,
+    Vacancy: VacanciesRepository,
+    User: UserRepository,
 ):
-    return await Vacancy.create_one(job_vacancy)
+    user_data = request.session.get("user")
+    if user_data:
+        cv_owner = await User.get_user(user_data)
+
+        return await Vacancy.create_one(vacancy_data, owner_data=cv_owner)
+
+    raise UserNotAuthenticated
 
 
 @vacancy_router.get(

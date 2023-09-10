@@ -9,7 +9,6 @@ from app.config import settings
 from app.db.engine import init_db
 from app.exceptions import response_validation_exception_handler
 
-
 templates = Jinja2Templates(directory="app/templates")
 
 
@@ -29,13 +28,13 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=settings.SECRET_KEY
+    secret_key=settings.SECRET_KEY,
 )
 
 
 app.add_exception_handler(
     ResponseValidationError,
-    response_validation_exception_handler
+    response_validation_exception_handler,
 )
 
 
@@ -46,7 +45,7 @@ async def ping():
 
 @app.on_event("startup")
 async def startup():
-    await init_db()
+    await init_db
     print("Starting up...")
 
 

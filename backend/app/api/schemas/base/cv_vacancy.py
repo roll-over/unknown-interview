@@ -1,8 +1,10 @@
-from uuid import UUID
 from typing import Optional
+from uuid import UUID
+
 from pydantic import BaseModel
 
-from app.db.models.mixins import Salary, Title, Grade, Profession
+from app.db.models.mixins import Grade, Salary, Title
+from app.db.models.profession import Profession
 
 
 class RequestBaseSchema(BaseModel):

@@ -1,9 +1,8 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.user import UserRequestSchema, UserResponseSchema
+from app.api.schemas.user import UserEmailSchema, UserRequestSchema, UserResponseSchema
 from app.repository import UserRepository
-
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -19,10 +18,10 @@ async def create_user(data: UserRequestSchema, User: UserRepository):
 
 
 @user_router.delete(
-    "/{user_id}",
-    summary="Delete user by ID",
+    "/{user_data}",
+    summary="Delete user by email",
 )
-async def delete_user_cv(data: UserRequestSchema, User: UserRepository):
+async def delete_user_cv(data: UserEmailSchema, User: UserRepository):
     deleted_cv = await User.delete_user(data)
 
     if deleted_cv:

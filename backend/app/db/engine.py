@@ -1,21 +1,44 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.db.models.user import User
+from app.config import settings
 from app.db.models.cv import CV
-from app.db.models.vacancy import Vacancy
 from app.db.models.cv_note import CVNote
+from app.db.models.profession import Profession
+from app.db.models.user import User
+from app.db.models.vacancy import Vacancy
 from app.db.models.vacancy_note import VacancyNote
 
 
-async def init_db():
-    # Create Motor client
-    client = AsyncIOMotorClient(
-        "mongodb://root:example@unknown_mongo:27017/", uuidRepresentation="standard"
-    )
+class DatabaseInitializer:
+    # Initialize models in database
+    __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession]
 
-    # Initialize beanie with the User document class and a database
-    await init_beanie(
-        database=client.db_name,
-        document_models=[User, CV, CVNote, Vacancy, VacancyNote],
-    )
+    def __init__(self, stage, mongodb_url):
+        self.__stage = stage
+        self.__client = AsyncIOMotorClient(
+            mongodb_url,
+            uuidRepresentation="standard",
+        )  # Create Motor client
+
+    async def __init_database(self, stage):
+        await init_beanie(
+            database=self.__client[f"unknown_mongo_{stage}"],
+            document_models=self.__models,
+        )
+
+    async def get_database_stage(self):
+        match self.__stage:
+            case "dev":
+                await self.__init_database("development")
+            case "test":
+                await self.__init_database("testing")
+            case "prod":
+                await self.__init_database("production")
+            case _:
+                raise "Unknown database stage. The stage can be one of: dev, test or prod"
+
+
+init_db = DatabaseInitializer(
+    stage=settings.STAGE, mongodb_url=settings.ME_CONFIG_MONGODB_URL
+).get_database_stage()
