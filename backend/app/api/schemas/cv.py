@@ -1,9 +1,9 @@
-from uuid import UUID
-
-from pydantic import BaseModel
+from .base import RequestBaseSchema, ResponseBaseSchema
 
 
-class CvCreateResponseSchema(BaseModel):
-    id: UUID
-    title: str
-    owner_id: UUID
+class CVRequestSchema(RequestBaseSchema):
+    pass
+
+
+class CVResponseSchema(ResponseBaseSchema):
+    pass

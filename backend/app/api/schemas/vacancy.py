@@ -1,9 +1,9 @@
-from uuid import UUID
-
-from pydantic import BaseModel
+from .base import RequestBaseSchema, ResponseBaseSchema
 
 
-class VacancyCreateResponseSchema(BaseModel):
-    id: UUID
-    title: str
-    owner_id: UUID
+class VacancyRequestSchema(RequestBaseSchema):
+    pass
+
+
+class VacancyResponseSchema(ResponseBaseSchema):
+    pass

@@ -1,7 +1,16 @@
 {
-	"extends": "../tsconfig.json",
 	"include": ["**/*.ts"],
 	"compilerOptions": {
-		"verbatimModuleSyntax": true
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"verbatimModuleSyntax": true,
+		"noUncheckedIndexedAccess": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext"
 	}
 }

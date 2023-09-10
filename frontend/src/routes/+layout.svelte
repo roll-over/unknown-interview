@@ -1,30 +1,34 @@
 <script lang="ts">
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
+	import Header from '$lib/components/header.svelte';
+	import { AppShell } from '@skeletonlabs/skeleton';
 
 	export let data;
 </script>
 
 <QueryClientProvider client={data.queryClient}>
-	<div class="flex h-screen flex-col">
-		<header class="bg-slate-400">
-			<nav class="flex gap-3">
-				<a href="/">Home</a>
-				<a href="/auth/login">Log-in</a>
-				<a href="/profile/matches">Matches</a>
-			</nav>
-		</header>
-		<!-- min-h-0 overwrites default behavior of min-h-auto on flex elements -->
-		<main class="min-h-0 grow">
-			<slot />
-		</main>
-	</div>
-	<footer class="bg-slate-400">feet</footer>
+	<AppShell
+		slotHeader="bg-slate-400"
+		slotFooter="bg-slate-400"
+		regionPage="h-full w-full"
+		slotPageContent="h-full w-full"
+	>
+		<svelte:fragment slot="header">
+			<Header />
+		</svelte:fragment>
+		<slot />
+		<svelte:fragment slot="footer">feet</svelte:fragment>
+	</AppShell>
 </QueryClientProvider>
 
-<style>
-	:global(html) {
-		background-color: theme('colors.slate.700');
-		color: theme('colors.white');
+<style lang="postcss">
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: theme('colors.black/0.6');
+		border-radius: theme('borderRadius.md');
+	}
+	:global(::-webkit-scrollbar) {
+		background-color: theme('colors.white/0.1');
+		width: theme('width.2');
 	}
 </style>

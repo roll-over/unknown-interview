@@ -8,18 +8,16 @@
 		<p class="bg-gradient-to-r from-white to-slate-400 bg-clip-text font-bold text-transparent">
 			Login with provider
 		</p>
-		<button
-			class="w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing] current:tracking-widest"
-			on:click={() => {
-				console.log('Google OAuth2');
-			}}
+		<a
+			class="current:tracking-widest w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing]"
+			href="/api/v1/auth/login/google"
 		>
 			<span class="text-blue-500">G</span><span class="text-red-500">o</span><span
 				class="text-yellow-500">o</span
 			><span class="text-blue-500">g</span><span class="text-green-600">l</span><span
 				class="text-red-500">e</span
 			>
-		</button>
+		</a>
 		<div
 			class="h-1 w-[105%] self-center rounded-full bg-gradient-to-r from-slate-300 to-slate-500"
 		/>

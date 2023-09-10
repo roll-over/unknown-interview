@@ -18,18 +18,24 @@ services:
     working_dir: /frontend
     command: pnpm docker-dev
     volumes:
+      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
+      - ./frontend/patches/:/frontend/patches/
+      - ./frontend/scripts/:/frontend/scripts/
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
-      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
-    depends_on:
-      - unknown_mongo
+      - ./frontend/postcss.config.js:/frontend/postcss.config.js
+      - ./frontend/svelte.config.js:/frontend/svelte.config.js
+      - ./frontend/tailwind.config.ts:/frontend/tailwind.config.ts
+      - ./frontend/vite.config.ts:/frontend/vite.config.ts
     env_file:
       - .env
+    environment:
+      - isDocker=true
   unknown_mongo:
     image: mongo
     container_name: unknown_mongo
-    restart: always
+    restart: unless-stopped
     env_file:
       - .env
     volumes:

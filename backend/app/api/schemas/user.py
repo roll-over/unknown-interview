@@ -1,15 +1,21 @@
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
-class UserCreateResponseSchema(BaseModel):
+class UserResponseSchema(BaseModel):
     custom_id: UUID
     name: str
     email: EmailStr
+    created_at: datetime
 
 
-class UserCreateRequestSchema(BaseModel):
+class UserRequestSchema(BaseModel):
     name: str
     email: EmailStr
-    password_hash: str
+
+
+class UserEmailSchema(BaseModel):
+    email: EmailStr
