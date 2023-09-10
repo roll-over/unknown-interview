@@ -15,5 +15,8 @@ async def get_all_professions(
 
 
 @profession_router.post("/", response_model=ProfessionSchema)
-async def post_profession(profession: ProfessionSchema, Profession: ProfessionsRepository):
+async def post_profession(
+    profession: ProfessionSchema,
+    Profession: ProfessionsRepository
+):
     return await Profession.create_one(profession)
