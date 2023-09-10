@@ -1,5 +1,11 @@
-from .dependencies import CVNotesRepository, CVsRepository, UserRepository, \
-    SkillsRepository, VacanciesRepository, VacancyNotesRepository
+from .dependencies import (
+    CVNotesRepository,
+    CVsRepository,
+    UserRepository,
+    SkillsRepository,
+    VacanciesRepository,
+    VacancyNotesRepository,
+)
 
 __all__ = (
     "CVsRepository",
