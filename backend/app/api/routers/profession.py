@@ -7,7 +7,10 @@ profession_router = APIRouter(prefix="/professions", tags=["Professions"])
 
 
 @profession_router.get("/", response_model=list[ProfessionSchema])
-async def get_all_professions(Profession: ProfessionsRepository, limit: int = 10):
+async def get_all_professions(
+    Profession: ProfessionsRepository,
+    limit: int = 10,
+):
     return await Profession.get_all_professions(limit)
 
 

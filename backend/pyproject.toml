@@ -1,0 +1,13 @@
+[tool.ruff]
+select = ["E", "F", 'I']  # Default + iSort
+ignore = []
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = []
+per-file-ignores = {}
+
+line-length = 90

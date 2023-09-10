@@ -1,5 +1,5 @@
-from .mixin import UUIDMixin, Salary, Note
 from .grade import Grade
+from .mixin import Note, Salary, UUIDMixin
 from .title import Title
 
 __all__ = (
