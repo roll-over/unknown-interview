@@ -9,7 +9,6 @@ from app.config import settings
 from app.db.engine import init_db
 from app.exceptions import response_validation_exception_handler
 
-
 templates = Jinja2Templates(directory="app/templates")
 
 

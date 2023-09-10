@@ -1,4 +1,6 @@
-# unknown-interview
+[![CI](https://github.com/roll-over/unknown-interview/actions/workflows/CI.yml/badge.svg)](https://github.com/roll-over/unknown-interview/actions/workflows/CI.yml)
+
+# Hide-Hire
 
 Проект для анонимного поиска работы - там, где до первого созвона и/или внутри переписки, кандидат и работодатель не будут знать друг о друге ничего, кроме того, что указано в cv и базовых вопросов про опыт, стек, грейд, зарплатной вилке и другой недеанонимизирующей информации.
 
