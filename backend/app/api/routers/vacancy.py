@@ -23,9 +23,9 @@ async def create_vacancy(
 ):
     user_data = request.session.get("user")
     if user_data:
-        cv_owner = await User.get_user(user_data)
+        vacancy_owner = await User.get_user(user_data)
 
-        return await Vacancy.create_one(vacancy_data, owner_data=cv_owner)
+        return await Vacancy.create_one(vacancy_data, owner_data=vacancy_owner)
 
     raise UserNotAuthenticated
 

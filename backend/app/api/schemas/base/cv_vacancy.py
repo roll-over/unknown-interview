@@ -1,18 +1,19 @@
-from typing import Optional
+from typing import List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel
 
+from app.api.schemas.profession import ProfessionSchema
+from app.api.schemas.skill import SkillSchema
 from app.db.models.mixins import Grade, Salary, Title
-from app.db.models.profession import Profession
 
 
 class RequestBaseSchema(BaseModel):
     title: Title
     salary: Optional[Salary]
     grade: Grade
-    profession: Profession
-    skillset: str
+    profession: ProfessionSchema
+    skillset: Optional[List[SkillSchema]]
 
 
 class ResponseBaseSchema(BaseModel):
@@ -21,5 +22,5 @@ class ResponseBaseSchema(BaseModel):
     title: Title
     salary: Optional[Salary]
     grade: Grade
-    profession: Profession
-    skillset: str
+    profession: ProfessionSchema
+    skillset: Optional[List[SkillSchema]]
