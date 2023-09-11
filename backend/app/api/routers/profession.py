@@ -17,7 +17,6 @@ async def get_all_professions(
 @profession_router.post("/", response_model=ProfessionSchema)
 async def post_profession(
     profession: ProfessionSchema,
-    Profession: ProfessionsRepository,
+    Profession: ProfessionsRepository
 ):
-    # накинуть @field_validator на больше чем 20 символов
     return await Profession.create_one(profession)
