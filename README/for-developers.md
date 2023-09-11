@@ -2,10 +2,28 @@
 
 # Для разарботчиков
 
-## Предположительный стек
+## Стек
 
-1. svelte фронт
-2. Fastapi бекенд
+### Фронт
+
+- svelete
+- typescript
+- pnpm
+- tailwindcss
+- vite
+- prettier
+- skeleton
+
+### Бэк
+
+- python
+- fastapi
+- mongodb
+
+### Общее
+
+- docker
+- docker-compose
 
 ## Pre requierments
 
