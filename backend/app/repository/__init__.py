@@ -1,8 +1,8 @@
 from .dependencies import (
     CVNotesRepository,
     CVsRepository,
-    UserRepository,
     SkillsRepository,
+    UserRepository,
     VacanciesRepository,
     VacancyNotesRepository,
 )
