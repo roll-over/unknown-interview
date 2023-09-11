@@ -12,12 +12,12 @@
 	});
 </script>
 
-<ul class="h-full overflow-y-scroll p-1">
+<ul class="h-full overflow-y-scroll">
 	{#each chats as chat, i (chat.id)}
-		<li class="border-b border-b-blue-500 last:border-b-0">
+		<li class=" border-b-app-blue-500 border-b-2 last:border-b-0">
 			<a
 				href="/profile/matches/{chat.id}"
-				class="flex flex-col rounded-md p-1 transition-colors aria-[current]:bg-slate-800"
+				class="aria-[current]:bg-app-blue-100 flex flex-col p-1 transition-colors"
 				aria-current={$page.params.id === chat.id || undefined}
 				bind:this={chatNodes[i]}
 			>

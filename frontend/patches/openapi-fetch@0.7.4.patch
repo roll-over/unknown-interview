@@ -1,5 +1,5 @@
 diff --git a/dist/index.cjs b/dist/index.cjs
-index bf7da635b18425dd8647f7be013899f1bb841142..d2836c29ccf2d92d0ba206c10d4d597b4024cd2a 100644
+index bf7da635b18425dd8647f7be013899f1bb841142..b7fba1a90fec54a02242ed544a537e9ce3d7d896 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
 @@ -32,16 +32,36 @@ var DEFAULT_HEADERS = {
@@ -38,7 +38,7 @@ index bf7da635b18425dd8647f7be013899f1bb841142..d2836c29ccf2d92d0ba206c10d4d597b
 +      headers,
 +      params.header
 +    );
-+    const requestInit = Object.assign(options, init, { headers: finalHeaders });
++    const requestInit = Object.assign(init, options, { headers: finalHeaders });
 +    requestInit.redirect ??= "follow";
      if (requestBody)
        requestInit.body = bodySerializer(requestBody);
@@ -152,7 +152,7 @@ index 5403066621b7b4ff4517a9bb3c325bb26f47cfb0..d2221dd771e14468015fe01277bbb055
  /** serialize query params to string */
  export declare function defaultQuerySerializer<T = unknown>(q: T): string;
 diff --git a/dist/index.js b/dist/index.js
-index 59b3aa56d4a795021e89bd12bb06476ee37bdd32..c80b12175b9d7be8e8889702b8fdc37dc5c6dd57 100644
+index 59b3aa56d4a795021e89bd12bb06476ee37bdd32..6978e0c5cf81a16f0fc2324bad1f44ec750025f7 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -4,31 +4,39 @@ const DEFAULT_HEADERS = {
@@ -174,7 +174,7 @@ index 59b3aa56d4a795021e89bd12bb06476ee37bdd32..c80b12175b9d7be8e8889702b8fdc37d
          const finalHeaders = mergeHeaders(DEFAULT_HEADERS, clientOptions?.headers, headers, params.header);
          // fetch!
 -        const requestInit = { redirect: "follow", ...options, ...init, headers: finalHeaders };
-+        const requestInit = Object.assign(options, init, { headers: finalHeaders });
++        const requestInit = Object.assign(init, options, { headers: finalHeaders });
 +        requestInit.redirect ??= "follow";
          if (requestBody)
              requestInit.body = bodySerializer(requestBody);
@@ -308,14 +308,14 @@ index 5403066621b7b4ff4517a9bb3c325bb26f47cfb0..d2221dd771e14468015fe01277bbb055
  /** serialize query params to string */
  export declare function defaultQuerySerializer<T = unknown>(q: T): string;
 diff --git a/dist/index.min.js b/dist/index.min.js
-index f6785d94824b6e8a6b615d4bbf4eebee633e8ac4..c440dcc2151d5ce1dd4ee22c09ef2d89041c4c9b 100644
+index f6785d94824b6e8a6b615d4bbf4eebee633e8ac4..8f8abe0a8126cb485b58b181aa1752911cd45b9b 100644
 --- a/dist/index.min.js
 +++ b/dist/index.min.js
 @@ -1 +1 @@
 -var x={"Content-Type":"application/json"},S=/\/*$/;function g(s={}){let{fetch:r=globalThis.fetch,querySerializer:n,bodySerializer:a,...p}=s;async function o(e,t){let{headers:T,body:u,params:l={},parseAs:d="json",querySerializer:O=n??F,bodySerializer:R=a??q,...b}=t||{},m=M(e,{baseUrl:p.baseUrl,params:l,querySerializer:O}),P=z(x,s?.headers,T,l.header),y={redirect:"follow",...p,...b,headers:P};u&&(y.body=R(u)),y.body instanceof FormData&&P.delete("Content-Type");let i=await r(m,y);if(i.status===204||i.headers.get("Content-Length")==="0")return i.ok?{data:{},response:i}:{error:{},response:i};if(i.ok){let f=i.body;if(d!=="stream"){let c=i.clone();f=typeof c[d]=="function"?await c[d]():await c.text()}return{data:f,response:i}}let h={};try{h=await i.clone().json()}catch{h=await i.clone().text()}return{error:h,response:i}}return{async GET(e,t){return o(e,{...t,method:"GET"})},async PUT(e,t){return o(e,{...t,method:"PUT"})},async POST(e,t){return o(e,{...t,method:"POST"})},async DELETE(e,t){return o(e,{...t,method:"DELETE"})},async OPTIONS(e,t){return o(e,{...t,method:"OPTIONS"})},async HEAD(e,t){return o(e,{...t,method:"HEAD"})},async PATCH(e,t){return o(e,{...t,method:"PATCH"})},async TRACE(e,t){return o(e,{...t,method:"TRACE"})}}}function F(s){let r=new URLSearchParams;if(s&&typeof s=="object")for(let[n,a]of Object.entries(s))a!=null&&r.set(n,a);return r.toString()}function q(s){return JSON.stringify(s)}function M(s,r){let n=`${r.baseUrl?r.baseUrl.replace(S,""):""}${s}`;if(r.params.path)for(let[a,p]of Object.entries(r.params.path))n=n.replace(`{${a}}`,encodeURIComponent(String(p)));if(r.params.query){let a=r.querySerializer(r.params.query);a&&(n+=`?${a}`)}return n}function z(...s){let r=new Headers;for(let n of s){if(!n||typeof n!="object")continue;let a=n instanceof Headers?n.entries():Object.entries(n);for(let[p,o]of a)o===null?r.delete(p):o!==void 0&&r.set(p,o)}return r}export{M as createFinalURL,g as default,q as defaultBodySerializer,F as defaultQuerySerializer,z as mergeHeaders};
-+var g={"Content-Type":"application/json"},m=/\/*$/;function S(i={}){let{querySerializer:r,bodySerializer:n,...a}=i;async function o(t,e,s=globalThis.fetch){let{headers:f,body:c,params:u={},parseAs:d="json",querySerializer:T=r??F,bodySerializer:O=n??q,...b}=e||{},R=M(t,{baseUrl:a.baseUrl,params:u,querySerializer:T}),x=z(g,i?.headers,f,u.header),h=Object.assign(a,b,{headers:x});h.redirect??="follow",c&&(h.body=O(c));let p=await s(R,h);if(p.status===204||p.headers.get("Content-Length")==="0")return p.ok?{data:{},response:p}:{error:{},response:p};if(p.ok){let P=p.body;if(d!=="stream"){let l=p.clone();P=typeof l[d]=="function"?await l[d]():await l.text()}return{data:P,response:p}}let y={};try{y=await p.clone().json()}catch{y=await p.clone().text()}return{error:y,response:p}}return{async GET(t,e,s=globalThis.fetch){return e.method="GET",o(t,e,s)},async PUT(t,e,s=globalThis.fetch){return e.method="PUT",o(t,e),s},async POST(t,e,s=globalThis.fetch){return e.method="POST",o(t,e,s)},async DELETE(t,e,s=globalThis.fetch){return e.method="DELETE",o(t,e,s)},async OPTIONS(t,e,s=globalThis.fetch){return e.method="OPTIONS",o(t,e,s)},async HEAD(t,e,s=globalThis.fetch){return e.method="HEAD",o(t,e,s)},async PATCH(t,e,s=globalThis.fetch){return e.method="PATCH",o(t,e,s)},async TRACE(t,e,s=globalThis.fetch){return e.method="TRACE",o(t,e,s)}}}function F(i){let r=new URLSearchParams;if(i&&typeof i=="object")for(let[n,a]of Object.entries(i))a!=null&&r.set(n,a);return r.toString()}function q(i){return JSON.stringify(i)}function M(i,r){let n=`${r.baseUrl?r.baseUrl.replace(m,""):""}${i}`;if(r.params.path)for(let[a,o]of Object.entries(r.params.path))n=n.replace(`{${a}}`,encodeURIComponent(String(o)));if(r.params.query){let a=r.querySerializer(r.params.query);a&&(n+=`?${a}`)}return n}function z(...i){let r=new Headers;for(let n of i){if(!n||typeof n!="object")continue;let a=n instanceof Headers?n.entries():Object.entries(n);for(let[o,t]of a)t===null?r.delete(o):t!==void 0&&r.set(o,t)}return r}export{M as createFinalURL,S as default,q as defaultBodySerializer,F as defaultQuerySerializer,z as mergeHeaders};
++var g={"Content-Type":"application/json"},m=/\/*$/;function S(i={}){let{querySerializer:r,bodySerializer:n,...a}=i;async function o(t,e,s=globalThis.fetch){let{headers:f,body:c,params:u={},parseAs:d="json",querySerializer:T=r??F,bodySerializer:O=n??q,...b}=e||{},R=M(t,{baseUrl:a.baseUrl,params:u,querySerializer:T}),x=z(g,i?.headers,f,u.header),h=Object.assign(b,a,{headers:x});h.redirect??="follow",c&&(h.body=O(c));let p=await s(R,h);if(p.status===204||p.headers.get("Content-Length")==="0")return p.ok?{data:{},response:p}:{error:{},response:p};if(p.ok){let P=p.body;if(d!=="stream"){let l=p.clone();P=typeof l[d]=="function"?await l[d]():await l.text()}return{data:P,response:p}}let y={};try{y=await p.clone().json()}catch{y=await p.clone().text()}return{error:y,response:p}}return{async GET(t,e,s=globalThis.fetch){return e.method="GET",o(t,e,s)},async PUT(t,e,s=globalThis.fetch){return e.method="PUT",o(t,e),s},async POST(t,e,s=globalThis.fetch){return e.method="POST",o(t,e,s)},async DELETE(t,e,s=globalThis.fetch){return e.method="DELETE",o(t,e,s)},async OPTIONS(t,e,s=globalThis.fetch){return e.method="OPTIONS",o(t,e,s)},async HEAD(t,e,s=globalThis.fetch){return e.method="HEAD",o(t,e,s)},async PATCH(t,e,s=globalThis.fetch){return e.method="PATCH",o(t,e,s)},async TRACE(t,e,s=globalThis.fetch){return e.method="TRACE",o(t,e,s)}}}function F(i){let r=new URLSearchParams;if(i&&typeof i=="object")for(let[n,a]of Object.entries(i))a!=null&&r.set(n,a);return r.toString()}function q(i){return JSON.stringify(i)}function M(i,r){let n=`${r.baseUrl?r.baseUrl.replace(m,""):""}${i}`;if(r.params.path)for(let[a,o]of Object.entries(r.params.path))n=n.replace(`{${a}}`,encodeURIComponent(String(o)));if(r.params.query){let a=r.querySerializer(r.params.query);a&&(n+=`?${a}`)}return n}function z(...i){let r=new Headers;for(let n of i){if(!n||typeof n!="object")continue;let a=n instanceof Headers?n.entries():Object.entries(n);for(let[o,t]of a)t===null?r.delete(o):t!==void 0&&r.set(o,t)}return r}export{M as createFinalURL,S as default,q as defaultBodySerializer,F as defaultQuerySerializer,z as mergeHeaders};
 diff --git a/src/index.ts b/src/index.ts
-index 619f82a8582e984f79ef13e9c9f6712050083411..42f4799726e3ee0dc4fa65d2fd7a28979918b624 100644
+index 619f82a8582e984f79ef13e9c9f6712050083411..67e2ce116448f69662096539df71fba31e72ab95 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -1,4 +1,13 @@
@@ -433,7 +433,7 @@ index 619f82a8582e984f79ef13e9c9f6712050083411..42f4799726e3ee0dc4fa65d2fd7a2897
  
      // fetch!
 -    const requestInit: RequestInit = { redirect: "follow", ...options, ...init, headers: finalHeaders };
-+    const requestInit: RequestInit = Object.assign(options, init, { headers: finalHeaders });
++    const requestInit: RequestInit = Object.assign(init, options, { headers: finalHeaders });
 +    requestInit.redirect ??= "follow";
 +
      if (requestBody) requestInit.body = bodySerializer(requestBody as any);

@@ -1,16 +1,16 @@
 <script lang="ts">
+	import Header from '$lib/components/Header.svelte';
+	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+	import { AppShell, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
-	import Header from '$lib/components/header.svelte';
-	import { AppShell } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	export let data;
 </script>
 
 <QueryClientProvider client={data.queryClient}>
 	<AppShell
-		slotHeader="bg-slate-400"
-		slotFooter="bg-slate-400"
 		regionPage="h-full w-full"
 		slotPageContent="h-full w-full"
 	>
@@ -18,17 +18,8 @@
 			<Header />
 		</svelte:fragment>
 		<slot />
-		<svelte:fragment slot="footer">feet</svelte:fragment>
+		<svelte:fragment slot="footer">
+			<footer class="bg-app-blue-100">feet</footer>
+		</svelte:fragment>
 	</AppShell>
 </QueryClientProvider>
-
-<style lang="postcss">
-	:global(::-webkit-scrollbar-thumb) {
-		background-color: theme('colors.black/0.6');
-		border-radius: theme('borderRadius.md');
-	}
-	:global(::-webkit-scrollbar) {
-		background-color: theme('colors.white/0.1');
-		width: theme('width.2');
-	}
-</style>

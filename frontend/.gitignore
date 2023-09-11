@@ -9,4 +9,4 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 package-lock.json
-src/openapi.d.ts
+src/lib/openapi.d.ts

@@ -62,10 +62,10 @@
 				>
 					{#each $chatQuery.data.messages as message (message.id)}
 						<li
-							class="max-w-lg rounded-lg p-3
-							{message.author.id === YourID ? 'bg-slate-500 max-xl:self-end' : 'bg-neutral-500'}"
+							class="max-w-lg rounded-lg p-3 text-white
+							{message.author.id === YourID ? 'bg-app-blue-500 max-xl:self-end' : 'bg-app-blue-900'}"
 						>
-							<div class="text-sm text-white/80">
+							<div class="text-sm text-white/70">
 								by {message.author.name} - {formatDate(message.timestamp)}
 							</div>
 							<div>{message.content}</div>
@@ -83,8 +83,8 @@
 	</div>
 	<div class="flex p-1">
 		<textarea
-			class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50"
+			class="grow resize-none rounded-l-lg bg-blue-300/20 p-1 shadow-inner shadow-white/50"
 		/>
-		<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
+		<button class="rounded-r-lg bg-black/30 px-4">SEND</button>
 	</div>
 </div>
