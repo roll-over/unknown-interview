@@ -1,12 +1,6 @@
-from typing import List
-from uuid import UUID
-
-from app.db.models.mixins import Note, UUIDMixin
+from .mixins.notes import NoteMixin
 
 
-class VacancyNote(UUIDMixin):
-    related_id: UUID
-    notes: List[Note]
-
+class VacancyNote(NoteMixin):
     class Settings:
         name = "vacancy_notes"
