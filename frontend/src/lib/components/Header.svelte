@@ -16,7 +16,7 @@
 	};
 </script>
 
-<header class="bg-app-blue-100 px-2">
+<header class="bg-app-blue-50 px-2">
 	<nav class="flex gap-3">
 		<a href="/">Home</a>
 		<a href="/profile/matches">Matches</a>
@@ -24,14 +24,14 @@
 			Create
 			<div
 				data-popup={navPopup.target}
-				class="bg-app-blue-100 px-4 py-2 text-black drop-shadow-md"
+				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 			>
 				<div class="flex flex-col gap-2">
 					<a href="/create/cv">CV</a>
 					<hr />
 					<a href="/create/offer">Offer</a>
 				</div>
-				<div class="arrow bg-app-blue-100"></div>
+				<div class="arrow bg-app-blue-50"></div>
 			</div>
 		</button>
 		{#if $userInfo.status === 'pending'}

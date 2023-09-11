@@ -18,11 +18,11 @@ export default {
 			colors: {
 				app: {
 					blue: {
-						100: '#EAF4FD',
-						300: '#CBE6F7',
-						500: '#4DA9E9',
-						700: '#2B93E1',
-						900: '#1985E2'
+						50: '#EAF4FD',
+						100: '#CBE6F7',
+						400: '#4DA9E9',
+						500: '#2B93E1',
+						600: '#1985E2'
 					}
 				}
 			}
@@ -31,6 +31,8 @@ export default {
 	plugins: [
 		plugin(({ addVariant }) => {
 			addVariant('current', ['&:focus-within', '&:hover']);
+			addVariant('group-current', [':merge(.group):focus-within &', ':merge(.group):hover &']);
+			addVariant('peer-current', [':merge(.peer):focus-within ~ &', ':merge(.peer):hover ~ &']);
 		}),
 		skeleton
 	]
