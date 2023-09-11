@@ -31,6 +31,8 @@ export default {
 	plugins: [
 		plugin(({ addVariant }) => {
 			addVariant('current', ['&:focus-within', '&:hover']);
+			addVariant('group-current', [':merge(.group):focus-within &', ':merge(.group):hover &']);
+			addVariant('peer-current', [':merge(.peer):focus-within ~ &', ':merge(.peer):hover ~ &']);
 		}),
 		skeleton
 	]
