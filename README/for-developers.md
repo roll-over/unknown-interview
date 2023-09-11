@@ -40,3 +40,11 @@ Rename .env.exemple -> .env
 ```
 sudo docker-compose up
 ```
+
+[Документация по фронтенду](./../frontend/README.md)
+
+[Документация по бекенду](./../backend/README.md)
+
+[Команда](./command.md)
+
+[Миссия](./mission.md)
