@@ -15,7 +15,7 @@
 	</div>
 	<a
 		href="/create"
-		class="bg-app-blue-300 font-400 current:bg-app-blue-500 flex items-center justify-center gap-16 rounded-lg px-24 py-3.5 text-2xl text-black focus:outline-none focus:ring-4"
+		class="bg-app-blue-100 font-400 current:bg-app-blue-400 flex items-center justify-center gap-16 rounded-lg px-24 py-3.5 text-2xl text-black focus:outline-none focus:ring-4"
 	>
 		go to survey!
 		<img

@@ -63,7 +63,7 @@
 					{#each $chatQuery.data.messages as message (message.id)}
 						<li
 							class="max-w-lg rounded-lg p-3 text-white
-							{message.author.id === YourID ? 'bg-app-blue-500 max-xl:self-end' : 'bg-app-blue-900'}"
+							{message.author.id === YourID ? 'bg-app-blue-400 max-xl:self-end' : 'bg-app-blue-600'}"
 						>
 							<div class="text-sm text-white/70">
 								by {message.author.name} - {formatDate(message.timestamp)}

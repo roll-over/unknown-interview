@@ -16,8 +16,8 @@
 <div class="flex gap-2">
 	{#each options as option (option)}
 		<label
-			class="bg-app-blue-300 rounded-md px-2 {value === option
-				? 'outline-app-blue-500 outline outline-1'
+			class="bg-app-blue-100 rounded-md px-2 {value === option
+				? 'outline-app-blue-400 outline outline-1'
 				: ''}"
 		>
 			{option}
