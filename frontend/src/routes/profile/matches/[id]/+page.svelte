@@ -45,15 +45,18 @@
 	$: ScrollToBottom(isPlaceholder, $page.params.id);
 
 	let initialLoad = true;
-	
+
 	let notes = [
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 1", id: "1" },
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 2", id: "2" },
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 3", id: "3" },
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 4, Modi laboriosam quidem accusantium fugiat repellendus 4", id: "4" },
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 5", id: "5" },
-		{ text: "Modi laboriosam quidem accusantium fugiat repellendus 6", id: "6" }
-	]
+		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 1', id: '1' },
+		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 2', id: '2' },
+		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 3', id: '3' },
+		{
+			text: 'Modi laboriosam quidem accusantium fugiat repellendus 4, Modi laboriosam quidem accusantium fugiat repellendus 4',
+			id: '4'
+		},
+		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 5', id: '5' },
+		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 6', id: '6' }
+	];
 </script>
 
 <div class="flex h-full flex-col">
@@ -96,26 +99,27 @@
 		/>
 		<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
 	</div>
-	
-	<div class="flex flex-col h-1/3 justify-between border-t border-t-blue-500">
-		<div class="overflow-y-scroll h-full">
-		{#if notes.length}
-			<ul class="flex flex-col h-full items-start gap-2 p-1">
-				{#each notes as { text, id }, i (id)}
-					<li class="max-w-lg rounded-lg p-3 bg-slate-500 max-xl">
-						<p class="p-1">{ id }. { text }</p>
-					</li>
-				{/each}
-			</ul>
-		{:else}
-			<div class="flex justify-center items-center w-full h-full">
-				<span> Loading... </span>
-			</div>
-		{/if}
+
+	<div class="flex h-1/3 flex-col justify-between border-t border-t-blue-500">
+		<div class="h-full overflow-y-scroll">
+			{#if notes.length}
+				<ul class="flex h-full flex-col items-start gap-2 p-1">
+					{#each notes as { text, id }, i (id)}
+						<li class="max-xl max-w-lg rounded-lg bg-slate-500 p-3">
+							<p class="p-1">{id}. {text}</p>
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				<div class="flex h-full w-full items-center justify-center">
+					<span> Loading... </span>
+				</div>
+			{/if}
 		</div>
 		<div class="flex p-1">
 			<textarea
-				class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50" />
+				class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50"
+			/>
 			<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
 		</div>
 	</div>

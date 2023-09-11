@@ -12,8 +12,6 @@
 	});
 </script>
 
-
-
 <div class="flex h-full">
 	<AppRail
 		width="w-80"
