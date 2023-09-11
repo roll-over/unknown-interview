@@ -53,7 +53,9 @@
 	});
 </script>
 
-<div>{JSON.stringify($CVInfo.data?.data)}</div>
+<div>
+	{JSON.stringify($CVInfo.data?.data) ?? 'Your review will by displayed here after you save it'}
+</div>
 <form
 	class="flex flex-col items-start gap-3 p-3"
 	on:submit={handleSubmit}
