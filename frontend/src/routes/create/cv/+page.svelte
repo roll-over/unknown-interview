@@ -20,7 +20,7 @@
 		const { skillset, title, grade, profession, salary } = $CVStateData;
 
 		$submitMutation.mutate(
-			{ title, grade, profession, salary, skillset: skillset.join('\n') },
+			{ title, grade, profession, salary, skillset: skillset.map((name) => ({ name })) },
 			{
 				onSettled(d, e) {
 					console.log({ d, e });
