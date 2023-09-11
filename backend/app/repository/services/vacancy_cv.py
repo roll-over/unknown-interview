@@ -6,11 +6,11 @@ class VacancyCVService:
         self.repo: AbstractBaseRepository = repo_model()
 
     async def create_one(self, data, *, owner_data):
-        join_cv_data = self.repo.model(
+        joined_data = self.repo.model(
             owner_id=owner_data.custom_id,
             **data.model_dump(),
         )
-        return await self.repo.create_one(join_cv_data)
+        return await self.repo.create_one(joined_data)
 
     async def get_one(self, data_id):
         return await self.repo.fetch_one({"custom_id": data_id})
