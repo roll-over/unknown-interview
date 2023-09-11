@@ -2,7 +2,6 @@ from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr
-from typing import Optional
 
 
 class UserResponseSchema(BaseModel):

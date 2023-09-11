@@ -2,6 +2,7 @@ import { skeleton } from '@skeletonlabs/tw-plugin';
 import { join } from 'path';
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	content: [
@@ -10,6 +11,10 @@ export default {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				title: ['Comfortaa', ...defaultTheme.fontFamily.sans],
+				body: ['Montserrat', ...defaultTheme.fontFamily.sans]
+			},
 			colors: {
 				app: {
 					blue: {

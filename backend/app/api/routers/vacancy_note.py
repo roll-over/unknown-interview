@@ -1,12 +1,13 @@
 from uuid import UUID
+
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import BaseNoteSchema
 from app.api.schemas.vacancy_note import (
     VacancyNoteRequestSchema,
     VacancyNoteResponseSchema,
 )
-from app.api.schemas.base import BaseNoteSchema
 from app.repository import VacancyNotesRepository
 
 vacancy_note_router = APIRouter(prefix="/vacancy_note", tags=["Vacancy Notes"])

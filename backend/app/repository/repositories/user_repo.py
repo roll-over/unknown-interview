@@ -1,6 +1,6 @@
-from app.repository.services import UserService
-from app.repository.interfaces import MongoBeanieRepository
 from app.db.models.user import User
+from app.repository.interfaces import MongoBeanieRepository
+from app.repository.services import UserService
 
 
 class UserRepositoryModel(MongoBeanieRepository):

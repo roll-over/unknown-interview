@@ -1,7 +1,8 @@
-from fastapi import APIRouter
-from app.db.models.mixins import Grade, Title
 from typing import List
 
+from fastapi import APIRouter
+
+from app.db.models.mixins import Grade, Title
 
 collection_router = APIRouter(prefix="/collections", tags=["Collections"])
 

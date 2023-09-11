@@ -1,5 +1,5 @@
-from app.repository.interfaces import AbstractBaseRepository
 from app.exceptions import UserEmailAlreadyExist
+from app.repository.interfaces import AbstractBaseRepository
 
 
 class UserService:

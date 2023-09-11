@@ -1,9 +1,9 @@
 from .dependencies import (
-    CVsRepository,
-    VacanciesRepository,
     CVNotesRepository,
-    VacancyNotesRepository,
+    CVsRepository,
     UserRepository,
+    VacanciesRepository,
+    VacancyNotesRepository,
 )
 
 __all__ = (

@@ -1,22 +1,26 @@
 <script lang="ts">
-	import api from '$lib/api';
-	import { createQuery } from '@tanstack/svelte-query';
-
-	$: prefetchedQuery = createQuery({
-		queryKey: ['prefetchedQuery'],
-		queryFn: () => api.GET('/api/ping', {})
-	});
-	$: clientQuery = createQuery({
-		queryKey: ['clientQuery'],
-		queryFn: () => api.GET('/api/ping', {})
-	});
 </script>
 
-<div class="bg-app-blue-300 flex h-full flex-col items-center justify-center gap-4">
-	<div>
-		<div>THIS IS PREFETCHED: {$prefetchedQuery.data?.data}</div>
-		<div>THI IS FETCHED ONLY ON CLIENT: {$clientQuery.data?.data}</div>
+<div class="flex h-full flex-col items-center justify-center bg-white">
+	<div
+		class="font-title flex w-full flex-col items-center bg-[url(/src/img/background.svg)] bg-center bg-no-repeat p-5 pb-12"
+	>
+		<img
+			class="pb-7"
+			src="/src/img/diversity-icon.svg"
+			alt=""
+		/>
+		<h1 class="pb-2 text-6xl text-gray-900">Hello!</h1>
+		<p class="text-2xl text-black">Fill out a short form to get started!</p>
 	</div>
-	<hr class="w-full !border-t-2 !border-white" />
-	<h1 class="text-4xl font-extrabold">Home</h1>
+	<a
+		href="/create"
+		class="bg-app-blue-300 font-400 current:bg-app-blue-500 flex items-center justify-center gap-16 rounded-lg px-24 py-3.5 text-2xl text-black focus:outline-none focus:ring-4"
+	>
+		go to survey!
+		<img
+			src="/src/img/arrow-right.svg"
+			alt=""
+		/>
+	</a>
 </div>
