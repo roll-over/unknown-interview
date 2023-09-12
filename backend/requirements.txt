@@ -15,3 +15,8 @@ beanie
 authlib
 itsdangerous
 ruff
+pytest
+pytest-dotenv
+pytest-asyncio
+asgi-lifespan
+httpx

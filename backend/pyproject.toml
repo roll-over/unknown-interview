@@ -11,3 +11,9 @@ exclude = []
 per-file-ignores = {}
 
 line-length = 90
+
+[tool.pytest.ini_options]
+pythonpath = ['.', 'app']
+testpaths = ['tests']
+env_files = '.env.testing'
+asyncio_mode = "auto"
