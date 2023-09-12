@@ -20,7 +20,7 @@
 		const { skillset, title, grade, profession, salary } = $jobOfferData;
 
 		$submitMutation.mutate(
-			{ title, grade, profession, salary, skillset: skillset.join('\n') },
+			{ title, grade, profession, salary, skillset: skillset.map((name) => ({ name })) },
 			{
 				onSettled(d, e) {
 					console.log({ d, e });
@@ -53,7 +53,11 @@
 	});
 </script>
 
-<div>{JSON.stringify($vacancyInfo.data?.data)}</div>
+<div>
+	{JSON.stringify(
+		$vacancyInfo.data?.data ?? 'Your review will by displayed here after you save it'
+	)}
+</div>
 <form
 	class="flex flex-col items-start gap-3 p-3"
 	on:submit={handleSubmit}

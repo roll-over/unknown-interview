@@ -1,9 +1,9 @@
 import type { StrictOmit } from '$lib/utils/types';
 import type { components } from '$lib/openapi';
 
-type _CVState = components['schemas']['CVRequestSchema'];
-// todo - remove, this is temporary
-export type CVState = StrictOmit<_CVState, 'skillset'> & { skillset: string[] };
+export type CVState = StrictOmit<components['schemas']['CVRequestSchema'], 'skillset'> & {
+	skillset: string[];
+};
 
 export const titles: CVState['title'][] = ['member', 'lead', 'teamlead', 'manager', 'director'];
 export const grades: CVState['grade'][] = ['junior', 'middle', 'senior', 'lead', 'principal'];
@@ -31,7 +31,7 @@ export const defaultCVState = {
 	},
 	profession: { name: '' },
 	skillset: [] as string[]
-} satisfies StrictOmit<CVState, 'skillset'> & { skillset: string[] };
+} satisfies CVState;
 
 export type JobOfferState = CVState;
 export const defaultJobOfferState = defaultCVState satisfies JobOfferState;
