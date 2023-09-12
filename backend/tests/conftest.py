@@ -1,10 +1,12 @@
 import asyncio
+
 import pytest_asyncio
-from motor.motor_asyncio import AsyncIOMotorClient
 from asgi_lifespan import LifespanManager
-from app.main import app, init_db
 from httpx import AsyncClient
+from motor.motor_asyncio import AsyncIOMotorClient
+
 from app.db.engine import init_client
+from app.main import app, init_db
 
 
 @pytest_asyncio.fixture(scope="session", autouse=True)

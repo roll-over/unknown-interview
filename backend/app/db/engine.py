@@ -1,6 +1,5 @@
 from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
-from motor.motor_asyncio import AsyncIOMotorDatabase
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from app.config import settings
 from app.db.models.cv import CV
@@ -10,7 +9,6 @@ from app.db.models.skill import Skill
 from app.db.models.user import User
 from app.db.models.vacancy import Vacancy
 from app.db.models.vacancy_note import VacancyNote
-
 
 __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession, Skill]
 __database_url: str = settings.ME_CONFIG_MONGODB_URL
