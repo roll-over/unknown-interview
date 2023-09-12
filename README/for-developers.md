@@ -2,10 +2,28 @@
 
 # Для разарботчиков
 
-## Предположительный стек
+## Стек
 
-1. svelte фронт
-2. Fastapi бекенд
+### Фронт
+
+- svelete
+- typescript
+- pnpm
+- tailwindcss
+- vite
+- prettier
+- skeleton
+
+### Бэк
+
+- python
+- fastapi
+- mongodb
+
+### Общее
+
+- docker
+- docker-compose
 
 ## Pre requierments
 
@@ -22,3 +40,11 @@ Rename .env.exemple -> .env
 ```
 sudo docker-compose up
 ```
+
+[Документация по фронтенду](./../frontend/README.md)
+
+[Документация по бекенду](./../backend/README.md)
+
+[Команда](./command.md)
+
+[Миссия](./mission.md)
