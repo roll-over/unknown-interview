@@ -1,11 +1,12 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Request, status
+from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
-from app.exceptions import UserNotAuthenticated, ForbiddenAction
-from app.repository import CVsRepository, UserRepository
+from app.api.schemas.user import UserResponseSchema
+from app.repository import CVsRepository
+from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
@@ -19,15 +20,9 @@ async def create_cv(
     request: Request,
     data: CVRequestSchema,
     CV: CVsRepository,
-    User: UserRepository,
+    cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    user_data = request.session.get("user")
-    if user_data:
-        cv_owner = await User.get_user(user_data)
-
-        return await CV.create_one(data, owner_data=cv_owner)
-
-    raise UserNotAuthenticated
+    return await CV.create_one(data, owner_data=cv_owner)
 
 
 @cv_router.get(
@@ -58,19 +53,9 @@ async def update_user_cv(
     data: CVRequestSchema,
     cv_id: UUID,
     CV: CVsRepository,
-    User: UserRepository,
+    cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    user_data = request.session.get("user")
-    if user_data:
-        cv_owner = await User.get_user(user_data)
-        updated_cv = await CV.update_one(data, cv_id, owner_data=cv_owner)
-
-        if updated_cv:
-            return updated_cv
-
-        return ForbiddenAction
-
-    raise UserNotAuthenticated
+    return await CV.update_one(data, cv_id, owner_data=cv_owner)
 
 
 @cv_router.delete(
