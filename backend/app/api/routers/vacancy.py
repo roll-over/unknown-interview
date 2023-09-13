@@ -4,7 +4,7 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.exceptions import UserNotAuthenticated
+from app.exceptions import UserNotAuthenticated, ForbiddenAction
 from app.repository import UserRepository, VacanciesRepository
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -46,6 +46,33 @@ async def get_random_vacancy(Vacancy: VacanciesRepository):
 )
 async def get_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
     return await Vacancy.get_one(vacancy_id)
+
+
+@vacancy_router.patch(
+    "/{vacancy_id}",
+    response_model=VacancyResponseSchema,
+    summary="Update company vacancy by ID",
+)
+async def update_user_cv(
+    request: Request,
+    vacancy_data: VacancyRequestSchema,
+    vacancy_id: UUID,
+    Vacancy: VacanciesRepository,
+    User: UserRepository,
+):
+    user_data = request.session.get("user")
+    if user_data:
+        cv_owner = await User.get_user(user_data)
+        updated_cv = await Vacancy.update_one(
+            vacancy_data, vacancy_id, owner_data=cv_owner
+        )
+
+        if updated_cv:
+            return updated_cv
+
+        return ForbiddenAction
+
+    raise UserNotAuthenticated
 
 
 @vacancy_router.delete(
