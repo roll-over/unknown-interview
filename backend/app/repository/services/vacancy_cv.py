@@ -1,3 +1,4 @@
+from app.exceptions import ForbiddenAction
 from app.repository.interfaces import AbstractBaseRepository
 
 
@@ -27,3 +28,5 @@ class VacancyCVService:
 
         if owner_id == cv.owner_id:
             return await self.repo.update_one(data, {"custom_id": data_id})
+
+        raise ForbiddenAction
