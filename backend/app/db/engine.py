@@ -1,6 +1,6 @@
-import sys
 from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from mongomock_motor import AsyncMongoMockClient
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.config import settings
 from app.db.models.cv import CV
@@ -10,7 +10,6 @@ from app.db.models.skill import Skill
 from app.db.models.user import User
 from app.db.models.vacancy import Vacancy
 from app.db.models.vacancy_note import VacancyNote
-from mongomock_motor import AsyncMongoMockClient
 
 
 async def init_client(db_name):
