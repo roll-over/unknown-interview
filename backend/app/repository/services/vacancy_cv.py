@@ -20,3 +20,10 @@ class VacancyCVService:
 
     async def delete_one(self, data_id):
         return await self.repo.delete_one({"custom_id": data_id})
+
+    async def update_one(self, data, data_id, *, owner_data):
+        owner_id = owner_data.custom_id
+        cv = await self.get_one(data_id)
+
+        if owner_id == cv.owner_id:
+            return await self.repo.update_one(data, {"custom_id": data_id})
