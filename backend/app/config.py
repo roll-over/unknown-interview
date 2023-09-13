@@ -10,8 +10,14 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: str
     GOOGLE_CLIENT_SECRET: str
 
+    IS_TEST: bool = False
+
     class Config:
-        env_file = '.env'
+        env_file = ".env"
+
+    def __init__(self, **values):
+        super().__init__(**values)
+        self.IS_TEST = self.STAGE == "test"
 
 
 settings = Settings()
