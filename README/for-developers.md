@@ -1,29 +1,29 @@
 [На главную](../README.md)
 
-# Для разарботчиков
+# Для разработчиков
 
 ## Стек
 
 ### Фронт
 
-- svelete
-- typescript
-- pnpm
-- tailwindcss
-- vite
-- prettier
-- skeleton
+- [svelte](https://svelte.dev/)
+- [typescript](<(https://www.typescriptlang.org/)>)
+- [pnpm](https://pnpm.io/)
+- [tailwindcss](https://tailwindcss.com/)
+- [vite](https://vitejs.dev/)
+- [prettier](https://prettier.io/)
+- [skeleton](https://www.skeleton.dev/)
 
 ### Бэк
 
-- python
-- fastapi
-- mongodb
+- [python](https://www.python.org/)
+- [fastAPI](https://fastapi.tiangolo.com/)
+- [mongoDB](https://www.mongodb.com/)
 
 ### Общее
 
-- docker
-- docker-compose
+- [docker](https://www.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/)
 
 ## Pre requierments
 
