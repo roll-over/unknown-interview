@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  backend:
+    build: ./backend
+    working_dir: /backend
+    container_name: backend
+    command: pytest
+    volumes:
+      - ./backend/:/backend
+    env_file:
+      - .env
+    environment:
+      - STAGE=test

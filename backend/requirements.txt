@@ -20,3 +20,4 @@ pytest-dotenv
 pytest-asyncio
 asgi-lifespan
 httpx
+mongomock_motor

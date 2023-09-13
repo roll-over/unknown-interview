@@ -1,3 +1,4 @@
+import sys
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
@@ -9,37 +10,33 @@ from app.db.models.skill import Skill
 from app.db.models.user import User
 from app.db.models.vacancy import Vacancy
 from app.db.models.vacancy_note import VacancyNote
-
-__models = [User, CV, CVNote, Vacancy, VacancyNote, Profession, Skill]
-__database_url: str = settings.ME_CONFIG_MONGODB_URL
-__database_stage: str = settings.STAGE
-__database_client: AsyncIOMotorDatabase = None
+from mongomock_motor import AsyncMongoMockClient
 
 
 async def init_client(db_name):
-    global __database_client
-    global __database_url
-
-    __database_client = AsyncIOMotorClient(
-        __database_url,
-        uuidRepresentation="standard",
-    )[db_name]
-
-    return __database_client
+    return (
+        AsyncMongoMockClient()[db_name]
+        if settings.IS_TEST
+        else AsyncIOMotorClient(
+            settings.ME_CONFIG_MONGODB_URL,
+            uuidRepresentation="standard",
+        )[db_name]
+    )
 
 
 async def __init_beanie(db_name):
-    global __models
+    __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession, Skill]
 
     client = await init_client(db_name)
     await init_beanie(
         database=client,
         document_models=__models,
     )
+    return client
 
 
-async def init_database(stage=__database_stage):
-    global __database_client
+async def init_database():
+    stage = settings.STAGE
 
     database_stage = {
         "dev": "development",
@@ -53,7 +50,7 @@ async def init_database(stage=__database_stage):
         )
 
     db_name = "unknown_mongo_{stage}".format(stage=database_stage.get(stage))
-    await __init_beanie(db_name)
+    __database_client = await __init_beanie(db_name)
 
     return __database_client
 
