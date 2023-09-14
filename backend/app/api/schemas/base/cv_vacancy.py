@@ -1,7 +1,7 @@
 from typing import List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.api.schemas.profession import ProfessionSchema
 from app.api.schemas.skill import SkillSchema
@@ -14,6 +14,7 @@ class RequestBaseSchema(BaseModel):
     grade: Grade
     profession: ProfessionSchema
     skillset: Optional[List[SkillSchema]]
+    extra_info: Optional[str] = Field(max_length=500)
 
 
 class ResponseBaseSchema(BaseModel):
@@ -24,3 +25,4 @@ class ResponseBaseSchema(BaseModel):
     grade: Grade
     profession: ProfessionSchema
     skillset: Optional[List[SkillSchema]]
+    extra_info: Optional[str] = Field(max_length=500)
