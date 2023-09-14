@@ -9,14 +9,13 @@ class UserService:
     @staticmethod
     def get_user_email(func):
         def wrapper(self, data):
-            try:
-                user_email = data.get("email")
-            except AttributeError:
-                try:
-                    user_email = data.email
-                except AttributeError:
+            match data:
+                case dict():
+                    user_email = data.get("email")
+                case str():
                     user_email = data
-
+                case _:
+                    user_email = data.email
             return func(self, user_email, data)
 
         return wrapper
