@@ -25,9 +25,6 @@ async def test_post_user_without_fields(test_client: AsyncClient):
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
-# async def test_post_unauthorized(test_client: AsyncClient):
-
-
 @pytest.mark.asyncio
 async def test_get_user_list(test_client: AsyncClient):
     response = await test_client.get("/api/v1/users/")
@@ -37,19 +34,18 @@ async def test_get_user_list(test_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_delete_user(test_client: AsyncClient):
-    # response = await test_client.get("/api/v1/users/")
-    # print(response.json()[0]['email'])
-
-    response = await test_client.delete("/api/v1/users/email@example.com", json='email@example.com')
-
-    print(response.status_code)
-    print(response.json())
-
+    response = await test_client.delete("/api/v1/users/email@example.com", params={"user_email": "email@example.com"})
     assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {'message': 'User deleted successfully'}
 
 
 @pytest.mark.asyncio
 async def test_delete_user_not_found(test_client: AsyncClient):
+    response = await test_client.delete(f"/api/v1/users/not@found.com", params={"user_email": "not@found.com"})
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.asyncio
+async def test_delete_user_without_fields(test_client: AsyncClient):
     response = await test_client.delete(f"/api/v1/users/not@found.com")
-    print(response.status_code)
-    print(response.json())
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY

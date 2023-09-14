@@ -12,7 +12,10 @@ class UserService:
             try:
                 user_email = data.get("email")
             except AttributeError:
-                user_email = data.email
+                try:
+                    user_email = data.email
+                except AttributeError:
+                    user_email = data
 
             return func(self, user_email, data)
 
