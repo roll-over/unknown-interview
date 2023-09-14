@@ -9,7 +9,7 @@ class UserService:
     @staticmethod
     def get_user_email(func):
         def wrapper(self, data):
-            user_email = data.get("email")
+            user_email = data.email
             return func(self, user_email, data)
 
         return wrapper
