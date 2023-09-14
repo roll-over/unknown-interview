@@ -1,11 +1,12 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Request, status
+from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
-from app.exceptions import UserNotAuthenticated
-from app.repository import CVsRepository, UserRepository
+from app.api.schemas.user import UserResponseSchema
+from app.repository import CVsRepository
+from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
@@ -19,15 +20,9 @@ async def create_cv(
     request: Request,
     data: CVRequestSchema,
     CV: CVsRepository,
-    User: UserRepository,
+    cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    user_data = request.session.get("user")
-    if user_data:
-        cv_owner = await User.get_user(user_data)
-
-        return await CV.create_one(data, owner_data=cv_owner)
-
-    raise UserNotAuthenticated
+    return await CV.create_one(data, owner_data=cv_owner)
 
 
 @cv_router.get(
@@ -46,6 +41,21 @@ async def get_random_cv(CV: CVsRepository):
 )
 async def get_user_cv(cv_id: UUID, CV: CVsRepository):
     return await CV.get_one(cv_id)
+
+
+@cv_router.patch(
+    "/{cv_id}",
+    response_model=CVResponseSchema,
+    summary="Update user CV by ID",
+)
+async def update_user_cv(
+    request: Request,
+    data: CVRequestSchema,
+    cv_id: UUID,
+    CV: CVsRepository,
+    cv_owner: UserResponseSchema = Depends(current_user),
+):
+    return await CV.update_one(data, cv_id, owner_data=cv_owner)
 
 
 @cv_router.delete(

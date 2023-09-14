@@ -1,11 +1,12 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Request, status
+from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.exceptions import UserNotAuthenticated
-from app.repository import UserRepository, VacanciesRepository
+from app.repository import VacanciesRepository
+from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 
@@ -19,15 +20,9 @@ async def create_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
     Vacancy: VacanciesRepository,
-    User: UserRepository,
+    vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    user_data = request.session.get("user")
-    if user_data:
-        vacancy_owner = await User.get_user(user_data)
-
-        return await Vacancy.create_one(vacancy_data, owner_data=vacancy_owner)
-
-    raise UserNotAuthenticated
+    return await Vacancy.create_one(vacancy_data, owner_data=vacancy_owner)
 
 
 @vacancy_router.get(
@@ -46,6 +41,21 @@ async def get_random_vacancy(Vacancy: VacanciesRepository):
 )
 async def get_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
     return await Vacancy.get_one(vacancy_id)
+
+
+@vacancy_router.patch(
+    "/{vacancy_id}",
+    response_model=VacancyResponseSchema,
+    summary="Update company vacancy by ID",
+)
+async def update_company_vacancy(
+    request: Request,
+    vacancy_data: VacancyRequestSchema,
+    vacancy_id: UUID,
+    Vacancy: VacanciesRepository,
+    vacancy_owner: UserResponseSchema = Depends(current_user),
+):
+    return await Vacancy.update_one(vacancy_data, vacancy_id, owner_data=vacancy_owner)
 
 
 @vacancy_router.delete(
