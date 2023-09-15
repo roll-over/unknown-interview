@@ -31,6 +31,7 @@
 	"devDependencies": {
 		"@faker-js/faker": "^8.0.2",
 		"@iconify-json/ic": "^1.1.14",
+		"@playwright/experimental-ct-svelte": "^1.38.0",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.23.0",
 		"@types/node": "^20.5.6",
