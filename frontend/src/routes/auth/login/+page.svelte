@@ -9,7 +9,7 @@
 			Login with provider
 		</p>
 		<a
-			class="current:tracking-widest w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing]"
+			class="w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing] current:tracking-widest"
 			href="/api/v1/auth/login/google"
 		>
 			<span class="text-blue-500">G</span><span class="text-red-500">o</span><span

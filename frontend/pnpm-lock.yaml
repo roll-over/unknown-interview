@@ -72,6 +72,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^6.4.1
     version: 6.4.1(eslint@8.47.0)(typescript@5.2.2)
+  '@vitest/ui':
+    specifier: ^0.34.4
+    version: 0.34.4(vitest@0.34.4)
   eslint:
     specifier: ^8.47.0
     version: 8.47.0
@@ -122,7 +125,7 @@ devDependencies:
     version: 0.10.0
   vitest:
     specifier: ^0.34.4
-    version: 0.34.4
+    version: 0.34.4(@vitest/ui@0.34.4)
 
 packages:
 
@@ -1036,6 +1039,21 @@ packages:
       tinyspy: 2.1.1
     dev: true
 
+  /@vitest/ui@0.34.4(vitest@0.34.4):
+    resolution: {integrity: sha512-gz0m0r9ErFG32r+DRdwuLJpUDpbi+jrMcw9nJZAau48Fs4LDIBg561PvczvGqyYxzbyFU7vgkSnSlSDfK0d53w==}
+    peerDependencies:
+      vitest: '>=0.30.1 <1'
+    dependencies:
+      '@vitest/utils': 0.34.4
+      fast-glob: 3.3.1
+      fflate: 0.8.0
+      flatted: 3.2.7
+      pathe: 1.1.1
+      picocolors: 1.0.0
+      sirv: 2.0.3
+      vitest: 0.34.4(@vitest/ui@0.34.4)
+    dev: true
+
   /@vitest/utils@0.34.4:
     resolution: {integrity: sha512-yR2+5CHhp/K4ySY0Qtd+CAL9f5Yh1aXrKfAT42bq6CtlGPh92jIDDDSg7ydlRow1CP+dys4TrOrbELOyNInHSg==}
     dependencies:
@@ -1659,6 +1677,10 @@ packages:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
       reusify: 1.0.4
+
+  /fflate@0.8.0:
+    resolution: {integrity: sha512-FAdS4qMuFjsJj6XHbBaZeXOgaypXp8iw/Tpyuq/w3XA41jjLHT8NPA+n7czH/DDhdncq0nAyDZmPeWXh2qmdIg==}
+    dev: true
 
   /file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
@@ -3208,7 +3230,7 @@ packages:
       vite: 4.4.9(@types/node@20.5.6)
     dev: true
 
-  /vitest@0.34.4:
+  /vitest@0.34.4(@vitest/ui@0.34.4):
     resolution: {integrity: sha512-SE/laOsB6995QlbSE6BtkpXDeVNLJc1u2LHRG/OpnN4RsRzM3GQm4nm3PQCK5OBtrsUqnhzLdnT7se3aeNGdlw==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -3246,6 +3268,7 @@ packages:
       '@vitest/runner': 0.34.4
       '@vitest/snapshot': 0.34.4
       '@vitest/spy': 0.34.4
+      '@vitest/ui': 0.34.4(vitest@0.34.4)
       '@vitest/utils': 0.34.4
       acorn: 8.10.0
       acorn-walk: 8.2.0

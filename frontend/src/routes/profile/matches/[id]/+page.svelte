@@ -104,7 +104,7 @@
 		<div class="h-full overflow-y-scroll">
 			{#if notes.length}
 				<ul class="flex h-full flex-col items-start gap-2 p-1">
-					{#each notes as { text, id }, i (id)}
+					{#each notes as { text, id } (id)}
 						<li class="max-w-lg rounded-lg bg-slate-500 p-3">
 							<p class="p-1">{id}. {text}</p>
 						</li>
