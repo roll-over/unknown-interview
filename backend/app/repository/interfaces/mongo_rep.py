@@ -21,7 +21,7 @@ class MongoBeanieRepository(AbstractBaseRepository):
             return found_data.pop()
 
     async def delete_one(self, data_id):
-        found_data = await self.model.find_one(data_id)
+        found_data = await self.fetch_one(data_id)
         if found_data:
             await found_data.delete()
 
@@ -32,3 +32,11 @@ class MongoBeanieRepository(AbstractBaseRepository):
         await new_data.create()
 
         return new_data
+
+    async def update_one(self, data, data_id):
+        found_data = await self.fetch_one(data_id)
+
+        if found_data:
+            await found_data.update({"$set": data.model_dump()})
+
+            return found_data

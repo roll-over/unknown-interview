@@ -15,6 +15,7 @@ class CV(UUIDMixin):
     grade: Grade
     profession: Profession
     skillset: Optional[List[Skill]]
+    extra_info: Optional[str] = Field(None, max_length=500)
 
     class Settings:
         name = "CV"

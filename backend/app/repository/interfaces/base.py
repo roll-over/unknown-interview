@@ -21,3 +21,7 @@ class AbstractBaseRepository(ABC):
     @abstractmethod
     async def create_one(self, data):
         raise NotImplementedError
+
+    @abstractmethod
+    async def update_one(self, data, data_id):
+        raise NotImplementedError
