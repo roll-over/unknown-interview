@@ -9,7 +9,7 @@ Scripts are used for some menial tasks like codegen or starting a bulk of comman
 
 ```bash
 # run script
-pnpm script scriptname
+pnpm rscript scriptname
 ```
 
 ### Checks

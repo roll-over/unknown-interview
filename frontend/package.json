@@ -6,7 +6,7 @@
 	"packageManager": "pnpm@8.7.5",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
-		"script": "node ./scripts/script.js",
+		"rscript": "node ./scripts/script.js",
 		"build": "vite build",
 		"preview": "vite preview",
 		"analyze": "pnpm vite-bundle-visualizer",
