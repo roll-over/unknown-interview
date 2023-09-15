@@ -54,6 +54,9 @@ devDependencies:
   '@iconify-json/ic':
     specifier: ^1.1.14
     version: 1.1.14
+  '@playwright/experimental-ct-svelte':
+    specifier: ^1.38.0
+    version: 1.38.0(@types/node@20.5.6)(svelte@4.2.0)(vite@4.4.9)
   '@playwright/test':
     specifier: ^1.38.0
     version: 1.38.0
@@ -724,6 +727,44 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@playwright/experimental-ct-core@1.38.0(@types/node@20.5.6):
+    resolution: {integrity: sha512-jspVRe+D9/gM8aZ6g5TVybSKnYi9OfvUtq67WHo22OfxENXBdDe0hHHlLRQNSdmuKcE5goG8WNVZvOWjolTb/Q==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright: 1.38.0
+      playwright-core: 1.38.0
+      vite: 4.4.9(@types/node@20.5.6)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - terser
+    dev: true
+
+  /@playwright/experimental-ct-svelte@1.38.0(@types/node@20.5.6)(svelte@4.2.0)(vite@4.4.9):
+    resolution: {integrity: sha512-W9lIOeoMVlRMqeQ9vwRJnnGWUUomeQrk68jSOJ031XxN2bCfb1+JkiCkx1EIuotV4uj1zZn6j0UUG0Vj5z93yA==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@playwright/experimental-ct-core': 1.38.0(@types/node@20.5.6)
+      '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@4.2.0)(vite@4.4.9)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - svelte
+      - terser
+      - vite
+    dev: true
 
   /@playwright/test@1.38.0:
     resolution: {integrity: sha512-xis/RXXsLxwThKnlIXouxmIvvT3zvQj1JE39GsNieMUrMpb3/GySHDh2j8itCG22qKVD4MYLBp7xB73cUW/UUw==}

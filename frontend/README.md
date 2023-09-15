@@ -32,6 +32,8 @@ pnpm lint
 
 #### Unit
 
+Files must be somewhere in the `./src` directory and named `*.{spec,test}.ts`.
+
 ```bash
 # run tests in watch mode
 pnpm test:unit
@@ -45,6 +47,12 @@ pnpm test:unit --ui
 
 #### Component/Integration
 
+Files must be somewhere in the `./src` directory and named `*.{cspec,ctest}.ts`.
+
 ```bash
-# todo
+# run tests once
+pnpm test:comp
+
+# run tests with ui in watch mode - watches only changes in test files
+pnpm test:comp --ui
 ```
