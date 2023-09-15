@@ -62,7 +62,8 @@
 		"patchedDependencies": {
 			"openapi-fetch@0.7.4": "patches/openapi-fetch@0.7.4.patch",
 			"@sveltejs/kit@1.23.0": "patches/@sveltejs__kit@1.23.0.patch",
-			"@skeletonlabs/skeleton@2.0.0": "patches/@skeletonlabs__skeleton@2.0.0.patch"
+			"@skeletonlabs/skeleton@2.0.0": "patches/@skeletonlabs__skeleton@2.0.0.patch",
+			"@playwright/experimental-ct-svelte@1.38.0": "patches/@playwright__experimental-ct-svelte@1.38.0.patch"
 		}
 	}
 }
