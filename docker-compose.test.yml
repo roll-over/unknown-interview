@@ -5,7 +5,7 @@ services:
     build: ./backend
     working_dir: /backend
     container_name: backend
-    command: pytest
+    command: pytest -v
     volumes:
       - ./backend/:/backend
     env_file:
