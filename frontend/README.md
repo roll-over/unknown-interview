@@ -48,22 +48,3 @@ pnpm test:unit --ui
 ```bash
 # todo
 ```
-
-#### E2E
-
-For now requires that the server is already running
-
-```bash
-# run tests once
-pnpm test:e2e
-
-# run tests with ui - has watch mode support (only watches test file changes)
-pnpm test:e2e --ui
-
-```
-
-You can also generate user actions on a page using this command
-
-```bash
-pnpm playwright codegen URL
-```

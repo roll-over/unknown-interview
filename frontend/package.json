@@ -13,8 +13,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss && eslint .",
 		"format": "prettier . -l -w --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
-		"test:unit": "vitest",
-		"test:e2e": "playwright test"
+		"test:unit": "vitest"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.5.1",
@@ -31,7 +30,6 @@
 	"devDependencies": {
 		"@faker-js/faker": "^8.0.2",
 		"@iconify-json/ic": "^1.1.14",
-		"@playwright/test": "^1.38.0",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.23.0",
 		"@types/node": "^20.5.6",
