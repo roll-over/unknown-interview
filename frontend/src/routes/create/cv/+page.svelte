@@ -66,6 +66,7 @@
 		<RadioGroup
 			options={titles}
 			bind:value={$CVStateData.title}
+			name="title"
 		/>
 	</fieldset>
 	<fieldset>
@@ -73,6 +74,7 @@
 		<RadioGroup
 			options={grades}
 			bind:value={$CVStateData.grade}
+			name="position"
 		/>
 	</fieldset>
 	<fieldset>

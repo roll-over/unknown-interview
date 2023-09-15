@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@8.7.4",
+	"packageManager": "pnpm@8.7.5",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"docker-dev": "tsx --tsconfig scripts/tsconfig.json scripts/docker-dev.ts",
@@ -33,6 +33,7 @@
 	"devDependencies": {
 		"@faker-js/faker": "^8.0.2",
 		"@iconify-json/ic": "^1.1.14",
+		"@playwright/test": "^1.38.0",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.23.0",
 		"@types/node": "^20.5.6",

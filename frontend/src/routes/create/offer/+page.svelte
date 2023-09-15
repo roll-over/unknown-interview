@@ -68,6 +68,7 @@
 		<RadioGroup
 			options={titles}
 			bind:value={$jobOfferData.title}
+			name="title"
 		/>
 	</fieldset>
 	<fieldset>
@@ -75,6 +76,7 @@
 		<RadioGroup
 			options={grades}
 			bind:value={$jobOfferData.grade}
+			name="position"
 		/>
 	</fieldset>
 	<fieldset>
