@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.user import UserRequestSchema, UserResponseSchema, UserEmailSchema
+from app.api.schemas.user import UserEmailSchema, UserRequestSchema, UserResponseSchema
 from app.repository import UserRepository
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
