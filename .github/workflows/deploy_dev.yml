@@ -25,3 +25,7 @@ jobs:
           ssh-keyscan -H ${{ vars.DEV_SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
         run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && git checkout ${{ vars.DEV_BRANCH }} && git pull"
+      - name: restart frontend container
+        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_INFRA_DIR }} && docker-compose restart dev-frontend"
+      - name: restart backend container
+        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_INFRA_DIR }} && docker-compose restart dev-backend"        
