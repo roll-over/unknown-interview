@@ -18,3 +18,4 @@ class UserRequestSchema(BaseModel):
 
 class UserEmailSchema(BaseModel):
     email: EmailStr
+    picture: str
