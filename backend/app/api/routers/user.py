@@ -1,8 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from pydantic import EmailStr
 
-from app.api.schemas.user import UserRequestSchema, UserResponseSchema
+from app.api.schemas.user import UserEmailSchema, UserRequestSchema, UserResponseSchema
 from app.repository import UserRepository
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
@@ -22,7 +21,7 @@ async def create_user(data: UserRequestSchema, User: UserRepository):
     "/{user_data}",
     summary="Delete user by email",
 )
-async def delete_user_cv(user_email: EmailStr, User: UserRepository):
+async def delete_user_cv(user_email: UserEmailSchema, User: UserRepository):
     deleted_cv = await User.delete_user(user_email)
 
     if deleted_cv:
