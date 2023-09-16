@@ -48,7 +48,8 @@ def endpoint_urls(request):
 
 
 @pytest.mark.asyncio
-async def test_add_skill(test_client: AsyncClient, endpoint_urls, json_data, expected_status):
+async def test_add_skill(test_client: AsyncClient, 
+                         endpoint_urls, json_data, expected_status):
     response = await test_client.post(endpoint_urls, json=json_data)
     assert response.status_code == expected_status
 
@@ -59,7 +60,8 @@ def expected_len(request):
 
 
 @pytest.mark.asyncio
-async def test_get_sp(test_client: AsyncClient, endpoint_urls, expected_len, expected_status):
+async def test_get_sp(test_client: AsyncClient, 
+                      endpoint_urls, expected_len, expected_status):
     response = await test_client.get(endpoint_urls, params=expected_len[0])
     assert response.status_code == expected_status
     assert len(response.json()) == expected_len[1]
