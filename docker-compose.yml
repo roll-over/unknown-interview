@@ -40,6 +40,12 @@ services:
       - .env
     volumes:
       - "./data:/data/db"
+
+  mongo_seed:
+    build: ./backend/mongo
+    depends_on:
+      - unknown_mongo
+
   client:
     image: nginx
     ports:
