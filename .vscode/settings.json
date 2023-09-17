@@ -1,3 +1,14 @@
 {
-  "tailwindCSS.experimental.classRegex": [["class:([^=]*)"], ["region.+=\"([^\"]*)\""]]
+  "tailwindCSS.experimental.classRegex": [["class:([^=]*)"], ["region.+=\"([^\"]*)\""]],
+  "[svelte]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.fileNesting.patterns": {
+    "+*.svelte": "+${capture}.ts, +${capture}.server.ts",
+    "*.svelte": "${capture}.spec.ts, ${capture}.test.ts, ${capture}.cspec.ts, ${capture}.ctest.ts"
+  },
+  "material-icon-theme.files.associations": {
+    "*.ctest.ts": "test-ts",
+    "*.cspec.ts": "test-ts"
+  }
 }

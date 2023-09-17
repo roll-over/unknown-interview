@@ -15,7 +15,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="bg-app-blue-50 rounded-xl px-2 py-1">
+	<div class="rounded-xl bg-app-blue-50 px-2 py-1">
 		<div class="flex flex-wrap gap-2">
 			{#each selectedSkills as skill, i (skill)}
 				<button
@@ -31,7 +31,7 @@
 				</button>
 			{/each}
 			<input
-				class="caret-app-blue-600 w-11 rounded p-2 text-xs text-black/60"
+				class="w-11 rounded p-2 text-xs text-black/60 caret-app-blue-600"
 				bind:value={newSkill}
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {
@@ -55,7 +55,7 @@
 				selectedSkills.push(e.detail.value);
 				selectedSkills = selectedSkills;
 			}}
-			class="bg-app-blue-50 rounded-xl p-4"
+			class="rounded-xl bg-app-blue-50 p-4"
 			regionList="flex flex-col gap-1"
 			regionItem="bg-app-blue-400 rounded-lg"
 			regionButton="w-full text-left px-3"

@@ -17,10 +17,10 @@
 	});
 
 	function handleSubmit() {
-		const { skillset, title, grade, profession, salary } = $jobOfferData;
+		const { skillset, ...rest } = $jobOfferData;
 
 		$submitMutation.mutate(
-			{ title, grade, profession, salary, skillset: skillset.map((name) => ({ name })) },
+			{ ...rest, skillset: skillset.map((name) => ({ name })) },
 			{
 				onSettled(d, e) {
 					console.log({ d, e });
@@ -68,6 +68,7 @@
 		<RadioGroup
 			options={titles}
 			bind:value={$jobOfferData.title}
+			name="title"
 		/>
 	</fieldset>
 	<fieldset>
@@ -75,6 +76,7 @@
 		<RadioGroup
 			options={grades}
 			bind:value={$jobOfferData.grade}
+			name="position"
 		/>
 	</fieldset>
 	<fieldset>

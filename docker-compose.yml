@@ -16,7 +16,7 @@ services:
     build: ./frontend
     container_name: frontend
     working_dir: /frontend
-    command: pnpm docker-dev
+    command: pnpm script docker-dev
     volumes:
       - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
       - ./frontend/patches/:/frontend/patches/
