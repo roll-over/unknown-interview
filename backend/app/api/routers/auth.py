@@ -33,7 +33,8 @@ async def user_info(request: Request):
     user = request.session.get("user")
     if user:
         email = user.get("email", None)
-        return JSONResponse({"email": email})
+        picture = user.get("picture", None)
+        return JSONResponse({"email": email, "picture": picture})
 
     raise UserNotAuthenticated
 

@@ -20,6 +20,7 @@
 	<nav class="flex gap-3">
 		<a href="/">Home</a>
 		<a href="/profile/matches">Matches</a>
+		<a href="/user">User</a>
 		<button use:popup={navPopup}>
 			Create
 			<div
