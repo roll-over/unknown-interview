@@ -33,9 +33,12 @@
 - pnpm
 - python 3.11
 
-Rename .env.exemple -> .env
-
 ## Install and Run via docker compose
+
+- clone repository
+- rename .env.exemple -> .env
+- run docker-compose up from the project folder
+- check in browser: localhost:2080
 
 ```
 sudo docker-compose up
