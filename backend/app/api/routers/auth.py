@@ -2,7 +2,7 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from app.api.schemas.user import UserEmailSchema
+from app.api.schemas.user import UserEmailSchema, UserRequestSchema
 from app.config import settings
 from app.exceptions import UserNotAuthenticated
 from app.repository import UserRepository
@@ -29,7 +29,7 @@ async def google_login(request: Request):
 
 
 @auth_router.get("/user_info", response_model=UserEmailSchema)
-async def user_info(request: Request):
+async def user_info(request: Request, response: Response):
     user = request.session.get("user")
     if user:
         email = user.get("email", None)
@@ -50,6 +50,23 @@ async def google_auth(request: Request, User: UserRepository):
 
     request.session["user"] = request_user
 
+    return RedirectResponse(url="/")
+
+
+@auth_router.get("/demo")
+async def demo_auth(request: Request, User: UserRepository):
+    request_user = {
+        "email": "demo.user@hide.hire.com",
+        "name": "Demo User",
+    }
+    user = UserRequestSchema(
+        email=request_user.get("email"), name=request_user.get("name")
+    )
+    existing_user = await User.get_user(user)
+    if not existing_user:
+        await User.create_one(user)
+
+    request.session["user"] = request_user
     return RedirectResponse(url="/")
 
 
