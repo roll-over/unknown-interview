@@ -1,10 +1,10 @@
 import asyncio
 
+import pytest
 import pytest_asyncio
+from app.main import app
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
-
-from app.main import app
 
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
@@ -26,3 +26,8 @@ async def test_client(test_app) -> AsyncClient:
     """Yield an asynchronous test client"""
     async with AsyncClient(app=test_app, base_url="http://test") as client:
         yield client
+
+
+@pytest.fixture
+def no_db_entries_error() -> bytes:
+    return b"database equal to: None"
