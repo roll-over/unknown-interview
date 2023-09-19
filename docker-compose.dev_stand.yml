@@ -1,0 +1,60 @@
+version: "3.7"
+
+services:
+  dev_backend:
+    build: ./backend
+    working_dir: /backend
+    container_name: dev_backend
+    command: python3 dev-entry.py
+    volumes:
+      - ./backend/:/backend
+    depends_on:
+      - dev_unknown_mongo
+    env_file:
+      - .env
+  dev_frontend:
+    build: ./frontend
+    container_name: dev_frontend
+    working_dir: /frontend
+    command: pnpm script docker-dev
+    volumes:
+      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
+      - ./frontend/patches/:/frontend/patches/
+      - ./frontend/scripts/:/frontend/scripts/
+      - ./frontend/src/:/frontend/src/
+      - ./frontend/static/:/frontend/static/
+      - ./frontend/package.json:/frontend/package.json
+      - ./frontend/postcss.config.js:/frontend/postcss.config.js
+      - ./frontend/svelte.config.js:/frontend/svelte.config.js
+      - ./frontend/tailwind.config.ts:/frontend/tailwind.config.ts
+      - ./frontend/vite.config.ts:/frontend/vite.config.ts
+    env_file:
+      - .env
+    environment:
+      - isDocker=true
+  dev_unknown_mongo:
+    image: mongo
+    container_name: dev_unknown_mongo
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - "./data:/data/db"
+
+  mongo_seed:
+    build: ./backend/mongo
+    depends_on:
+      - dev_unknown_mongo
+
+  dev_client:
+    image: nginx
+    ports:
+      - 2081:80
+    volumes:
+      - type: bind
+        source: ./dev-proxy/dev-stand-nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    depends_on:
+      - dev_frontend
+      - dev_backend
