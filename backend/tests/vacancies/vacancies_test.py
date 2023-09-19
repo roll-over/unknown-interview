@@ -1,8 +1,9 @@
+from random import choice, choices, randint
+from string import ascii_letters
+
 import pytest
 from fastapi import status
 from httpx import AsyncClient
-from random import choice, choices, randint
-from string import ascii_letters
 
 
 @pytest.fixture
@@ -34,12 +35,13 @@ def create_json(random_string, payment_values) -> dict:
     "grade": random_string(10),
     "profession": {
         "name": random_string(10),
-        "name": random_string(10)
     },
     "skillset": [
         {
-        "name": random_string(10),
-        "name": random_string(10)
+            "name": random_string(10),
+        },
+        {
+            "name": random_string(10)
         }
     ],
     "extra_info": random_string(100)
