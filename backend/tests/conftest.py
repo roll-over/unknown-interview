@@ -2,9 +2,10 @@ import asyncio
 
 import pytest
 import pytest_asyncio
-from app.main import app
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
+
+from app.main import app
 
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
