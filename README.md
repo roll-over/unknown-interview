@@ -30,6 +30,11 @@ https://www.figma.com/file/Aiv1GFLtbGJjIOZJqSYKsp/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA
 
 https://www.figma.com/proto/Aiv1GFLtbGJjIOZJqSYKsp/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?page-id=0%3A1&type=design&node-id=82-32&viewport=-191%2C1709%2C0.09&t=fhiN2ns3ALreryb7-1&scaling=min-zoom&starting-point-node-id=82%3A32&mode=design
 
+### Ссылка на плейлист : рабочие созвоны
+
+[https://www.youtube.com/@orby_tech/videos
+](https://www.youtube.com/playlist?list=PLQfCv6Vomjn6aNXg4WuyBxg5C79t9hhQN)
+
 ## Дедлайн 3 месяца:
 
 До 1 декабря мы должны иметь монетизацию или понимание того что мы делаем не так.
