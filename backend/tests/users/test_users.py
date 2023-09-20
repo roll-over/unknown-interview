@@ -29,7 +29,7 @@ async def test_post_user_without_fields(test_client: AsyncClient):
 async def test_get_user_list(test_client: AsyncClient):
     response = await test_client.get("/api/v1/users/")
     assert response.status_code == status.HTTP_200_OK
-    assert len(response.json()) == 1
+    assert len(response.json()) == 2
 
 
 @pytest.mark.asyncio
