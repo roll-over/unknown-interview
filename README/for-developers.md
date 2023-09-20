@@ -35,14 +35,28 @@
 
 ## Install and Run via docker compose
 
-- clone repository
-- rename .env.exemple -> .env
-- run docker-compose up from the project folder
-- check in browser: localhost:2080
+clone repository:
+```
+git clone git@github.com:roll-over/unknown-interview && cd unknown-interview
+```
+rename .env.exemple -> .env:
+```
+cp .env.example .env
+```
+run docker-compose:
+```
+docker-compose up --build
+```
+or run it as the administrator:
+```
+sudo docker-compose up --build
+```
+check in browser:
+```
+localhost:2080
+```
 
-```
-sudo docker-compose up
-```
+
 
 [Документация по фронтенду](./../frontend/README.md)
 
