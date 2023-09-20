@@ -1,0 +1,50 @@
+{
+    "valid_data": {
+      "title": "lead",
+      "salary": {
+        "min_level": 70,
+        "max_level": 100,
+        "currency": "USD"
+      },
+      "grade": "middle",
+      "profession": {
+        "name": "Backend Developer"
+      },
+      "skillset": [
+        {
+          "name": "Python"
+        },
+        {
+          "name": "FastAPI"
+        },
+        {
+          "name": "pytest"
+        }
+      ],
+      "extra_info": "I'm actively involved in a startup"
+    },
+    "invalid_data": {
+      "title": "lead",
+      "salary": {
+        "min_level": 70,
+        "max_level": 100,
+        "currency": "USD"
+      },
+      "grade": "",
+      "profession": {
+        "name": "Backend Developer"
+      },
+      "skillset": [
+        {
+          "name": "Python"
+        },
+        {
+          "name": "FastAPI"
+        },
+        {
+          "name": "pytest"
+        }
+      ],
+      "extra_info": "I'm actively involved in a startup"
+    }
+  }
