@@ -4,6 +4,31 @@
 	import MaterialSymbolsEditOutline from '~icons/material-symbols/edit-outline';
 	import MaterialSymbolsThumbDownOutline from '~icons/material-symbols/thumb-down-outline';
 	import MaterialSymbolsThumbUpOutline from '~icons/material-symbols/thumb-up-outline';
+	import MaterialSymbolsArrowDropDown from '~icons/material-symbols/arrow-drop-down'
+	import { getMaxCharacters, getMaxWords, isFullText } from './utils';
+
+   let textContent = 'Carrying out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team Requirements: -Strong knowledge of C++, STL libraries (basic algorithms and containers). -Understanding of simple data structures, knowledge';
+   let readMoreLabel = 'Expand';
+   let readLessLabel = 'Decrease';
+	 
+   let maxChars = 150;
+   let maxWords = 150;
+
+   let dotDotDot = "...";
+
+	 let text: any
+    let isOpen = false
+    const cleanText = textContent.replace(/\s+/g, ' ').trim();
+    $: finalLabel = isOpen ? readLessLabel : readMoreLabel
+    $: maxCharsText = getMaxCharacters(maxChars, isOpen, cleanText, text)
+    $: finalText = getMaxWords(maxWords, isOpen, maxCharsText, text)
+    $: finalSymbol = isOpen ? '' : dotDotDot
+    $: showButton = (!isOpen && isFullText(finalText, cleanText)) ? false : true
+
+    const handleClick = () => {
+        isOpen = !isOpen
+    }  
+
 
 	$: userQuery = createQuery({
 		queryKey: ['userInfo'],
@@ -28,7 +53,22 @@
 					/>
 				</a>
 			</div>
-			<p>Fill out a resume</p>
+			<div>
+				{finalText}
+				<span
+						data-visible={`${showButton}`}
+						class=""
+				>
+						{!isOpen ? finalSymbol: ""}
+						<button
+								on:click={handleClick}
+								class=""
+						>
+								{finalLabel}
+								<MaterialSymbolsArrowDropDown class="" />
+						</button>
+				</span>
+			</div>
 		</div>
 		<div class="flex gap-12 pt-3">
 			<span>Views: 16</span>
