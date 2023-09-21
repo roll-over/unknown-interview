@@ -37,27 +37,28 @@ Rename .env.exemple -> .env
 
 ## Install and Run via docker compose
 
-- clone repository:
+clone repository:
 ```
 git clone git@github.com:roll-over/unknown-interview && cd unknown-interview
 ```
 
-- rename .env.exemple -> .env:
+rename .env.exemple -> .env:
 ```
 mv .env.example .env
 ```
 
-- run docker-compose:
+run docker-compose:
 ```
 docker-compose up --build
 ```
 
-- or run it as the administrator:
+or run it as the administrator:
 ```
 sudo docker-compose up --build
 ```
 
-- check in browser http://localhost:2080/ 
+check in browser http://localhost:2080/ 
+
 
 
 [Документация по фронтенду](./../frontend/README.md)
