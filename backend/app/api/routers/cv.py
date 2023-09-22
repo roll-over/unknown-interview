@@ -25,7 +25,7 @@ async def create_cv(
     CV: CV_unit,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.create_new(data, owner_data=cv_owner, flag='cv')
+    return await CV.create_new(data, owner_data=cv_owner, role='applicant')
 
 
 @cv_router.get(

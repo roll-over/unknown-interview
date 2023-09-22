@@ -28,7 +28,7 @@ async def create_vacancy(
     return await Vacancy.create_new(
         vacancy_data,
         owner_data=vacancy_owner,
-        flag='vacancy',
+        role='employer',
     )
 
 

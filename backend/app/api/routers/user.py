@@ -21,7 +21,6 @@ async def get_users(User: UserRepository):
 
 @user_router.post("/", response_model=UserResponseSchema)
 async def create_user(data: UserRequestSchema, User: UserRepository):
-    print('data', data)
     return await User.create_one(data)
 
 

@@ -36,7 +36,7 @@ async def test_get_user_list(test_client: AsyncClient):
 @pytest.mark.asyncio
 async def test_delete_user(test_client: AsyncClient):
     response = await test_client.delete(
-        "/api/v1/users/email@example.com", params={"user_email": "vasya@gmail.com"}
+        "/api/v1/users/{user_email}", params={"user_email": "vasya@gmail.com"}
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"message": "User deleted successfully"}
