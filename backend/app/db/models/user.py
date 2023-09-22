@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List
+from uuid import UUID
+
 from pydantic import EmailStr, Field
 
-from app.db.models.mixins import UUIDMixin, Role
-from uuid import UUID
+from app.db.models.mixins import Role, UUIDMixin
 
 
 class User(UUIDMixin):  # inherit from the UUIDMixin, since it generates our identifier
