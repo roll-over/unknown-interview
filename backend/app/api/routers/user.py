@@ -1,8 +1,15 @@
-from fastapi import APIRouter, status
+
+from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.user import UserEmailSchema, UserRequestSchema, UserResponseSchema
+from app.api.schemas.user import (
+    UserDataListResponseSchema,
+    UserEmailSchema,
+    UserRequestSchema,
+    UserResponseSchema,
+)
 from app.repository import UserRepository
+from app.utils import current_user
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -14,6 +21,7 @@ async def get_users(User: UserRepository):
 
 @user_router.post("/", response_model=UserResponseSchema)
 async def create_user(data: UserRequestSchema, User: UserRepository):
+    print('data', data)
     return await User.create_one(data)
 
 
@@ -34,3 +42,11 @@ async def delete_user_cv(user_email: UserEmailSchema, User: UserRepository):
         content={"message": "There is no user with such email"},
         status_code=status.HTTP_404_NOT_FOUND,
     )
+
+
+@user_router.get("/records", response_model=UserDataListResponseSchema)
+async def get_user_job_data(
+        User: UserRepository,
+        cv_owner: UserResponseSchema = Depends(current_user),
+):
+    return await User.get_cv_vacancy_data(cv_owner)

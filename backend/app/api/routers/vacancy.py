@@ -1,11 +1,14 @@
+from typing import Union
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import ErrorSchema
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
 from app.repository import VacanciesRepository
+from app.unitorwork import UVC_dep as Vacancy_unit
 from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -13,16 +16,20 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 
 @vacancy_router.post(
     "/",
-    response_model=VacancyResponseSchema,
+    response_model=Union[VacancyResponseSchema, ErrorSchema],
     summary="Create new company vacancy",
 )
 async def create_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
-    Vacancy: VacanciesRepository,
+    Vacancy: Vacancy_unit,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await Vacancy.create_one(vacancy_data, owner_data=vacancy_owner)
+    return await Vacancy.create_new(
+        vacancy_data,
+        owner_data=vacancy_owner,
+        flag='vacancy',
+    )
 
 
 @vacancy_router.get(
