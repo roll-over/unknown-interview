@@ -5,31 +5,15 @@
 	import MaterialSymbolsThumbDownOutline from '~icons/material-symbols/thumb-down-outline';
 	import MaterialSymbolsThumbUpOutline from '~icons/material-symbols/thumb-up-outline';
 	import MaterialSymbolsArrowDropDown from '~icons/material-symbols/arrow-drop-down';
-	import { getMaxCharacters, getMaxWords, isFullText } from './utils';
 
 	$: userQuery = createQuery({
 		queryKey: ['userInfo'],
 		queryFn: () => api.GET('/api/v1/auth/user_info', {})
 	});
 
-	let textContent =
-		'Carrying out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team Requirements: -Strong knowledge of C++, STL libraries (basic algorithms and containers). -Understanding of simple data structures, knowledge';
-	let showMoreLabel = 'Expand';
-	let hideTextLabel = 'Decrease';
-	let maxChars = 150;
-	let maxWords = 150;
-	let dotSpan = '....';
-	let text: any;
+	const textContent = `Carrying  out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team Requirements: -Strong knowledge of C++, STL libraries (basic algorithms and containers). -Understanding of simple data structures, knowledge`;
+
 	let isOpen = false;
-	const cleanText = textContent.replace(/\s+/g, ' ').trim();
-	$: finalLabel = isOpen ? hideTextLabel : showMoreLabel;
-	$: maxCharsText = getMaxCharacters(maxChars, isOpen, cleanText, text);
-	$: finalText = getMaxWords(maxWords, isOpen, maxCharsText, text);
-	$: finalSymbol = isOpen ? '' : dotSpan;
-	$: showButton = !isOpen && isFullText(finalText, cleanText) ? false : true;
-	const handleClick = () => {
-		isOpen = !isOpen;
-	};
 </script>
 
 <div class="flex gap-5 px-12 pt-5">
@@ -49,21 +33,17 @@
 					/>
 				</a>
 			</div>
-			<div>
-				{finalText}
-				<span
-					data-visible={`${showButton}`}
-					class=""
-				>
-					{!isOpen ? finalSymbol : ''}
-				</span>
-			</div>
-			<div>
+			<div
+				class="grid justify-items-start transition-[grid-template-rows] {isOpen
+					? 'grid-rows-[1fr]'
+					: 'grid-rows-[0fr]'}"
+			>
+				<span class="min-h-[4.5rem] overflow-hidden">{textContent}</span>
 				<button
-					on:click={handleClick}
+					on:click={() => (isOpen = !isOpen)}
 					class="btn p-0"
 				>
-					{finalLabel}
+					{isOpen ? 'Collapse' : 'Expand'}
 					<MaterialSymbolsArrowDropDown class="-rotate-90" />
 				</button>
 			</div>
@@ -80,7 +60,7 @@
 				С++ programmer
 			</h2>
 			<h3 class="px-12 text-2xl">Professional skills:</h3>
-			<ul class="flex list-outside list-disc flex-col items-center">
+			<ul class="flex list-disc flex-col items-center">
 				<li>experience with HTML5, CSS3, JS;</li>
 				<li>knowledge of JavaScript/JQuery;</li>
 				<li>experience of adaptive layout</li>

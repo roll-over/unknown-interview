@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@8.7.5",
+	"packageManager": "pnpm@8.7.6",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"rscript": "node ./scripts/script.js",

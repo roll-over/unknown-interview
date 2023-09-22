@@ -16,5 +16,6 @@ class UserRequestSchema(BaseModel):
     email: EmailStr
 
 
-class UserEmailSchema(EmailStr):
-    pass
+class UserEmailSchema(BaseModel):
+    email: EmailStr
+    picture: str
