@@ -33,7 +33,7 @@ services:
     environment:
       - isDocker=true
   unknown_mongo:
-    image: mongo
+    image: mongo:4.4
     container_name: unknown_mongo
     restart: unless-stopped
     env_file:
