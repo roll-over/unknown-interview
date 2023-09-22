@@ -1,5 +1,6 @@
 import asyncio
 
+import pytest
 import pytest_asyncio
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
@@ -35,3 +36,8 @@ async def test_user():
 
     async with TestUser(user_data=test_user_data) as _user:
         yield _user
+
+
+@pytest.fixture
+def no_db_entries_error() -> bytes:
+    return b"database equal to: None"
