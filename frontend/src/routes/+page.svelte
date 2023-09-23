@@ -2,9 +2,18 @@
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
 	import Diversity from '~icons/main/diversity';
 	import Background from '~icons/main/background';
+	import { goto } from '$app/navigation';
 </script>
 
 <div class="flex h-full flex-col items-center justify-center bg-white">
+	<button
+		class="btn bg-purple-500 p-5"
+		on:click={() => {
+			goto('create/cv');
+		}}
+	>
+		test
+	</button>
 	<div class="relative z-0 mb-12 flex w-full flex-col items-center font-title">
 		<Background class="absolute bottom-0 -z-10 h-[95%] w-[9999px] px-5" />
 		<Diversity class="h-52 w-full text-app-blue-500" />
