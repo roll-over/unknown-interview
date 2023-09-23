@@ -1,2 +1,6 @@
 data
 .env
+
+# Backend
+# Pycharm
+.idea
