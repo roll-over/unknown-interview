@@ -2,7 +2,7 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from app.api.schemas.user import UserEmailSchema
+from app.api.schemas.user import UserInfoSchema
 from app.config import settings
 from app.exceptions import UserNotAuthenticated
 from app.repository import UserRepository
@@ -28,7 +28,7 @@ async def google_login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-@auth_router.get("/user_info", response_model=UserEmailSchema)
+@auth_router.get("/user_info", response_model=UserInfoSchema)
 async def user_info(request: Request):
     user = request.session.get("user")
     if user:

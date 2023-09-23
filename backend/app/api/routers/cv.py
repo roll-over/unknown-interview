@@ -1,11 +1,14 @@
+from typing import Union
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import ErrorSchema, UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
 from app.repository import CVsRepository
+from app.unitorwork import UVC_dep as CV_unit
 from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
@@ -13,16 +16,16 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 
 @cv_router.post(
     "/",
-    response_model=CVResponseSchema,
+    response_model=Union[CVResponseSchema, ErrorSchema],
     summary="Create new CV for user",
 )
 async def create_cv(
     request: Request,
     data: CVRequestSchema,
-    CV: CVsRepository,
+    CV: CV_unit,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.create_one(data, owner_data=cv_owner)
+    return await CV.create_new(data, owner_data=cv_owner, role=UserRole.applicant)
 
 
 @cv_router.get(

@@ -6,8 +6,9 @@ from httpx import AsyncClient
 @pytest.mark.asyncio
 async def test_post_user(test_client: AsyncClient):
     data = {
-        "name": "name",
-        "email": "email@example.com",
+        "name": "Vasily",
+        'role': 'employer',
+        "email": "vasya@gmail.com",
     }
 
     response = await test_client.post("/api/v1/users/", json=data)
@@ -35,7 +36,7 @@ async def test_get_user_list(test_client: AsyncClient):
 @pytest.mark.asyncio
 async def test_delete_user(test_client: AsyncClient):
     response = await test_client.delete(
-        "/api/v1/users/email@example.com", params={"user_email": "email@example.com"}
+        "/api/v1/users/{user_email}", params={"user_email": "vasya@gmail.com"}
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"message": "User deleted successfully"}
