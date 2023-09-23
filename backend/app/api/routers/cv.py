@@ -4,7 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.base import ErrorSchema
+from app.api.schemas.base import ErrorSchema, UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
 from app.repository import CVsRepository
@@ -25,7 +25,7 @@ async def create_cv(
     CV: CV_unit,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.create_new(data, owner_data=cv_owner, role='applicant')
+    return await CV.create_new(data, owner_data=cv_owner, role=UserRole.applicant)
 
 
 @cv_router.get(

@@ -4,7 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.base import ErrorSchema
+from app.api.schemas.base import ErrorSchema, UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
 from app.repository import VacanciesRepository
@@ -28,7 +28,7 @@ async def create_vacancy(
     return await Vacancy.create_new(
         vacancy_data,
         owner_data=vacancy_owner,
-        role='employer',
+        role=UserRole.employer,
     )
 
 

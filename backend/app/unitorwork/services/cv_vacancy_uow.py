@@ -9,11 +9,11 @@ class UserVacancyCVUoW:
         self.vacancy = vacancy_repo()
 
     async def create_new(self, data, *, owner_data, role):
-        match owner_data.role:
-            case Role.applicant if role == 'applicant':
+        match role:
+            case Role.applicant if role == owner_data.role:
                 new_data = await self.cvs.create_one(data, owner_data=owner_data)
                 owner_data.cvs_list.append(new_data.custom_id)
-            case Role.employer if role == 'employer':
+            case Role.employer if role == owner_data.role:
                 new_data = await self.vacancy.create_one(data, owner_data=owner_data)
                 owner_data.vacancies_list.append(new_data.custom_id)
             case _:
