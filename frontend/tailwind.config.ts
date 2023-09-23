@@ -25,7 +25,8 @@ export default {
 						600: '#1985E2'
 					}
 				}
-			}
+			},
+			transitionDuration: { DEFAULT: '300ms' }
 		}
 	},
 	plugins: [
