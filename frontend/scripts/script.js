@@ -1,6 +1,7 @@
+// this file removed the need to write boilerplate when executing scripts with tsx
 import { spawn } from 'child_process';
 
-spawn(`pnpm tsx --tsconfig scripts/tsconfig.json scripts/${process.argv[2]}.ts`, {
+spawn(`pnpm tsx --tsconfig scripts/tsconfig.json scripts ${process.argv[2] ?? ''}`, {
 	shell: true,
 	stdio: 'inherit'
 });

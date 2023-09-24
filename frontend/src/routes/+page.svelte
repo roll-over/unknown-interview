@@ -1,19 +1,11 @@
 <script lang="ts">
+	import { route } from '$lib/utils/route';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
-	import Diversity from '~icons/main/diversity';
 	import Background from '~icons/main/background';
-	import { goto } from '$app/navigation';
+	import Diversity from '~icons/main/diversity';
 </script>
 
 <div class="flex h-full flex-col items-center justify-center bg-white">
-	<button
-		class="btn bg-purple-500 p-5"
-		on:click={() => {
-			goto('create/cv');
-		}}
-	>
-		test
-	</button>
 	<div class="relative z-0 mb-12 flex w-full flex-col items-center font-title">
 		<Background class="absolute bottom-0 -z-10 h-[95%] w-[9999px] px-5" />
 		<Diversity class="h-52 w-full text-app-blue-500" />
@@ -21,7 +13,7 @@
 		<p class="text-2xl text-black">Fill out a short form to get started!</p>
 	</div>
 	<a
-		href="/create"
+		href={route('/create')}
 		class="group flex items-center justify-end gap-6 rounded-lg bg-app-blue-100 px-14 py-2.5 text-2xl text-black transition-colors current:bg-app-blue-400"
 	>
 		go to survey!
