@@ -76,7 +76,14 @@ async function writeRouteFile(routeType: string) {
 	export { Param, Route }
 	`;
 
-	writeFile('./src/lib/router.d.ts', await format(fileData, { parser: 'typescript' }));
+	writeFile('./src/lib/router.d.ts', await format(fileData, { parser: 'typescript' }))
+		.catch((e) => {
+			console.error('Error while trying to write router.d.ts file');
+			console.error(e);
+		})
+		.then(() => {
+			console.log('Sucessfully saved router.d.ts file');
+		});
 }
 
 /**
