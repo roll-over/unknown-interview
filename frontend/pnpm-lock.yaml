@@ -15,7 +15,7 @@ patchedDependencies:
     hash: vra2r7fvwhg4pza7a47mqc2vja
     path: patches/@sveltejs__kit@1.23.0.patch
   openapi-fetch@0.7.4:
-    hash: 7ryf7bg6dstmay2kngryl7fzbm
+    hash: owbqto3hwndlcxyugxrmx7tab4
     path: patches/openapi-fetch@0.7.4.patch
 
 dependencies:
@@ -36,7 +36,7 @@ dependencies:
     version: 10.4.15(postcss@8.4.28)
   openapi-fetch:
     specifier: ^0.7.4
-    version: 0.7.4(patch_hash=7ryf7bg6dstmay2kngryl7fzbm)
+    version: 0.7.4(patch_hash=owbqto3hwndlcxyugxrmx7tab4)
   postcss:
     specifier: ^8.4.28
     version: 8.4.28
@@ -2339,7 +2339,7 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openapi-fetch@0.7.4(patch_hash=7ryf7bg6dstmay2kngryl7fzbm):
+  /openapi-fetch@0.7.4(patch_hash=owbqto3hwndlcxyugxrmx7tab4):
     resolution: {integrity: sha512-ACoSikOuFO3sMROtqritJAsGd694gRNXFnWpYAqi+tQzowLOkcQ6SbeAvS+T6qNS92y/OLiiYcNrb/Rh/MrEVw==}
     dependencies:
       openapi-typescript-helpers: 0.0.1
