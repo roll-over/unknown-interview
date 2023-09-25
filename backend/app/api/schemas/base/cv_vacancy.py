@@ -30,7 +30,3 @@ class ResponseBaseSchema(BaseSchema):
     profession: ProfessionSchema
     skillset: Optional[List[SkillSchema]]
     extra_info: Optional[str] = Field(max_length=500)
-
-
-class ErrorSchema(BaseSchema):
-    message: str
