@@ -1,10 +1,9 @@
-from typing import Union
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
-from app.api.schemas.base import ErrorSchema, UserRole
+from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
 from app.repository import VacanciesRepository
@@ -16,7 +15,7 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 
 @vacancy_router.post(
     "/",
-    response_model=Union[VacancyResponseSchema, ErrorSchema],
+    response_model=VacancyResponseSchema,
     summary="Create new company vacancy",
 )
 async def create_vacancy(
@@ -69,8 +68,17 @@ async def update_company_vacancy(
     "/{vacancy_id}",
     summary="Delete company vacancy by ID",
 )
-async def delete_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
-    deleted_vacancy = await Vacancy.delete_one(vacancy_id)
+async def delete_company_vacancy(
+    vacancy_id: UUID,
+    Vacancy: Vacancy_unit,
+    vacancy_owner: UserResponseSchema = Depends(current_user),
+
+):
+    deleted_vacancy = await Vacancy.delete_record(
+        vacancy_id,
+        owner_data=vacancy_owner,
+        role=UserRole.employer,
+    )
 
     if deleted_vacancy:
         return JSONResponse(
