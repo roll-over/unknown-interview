@@ -7,6 +7,7 @@ export default async function generateRoutes() {
 	const routes = await glob('./src/routes/**/+page.svelte', { withFileTypes: true }).then((files) =>
 		files
 			.filter((file) => file.isFile())
+			.sort((a, b) => (a.path > b.path ? 1 : -1))
 			.map<Route>((file) =>
 				file
 					.relative()
@@ -24,7 +25,11 @@ export default async function generateRoutes() {
 export function generateRoutesWatcher() {
 	const watcher = watch('./src/routes/**/+page.svelte');
 	watcher.on('add', generateRoutes);
+	// note: doesn't trigger when a folder containing page is deleted - I don't know how to circumvent this
 	watcher.on('unlink', generateRoutes);
+	return () => {
+		watcher.close();
+	};
 }
 
 function routesToType(routes: Route[]) {

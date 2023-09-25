@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 import genrateOpenApi from './scripts/openapi-gen';
 import { generateRoutesWatcher } from './scripts/router-gen';
 
+let cleanup = () => void 0;
 export default defineConfig({
 	plugins: [
 		sveltekit(),
@@ -18,9 +19,15 @@ export default defineConfig({
 			name: 'codegen',
 			buildStart() {
 				if (process.env.NODE_ENV !== 'development') return;
-
-				generateRoutesWatcher();
+				const routegenCleanup = generateRoutesWatcher();
 				genrateOpenApi();
+
+				cleanup = () => {
+					routegenCleanup();
+				};
+			},
+			buildEnd() {
+				cleanup();
 			}
 		}
 	],
