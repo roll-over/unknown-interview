@@ -16,7 +16,7 @@ class TestCV:
         ],
     )
     async def test_add_cv_unauthorized(
-        self, test_client: AsyncClient, test_user, cv_data, expected_status
+        self, test_client: AsyncClient, test_applicant, cv_data, expected_status
     ):
         response = await test_client.post(
             "/api/v1/cvs/",
@@ -33,12 +33,12 @@ class TestCV:
         ],
     )
     async def test_add_cv_authorized(
-        self, test_client: AsyncClient, test_user, cv_data, expected_status
+        self, test_client: AsyncClient, test_applicant, cv_data, expected_status
     ):
-        await test_user.login(test_client)
+        await test_applicant.login(test_client)
         response = await test_client.post(
             "/api/v1/cvs/",
             json=cv_data,
         )
         assert response.status_code == expected_status
-        await test_user.logout(test_client)
+        await test_applicant.logout(test_client)
