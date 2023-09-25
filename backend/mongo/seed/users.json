@@ -1,0 +1,143 @@
+[
+    {
+        "_id": "651139ca7e0b9a7ed12d8716",
+        "custom_id": "64796a62-a80b-4a1a-b1a5-0e22f406b87a",
+        "name": "Захар Котов",
+        "email": "zakharK@gmail.com",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-06-29T09:43:14.574Z"
+    },
+    {
+        "_id": "65113a087e0b9a7ed12d8717",
+        "custom_id": "62149158-9102-4e0e-9da1-c15afa138d3e",
+        "name": "Cool Systems Ltd",
+        "email": "hr@cools.io",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-10-05T09:53:41.392Z"
+    },
+    {
+        "_id": "65113a3f7e0b9a7ed12d8718",
+        "custom_id": "473a5464-f603-4a94-8eba-6d24f570b031",
+        "name": "Activision Blizzard",
+        "email": "besthr@blizzar.com",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-07-27T10:50:11.289Z"
+    },
+    {
+        "_id": "65113acd7e0b9a7ed12d8719",
+        "custom_id": "31a04254-41b0-4893-a812-d050ac809314",
+        "name": "Yolo69 HR",
+        "email": "yolocvhere@proton.me",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-12-24T14:24:22.923Z"
+    },
+    {
+        "_id": "65113b0a7e0b9a7ed12d871a",
+        "custom_id": "9b0c98ad-7583-4c3b-8b0a-542cf7614434",
+        "name": "Microsoft",
+        "email": "jackdaniels@microsoft.com",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-10-14T21:07:04.284Z"
+    },
+    {
+        "_id": "65113c6f7e0b9a7ed12d871b",
+        "custom_id": "6561c05d-34c9-42e7-841b-f89aabcd5d15",
+        "name": "Erste Donaudampfschiffahrtsgesellschaft",
+        "email": "hr@ddsgf-bluea-danube.at",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-05-02T19:08:29.387Z"
+    },
+    {
+        "_id": "651140217e0b9a7ed12d871c",
+        "custom_id": "fefda307-20f9-4cef-8b8a-0ee2695a9597",
+        "name": "La Fromagette",
+        "email": "jaquebarnier@ddsgf-bluea-danube.at",
+        "role": "employer",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-11-04T13:43:20.827Z"
+    },
+    {
+        "_id": "651140827e0b9a7ed12d871d",
+        "custom_id": "f6ea8005-c175-43bb-9668-244998c658a3",
+        "name": "Augustus Aurelius",
+        "email": "rome4ever@myself.io",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-12-28T11:00:10.178Z"
+    },
+    {
+        "_id": "651140b67e0b9a7ed12d871e",
+        "custom_id": "5fe6c30a-570c-46e8-a750-3fc29e85a8b5",
+        "name": "Michael Johnson",
+        "email": "johnsonandsons@yahoo.com",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-03-27T04:21:16.139Z"
+    },
+    {
+        "_id": "651140ce7e0b9a7ed12d871f",
+        "custom_id": "5faebac3-c870-4d59-8ba2-e295fd2dd545",
+        "name": "Jennet Jackson",
+        "email": "realslimshady69696@google.com",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-03-31T20:48:49.378Z"
+    },
+    {
+        "_id": "651140e37e0b9a7ed12d8720",
+        "custom_id": "faad2054-5c06-4571-836b-f45c9af68bad",
+        "name": "John Doe",
+        "email": "donttreadonme@proton.me",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-10-30T08:18:17.938Z"
+    },
+    {
+        "_id": "651141117e0b9a7ed12d8721",
+        "custom_id": "d72fe1a2-1e9d-4e6f-9d67-fcad9fcb4b97",
+        "name": "Jankaus Pappokopulus",
+        "email": "frenchdomain@mail.fr",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-09-19T02:15:30.284Z"
+    },
+    {
+        "_id": "6511418b7e0b9a7ed12d8722",
+        "custom_id": "8fc3a2d5-a11d-4f58-93d3-29a8bb0c16e5",
+        "name": "William Clark",
+        "email": "unvireseconquerer69@rambler.ru",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-06-04T17:13:45.294Z"
+    },
+    {
+        "_id": "651142287e0b9a7ed12d8723",
+        "custom_id": "6426be81-4156-43c2-b639-03add09ef796",
+        "name": "Alejandro Martinez",
+        "email": "amartinez96443@mailservice.es",
+        "role": "applicant",
+        "cvs_list": [],
+        "vacancies_list": [],
+        "created_at": "2023-02-18T21:29:58.639Z"
+    }
+]
+  

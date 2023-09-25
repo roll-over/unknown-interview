@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { route } from '$lib/utils/route';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
-	import Diversity from '~icons/main/diversity';
 	import Background from '~icons/main/background';
+	import Diversity from '~icons/main/diversity';
 </script>
 
 <div class="flex h-full flex-col items-center justify-center bg-white">
@@ -12,10 +13,12 @@
 		<p class="text-2xl text-black">Fill out a short form to get started!</p>
 	</div>
 	<a
-		href="/create"
-		class="group flex items-center justify-end gap-6 rounded-lg bg-app-blue-100 px-14 py-2.5 text-2xl text-black focus:outline-none focus:ring-4 current:bg-app-blue-400"
+		href={route('/create')}
+		class="group flex items-center justify-end gap-6 rounded-lg bg-app-blue-100 px-14 py-2.5 text-2xl text-black transition-colors current:bg-app-blue-400"
 	>
 		go to survey!
-		<IcOutlineArrowForwardIos class="text-3xl text-app-blue-500 group-current:text-app-blue-100" />
+		<IcOutlineArrowForwardIos
+			class="text-3xl text-app-blue-500 transition-colors group-current:text-app-blue-100"
+		/>
 	</a>
 </div>

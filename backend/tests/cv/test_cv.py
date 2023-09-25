@@ -41,3 +41,4 @@ class TestCV:
             json=cv_data,
         )
         assert response.status_code == expected_status
+        await test_user.logout(test_client)

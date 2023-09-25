@@ -32,7 +32,11 @@ async def test_client(test_app) -> AsyncClient:
 
 @pytest_asyncio.fixture(scope="session")
 async def test_user():
-    test_user_data = {"name": "Test User", "email": "hide_test@hire.hi"}
+    test_user_data = {
+        "name": "Test User",
+        'role': 'employer',
+        "email": "hide_test@hire.hi",
+    }
 
     async with TestUser(user_data=test_user_data) as _user:
         yield _user
