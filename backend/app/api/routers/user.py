@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
@@ -25,13 +24,13 @@ async def create_user(data: UserRequestSchema, User: UserRepository):
 
 
 @user_router.delete(
-    "/{user_data}",
+    "/{user_email}",
     summary="Delete user by email",
 )
-async def delete_user_cv(user_email: UserEmailSchema, User: UserRepository):
-    deleted_cv = await User.delete_user(user_email)
+async def delete_user(user_email: UserEmailSchema, User: UserRepository):
+    deleted_user = await User.delete_user(user_email)
 
-    if deleted_cv:
+    if deleted_user:
         return JSONResponse(
             content={"message": "User deleted successfully"},
             status_code=status.HTTP_200_OK,
@@ -46,6 +45,6 @@ async def delete_user_cv(user_email: UserEmailSchema, User: UserRepository):
 @user_router.get("/records", response_model=UserDataListResponseSchema)
 async def get_user_job_data(
         User: UserRepository,
-        cv_owner: UserResponseSchema = Depends(current_user),
+        owner: UserResponseSchema = Depends(current_user),
 ):
-    return await User.get_cv_vacancy_data(cv_owner)
+    return await User.get_cv_vacancy_data(owner)
