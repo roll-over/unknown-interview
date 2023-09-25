@@ -28,7 +28,9 @@
 				onSuccess(d) {
 					console.log(d);
 					if (!d.data) return;
-					cvId = d.data.custom_id;
+					if ('custom_id' in d.data) {
+						cvId = d.data.custom_id;
+					}
 				}
 			}
 		);

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import api from '$lib/api';
+	import { route } from '$lib/utils/route';
 	import { createQuery } from '@tanstack/svelte-query';
 	import MaterialSymbolsEditOutline from '~icons/material-symbols/edit-outline';
 	import MaterialSymbolsThumbDownOutline from '~icons/material-symbols/thumb-down-outline';
@@ -22,7 +23,7 @@
 		<div class="bg-app-blue-50 flex flex-col gap-7 rounded-lg px-11 py-10">
 			<div class="flex justify-between">
 				<h2 class="font-title text-3xl">Resume</h2>
-				<a href="/create/cv">
+				<a href={route("/create/cv")}>
 					<MaterialSymbolsEditOutline
 						class="bg-app-blue-600  hover:text-app-blue-500 h-8 w-8 rounded-full p-1 text-white duration-500 hover:bg-white"
 					/>
