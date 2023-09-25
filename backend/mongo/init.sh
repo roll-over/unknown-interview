@@ -1,6 +1,6 @@
 #!/bin/bash
 
-collections=("professions")
+collections=("professions" "users")
 
 for collection in "${collections[@]}"
 do
