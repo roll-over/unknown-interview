@@ -5,6 +5,7 @@
 	import { tick } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { YourID, getChat } from '../getChats';
+	import { route } from '$lib/utils/route';
 
 	const dateFormatter = new Intl.DateTimeFormat('ru');
 	const relativeDateFormatter = new Intl.RelativeTimeFormat('en');
@@ -24,9 +25,9 @@
 	$: chatQuery = createQuery({
 		async queryFn() {
 			const id = $page.params.id;
-			if (!id) return goto('/profile/matches'), null;
+			if (!id) return goto(route('/profile/matches')), null;
 			const chat = await getChat(id);
-			if (!chat || chat.id !== id) return goto('/profile/matches'), null;
+			if (!chat || chat.id !== id) return goto(route('/profile/matches')), null;
 			prevData = chat;
 			return chat;
 		},
