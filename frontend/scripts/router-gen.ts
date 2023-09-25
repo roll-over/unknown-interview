@@ -59,7 +59,7 @@ function segmentToType(segment: Segment): string | [string, null] {
 		case 'OPTIONAL':
 			return ['${Param}', null];
 		case 'REST':
-			return ['${Param}', null];
+			return ['${RestParam}', null];
 		default: {
 			const x: never = segment.type;
 			return x;
@@ -70,10 +70,12 @@ function segmentToType(segment: Segment): string | [string, null] {
 async function writeRouteFile(routeType: string) {
 	const fileData = `
 	// This file is auto-generated. Please do not modify it.
-	declare const ParamBrand: unique symbol;
-	type Param = (string | number) & { readonly [ParamBrand]: unique symbol };
+	declare const Brand: unique symbol;
+	type TemplateToken = string | number;
+	type Param = TemplateToken & { readonly [Brand]: unique symbol };
+	type RestParam = (TemplateToken & { readonly [Brand]: unique symbol }) | Param;
 	type Route = ${routeType};
-	export { Param, Route }
+	export { Param, RestParam, Route, TemplateToken }
 	`;
 
 	writeFile('./src/lib/router.d.ts', await format(fileData, { parser: 'typescript' }))
