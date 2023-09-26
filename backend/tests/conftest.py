@@ -5,6 +5,7 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
 
+from app.db.models.mixins import Role
 from app.main import app
 from tests.auth.user import TestUser
 
@@ -31,14 +32,15 @@ async def test_client(test_app) -> AsyncClient:
 
 
 @pytest_asyncio.fixture(scope="session")
-async def test_user():
-    test_user_data = {
-        "name": "Test User",
-        'role': 'employer',
-        "email": "hide_test@hire.hi",
-    }
+async def test_applicant():
 
-    async with TestUser(user_data=test_user_data) as _user:
+    async with TestUser(user_role=Role.applicant) as _user:
+        yield _user
+
+
+@pytest_asyncio.fixture(scope="session")
+async def test_employer():
+    async with TestUser(user_role=Role.employer) as _user:
         yield _user
 
 
