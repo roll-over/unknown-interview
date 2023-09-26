@@ -22,3 +22,11 @@ class AbstractUnitOfWork(ABC):
     @abstractmethod
     async def __aexit__(self, *args):
         raise NotImplementedError
+
+    @abstractmethod
+    async def create_new(self, *args):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def delete_record(self, *args):
+        raise NotImplementedError
