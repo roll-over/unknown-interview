@@ -329,16 +329,3 @@ index 619f82a8582e984f79ef13e9c9f6712050083411..6935dd61299de706a02f205e916d13b8
      },
    };
  }
-diff --git a/tsconfig.json b/tsconfig.json
-index 5b4f2297b7ad4f856519c157c9781208758756c2..e331440ce3a218aa1bb35a48cd24bff9d052dec9 100644
---- a/tsconfig.json
-+++ b/tsconfig.json
-@@ -4,7 +4,7 @@
-     "declaration": true,
-     "downlevelIteration": false,
-     "esModuleInterop": true,
--    "module": "ESNext",
-+    "module": "NodeNext",
-     "moduleResolution": "nodenext",
-     "outDir": "dist",
-     "skipLibCheck": true,
