@@ -1,5 +1,6 @@
 from .cv_note_repo import get_cv_note_repository as cv_note_repo
 from .cv_repo import get_cv_repository as cv_repo
+from .match_repo import get_match_repository as match_repo
 from .profession_repo import get_profession_repository as profession_repo
 from .skill_repo import get_skill_repository as skill_repo
 from .user_repo import get_user_repository as user_repo
@@ -14,4 +15,5 @@ __all__ = (
     "user_repo",
     "profession_repo",
     "skill_repo",
+    'match_repo',
 )
