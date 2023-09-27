@@ -23,8 +23,8 @@ async def test_get_nothing(test_client: AsyncClient, no_db_entries_error: bytes)
 
 
 @pytest.mark.asyncio
-async def test_unauthorized_post(test_client: AsyncClient, test_user):
-    await test_user.logout(test_client)
+async def test_unauthorized_post(test_client: AsyncClient, test_employer):
+    await test_employer.logout(test_client)
     
     data = get_test_data("cv_vacancy")["valid_data"]
     response = await test_client.post("/api/v1/vacancies/", json=data)
@@ -33,8 +33,8 @@ async def test_unauthorized_post(test_client: AsyncClient, test_user):
 
 
 @pytest.mark.asyncio
-async def test_unauthorize_patch(test_client: AsyncClient, test_user):
-    await test_user.logout(test_client)
+async def test_unauthorized_patch(test_client: AsyncClient, test_employer):
+    await test_employer.logout(test_client)
     
     vacancy_id = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
     response = await test_client.patch(f"/api/v1/vacancies/{vacancy_id}")
@@ -55,16 +55,20 @@ def posted_test_ids() -> list:
     ]
 )
 async def test_vacancy_post(
-    test_client: AsyncClient, test_user, json_data, expected_status, posted_test_ids: list
+        test_client: AsyncClient,
+        test_employer,
+        json_data,
+        expected_status,
+        posted_test_ids: list,
 ):
-    await test_user.login(test_client)
+    await test_employer.login(test_client)
 
     response = await test_client.post("/api/v1/vacancies/", json=json_data)
     posted_test_ids.append(response.json()["custom_id"])
 
     assert response.status_code == expected_status
 
-    await test_user.logout(test_client)
+    await test_employer.logout(test_client)
 
 
 @pytest.mark.asyncio
@@ -75,16 +79,16 @@ async def test_vacancy_post(
     ]
 )
 async def test_vacancy_get(
-    test_client: AsyncClient, test_user, posted_test_ids, pointer, expected_status
+    test_client: AsyncClient, test_employer, posted_test_ids, pointer, expected_status
 ):
-    await test_user.login(test_client)
+    await test_employer.login(test_client)
     
     vacancy_id = posted_test_ids[pointer]
     response = await test_client.get(f"/api/v1/vacancies/{vacancy_id}")
 
     assert response.status_code == expected_status
     
-    await test_user.logout(test_client)
+    await test_employer.logout(test_client)
 
 
 @pytest.mark.asyncio
@@ -95,9 +99,9 @@ async def test_vacancy_get(
     ]
 )
 async def test_get_random_vacancy(
-    test_client: AsyncClient, test_user, posted_test_ids: list, expected_status
+    test_client: AsyncClient, test_employer, posted_test_ids: list, expected_status
 ):
-    await test_user.login(test_client)
+    await test_employer.login(test_client)
     
     response = await test_client.get("/api/v1/vacancies/random_vacancy")
     vacancy_id = response.json()["custom_id"]
@@ -105,7 +109,7 @@ async def test_get_random_vacancy(
     assert response.status_code == expected_status
     assert vacancy_id in posted_test_ids
     
-    await test_user.logout(test_client)
+    await test_employer.logout(test_client)
 
 
 @pytest.mark.asyncio
@@ -116,9 +120,13 @@ async def test_get_random_vacancy(
     ]
 )
 async def test_vacancy_patch(
-    test_client: AsyncClient, test_user, posted_test_ids: list, pointer, expected_status
+        test_client: AsyncClient,
+        test_employer,
+        posted_test_ids: list,
+        pointer,
+        expected_status,
 ):
-    await test_user.login(test_client)
+    await test_employer.login(test_client)
     
     vacancy_id = posted_test_ids[pointer]
     data = get_test_data("cv_vacancy")["valid_data"]
@@ -130,7 +138,7 @@ async def test_vacancy_patch(
     assert response.status_code == expected_status
     assert response.json()["extra_info"] == changed_info
     
-    await test_user.logout(test_client)
+    await test_employer.logout(test_client)
 
 
 @pytest.mark.asyncio
@@ -142,10 +150,10 @@ async def test_vacancy_patch(
     ]
 )
 async def test_delete_vacancy(
-    test_client: AsyncClient, test_user, posted_test_ids, pointer, 
+    test_client: AsyncClient, test_employer, posted_test_ids, pointer,
     expected_delete_status, expected_get_status, no_db_entries_error
 ):
-    await test_user.login(test_client)
+    await test_employer.login(test_client)
     
     vacancy_id = posted_test_ids[pointer]
     delete_response = await test_client.delete(f"/api/v1/vacancies/{vacancy_id}")
@@ -155,4 +163,4 @@ async def test_delete_vacancy(
     assert get_response.status_code == expected_get_status
     assert no_db_entries_error in get_response.content
     
-    await test_user.logout(test_client)
+    await test_employer.logout(test_client)

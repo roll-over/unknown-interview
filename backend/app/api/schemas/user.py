@@ -26,9 +26,10 @@ class UserDataListResponseSchema(BaseModel):
     cvs: List[UUID] = None
 
 
-class UserEmailSchema(BaseModel):
-    email: EmailStr
+class UserEmailSchema(EmailStr):
+    pass
 
 
-class UserInfoSchema(UserEmailSchema):
+class UserInfoSchema(BaseModel):
+    email: UserEmailSchema
     picture: str

@@ -4,14 +4,28 @@ from base64 import b64encode
 import itsdangerous
 
 from app.config import settings
+from app.db.models.mixins import Role
 from app.db.models.user import User
 from app.repository.repositories import user_repo
 
+TEST_USER_DATA = {
+    Role.applicant: {
+        "name": "Test Applicant",
+        'role': 'applicant',
+        "email": "hide_applicant@hire.hi",
+    },
+    Role.employer: {
+        "name": "Test Employer",
+        'role': 'employer',
+        "email": "hide_employer@hire.hi",
+    }
+}
+
 
 class TestUser:
-    def __init__(self, secret_key=settings.SECRET_KEY, *, user_data):
+    def __init__(self, secret_key=settings.SECRET_KEY, *, user_role):
         self.user = user_repo()
-        self.user_data = user_data
+        self.user_data = TEST_USER_DATA.get(user_role)
         self.secret_key = secret_key
 
     async def __aenter__(self):

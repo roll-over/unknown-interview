@@ -39,3 +39,11 @@ class ForbiddenAction(HTTPException):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="No permissions for this action",
         )
+
+
+class UserRoleMismatch(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The user role does not match the record or action type",
+        )
