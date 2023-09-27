@@ -1,0 +1,588 @@
+[
+    {
+        "custom_id": "503b9ad7-20dc-4ed9-ad35-a746d71f8458",
+        "owner_id": "f6ea8005-c175-43bb-9668-244998c658a3",
+        "title": "manager",
+        "salary": {
+            "min_level": 40000.0,
+            "max_level": 50000,
+            "currency": "USD"
+        },
+        "grade": "junior",
+        "profession": {
+            "name": "Product Manager"
+        },
+        "skillset": [
+            {
+                "name": "Spark"
+            },
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "Aurelia"
+            },
+            {
+                "name": "FastAPI"
+            },
+            {
+                "name": "Android Studio"
+            },
+            {
+                "name": "Kotlin"
+            },
+            {
+                "name": "Tornado"
+            },
+            {
+                "name": "SQLite"
+            },
+            {
+                "name": "Shell"
+            },
+            {
+                "name": "Backbone.js"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "e5c72ec4-41a6-41b4-b9ad-3c6bb12bc841",
+        "owner_id": "f6ea8005-c175-43bb-9668-244998c658a3",
+        "title": "member",
+        "salary": {
+            "min_level": 72000.0,
+            "max_level": 90000,
+            "currency": "USD"
+        },
+        "grade": "middle",
+        "profession": {
+            "name": "DS Engineer"
+        },
+        "skillset": [
+            {
+                "name": "Shell"
+            },
+            {
+                "name": "Django"
+            },
+            {
+                "name": "TezJS"
+            },
+            {
+                "name": "Oracle"
+            },
+            {
+                "name": "Mithril"
+            },
+            {
+                "name": "NodeJS"
+            },
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "Android Studio"
+            },
+            {
+                "name": "Ruby"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "abb3ed9d-44da-4452-b255-860c8b96e127",
+        "owner_id": "5fe6c30a-570c-46e8-a750-3fc29e85a8b5",
+        "title": "manager",
+        "salary": {
+            "min_level": 40000.0,
+            "max_level": 50000,
+            "currency": "USD"
+        },
+        "grade": "junior",
+        "profession": {
+            "name": "Release Manager"
+        },
+        "skillset": [
+            {
+                "name": "PHP"
+            },
+            {
+                "name": "FastAPI"
+            },
+            {
+                "name": "Angular"
+            },
+            {
+                "name": "Django"
+            },
+            {
+                "name": "Ember.js"
+            },
+            {
+                "name": "Flask"
+            },
+            {
+                "name": "Aurelia"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "cae4a450-87c4-45e0-a2be-3d3bc4f325fc",
+        "owner_id": "5fe6c30a-570c-46e8-a750-3fc29e85a8b5",
+        "title": "teamlead",
+        "salary": {
+            "min_level": 90000.0,
+            "max_level": 150000,
+            "currency": "USD"
+        },
+        "grade": "lead",
+        "profession": {
+            "name": "Frontend Team Lead"
+        },
+        "skillset": [
+            {
+                "name": "Feature Engineering"
+            },
+            {
+                "name": "Firebase"
+            },
+            {
+                "name": "Ansible"
+            },
+            {
+                "name": "GPC"
+            },
+            {
+                "name": "Java"
+            },
+            {
+                "name": "Machine Translation"
+            },
+            {
+                "name": "Java"
+            },
+            {
+                "name": "Ember.js"
+            },
+            {
+                "name": "Tableau"
+            },
+            {
+                "name": "MySQL"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "441fab94-44fb-4cb9-9644-de5df94c899c",
+        "owner_id": "5faebac3-c870-4d59-8ba2-e295fd2dd545",
+        "title": "member",
+        "salary": {
+            "min_level": 48000.0,
+            "max_level": 60000,
+            "currency": "USD"
+        },
+        "grade": "junior",
+        "profession": {
+            "name": "Frontend Developer"
+        },
+        "skillset": [
+            {
+                "name": "React"
+            },
+            {
+                "name": "RNN's"
+            },
+            {
+                "name": "Android Studio"
+            },
+            {
+                "name": "Data Preprocessing"
+            },
+            {
+                "name": "version control"
+            },
+            {
+                "name": "pytest"
+            },
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "SQLite"
+            },
+            {
+                "name": "Model Selection"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "da6f8c87-fa50-45cd-91c0-db1f6a2673cb",
+        "owner_id": "5faebac3-c870-4d59-8ba2-e295fd2dd545",
+        "title": "manager",
+        "salary": {
+            "min_level": 42000.0,
+            "max_level": 70000,
+            "currency": "USD"
+        },
+        "grade": "senior",
+        "profession": {
+            "name": "Project Manager"
+        },
+        "skillset": [
+            {
+                "name": "Spark"
+            },
+            {
+                "name": "JavaScript"
+            },
+            {
+                "name": "Polymer"
+            },
+            {
+                "name": "Deep Learning"
+            },
+            {
+                "name": "Pyramid"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "84b9a1f3-9b1e-4edb-b7a9-64b472ba84df",
+        "owner_id": "faad2054-5c06-4571-836b-f45c9af68bad",
+        "title": "lead",
+        "salary": {
+            "min_level": 78000.0,
+            "max_level": 130000,
+            "currency": "USD"
+        },
+        "grade": "lead",
+        "profession": {
+            "name": "Frontend Developer"
+        },
+        "skillset": [
+            {
+                "name": "MySQL"
+            },
+            {
+                "name": "PHP"
+            },
+            {
+                "name": "Ruby"
+            },
+            {
+                "name": "NodeJS"
+            },
+            {
+                "name": "Apache"
+            },
+            {
+                "name": "Spark"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "2892e7c9-c71b-4847-a2c5-d2938572f5c8",
+        "owner_id": "faad2054-5c06-4571-836b-f45c9af68bad",
+        "title": "member",
+        "salary": {
+            "min_level": 72000.0,
+            "max_level": 120000,
+            "currency": "USD"
+        },
+        "grade": "senior",
+        "profession": {
+            "name": "DS Engineer"
+        },
+        "skillset": [
+            {
+                "name": "Git"
+            },
+            {
+                "name": "Nginx"
+            },
+            {
+                "name": "Tableau"
+            },
+            {
+                "name": "React"
+            },
+            {
+                "name": "PHP"
+            },
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "seaborn"
+            },
+            {
+                "name": "Microsoft Azure"
+            },
+            {
+                "name": "Aurelia"
+            },
+            {
+                "name": "Objective-C"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "d360ad45-85de-4854-abc0-cf1fe8f9c7a6",
+        "owner_id": "d72fe1a2-1e9d-4e6f-9d67-fcad9fcb4b97",
+        "title": "member",
+        "salary": {
+            "min_level": 54000.0,
+            "max_level": 90000,
+            "currency": "USD"
+        },
+        "grade": "middle",
+        "profession": {
+            "name": "Backend Developer"
+        },
+        "skillset": [
+            {
+                "name": "XML"
+            },
+            {
+                "name": "JavaScript"
+            },
+            {
+                "name": "Android Studio"
+            },
+            {
+                "name": "Tableau"
+            },
+            {
+                "name": "Falcon"
+            },
+            {
+                "name": "pytest"
+            },
+            {
+                "name": "Ansible"
+            },
+            {
+                "name": "Ruby"
+            },
+            {
+                "name": "matplotlib"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "873bd013-4d52-43d8-9b6e-13e47d132edb",
+        "owner_id": "d72fe1a2-1e9d-4e6f-9d67-fcad9fcb4b97",
+        "title": "director",
+        "salary": {
+            "min_level": 180000.0,
+            "max_level": 200000,
+            "currency": "USD"
+        },
+        "grade": "principal",
+        "profession": {
+            "name": "Executive Director"
+        },
+        "skillset": [
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "matplotlib"
+            },
+            {
+                "name": "Django"
+            },
+            {
+                "name": "Bottle"
+            },
+            {
+                "name": "Apache"
+            },
+            {
+                "name": "Nginx"
+            },
+            {
+                "name": "seaborn"
+            },
+            {
+                "name": "Sanic"
+            },
+            {
+                "name": "pytest"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "bd863843-5c32-4d21-aa91-eb92e110a6d1",
+        "owner_id": "8fc3a2d5-a11d-4f58-93d3-29a8bb0c16e5",
+        "title": "teamlead",
+        "salary": {
+            "min_level": 135000.0,
+            "max_level": 150000,
+            "currency": "USD"
+        },
+        "grade": "lead",
+        "profession": {
+            "name": "Technical Team Lead"
+        },
+        "skillset": [
+            {
+                "name": "Chrome DevTools"
+            },
+            {
+                "name": "Text Classification"
+            },
+            {
+                "name": "RESTful APIs"
+            },
+            {
+                "name": "Android Studio"
+            },
+            {
+                "name": "GPC"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "2131ea0c-d47a-4791-94d1-e399e0fa896a",
+        "owner_id": "8fc3a2d5-a11d-4f58-93d3-29a8bb0c16e5",
+        "title": "member",
+        "salary": {
+            "min_level": 54000.0,
+            "max_level": 60000,
+            "currency": "USD"
+        },
+        "grade": "junior",
+        "profession": {
+            "name": "Fullstack Developer"
+        },
+        "skillset": [
+            {
+                "name": "Node.js"
+            },
+            {
+                "name": "Bash"
+            },
+            {
+                "name": "SQLite"
+            },
+            {
+                "name": "Tableau"
+            },
+            {
+                "name": "Meteor"
+            },
+            {
+                "name": "Kotlin"
+            },
+            {
+                "name": "HTML"
+            },
+            {
+                "name": "Sentiment Analysis"
+            },
+            {
+                "name": "Machine Translation"
+            },
+            {
+                "name": "R"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "de66fd0b-1544-46ba-82c8-69b9e5f683cd",
+        "owner_id": "6426be81-4156-43c2-b639-03add09ef796",
+        "title": "lead",
+        "salary": {
+            "min_level": 104000.0,
+            "max_level": 130000,
+            "currency": "USD"
+        },
+        "grade": "lead",
+        "profession": {
+            "name": "Frontend Developer"
+        },
+        "skillset": [
+            {
+                "name": "XML"
+            },
+            {
+                "name": "Core Data"
+            },
+            {
+                "name": "FastAPI"
+            },
+            {
+                "name": "Data Preprocessing"
+            },
+            {
+                "name": "TezJS"
+            },
+            {
+                "name": "Mobile UI Design"
+            },
+            {
+                "name": "Kotlin"
+            },
+            {
+                "name": "Ruby"
+            },
+            {
+                "name": "Angular"
+            },
+            {
+                "name": "Deep Learning"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "custom_id": "1b5e7d54-86d8-4edb-9686-498f55bb2e50",
+        "owner_id": "6426be81-4156-43c2-b639-03add09ef796",
+        "title": "director",
+        "salary": {
+            "min_level": 180000.0,
+            "max_level": 200000,
+            "currency": "USD"
+        },
+        "grade": "principal",
+        "profession": {
+            "name": "Executive Director"
+        },
+        "skillset": [
+            {
+                "name": "Microsoft Azure"
+            },
+            {
+                "name": "Chrome DevTools"
+            },
+            {
+                "name": "Nginx"
+            },
+            {
+                "name": "NodeJS"
+            },
+            {
+                "name": "pytest"
+            },
+            {
+                "name": "Falcon"
+            },
+            {
+                "name": "FastAPI"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    }
+]
