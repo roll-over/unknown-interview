@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
 from app.db.models.cv import CV
 from app.db.models.cv_note import CVNote
+from app.db.models.match import MatchCollection
 from app.db.models.profession import Profession
 from app.db.models.skill import Skill
 from app.db.models.user import User
@@ -24,7 +25,16 @@ async def init_client(db_name):
 
 
 async def __init_beanie(db_name):
-    __models = [User, CV, CVNote, Vacancy, VacancyNote, Profession, Skill]
+    __models = [
+        User,
+        CV,
+        CVNote,
+        Vacancy,
+        VacancyNote,
+        Profession,
+        Skill,
+        MatchCollection,
+    ]
 
     client = await init_client(db_name)
     await init_beanie(
