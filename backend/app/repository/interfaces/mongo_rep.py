@@ -9,6 +9,11 @@ class MongoBeanieRepository(AbstractBaseRepository):
 
         return found_data
 
+    async def fetch_many(self, data_id):
+        found_data = await self.model.find(data_id).to_list()
+
+        return found_data
+
     async def fetch_one(self, data_id):
         found_data = await self.model.find_one(data_id)
 
@@ -32,6 +37,10 @@ class MongoBeanieRepository(AbstractBaseRepository):
         await new_data.create()
 
         return new_data
+
+    async def create_many(self, data):
+        prepared_data = (match.model_dump() for match in data)
+        return await self.model.insert_many(list(prepared_data))
 
     async def update_one(self, data, data_id):
         found_data = await self.fetch_one(data_id)

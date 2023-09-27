@@ -7,6 +7,10 @@ class AbstractBaseRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    async def fetch_many(self, data_id):
+        raise NotImplementedError
+
+    @abstractmethod
     async def fetch_one(self, data_id):
         raise NotImplementedError
 
@@ -20,6 +24,10 @@ class AbstractBaseRepository(ABC):
 
     @abstractmethod
     async def create_one(self, data):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def create_many(self, data):
         raise NotImplementedError
 
     @abstractmethod

@@ -73,9 +73,12 @@
         "_id": "651140827e0b9a7ed12d871d",
         "custom_id": "f6ea8005-c175-43bb-9668-244998c658a3",
         "name": "Augustus Aurelius",
-        "email": "rome4ever@myself.io",
+        "email": "rome4ever@myself.it",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "503b9ad7-20dc-4ed9-ad35-a746d71f8458",
+            "e5c72ec4-41a6-41b4-b9ad-3c6bb12bc841"
+        ],
         "vacancies_list": [],
         "created_at": "2023-12-28T11:00:10.178Z"
     },
@@ -85,7 +88,10 @@
         "name": "Michael Johnson",
         "email": "johnsonandsons@yahoo.com",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "abb3ed9d-44da-4452-b255-860c8b96e127",
+            "cae4a450-87c4-45e0-a2be-3d3bc4f325fc"
+        ],
         "vacancies_list": [],
         "created_at": "2023-03-27T04:21:16.139Z"
     },
@@ -95,7 +101,10 @@
         "name": "Jennet Jackson",
         "email": "realslimshady69696@google.com",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "441fab94-44fb-4cb9-9644-de5df94c899c",
+            "da6f8c87-fa50-45cd-91c0-db1f6a2673cb"
+        ],
         "vacancies_list": [],
         "created_at": "2023-03-31T20:48:49.378Z"
     },
@@ -105,7 +114,10 @@
         "name": "John Doe",
         "email": "donttreadonme@proton.me",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "84b9a1f3-9b1e-4edb-b7a9-64b472ba84df",
+            "2892e7c9-c71b-4847-a2c5-d2938572f5c8"
+        ],
         "vacancies_list": [],
         "created_at": "2023-10-30T08:18:17.938Z"
     },
@@ -115,7 +127,10 @@
         "name": "Jankaus Pappokopulus",
         "email": "frenchdomain@mail.fr",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "d360ad45-85de-4854-abc0-cf1fe8f9c7a6",
+            "873bd013-4d52-43d8-9b6e-13e47d132edb"
+        ],
         "vacancies_list": [],
         "created_at": "2023-09-19T02:15:30.284Z"
     },
@@ -125,7 +140,10 @@
         "name": "William Clark",
         "email": "unvireseconquerer69@rambler.ru",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "bd863843-5c32-4d21-aa91-eb92e110a6d1",
+            "2131ea0c-d47a-4791-94d1-e399e0fa896a"
+        ],
         "vacancies_list": [],
         "created_at": "2023-06-04T17:13:45.294Z"
     },
@@ -135,9 +153,11 @@
         "name": "Alejandro Martinez",
         "email": "amartinez96443@mailservice.es",
         "role": "applicant",
-        "cvs_list": [],
+        "cvs_list": [
+            "de66fd0b-1544-46ba-82c8-69b9e5f683cd",
+            "1b5e7d54-86d8-4edb-9686-498f55bb2e50"
+        ],
         "vacancies_list": [],
         "created_at": "2023-02-18T21:29:58.639Z"
     }
 ]
-  

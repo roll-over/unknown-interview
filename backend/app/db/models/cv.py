@@ -18,4 +18,4 @@ class CV(UUIDMixin):
     extra_info: Optional[str] = Field(None, max_length=500)
 
     class Settings:
-        name = "CV"
+        name = "cvs"
