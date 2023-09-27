@@ -34,5 +34,5 @@ export const defaultCVState = {
 	extra_info: null
 } satisfies CVState;
 
-export type JobOfferState = CVState;
-export const defaultJobOfferState = defaultCVState satisfies JobOfferState;
+export type VacancyState = CVState;
+export const defaultVacancyState = defaultCVState satisfies VacancyState;

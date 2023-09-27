@@ -35,7 +35,7 @@
 				<div class="flex flex-col gap-2">
 					<a href={route('/profile/cv')}>CV</a>
 					<hr />
-					<a href={route('/profile/offer')}>Offer</a>
+					<a href={route('/profile/vacancy')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>
@@ -49,7 +49,7 @@
 				<div class="flex flex-col gap-2">
 					<a href={route('/create/cv')}>CV</a>
 					<hr />
-					<a href={route('/create/offer')}>Offer</a>
+					<a href={route('/create/vacancy')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>

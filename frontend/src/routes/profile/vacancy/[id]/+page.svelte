@@ -6,7 +6,7 @@
 </script>
 
 {#if id}
-	<RandomMatchView profileMeta={{ id, type: 'offer' }} />
+	<RandomMatchView profileMeta={{ id, type: 'vacancy' }} />
 {:else}
 	Something went wrong
 {/if}

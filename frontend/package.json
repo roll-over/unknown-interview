@@ -43,7 +43,7 @@
 		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.33.2",
-		"glob": "^10.3.9",
+		"glob": "^10.3.10",
 		"openapi-typescript": "^6.7.0",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^3.0.3",

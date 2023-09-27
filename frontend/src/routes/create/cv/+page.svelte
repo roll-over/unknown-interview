@@ -62,7 +62,7 @@
 	class="flex flex-col items-start gap-3 p-3"
 	on:submit={handleSubmit}
 >
-	<h1>Your Resume</h1>
+	<h1>Your CV</h1>
 	<fieldset>
 		<legend>Necessary title</legend>
 		<RadioGroup
