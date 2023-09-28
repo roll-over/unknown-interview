@@ -1,3 +1,6 @@
+// please make sure you don't have static imports here from external packages
+// this will crash on fresh docker start-ups because it didn't run installation yet
+// use dynamic import()
 import { spawn } from 'child_process';
 
 export default function runDockerProcess() {
