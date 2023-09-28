@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { route } from '$lib/utils/route';
+	import ProfileListView from '../ProfileListView.svelte';
 </script>
 
-<div>YOUR VACANCIES</div>
-<a href={route((p) => `/profile/vacancy/${p(1)}`)}>YOUR FIRST VACANCY</a>
+<ProfileListView type="vacancy" />
