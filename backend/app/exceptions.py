@@ -4,16 +4,11 @@ from fastapi.responses import JSONResponse
 
 
 async def response_validation_exception_handler(request, exc):
-    error: dict = exc.errors()[0]
-    # fmt: off
-    message = "Validation error, since the data from database equal to: {body}"
-    error["msg"] = message.format(
-        body=exc.body
-    )
-    # fmt: on
+    message = f"Validation error. Data from database equal to: {exc.body}"
+
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({"detail": exc.errors()}),
+        content=jsonable_encoder({"error": message}),
     )
 
 
