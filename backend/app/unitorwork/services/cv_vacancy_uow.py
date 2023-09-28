@@ -26,10 +26,10 @@ class UserVacancyCVUoW:
             UserRoleMismatch: If the owner_data.role does not match the role.
         """
         match role:
-            case Role.applicant if role == owner_data.role:
+            case Role.applicant:
                 record_collection = self.cvs
                 owner_collection = owner_data.cvs_list
-            case Role.employer if role == owner_data.role:
+            case Role.employer:
                 record_collection = self.vacancies
                 owner_collection = owner_data.vacancies_list
             case _:
