@@ -66,8 +66,9 @@ Requirements:
 	});
 
 	export let profileMeta: { id: string; type: 'cv' | 'vacancy' };
-	$: profileContent = profileMeta.type === 'cv' ? cvContent : vacancyContent;
-	$: matchData = profileMeta.type === 'cv' ? randomVacancy : randomCv;
+	$: isVacancy = profileMeta.type === 'vacancy';
+	$: profileContent = isVacancy ? vacancyContent : cvContent;
+	$: matchData = isVacancy ? randomCv : randomVacancy;
 
 	let isOpen = false;
 </script>
@@ -82,8 +83,8 @@ Requirements:
 		/>
 		<div class="flex flex-col gap-7 rounded-lg bg-app-blue-50 px-11 py-10">
 			<div class="flex justify-between">
-				<h2 class="font-title text-3xl">CV</h2>
-				<a href={route('/create/cv')}>
+				<h2 class="font-title text-3xl">{isVacancy ? 'Vacancy' : 'CV'}</h2>
+				<a href={isVacancy ? route('/create/vacancy') : route('/create/cv')}>
 					<MaterialSymbolsEditOutline
 						class="h-8 w-8 rounded-full bg-app-blue-600 p-1 text-white duration-500 hover:bg-white hover:text-app-blue-500"
 					/>
