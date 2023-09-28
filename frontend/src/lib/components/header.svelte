@@ -24,5 +24,7 @@
 		{:else}
 			<a href="/auth/login">Log-in</a>
 		{/if}
+
+		<a href="/api/service">Api</a>
 	</nav>
 </header>
