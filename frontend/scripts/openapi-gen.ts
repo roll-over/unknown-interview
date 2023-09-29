@@ -2,7 +2,9 @@ import { writeFile } from 'fs/promises';
 import generateOpenApiTypes, { type OpenAPI3 } from 'openapi-typescript';
 
 export default async function generateOpenApi() {
-	const spec = await getOpenApiSpec();
+	const spec = await getOpenApiSpec().catch(console.error);
+	if (!spec) return;
+
 	const types = await generateOpenApiTypes(spec);
 	writeFile('./src/lib/openapi.d.ts', types)
 		.then(() => {
@@ -16,7 +18,7 @@ export default async function generateOpenApi() {
 
 let retries = 0;
 function getOpenApiSpec() {
-	return new Promise<OpenAPI3>((resolve) => {
+	return new Promise<OpenAPI3>((resolve, reject) => {
 		fetch(
 			new URL(
 				'api/openapi.json',
@@ -27,12 +29,11 @@ function getOpenApiSpec() {
 			.then(resolve)
 			.catch(() => {
 				if (++retries >= 5) {
-					throw new Error(
-						"Couldn't reach the server in 5 retries. Aborting generating openAPI types"
-					);
+					throw Error("Couldn't reach the server in 5 retries. Aborting generating openAPI types");
 				}
 				console.error("Couldn't reach the server, retrying in 10 seconds");
-				setTimeout(() => resolve(getOpenApiSpec()), 10000);
-			});
+				setTimeout(() => resolve(getOpenApiSpec()), 10);
+			})
+			.catch(reject);
 	});
 }
