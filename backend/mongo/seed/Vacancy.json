@@ -1,0 +1,970 @@
+[
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1912"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "xKHOcS28QSSpUH56x3YhSA==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "ZHlqYqgLShqxpQ4i9Aa4eg==",
+                "subType": "04"
+            }
+        },
+        "title": "member",
+        "grade": "junior",
+        "salary": {
+            "min_level": 54000.0,
+            "max_level": 60000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Frontend Developer"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Deep Learning"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Node.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Xcode"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "CherryPy"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tornado"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Hadoop"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Model Selection"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Flask"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1913"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "aEEf8a8KRGukUFcB/88ftg==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "ZHlqYqgLShqxpQ4i9Aa4eg==",
+                "subType": "04"
+            }
+        },
+        "title": "manager",
+        "grade": "junior",
+        "salary": {
+            "min_level": 40000.0,
+            "max_level": 50000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Project Manager"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Bottle"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "XML"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Meteor"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Pyramid"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sentiment Analysis"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1914"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "9hFOPMyZSWiv3uD1KGwZGA==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "YhSRWJECTg6docFa+hONPg==",
+                "subType": "04"
+            }
+        },
+        "title": "manager",
+        "grade": "junior",
+        "salary": {
+            "min_level": 35000.0,
+            "max_level": 50000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Product Manager"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "React"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Backbone.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "FastAPI"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "RNN's"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "seaborn"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sentiment Analysis"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1915"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "05gvWB9KSd+kr1IKHoIriQ==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "YhSRWJECTg6docFa+hONPg==",
+                "subType": "04"
+            }
+        },
+        "title": "director",
+        "grade": "principal",
+        "salary": {
+            "min_level": 180000.0,
+            "max_level": 200000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Finance Director"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Objective-C"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Android Studio"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "MySQL"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Swift"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Chrome DevTools"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Node.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Oracle"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1916"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "3S/IPBSVTTaZAmYIYOwoDw==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "RzpUZPYDSpSOum0k9XCwMQ==",
+                "subType": "04"
+            }
+        },
+        "title": "member",
+        "grade": "junior",
+        "salary": {
+            "min_level": 54000.0,
+            "max_level": 60000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Mobile Developer iOS"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Java"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Microsoft Azure"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Pyramid"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Nginx"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "R"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1917"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "bE1SBR0WTh6CMldPndWoyQ==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "RzpUZPYDSpSOum0k9XCwMQ==",
+                "subType": "04"
+            }
+        },
+        "title": "manager",
+        "grade": "senior",
+        "salary": {
+            "min_level": 63000.0,
+            "max_level": 70000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Release Manager"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Data Preprocessing"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Spark"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tableau"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Hive"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Firebase"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sentiment Analysis"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Swift"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Bottle"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "TezJS"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1918"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "nfc21nXVQW2yScCBwaV98g==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "MaBCVEGwSJOoEtBQrICTFA==",
+                "subType": "04"
+            }
+        },
+        "title": "manager",
+        "grade": "middle",
+        "salary": {
+            "min_level": 36000.0,
+            "max_level": 60000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Product Manager"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Polymer"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "SQLite"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Ruby"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "MongoDB"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Vue.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "PHP"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Google Cloud"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tableau"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c1919"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "Wk+WAzcZTymV8Wut3anHgQ==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "MaBCVEGwSJOoEtBQrICTFA==",
+                "subType": "04"
+            }
+        },
+        "title": "member",
+        "grade": "middle",
+        "salary": {
+            "min_level": 81000.0,
+            "max_level": 90000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Mobile Developer iOS"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Android SDK"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Data Preprocessing"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Vue.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Shell"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Model Selection"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "MySQL"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "PHP"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "NodeJS"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "CSS"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191a"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "6kBWgabxSE61nSFxF1/5+g==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "mwyYrXWDTDuLClQs92FENA==",
+                "subType": "04"
+            }
+        },
+        "title": "teamlead",
+        "grade": "lead",
+        "salary": {
+            "min_level": 90000.0,
+            "max_level": 150000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "DevOps Team Lead"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "CI/CD"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sanic"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "iOS SDK"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "MongoDB"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Ruby"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Java"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Oracle"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Feature Engineering"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Ansible"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Mithril"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191b"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "r45H9ZDwSHCZqPxmWxDTOA==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "mwyYrXWDTDuLClQs92FENA==",
+                "subType": "04"
+            }
+        },
+        "title": "lead",
+        "grade": "lead",
+        "salary": {
+            "min_level": 91000.0,
+            "max_level": 130000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Frontend Developer"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "NodeJS"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Vue.js"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Bash"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "MongoDB"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Oracle"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sanic"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Machine Translation"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "CherryPy"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Nginx"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Bottle"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191c"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "I41Qqm8LQpKk0Sut1udWIw==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "ZWHAXTTJQueEG/iaq81dFQ==",
+                "subType": "04"
+            }
+        },
+        "title": "member",
+        "grade": "senior",
+        "salary": {
+            "min_level": 96000.0,
+            "max_level": 120000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Data Engineer"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Text Classification"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tableau"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Android Studio"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "FastAPI"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Feature Engineering"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Deep Learning"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191d"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "6lygqlP1QWSUzXfpGwVlmw==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "ZWHAXTTJQueEG/iaq81dFQ==",
+                "subType": "04"
+            }
+        },
+        "title": "manager",
+        "grade": "senior",
+        "salary": {
+            "min_level": 49000.0,
+            "max_level": 70000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Product Manager"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Python"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Data Preprocessing"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tableau"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Java"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Model Selection"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "FastAPI"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Shell"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191e"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "szgQSerwTr6dEHqTangS6g==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "/v2jByD5TO+Lig7iaVqVlw==",
+                "subType": "04"
+            }
+        },
+        "title": "member",
+        "grade": "middle",
+        "salary": {
+            "min_level": 54000.0,
+            "max_level": 90000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "Fullstack Developer"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Git"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Flask"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Java"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Ruby"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Meteor"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Bottle"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "SQL Server"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Sanic"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Xcode"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    },
+    {
+        "_id": {
+            "$oid": "6515a7f824529a52df2c191f"
+        },
+        "custom_id": {
+            "$binary": {
+                "base64": "DErY/eqvTjuH/5FlL2q73A==",
+                "subType": "04"
+            }
+        },
+        "owner_id": {
+            "$binary": {
+                "base64": "/v2jByD5TO+Lig7iaVqVlw==",
+                "subType": "04"
+            }
+        },
+        "title": "lead",
+        "grade": "lead",
+        "salary": {
+            "min_level": 78000.0,
+            "max_level": 130000,
+            "currency": "USD"
+        },
+        "profession": {
+            "_id": null,
+            "revision_id": null,
+            "name": "DevOps Engineer"
+        },
+        "skillset": [
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Tornado"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Python"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Core Data"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "Microsoft Azure"
+            },
+            {
+                "_id": null,
+                "revision_id": null,
+                "name": "CherryPy"
+            }
+        ],
+        "extra_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et dictum ipsum. Duis posuere ex sed lorem auctor malesuada. Etiam rutrum pulvinar tortor a congue. Nullam sit amet est quis tortor tempor dictum nec eget nisl. Sed lacinia rutrum bibendum. Ut a purus sed libero luctus fermentum. Duis vel enim magna. Nam sapien nibh, vulputate eget risus ac, posuere commodo nunc. Vestibulum rhoncus sapien eget arcu vestibulum, sed aliquam nibh gravida. "
+    }
+]
