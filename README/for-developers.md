@@ -2,64 +2,13 @@
 
 # Для разработчиков
 
-## Стек
+[Стек](./for-developers/stack.md)
 
-### Фронт
+[Pre requierments](./for-developers/pre-requirments.md)
 
-- [svelte](https://svelte.dev/)
-- [typescript](<(https://www.typescriptlang.org/)>)
-- [pnpm](https://pnpm.io/)
-- [tailwindcss](https://tailwindcss.com/)
-- [vite](https://vitejs.dev/)
-- [prettier](https://prettier.io/)
-- [skeleton](https://www.skeleton.dev/)
+[Правила](./for-developers/rules.md)
 
-### Бэк
-
-- [python](https://www.python.org/)
-- [fastAPI](https://fastapi.tiangolo.com/)
-- [mongoDB](https://www.mongodb.com/)
-
-### Общее
-
-- [docker](https://www.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/)
-
-## Pre requierments
-
-- docker
-- docker-compose
-- node.js 20
-- pnpm
-- python 3.11
-
-Rename .env.exemple -> .env
-
-## Install and Run via docker compose
-
-clone repository:
-```
-git clone git@github.com:roll-over/unknown-interview && cd unknown-interview
-```
-
-rename .env.exemple -> .env:
-```
-mv .env.example .env
-```
-
-run docker-compose:
-```
-docker-compose up --build
-```
-
-or run it as the administrator:
-```
-sudo docker-compose up --build
-```
-
-check in browser http://localhost:2080/ 
-
-
+[Установка и запуск](./for-developers/instalation.md)
 
 [Документация по фронтенду](./../frontend/README.md)
 
