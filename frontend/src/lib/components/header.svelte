@@ -25,6 +25,6 @@
 			<a href="/auth/login">Log-in</a>
 		{/if}
 
-		<a href="/api/service">Api</a>
+		<a href="/integrations">Api</a>
 	</nav>
 </header>
