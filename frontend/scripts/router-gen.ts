@@ -19,7 +19,7 @@ export default async function generateRoutes() {
 			)
 	);
 	const routeType = routesToType(routes);
-	writeRouteFile(routeType);
+	writeRouteFile(routeType).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
