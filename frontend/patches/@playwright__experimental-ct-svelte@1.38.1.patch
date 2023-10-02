@@ -1,5 +1,5 @@
 diff --git a/index.d.ts b/index.d.ts
-index 0fd476f7ed146a984af470c5c826e17b70fe53c0..f46cb94eb3230901c7bef9056db6e33c787e61ac 100644
+index 0fd476f7ed146a984af470c5c826e17b70fe53c0..56fd39aab7993d308aad1ce3fdd692c8139cb008 100644
 --- a/index.d.ts
 +++ b/index.d.ts
 @@ -25,7 +25,7 @@ import type {
@@ -25,14 +25,14 @@ index 0fd476f7ed146a984af470c5c826e17b70fe53c0..f46cb94eb3230901c7bef9056db6e33c
 -  on?: ComponentEvents;
 -  hooksConfig?: HooksConfig;
 -}
-+type HTMLString=string & {};
++type HTMLString = string & {};
 +export type MountOptions<Component extends SvelteComponent>= {
-+  slots?: Partial<Record<keyof Component['$$slot_def'], HTMLString>>;
-+  on?: {[K in keyof ComponentEvents<Component>]?: (event: ComponentEvents<Component>[K]) => void};
-+  hooksConfig?: JsonObject;
-+} & ( Record<never,any> extends ComponentProps<Component> 
-+  ? {props?:ComponentProps<Component> }
-+  : {props:ComponentProps<Component> } )
++    slots?: Partial<Record<keyof Component['$$slot_def'], HTMLString>>;
++    on?: {[K in keyof ComponentEvents<Component>]?: (event: ComponentEvents<Component>[K]) => void};
++    hooksConfig?: JsonObject;
++  } & ( Record<never,any> extends ComponentProps<Component> 
++    ? {props?:ComponentProps<Component> }
++    : {props:ComponentProps<Component> } )
  
  interface MountResult<Component extends SvelteComponent> extends Locator {
    unmount(): Promise<void>;
@@ -48,7 +48,7 @@ index 0fd476f7ed146a984af470c5c826e17b70fe53c0..f46cb94eb3230901c7bef9056db6e33c
 +  mount<Component extends SvelteComponent = SvelteComponent>(
      component: new (...args: any[]) => Component,
 -    options?: MountOptions<HooksConfig, Component>
-+    options: MountOptions< Component>
++    options: MountOptions<Component>
    ): Promise<MountResult<Component>>;
  }
  
