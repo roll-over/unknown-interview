@@ -10,5 +10,7 @@
   "material-icon-theme.files.associations": {
     "*.ctest.ts": "test-ts",
     "*.cspec.ts": "test-ts"
-  }
+  },
+  "prettier.ignorePath": "frontend/.prettierignore",
+  "prettier.configPath": "frontend/.prettierrc"
 }
