@@ -51,11 +51,12 @@ async def init_database():
         "dev": "development",
         "test": "testing",
         "prod": "production",
+        "dev_stand": "development_stand",
     }
 
     if stage not in database_stage:
         raise ValueError(
-            "Unknown database stage. The stage can be one of: dev, test, or prod"
+            "Unknown database stage. The stage can be one of: dev, dev_stand, test, or prod"
         )
 
     db_name = "unknown_mongo_{stage}".format(stage=database_stage.get(stage))

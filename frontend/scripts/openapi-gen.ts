@@ -20,7 +20,7 @@ function getOpenApiSpec() {
 		fetch(
 			new URL(
 				'api/openapi.json',
-				process.env.isDocker ? 'http://client:80' : 'http://localhost:2080'
+				process.env.isDocker ? process.env.INTERNAL_URL : process.env.EXTERNAL_URL
 			)
 		)
 			.then((x) => x.json())
