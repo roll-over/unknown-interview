@@ -5,7 +5,10 @@
         "name": "Захар Котов",
         "email": "zakharK@gmail.com",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "c4a1ce71-2dbc-4124-a950-7e7ac7762148",
+            "68411ff1-af0a-446b-a450-5701ffcf1fb6"
+        ],
         "created_at": "2023-06-29T09:43:14.574Z"
     },
     {
@@ -14,7 +17,10 @@
         "name": "Cool Systems Ltd",
         "email": "hr@cools.io",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "f6114e3c-cc99-4968-afde-e0f5286c1918",
+            "d3982f58-1f4a-49df-a4af-520a1e822b89"
+        ],
         "created_at": "2023-10-05T09:53:41.392Z"
     },
     {
@@ -23,7 +29,10 @@
         "name": "Activision Blizzard",
         "email": "besthr@blizzar.com",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "dd2fc83c-1495-4d36-9902-660860ec280f",
+            "6c4d5205-1d16-4e1e-8232-574f9dd5a8c9"
+        ],
         "created_at": "2023-07-27T10:50:11.289Z"
     },
     {
@@ -32,7 +41,10 @@
         "name": "Yolo69 HR",
         "email": "yolocvhere@proton.me",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "9df736d6-75d5-416d-b249-c081c1a57df2",
+            "5a4f9603-3719-4f29-95f1-6baddda9c781"
+        ],
         "created_at": "2023-12-24T14:24:22.923Z"
     },
     {
@@ -41,7 +53,10 @@
         "name": "Microsoft",
         "email": "jackdaniels@microsoft.com",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "ea405681-a6f1-484e-b59d-2171175ff9fa",
+            "af8e47f5-90f0-4870-99a8-fc665b10d338"
+        ],
         "created_at": "2023-10-14T21:07:04.284Z"
     },
     {
@@ -50,7 +65,10 @@
         "name": "Erste Donaudampfschiffahrtsgesellschaft",
         "email": "hr@ddsgf-bluea-danube.at",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "238d50aa-6f0b-4292-a4d1-2badd6e75623",
+            "ea5ca0aa-53f5-4164-94cd-77e91b05659b"
+        ],
         "created_at": "2023-05-02T19:08:29.387Z"
     },
     {
@@ -59,7 +77,10 @@
         "name": "La Fromagette",
         "email": "jaquebarnier@ddsgf-bluea-danube.at",
         "cvs_list": [],
-        "vacancies_list": [],
+        "vacancies_list": [
+            "b3381049-eaf0-4ebe-9d10-7a936a7812ea",
+            "0c4ad8fd-eaaf-4e3b-87ff-91652f6abbdc"
+        ],
         "created_at": "2023-11-04T13:43:20.827Z"
     },
     {

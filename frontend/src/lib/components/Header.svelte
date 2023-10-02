@@ -64,5 +64,6 @@
 		{:else}
 			<a href={route('/auth/login')}>Log-in</a>
 		{/if}
+		<a href={route('/integrations')}>Api</a>
 	</nav>
 </header>
