@@ -9,6 +9,8 @@ class Settings(BaseSettings):
 
     GOOGLE_CLIENT_ID: str
     GOOGLE_CLIENT_SECRET: str
+    EXTERNAL_URL: str = "http://localhost:2080"
+    INTERNAL_URL: str = "http://client:80"
 
     IS_TEST: bool = False
 
