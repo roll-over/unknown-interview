@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
-from app.repository import CVsRepository
-from app.unitorwork import UVC_dep as CV_unit
+from app.services.repository import CVsRepository
+from app.services.unitorwork import UVC_dep as CV_unit
 from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])

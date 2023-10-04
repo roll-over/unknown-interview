@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from app.api.schemas.user import UserInfoSchema
 from app.config import settings
 from app.exceptions import UserNotAuthenticated
-from app.repository import UserRepository
+from app.services.repository import UserRepository
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
