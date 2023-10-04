@@ -6,7 +6,7 @@ import itsdangerous
 from app.config import settings
 from app.db.models.mixins import Role
 from app.db.models.user import User
-from app.repository.repositories import user_repo
+from app.services.repository.repositories import user_repo
 
 TEST_USER_DATA = {
     Role.applicant: {
