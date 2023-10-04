@@ -47,5 +47,6 @@
 			<a href={route('/auth/login')}>Log-in</a>
 		{/if}
 		<a href={route('/integrations')}>Api</a>
+		<a href={route('/documents')}>Documents</a>
 	</nav>
 </header>
