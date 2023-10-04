@@ -1,6 +1,6 @@
 from app.db.models.profession import Profession
-from app.repository.interfaces import MongoBeanieRepository
-from app.repository.services import ProfessionService
+from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.services import ProfessionService
 
 
 class ProfessionRepositoryModel(MongoBeanieRepository):

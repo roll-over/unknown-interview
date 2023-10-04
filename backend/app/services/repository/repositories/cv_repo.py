@@ -1,6 +1,6 @@
 from app.db.models.cv import CV
-from app.repository.interfaces import MongoBeanieRepository
-from app.repository.services import VacancyCVService
+from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.services import VacancyCVService
 
 
 class CVRepositoryModel(MongoBeanieRepository):

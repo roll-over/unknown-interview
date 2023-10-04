@@ -1,5 +1,5 @@
 from app.exceptions import UserEmailAlreadyExist
-from app.repository.interfaces import AbstractBaseRepository
+from app.services.repository.interfaces import AbstractBaseRepository
 
 
 class UserService:
@@ -46,6 +46,6 @@ class UserService:
         user_data = await self.get_user(user_email)
 
         return {
-            'vacancies': user_data.vacancies_list,
-            'cvs': user_data.cvs_list,
+            "vacancy_ids": user_data.vacancies_list,
+            "cv_ids": user_data.cvs_list,
         }

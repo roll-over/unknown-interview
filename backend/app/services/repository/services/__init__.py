@@ -1,4 +1,4 @@
-from .match import MatchCollectionService
+from .match import MatchService
 from .profession import ProfessionService
 from .skill import SkillService
 from .user import UserService
@@ -11,5 +11,5 @@ __all__ = (
     "UserService",
     "ProfessionService",
     "SkillService",
-    "MatchCollectionService",
+    "MatchService",
 )

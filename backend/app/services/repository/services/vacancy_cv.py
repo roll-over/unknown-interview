@@ -1,5 +1,5 @@
 from app.exceptions import ForbiddenAction
-from app.repository.interfaces import AbstractBaseRepository
+from app.services.repository.interfaces import AbstractBaseRepository
 
 
 class VacancyCVService:
@@ -15,6 +15,13 @@ class VacancyCVService:
 
     async def get_one(self, data_id):
         return await self.repo.fetch_one({"custom_id": data_id})
+
+    async def get_many(self, filter_, limit=None):
+        return await self.repo.fetch_many(filter_, limit)
+
+    # Удалить потом get_all
+    async def get_all(self):
+        return await self.repo.fetch_all()
 
     async def get_random(self):
         return await self.repo.fetch_random()

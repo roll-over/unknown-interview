@@ -1,7 +1,7 @@
 from app.db.models.mixins import Note
 from app.db.models.vacancy_note import VacancyNote
-from app.repository.interfaces import MongoBeanieRepository
-from app.repository.services import VacancyCVNoteService
+from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.services import VacancyCVNoteService
 
 
 class VacancyNoteRepositoryModel(MongoBeanieRepository):

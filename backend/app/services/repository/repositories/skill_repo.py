@@ -1,6 +1,6 @@
 from app.db.models.skill import Skill
-from app.repository.interfaces import MongoBeanieRepository
-from app.repository.services import SkillService
+from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.services import SkillService
 
 
 class SkillRepositoryModel(MongoBeanieRepository):

@@ -1,4 +1,4 @@
-from app.repository.interfaces import AbstractBaseRepository
+from app.services.repository.interfaces import AbstractBaseRepository
 
 
 class SkillService:

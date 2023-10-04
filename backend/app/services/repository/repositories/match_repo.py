@@ -1,11 +1,11 @@
-from app.db.models.match import MatchCollection
-from app.repository.interfaces import MongoBeanieRepository
-from app.repository.services import MatchCollectionService
+from app.db.models import Match
+from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.services import MatchService
 
 
 class MatchRepositoryModel(MongoBeanieRepository):
-    model = MatchCollection
+    model = Match
 
 
 def get_match_repository():
-    return MatchCollectionService(MatchRepositoryModel)
+    return MatchService(MatchRepositoryModel)
