@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
-from app.repository.repositories.cv_repo import CVRepositoryModel
-from app.repository.repositories.user_repo import UserRepositoryModel
-from app.repository.repositories.vacancy_repo import VacancyRepositoryModel
+from app.services.repository.repositories.cv_repo import CVRepositoryModel
+from app.services.repository.repositories.user_repo import UserRepositoryModel
+from app.services.repository.repositories.vacancy_repo import VacancyRepositoryModel
 
 
 class AbstractUnitOfWork(ABC):
+    """Abstract class for unit of work representation."""
+
     users: Type[UserRepositoryModel]
     cvs: Type[CVRepositoryModel]
     vacancy: Type[VacancyRepositoryModel]
