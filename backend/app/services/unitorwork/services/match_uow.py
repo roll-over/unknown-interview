@@ -1,6 +1,8 @@
 from typing import Dict, Generator, List, Union
 from uuid import UUID
 
+from pymongo import DESCENDING
+
 from app.db.models import CV, MatchRelation, Role, User, Vacancy
 from app.services.repository.repositories import (
     cv_repo,
@@ -67,23 +69,22 @@ class MatchVacancyCVUoW:
         Returns:
             The record if a match relation is found, None otherwise.
         """
-        relations = (MatchRelation.shown, MatchRelation.not_shown)
-        request = {self.id_type: record_id}
+        query = {'$or': [
+            {self.id_type: record_id, self.relation_type: MatchRelation.shown},
+            {self.id_type: record_id, self.relation_type: MatchRelation.not_shown},
+        ]}
+        sort = (self.relation_type, DESCENDING)
+        record = await self.matches.get_records(query, sort=sort, limit=1)
 
-        for relation in relations:
-            request[self.relation_type] = relation
-            record = await self.matches.get_records(request, limit=1)
+        if record:
+            await self.matches.update_relation(
+                record,
+                self.relation_type,
+                MatchRelation.shown,
+            )
+            return record
 
-            if record:
-                if relation == MatchRelation.not_shown:
-                    await self.matches.update_relation(
-                        record,
-                        self.relation_type,
-                        MatchRelation.shown,
-                    )
-                return record
-
-    async def __get_match(
+    async def __get_match_for_offer(
         self,
         reference_records: List[UUID],
         owner_data: User,
@@ -111,8 +112,8 @@ class MatchVacancyCVUoW:
 
             return await self.offer_repo.get_one(offer_record_id)
 
-        job_record = await self.repo.get_one(record_id)
-        await self.prepare_matches(job_record, owner_data, role)
+        # job_record = await self.repo.get_one(record_id)
+        # await self.prepare_matches(job_record, owner_data, role)
 
     async def __filter_records(
         self, record: Union[CV | Vacancy]
@@ -175,7 +176,7 @@ class MatchVacancyCVUoW:
 
     async def get_matches(
         self, owner_data: User, role: Role
-    ) -> Union[CV, Vacancy, None]:
+    ) -> Union[CV | Vacancy | None]:
         """Return matches for a given owner data and role
 
         Args:
@@ -188,6 +189,21 @@ class MatchVacancyCVUoW:
         """
         reference_records = await self.__get_user_records(owner_data, role)
         if reference_records:
-            return await self.__get_match(reference_records, owner_data, role)
+            return await self.__get_match_for_offer(reference_records, owner_data, role)
 
         return await self.offer_repo.get_random()
+
+    async def delete_matches(self, record_id: UUID, owner_data: User, role: Role):
+        """Delete all matches which contain already deleted record, specified by record_id
+
+        Args:
+            record_id: id of already deleted job record
+            owner_data: The owner data associated with the matches.
+            role: The role associated with the matches.
+
+        Returns:
+            Quantity of deleted records if success.
+        """
+        await self.__get_user_records(owner_data, role)
+        deleted_record = {self.id_type: record_id}
+        return await self.matches.delete_matches(deleted_record)
