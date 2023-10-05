@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.repository import VacanciesRepository
-from app.unitorwork import UVC_dep as Vacancy_unit
+from app.services.repository import VacanciesRepository
+from app.services.unitorwork import UVC_dep as Vacancy_unit
 from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])

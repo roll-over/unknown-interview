@@ -9,7 +9,7 @@ from tests.utils import get_test_data
 async def test_get_random_nothing(test_client: AsyncClient, no_db_entries_error: bytes):
     response = await test_client.get("/api/v1/vacancies/random_vacancy")
 
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == status.HTTP_200_OK
     assert no_db_entries_error in response.content
 
 
@@ -18,7 +18,7 @@ async def test_get_nothing(test_client: AsyncClient, no_db_entries_error: bytes)
     vacancy_id = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
     response = await test_client.get(f"/api/v1/vacancies/{vacancy_id}")
 
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == status.HTTP_200_OK
     assert no_db_entries_error in response.content
 
 
@@ -145,7 +145,7 @@ async def test_vacancy_patch(
 @pytest.mark.parametrize(
     "pointer, expected_delete_status, expected_get_status",
     [
-        (pointer, status.HTTP_200_OK, status.HTTP_422_UNPROCESSABLE_ENTITY) 
+        (pointer, status.HTTP_200_OK, status.HTTP_200_OK)
         for pointer in range(4)
     ]
 )

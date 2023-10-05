@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.schemas.profession import ProfessionSchema
-from app.repository.dependencies import ProfessionsRepository
+from app.services.repository import ProfessionsRepository
 
 profession_router = APIRouter(prefix="/professions", tags=["Professions"])
 

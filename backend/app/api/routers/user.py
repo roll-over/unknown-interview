@@ -7,7 +7,7 @@ from app.api.schemas.user import (
     UserRequestSchema,
     UserResponseSchema,
 )
-from app.repository import UserRepository
+from app.services.repository import UserRepository
 from app.utils import current_user
 
 user_router = APIRouter(prefix="/users", tags=["Users"])

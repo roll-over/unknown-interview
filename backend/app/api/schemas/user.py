@@ -18,8 +18,8 @@ class UserRequestSchema(BaseModel):
 
 
 class UserDataListResponseSchema(BaseModel):
-    vacancies: List[UUID] = None
-    cvs: List[UUID] = None
+    vacancy_ids: List[UUID] = None
+    cv_ids: List[UUID] = None
 
 
 class UserEmailSchema(EmailStr):
