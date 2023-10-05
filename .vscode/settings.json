@@ -10,5 +10,9 @@
   "material-icon-theme.files.associations": {
     "*.ctest.ts": "test-ts",
     "*.cspec.ts": "test-ts"
-  }
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
 }
