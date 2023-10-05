@@ -1,4 +1,5 @@
 from typing import Dict, Union
+from uuid import UUID
 
 from app.db.models import CV, Role, User, Vacancy
 
@@ -39,6 +40,43 @@ class RecordHandler:
         created_record = await self.job_records.create_new(
             data, owner_data=owner_data, role=role
         )
-        await self.matches.prepare_matches(created_record)
+        await self.matches.prepare_matches(
+            created_record,
+            owner_data=owner_data,
+            role=role,
+        )
 
         return created_record
+
+    async def get_matched_record(
+            self, owner_data: User, role: Role
+    ) -> Union[CV | Vacancy | None]:
+        """Return matched record from prepared matches collection.
+
+        Args:
+            owner_data: The owner data associated with the record.
+            role: The role associated with the record.
+
+        Returns:
+            Offer CV or Vacancy if existed, otherwise None
+        """
+        return await self.matches.get_matches(owner_data, role)
+
+    async def delete_record(
+        self,
+        record_id: UUID,
+        *,
+        owner_data: User,
+        role: Role,
+    ) -> bool:
+        deleted_record: bool = await self.job_records.delete_record(
+            record_id,
+            owner_data=owner_data,
+            role=role,
+        )
+        if deleted_record:
+            return await self.matches.delete_matches(
+                record_id,
+                owner_data=owner_data,
+                role=role,
+            )
