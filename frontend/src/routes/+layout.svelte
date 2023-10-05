@@ -4,12 +4,14 @@
 	import { AppShell, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+	import Analytics from '$lib/components/Analytics.svelte';
 
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	export let data;
 </script>
 
 <QueryClientProvider client={data.queryClient}>
+	<Analytics />
 	<AppShell
 		regionPage="h-full w-full"
 		slotPageContent="h-full w-full"
