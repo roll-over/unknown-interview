@@ -1,5 +1,7 @@
 [![CI](https://github.com/roll-over/unknown-interview/actions/workflows/CI.yml/badge.svg)](https://github.com/roll-over/unknown-interview/actions/workflows/CI.yml)
 
+![Union-_2_](https://github.com/roll-over/unknown-interview/assets/59844758/6a27c4d4-aa79-46ff-8089-56e4f073d722)
+
 # Hide-Hire
 
 Проект для анонимного поиска работы - там, где до первого созвона и/или внутри переписки, кандидат и работодатель не будут знать друг о друге ничего, кроме того, что указано в cv и базовых вопросов про опыт, стек, грейд, зарплатной вилке и другой недеанонимизирующей информации.
@@ -14,22 +16,6 @@
 - При взаимной заинтересованности, между кандидатом и работодателем формируется "матч", и автоматически создается общий чат для дальнейшего общения.
 - Для более углубленного общения, когда обе стороны заинтересованы, предусмотрена специальная кнопка, позволяющая разделить дополнительные данные о себе или организации с партнером по разговору.
 
-## Ссылки:
-
-### Кастдев
-
-https://docs.google.com/spreadsheets/d/1j2nhrZpbJ7wLDlrue3sO2gW2nVpvw7RbbkfMaX7Px1U/edit?usp=sharing
-
-### Дизайн
-
-#### Figma
-
-https://www.figma.com/file/Aiv1GFLtbGJjIOZJqSYKsp/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?type=design&node-id=0-1&mode=design&t=sdQuJmXNYKyx1RHj-0
-
-#### Прототип
-
-https://www.figma.com/proto/Aiv1GFLtbGJjIOZJqSYKsp/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?page-id=0%3A1&type=design&node-id=82-32&viewport=-191%2C1709%2C0.09&t=fhiN2ns3ALreryb7-1&scaling=min-zoom&starting-point-node-id=82%3A32&mode=design
-
 ## Дедлайн 3 месяца:
 
 До 1 декабря мы должны иметь монетизацию или понимание того что мы делаем не так.
@@ -40,9 +26,6 @@ https://www.figma.com/proto/Aiv1GFLtbGJjIOZJqSYKsp/%D0%BF%D1%80%D0%BE%D0%B5%D0%B
 
 [Миссия](./README/mission.md)
 
+[Ссылки](./README/links.md)
+
 [Для разработчиков](./README/for-developers.md)
-
-TODO:
-
-1. Какие сферы компании?
-2.

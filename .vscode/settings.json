@@ -12,5 +12,9 @@
     "*.cspec.ts": "test-ts"
   },
   "prettier.ignorePath": "frontend/.prettierignore",
-  "prettier.configPath": "frontend/.prettierrc"
+  "prettier.configPath": "frontend/.prettierrc",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
 }

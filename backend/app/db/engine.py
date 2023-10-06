@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
 from app.db.models.cv import CV
 from app.db.models.cv_note import CVNote
-from app.db.models.match import MatchCollection
+from app.db.models.match import Match
 from app.db.models.profession import Profession
 from app.db.models.skill import Skill
 from app.db.models.user import User
@@ -33,7 +33,7 @@ async def __init_beanie(db_name):
         VacancyNote,
         Profession,
         Skill,
-        MatchCollection,
+        Match,
     ]
 
     client = await init_client(db_name)
@@ -51,11 +51,13 @@ async def init_database():
         "dev": "development",
         "test": "testing",
         "prod": "production",
+        "dev_stand": "development_stand",
     }
 
     if stage not in database_stage:
         raise ValueError(
-            "Unknown database stage. The stage can be one of: dev, test, or prod"
+            """Unknown database stage. The stage can be one of:
+            dev, dev_stand, test, or prod"""
         )
 
     db_name = "unknown_mongo_{stage}".format(stage=database_stage.get(stage))

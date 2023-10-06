@@ -8,7 +8,7 @@ from app.api.schemas.vacancy_note import (
     VacancyNoteRequestSchema,
     VacancyNoteResponseSchema,
 )
-from app.repository import VacancyNotesRepository
+from app.services.repository import VacancyNotesRepository
 
 vacancy_note_router = APIRouter(prefix="/vacancy_note", tags=["Vacancy Notes"])
 

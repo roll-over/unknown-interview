@@ -12,6 +12,7 @@ services:
       - dev_unknown_mongo
     env_file:
       - .env
+
   dev_frontend:
     build: ./frontend
     container_name: dev_frontend
@@ -30,8 +31,11 @@ services:
       - ./frontend/vite.config.ts:/frontend/vite.config.ts
     env_file:
       - .env
+    depends_on:
+      - dev_backend
     environment:
       - isDocker=true
+
   dev_unknown_mongo:
     image: mongo
     container_name: dev_unknown_mongo
@@ -45,6 +49,8 @@ services:
     build: ./backend/mongo
     depends_on:
       - dev_unknown_mongo
+    environment:
+      - db_host=dev_unknown_mongo
 
   dev_client:
     image: nginx

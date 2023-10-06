@@ -4,6 +4,12 @@ from fastapi.responses import JSONResponse
 
 
 async def response_validation_exception_handler(request, exc):
+    if exc.body is None:
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=jsonable_encoder([]),
+        )
+
     message = f"Validation error. Data from database equal to: {exc.body}"
 
     return JSONResponse(
