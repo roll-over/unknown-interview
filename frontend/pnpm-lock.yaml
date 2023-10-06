@@ -14,9 +14,9 @@ patchedDependencies:
   '@sveltejs/kit@1.25.1':
     hash: vra2r7fvwhg4pza7a47mqc2vja
     path: patches/@sveltejs__kit@1.25.1.patch
-  '@types/gtag.js@0.0.14':
-    hash: eku5uu6vxwa5ptv7j7qsi5tgxa
-    path: patches/@types__gtag.js@0.0.14.patch
+  '@types/gtag.js@0.0.15':
+    hash: qe3nomneilxkxbxjy63wah5ci4
+    path: patches/@types__gtag.js@0.0.15.patch
   openapi-fetch@0.7.6:
     hash: p3d3mond6vrkhji5dfurp2d6ga
     path: patches/openapi-fetch@0.7.6.patch
@@ -73,8 +73,8 @@ devDependencies:
     specifier: ^1.25.1
     version: 1.25.1(patch_hash=vra2r7fvwhg4pza7a47mqc2vja)(svelte@4.2.1)(vite@4.4.9)
   '@types/gtag.js':
-    specifier: ^0.0.14
-    version: 0.0.14(patch_hash=eku5uu6vxwa5ptv7j7qsi5tgxa)
+    specifier: ^0.0.15
+    version: 0.0.15(patch_hash=qe3nomneilxkxbxjy63wah5ci4)
   '@types/node':
     specifier: ^20.7.0
     version: 20.7.0
@@ -715,8 +715,8 @@ packages:
   /@types/estree@1.0.2:
     resolution: {integrity: sha512-VeiPZ9MMwXjO32/Xu7+OwflfmeoRwkE/qzndw42gGtgJwZopBnzy2gD//NN1+go1mADzkDcqf/KnFRSjTJ8xJA==}
 
-  /@types/gtag.js@0.0.14(patch_hash=eku5uu6vxwa5ptv7j7qsi5tgxa):
-    resolution: {integrity: sha512-NcR9rf3B93ie5T086NIpXGTtoIJeOeQ14+IBIBwfNBztb175e/0gONc60ywUU4+f9dwctgz9L3I4h5Gs/hl31g==}
+  /@types/gtag.js@0.0.15(patch_hash=qe3nomneilxkxbxjy63wah5ci4):
+    resolution: {integrity: sha512-HT912iMVOWvj4yGwNTt5tBPMBWtrqIBH9xuOPrkXMuzXohXv1+lFw4fihX8fv1fl+7BqAca/ij7ezQjL2jLWlQ==}
     dev: true
     patched: true
 
