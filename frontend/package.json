@@ -35,6 +35,7 @@
 		"@playwright/experimental-ct-svelte": "^1.38.1",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.25.1",
+		"@types/gtag.js": "^0.0.15",
 		"@types/node": "^20.7.0",
 		"@typescript-eslint/eslint-plugin": "^6.7.3",
 		"@typescript-eslint/parser": "^6.7.3",
@@ -63,7 +64,8 @@
 			"openapi-fetch@0.7.6": "patches/openapi-fetch@0.7.6.patch",
 			"@sveltejs/kit@1.25.1": "patches/@sveltejs__kit@1.25.1.patch",
 			"@skeletonlabs/skeleton@2.2.0": "patches/@skeletonlabs__skeleton@2.2.0.patch",
-			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch"
+			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch",
+			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch"
 		}
 	}
 }
