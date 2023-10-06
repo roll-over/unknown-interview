@@ -7,6 +7,8 @@
 	import Profession from '../Profession.svelte';
 	import Skills from '../Skills.svelte';
 	import { currencies, defaultCVState, grades, titles } from '../common';
+	import MaterialSymbolsSearch from '~icons/material-symbols/search'
+	import CilArrowRight from '~icons/cil/arrow-right'
 
 	const CVStateData = persisted('CVState', defaultCVState);
 	$: submitMutation = createMutation({
@@ -59,71 +61,84 @@
 	{JSON.stringify($CVInfo.data?.data) ?? 'Your review will by displayed here after you save it'}
 </div>
 <form
-	class="flex flex-col items-start gap-3 p-3"
+	class="flex flex-col items-start gap-5 p-3"
 	on:submit={handleSubmit}
 >
 	<h1>Your Resume</h1>
-	<fieldset>
-		<legend>Necessary title</legend>
-		<RadioGroup
-			options={titles}
-			bind:value={$CVStateData.title}
-			name="title"
-		/>
+
+	<fieldset class="w-80">
+		<legend class="pb-2">Profession</legend>
+		<Profession bind:selectedProfession={$CVStateData.profession.name} />
 	</fieldset>
 	<fieldset>
-		<legend>Necessary grade</legend>
+		<legend class="pb-2">Grade</legend>
 		<RadioGroup
 			options={grades}
 			bind:value={$CVStateData.grade}
 			name="position"
 		/>
 	</fieldset>
+
 	<fieldset>
-		<legend>Available salary</legend>
-		<div class="flex gap-4">
+		<legend class="pb-2">Position</legend>
+		<RadioGroup
+			options={titles}
+			bind:value={$CVStateData.title}
+			name="title"
+		/>
+	</fieldset>
+
+	<fieldset class="w-80">
+		<legend class="pb-2 flex items-center gap-0.5">Skills
+			<MaterialSymbolsSearch/>
+		</legend>
+		<Skills bind:selectedSkills={$CVStateData.skillset} />
+	</fieldset>
+
+	<fieldset>
+		<div class="flex items-center gap-1">
+			<legend>Estimated salary</legend>
 			<label>
-				min:
+				from
 				<input
 					type="number"
 					min="0"
-					class="rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+					class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
 					bind:value={$CVStateData.salary.min_level}
 				/>
 			</label>
 			<label>
-				max:
+				to
 				<input
 					type="number"
 					min={$CVStateData.salary.min_level}
-					class="rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+					class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
 					bind:value={$CVStateData.salary.max_level}
 				/>
 			</label>
-			<label>
-				currency:
-				<select
-					class="rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-					bind:value={$CVStateData.salary.currency}
-				>
-					{#each currencies as currency}
-						<option value={currency}>{currency}</option>
-					{/each}
-				</select>
-			</label>
 		</div>
+		<label>
+			Currency:
+			<select
+				class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
+				bind:value={$CVStateData.salary.currency}
+			>
+				{#each currencies as currency}
+					<option value={currency}>{currency}</option>
+				{/each}
+			</select>
+		</label>
 	</fieldset>
-	<fieldset class="w-80">
-		<legend>Necessary profession</legend>
-		<Profession bind:selectedProfession={$CVStateData.profession.name} />
-	</fieldset>
-	<fieldset class="w-80">
-		<h2>Necessary skills</h2>
-		<Skills bind:selectedSkills={$CVStateData.skillset} />
-	</fieldset>
+
+
 	<button
-		class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-	>
-		SUBMIT
-	</button>
+	class="ml-auto group flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400"
+>
+View resume
+	<CilArrowRight
+	class="w-12 h-12"
+	/>
+</button>
+
+
 </form>
