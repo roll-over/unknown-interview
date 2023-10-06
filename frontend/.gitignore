@@ -10,3 +10,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 package-lock.json
 src/lib/openapi.d.ts
+src/lib/router.d.ts
+/test-results/
+/playwright-report/
+/playwright/.cache/

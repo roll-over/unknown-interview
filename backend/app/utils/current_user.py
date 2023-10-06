@@ -1,7 +1,7 @@
 from fastapi import Request
 
 from app.exceptions import UserNotAuthenticated
-from app.repository import UserRepository
+from app.services.repository import UserRepository
 
 
 async def current_user(User: UserRepository, request: Request):

@@ -11,19 +11,20 @@
 >
 	export let options: V[];
 	export let value: V;
+	export let name: string;
 </script>
 
 <div class="flex gap-2">
 	{#each options as option (option)}
 		<label
-			class="bg-app-blue-100 rounded-md px-2 {value === option
-				? 'outline-app-blue-400 outline outline-1'
+			class="cursor-pointer rounded-md bg-app-blue-100 px-2 {value === option
+				? 'outline outline-1 outline-app-blue-400'
 				: ''}"
 		>
 			{option}
 			<input
 				type="radio"
-				name="position"
+				{name}
 				bind:group={value}
 				value={option}
 				class="absolute w-0 opacity-0"

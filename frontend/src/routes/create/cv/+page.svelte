@@ -17,10 +17,10 @@
 	});
 
 	function handleSubmit() {
-		const { skillset, title, grade, profession, salary } = $CVStateData;
+		const { skillset, ...rest } = $CVStateData;
 
 		$submitMutation.mutate(
-			{ title, grade, profession, salary, skillset: skillset.map((name) => ({ name })) },
+			{ ...rest, skillset: skillset.map((name) => ({ name })) },
 			{
 				onSettled(d, e) {
 					console.log({ d, e });
@@ -28,7 +28,9 @@
 				onSuccess(d) {
 					console.log(d);
 					if (!d.data) return;
-					cvId = d.data.custom_id;
+					if ('custom_id' in d.data) {
+						cvId = d.data.custom_id;
+					}
 				}
 			}
 		);
@@ -66,6 +68,7 @@
 		<RadioGroup
 			options={titles}
 			bind:value={$CVStateData.title}
+			name="title"
 		/>
 	</fieldset>
 	<fieldset>
@@ -73,6 +76,7 @@
 		<RadioGroup
 			options={grades}
 			bind:value={$CVStateData.grade}
+			name="position"
 		/>
 	</fieldset>
 	<fieldset>

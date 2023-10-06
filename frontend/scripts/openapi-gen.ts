@@ -1,9 +1,9 @@
 import { writeFile } from 'fs/promises';
-import openApiTs, { type OpenAPI3 } from 'openapi-typescript';
+import generateOpenApiTypes, { type OpenAPI3 } from 'openapi-typescript';
 
-async function generateOpenAPI() {
-	const spec = await getOpenAPISpec();
-	const types = await openApiTs(spec);
+export default async function generateOpenApi() {
+	const spec = await getOpenApiSpec();
+	const types = await generateOpenApiTypes(spec);
 	writeFile('./src/lib/openapi.d.ts', types)
 		.then(() => {
 			console.log('Sucessfully saved openapi.d.ts file');
@@ -15,12 +15,12 @@ async function generateOpenAPI() {
 }
 
 let retries = 0;
-function getOpenAPISpec() {
+function getOpenApiSpec() {
 	return new Promise<OpenAPI3>((resolve) => {
 		fetch(
 			new URL(
 				'api/openapi.json',
-				process.env.isDocker ? 'http://client:80' : 'http://localhost:2080'
+				process.env.isDocker ? process.env.INTERNAL_URL : process.env.EXTERNAL_URL
 			)
 		)
 			.then((x) => x.json())
@@ -32,9 +32,7 @@ function getOpenAPISpec() {
 					);
 				}
 				console.error("Couldn't reach the server, retrying in 10 seconds");
-				setTimeout(() => resolve(getOpenAPISpec()), 10000);
+				setTimeout(() => resolve(getOpenApiSpec()), 10000);
 			});
 	});
 }
-
-generateOpenAPI();

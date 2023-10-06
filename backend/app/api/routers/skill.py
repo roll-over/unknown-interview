@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.schemas.skill import SkillSchema
-from app.repository.dependencies import SkillsRepository
+from app.services.repository import SkillsRepository
 
 skill_router = APIRouter(prefix="/skills", tags=["Skills"])
 

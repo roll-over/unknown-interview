@@ -12,7 +12,7 @@
 <div class="flex flex-col gap-2">
 	<input
 		bind:value={selectedProfession}
-		class="bg-app-blue-50 caret-app-blue-600 w-full rounded p-2 text-xs text-black/60"
+		class="w-full rounded bg-app-blue-50 p-2 text-xs text-black/60 caret-app-blue-600"
 		placeholder="profession..."
 	/>
 	<Autocomplete
@@ -22,7 +22,7 @@
 		on:selection={(e) => {
 			selectedProfession = e.detail.value;
 		}}
-		class="bg-app-blue-50 rounded-xl p-4"
+		class="rounded-xl bg-app-blue-50 p-4"
 		regionList="flex flex-col gap-1"
 		regionItem="bg-app-blue-400 rounded-lg"
 		regionButton="w-full text-left px-3"

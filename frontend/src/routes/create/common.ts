@@ -30,7 +30,8 @@ export const defaultCVState = {
 		currency: 'USD'
 	},
 	profession: { name: '' },
-	skillset: [] as string[]
+	skillset: [] as string[],
+	extra_info: null
 } satisfies CVState;
 
 export type JobOfferState = CVState;

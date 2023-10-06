@@ -16,7 +16,7 @@ services:
     build: ./frontend
     container_name: frontend
     working_dir: /frontend
-    command: pnpm docker-dev
+    command: pnpm rscript docker-dev
     volumes:
       - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
       - ./frontend/patches/:/frontend/patches/
@@ -40,6 +40,12 @@ services:
       - .env
     volumes:
       - "./data:/data/db"
+
+  mongo_seed:
+    build: ./backend/mongo
+    depends_on:
+      - unknown_mongo
+
   client:
     image: nginx
     ports:

@@ -8,7 +8,11 @@ from app.api.schemas.skill import SkillSchema
 from app.db.models.mixins import Grade, Salary, Title
 
 
-class RequestBaseSchema(BaseModel):
+class BaseSchema(BaseModel):
+    pass
+
+
+class RequestBaseSchema(BaseSchema):
     title: Title
     salary: Optional[Salary]
     grade: Grade
@@ -17,7 +21,7 @@ class RequestBaseSchema(BaseModel):
     extra_info: Optional[str] = Field(max_length=500)
 
 
-class ResponseBaseSchema(BaseModel):
+class ResponseBaseSchema(BaseSchema):
     custom_id: UUID
     owner_id: UUID
     title: Title

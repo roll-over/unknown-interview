@@ -3,9 +3,11 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
-from app.repository import CVsRepository
+from app.services.repository import CVsRepository
+from app.services.unitorwork import UVC_dep as CV_unit
 from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
@@ -19,10 +21,10 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 async def create_cv(
     request: Request,
     data: CVRequestSchema,
-    CV: CVsRepository,
+    CV: CV_unit,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.create_one(data, owner_data=cv_owner)
+    return await CV.create_new(data, owner_data=cv_owner, role=UserRole.applicant)
 
 
 @cv_router.get(
@@ -62,8 +64,17 @@ async def update_user_cv(
     "/{cv_id}",
     summary="Delete user CV by ID",
 )
-async def delete_user_cv(cv_id: UUID, CV: CVsRepository):
-    deleted_cv = await CV.delete_one(cv_id)
+async def delete_user_cv(
+        cv_id: UUID,
+        CV: CV_unit,
+        cv_owner: UserResponseSchema = Depends(current_user),
+
+):
+    deleted_cv = await CV.delete_record(
+        cv_id,
+        owner_data=cv_owner,
+        role=UserRole.applicant,
+    )
 
     if deleted_cv:
         return JSONResponse(

@@ -3,9 +3,11 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Request, status
 from fastapi.responses import JSONResponse
 
+from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.repository import VacanciesRepository
+from app.services.repository import VacanciesRepository
+from app.services.unitorwork import UVC_dep as Vacancy_unit
 from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -19,10 +21,14 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 async def create_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
-    Vacancy: VacanciesRepository,
+    Vacancy: Vacancy_unit,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await Vacancy.create_one(vacancy_data, owner_data=vacancy_owner)
+    return await Vacancy.create_new(
+        vacancy_data,
+        owner_data=vacancy_owner,
+        role=UserRole.employer,
+    )
 
 
 @vacancy_router.get(
@@ -62,8 +68,17 @@ async def update_company_vacancy(
     "/{vacancy_id}",
     summary="Delete company vacancy by ID",
 )
-async def delete_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
-    deleted_vacancy = await Vacancy.delete_one(vacancy_id)
+async def delete_company_vacancy(
+    vacancy_id: UUID,
+    Vacancy: Vacancy_unit,
+    vacancy_owner: UserResponseSchema = Depends(current_user),
+
+):
+    deleted_vacancy = await Vacancy.delete_record(
+        vacancy_id,
+        owner_data=vacancy_owner,
+        role=UserRole.employer,
+    )
 
     if deleted_vacancy:
         return JSONResponse(

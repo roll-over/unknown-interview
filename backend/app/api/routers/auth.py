@@ -2,10 +2,10 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from app.api.schemas.user import UserEmailSchema
+from app.api.schemas.user import UserInfoSchema
 from app.config import settings
 from app.exceptions import UserNotAuthenticated
-from app.repository import UserRepository
+from app.services.repository import UserRepository
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -23,17 +23,18 @@ oauth.register(
 @auth_router.get("/login/google")
 async def google_login(request: Request):
     # Redirect Google OAuth back to our application
-    redirect_uri = "http://localhost:2080/api/v1/auth/google"
+    redirect_uri = f"{settings.EXTERNAL_URL}/api/v1/auth/google"
 
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-@auth_router.get("/user_info", response_model=UserEmailSchema)
+@auth_router.get("/user_info", response_model=UserInfoSchema)
 async def user_info(request: Request):
     user = request.session.get("user")
     if user:
         email = user.get("email", None)
-        return JSONResponse({"email": email})
+        picture = user.get("picture", None)
+        return JSONResponse({"email": email, "picture": picture})
 
     raise UserNotAuthenticated
 

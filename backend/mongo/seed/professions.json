@@ -1,0 +1,46 @@
+[
+  {
+    "_id": "65049c20732a08285360cdc0",
+    "name": "Data Scientist"
+  },
+  {
+    "_id": "65049c40732a08285360cdc1",
+    "name": "Systems Analyst"
+  },
+  {
+    "_id": "65049c4f732a08285360cdc2",
+    "name": "Project Manager"
+  },
+  {
+    "_id": "65049c5d732a08285360cdc3",
+    "name": "UX Designer"
+  },
+  {
+    "_id": "65049c81732a08285360cdc4",
+    "name": "QA Engineer"
+  },
+  {
+    "_id": "65049cab732a08285360cdc5",
+    "name": "Product Manager"
+  },
+  {
+    "_id": "65049cc2732a08285360cdc6",
+    "name": "Backend Developer"
+  },
+  {
+    "_id": "65049cc9732a08285360cdc7",
+    "name": "Frontend Developer"
+  },
+  {
+    "_id": "65049cfd732a08285360cdc8",
+    "name": "DevOps Engineer"
+  },
+  {
+    "_id": "65049d0b732a08285360cdc9",
+    "name": "Mobile App Developer"
+  },
+  {
+    "_id": "65049d1c732a08285360cdca",
+    "name": "Cloud Architect"
+  }
+]

@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { YourID, type ChatGist } from './getChats';
+	import { route } from '$lib/utils/route';
 
 	export let chats: ChatGist[];
 	let chatNodes: HTMLAnchorElement[] = [];
@@ -14,10 +15,10 @@
 
 <ul class="h-full overflow-y-scroll">
 	{#each chats as chat, i (chat.id)}
-		<li class=" border-b-app-blue-400 border-b-2 last:border-b-0">
+		<li class=" border-b-2 border-b-app-blue-400 last:border-b-0">
 			<a
-				href="/profile/matches/{chat.id}"
-				class="aria-[current]:bg-app-blue-50 flex flex-col p-1 transition-colors"
+				href={route((p) => `/profile/matches/${p(chat.id)}`)}
+				class="flex flex-col p-1 transition-colors aria-[current]:bg-app-blue-50"
 				aria-current={$page.params.id === chat.id || undefined}
 				bind:this={chatNodes[i]}
 			>

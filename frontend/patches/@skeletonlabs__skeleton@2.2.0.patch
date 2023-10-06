@@ -1,0 +1,39 @@
+diff --git a/dist/components/Autocomplete/Autocomplete.svelte b/dist/components/Autocomplete/Autocomplete.svelte
+index 85a6fd1e94f108d11d5c61c0cc125fc630d86e6a..a6620f8313c3dc27d40bbc59806bf4bc42defa59 100644
+--- a/dist/components/Autocomplete/Autocomplete.svelte
++++ b/dist/components/Autocomplete/Autocomplete.svelte
+@@ -78,14 +78,14 @@ $:
+ 	{#if optionsFiltered.length > 0}
+ 		<nav class="autocomplete-nav {classesNav}">
+ 			<ul class="autocomplete-list {classesList}">
+-				{#each optionsFiltered.slice(0, sliceLimit) as option (option)}
++				{#each sliceLimit ? optionsFiltered.slice(0, sliceLimit) : optionsFiltered as option (option)}
+ 					<li
+ 						class="autocomplete-item {classesItem}"
+ 						in:dynamicTransition|local={{ transition: transitionIn, params: transitionInParams, enabled: transitions }}
+ 						out:dynamicTransition|local={{ transition: transitionOut, params: transitionOutParams, enabled: transitions }}
+ 					>
+ 						<button class="autocomplete-button {classesButton}" type="button" on:click={() => onSelection(option)} on:click on:keypress>
+-							{@html option.label}
++							{option.label}
+ 						</button>
+ 					</li>
+ 				{/each}
+diff --git a/dist/components/Autocomplete/Autocomplete.svelte.d.ts b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
+index 9592068bb19962f5e9f4c4ad9aa10de50e97d884..315af8d0a4e131076faa8d836f57579a6f73be36 100644
+--- a/dist/components/Autocomplete/Autocomplete.svelte.d.ts
++++ b/dist/components/Autocomplete/Autocomplete.svelte.d.ts
+@@ -1,4 +1,4 @@
+-import { SvelteComponentTyped } from "svelte";
++import { SvelteComponent } from "svelte";
+ import { slide } from 'svelte/transition';
+ import { type Transition, type TransitionParams } from '../../index.js';
+ type SlideTransition = typeof slide;
+@@ -51,6 +51,6 @@ declare class __sveltets_Render<Value = unknown, Meta = unknown, TransitionIn ex
+ export type AutocompleteProps<Value = unknown, Meta = unknown, TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<Value, Meta, TransitionIn, TransitionOut>['props']>;
+ export type AutocompleteEvents<Value = unknown, Meta = unknown, TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<Value, Meta, TransitionIn, TransitionOut>['events']>;
+ export type AutocompleteSlots<Value = unknown, Meta = unknown, TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> = ReturnType<__sveltets_Render<Value, Meta, TransitionIn, TransitionOut>['slots']>;
+-export default class Autocomplete<Value = unknown, Meta = unknown, TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> extends SvelteComponentTyped<AutocompleteProps<Value, Meta, TransitionIn, TransitionOut>, AutocompleteEvents<Value, Meta, TransitionIn, TransitionOut>, AutocompleteSlots<Value, Meta, TransitionIn, TransitionOut>> {
++export default class Autocomplete<Value = unknown, Meta = unknown, TransitionIn extends Transition = SlideTransition, TransitionOut extends Transition = SlideTransition> extends SvelteComponent<AutocompleteProps<Value, Meta, TransitionIn, TransitionOut>, AutocompleteEvents<Value, Meta, TransitionIn, TransitionOut>, AutocompleteSlots<Value, Meta, TransitionIn, TransitionOut>> {
+ }
+ export {};

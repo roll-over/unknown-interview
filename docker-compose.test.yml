@@ -1,10 +1,10 @@
 version: "3.7"
 
 services:
-  backend:
+  backend-test:
     build: ./backend
     working_dir: /backend
-    container_name: backend
+    container_name: backend-test
     command: pytest -v
     volumes:
       - ./backend/:/backend

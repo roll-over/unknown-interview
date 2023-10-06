@@ -4,16 +4,17 @@ from fastapi.responses import JSONResponse
 
 
 async def response_validation_exception_handler(request, exc):
-    error: dict = exc.errors()[0]
-    # fmt: off
-    message = "Validation error, since the data from database equal to: {body}"
-    error["msg"] = message.format(
-        body=exc.body
-    )
-    # fmt: on
+    if exc.body is None:
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=jsonable_encoder([]),
+        )
+
+    message = f"Validation error. Data from database equal to: {exc.body}"
+
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({"detail": exc.errors()}),
+        content=jsonable_encoder({"error": message}),
     )
 
 
@@ -38,4 +39,12 @@ class ForbiddenAction(HTTPException):
         super().__init__(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="No permissions for this action",
+        )
+
+
+class UserRoleMismatch(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The user role does not match the record or action type",
         )

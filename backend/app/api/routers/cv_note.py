@@ -8,7 +8,7 @@ from app.api.schemas.cv_note import (
     CVNoteRequestSchema,
     CVNoteResponseSchema,
 )
-from app.repository import CVNotesRepository
+from app.services.repository import CVNotesRepository
 
 cv_note_router = APIRouter(prefix="/cv_note", tags=["CV Notes"])
 
