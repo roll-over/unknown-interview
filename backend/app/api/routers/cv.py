@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
-from app.services import Records
+from app.services import Records as CVRecords
 from app.services.repository import CVsRepository
 from app.utils import current_user
 
@@ -21,7 +21,7 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 async def create_cv(
     request: Request,
     data: CVRequestSchema,
-    CV: Records,
+    CV: CVRecords,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
     return await CV.prepare_record(data, owner_data=cv_owner, role=UserRole.applicant)
@@ -33,7 +33,7 @@ async def create_cv(
     summary="Return random user CV",
 )
 async def get_random_cv(
-        CV: Records,
+        CV: CVRecords,
         cv_owner: UserResponseSchema = Depends(current_user),
 ):
     return await CV.get_matched_record(owner_data=cv_owner, role=UserRole.applicant)
@@ -69,7 +69,7 @@ async def update_user_cv(
 )
 async def delete_user_cv(
         cv_id: UUID,
-        CV: Records,
+        CV: CVRecords,
         cv_owner: UserResponseSchema = Depends(current_user),
 
 ):

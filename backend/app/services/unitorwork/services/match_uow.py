@@ -112,9 +112,6 @@ class MatchVacancyCVUoW:
 
             return await self.offer_repo.get_one(offer_record_id)
 
-        # job_record = await self.repo.get_one(record_id)
-        # await self.prepare_matches(job_record, owner_data, role)
-
     async def __filter_records(
         self, record: Union[CV | Vacancy]
     ) -> Union[List[CV] | List[Vacancy]]:

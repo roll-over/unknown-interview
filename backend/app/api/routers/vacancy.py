@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
-from app.services import Records
+from app.services import Records as VacancyRecords
 from app.services.repository import VacanciesRepository
 from app.utils import current_user
 
@@ -21,7 +21,7 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 async def create_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
-    Vacancy: Records,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
     return await Vacancy.prepare_record(
@@ -37,7 +37,7 @@ async def create_vacancy(
     summary="Return random company vacancy",
 )
 async def get_random_vacancy(
-        Vacancy: Records,
+        Vacancy: VacancyRecords,
         vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
     return await Vacancy.get_matched_record(
@@ -80,7 +80,7 @@ async def update_company_vacancy(
 )
 async def delete_company_vacancy(
     vacancy_id: UUID,
-    Vacancy: Records,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 
 ):
