@@ -17,8 +17,8 @@
 <div class="flex gap-2">
 	{#each options as option (option)}
 		<label
-			class="cursor-pointer rounded-md bg-app-blue-100 px-2 {value === option
-				? 'outline outline-1 outline-app-blue-400'
+			class="cursor-pointer rounded-md bg-app-blue-100 px-2 hover:bg-app-blue-50 transition-colors {value === option
+				? 'outline outline-2 outline-app-blue-400'
 				: ''}"
 		>
 			{option}

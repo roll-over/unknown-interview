@@ -24,7 +24,7 @@
 		}}
 		class="rounded bg-app-blue-50 p-4"
 		regionList="flex flex-col gap-2"
-		regionItem="bg-app-blue-600 rounded-md"
+		regionItem="bg-app-blue-600 hover:bg-app-blue-400 transition-colors rounded-md"
 		regionButton="w-full text-left text-white px-3"
 	/>
 </div>
