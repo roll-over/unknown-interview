@@ -26,6 +26,6 @@ jobs:
       - name: connect and pull
         run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && git stash && git checkout ${{ vars.DEV_BRANCH }} && git pull"
       - name: stop containers
-        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_INFRA_DIR }} && docker-compose -f docker-compose.dev_stand.yml down "
+        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && docker-compose -f docker-compose.dev_stand.yml down "
       - name: build and run containers
-        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_INFRA_DIR }} && && docker-compose -f docker-compose.dev_stand.yml up -d"
+        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && && docker-compose -f docker-compose.dev_stand.yml up -d"
