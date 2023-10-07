@@ -63,7 +63,6 @@
 	"pnpm": {
 		"patchedDependencies": {
 			"openapi-fetch@0.7.6": "patches/openapi-fetch@0.7.6.patch",
-			"@sveltejs/kit@1.25.1": "patches/@sveltejs__kit@1.25.1.patch",
 			"@skeletonlabs/skeleton@2.2.0": "patches/@skeletonlabs__skeleton@2.2.0.patch",
 			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch",
 			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch"
