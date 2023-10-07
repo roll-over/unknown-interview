@@ -11,7 +11,7 @@
 			return api.GET('/api/v1/users/records', {});
 		},
 		select(data) {
-			return data.data?.[isVacancy ? 'vacancies' : 'cvs'];
+			return isVacancy ? data.data?.vacancy_ids : data.data?.cv_ids;
 		}
 	});
 </script>

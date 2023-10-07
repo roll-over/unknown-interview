@@ -15,8 +15,9 @@
 			return api.POST('/api/v1/cvs/', { body: data });
 		}
 	});
+	function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
 
-	function handleSubmit() {
 		const { skillset, ...rest } = $CVStateData;
 
 		$submitMutation.mutate(
