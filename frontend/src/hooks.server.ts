@@ -1,3 +1,4 @@
+import { INTERNAL_URL } from '$env/static/private';
 import type { Handle, HandleFetch } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -10,11 +11,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 };
 
 export const handleFetch: HandleFetch = async ({ event, fetch, request }) => {
-	const apiUrl = process.env.INTERNAL_URL;
-
 	const cookies = event.request.headers.get('cookie');
 	// todo - this needs a more robust check if fetch request we're making is to our backend to pass along session cookie
-	if (cookies && apiUrl && request.url.startsWith(apiUrl.slice(0, -3))) {
+	if (cookies && request.url.startsWith(INTERNAL_URL.slice(0, -3))) {
 		request.headers.set('cookie', cookies);
 	}
 

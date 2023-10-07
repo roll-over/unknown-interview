@@ -14,7 +14,8 @@
 		"lint": "prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss && eslint .",
 		"format": "prettier . -l -w --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
 		"test:unit": "vitest",
-		"test:comp": "playwright test"
+		"test:comp": "playwright test",
+		"frontend-logs:l": "sudo docker compose logs frontend -f"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.5.3",
