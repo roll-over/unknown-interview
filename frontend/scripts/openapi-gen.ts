@@ -22,7 +22,9 @@ function getOpenApiSpec() {
 		fetch(
 			new URL(
 				'api/openapi.json',
-				process.env.IS_DOCKER ? process.env.INTERNAL_URL : process.env.EXTERNAL_URL
+				process.env.PUBLIC_IS_DOCKER
+					? process.env.PUBLIC_INTERNAL_URL
+					: process.env.PUBLIC_EXTERNAL_URL
 			)
 		)
 			.then((x) => x.json())
