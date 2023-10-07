@@ -8,7 +8,6 @@ const baseUrl = browser
 	? process.env.INTERNAL_URL
 	: process.env.EXTERNAL_URL;
 
-const api = createClient<paths>({
-	baseUrl
-});
+const api = createClient<paths>({ baseUrl });
+
 export default api;

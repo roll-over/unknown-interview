@@ -56,3 +56,14 @@ pnpm test:comp
 # run tests with ui in watch mode - watches only changes in test files
 pnpm test:comp --ui
 ```
+
+### Stack
+
+- Web Framework - [Svelte](https://svelte.dev/docs/introduction)
+  - [SvelteKit](https://kit.svelte.dev/docs/introduction)
+- Async State - [Tanstack-Query Svelte](https://tanstack.com/query/v5/docs/svelte/overview)
+- UI - [Skeleton](https://www.skeleton.dev/)
+- CSS - [TailwindCSS](https://tailwindcss.com/docs/utility-first)
+  - [cheatsheet](https://tailwindcomponents.com/cheatsheet/)
+- Icons - [Unplugin Icons](https://github.com/unplugin/unplugin-icons)
+  - [Icones](https://icones.js.org/)
