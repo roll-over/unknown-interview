@@ -4,31 +4,36 @@ import { format } from 'prettier';
 import { watch } from 'chokidar';
 
 export default async function generateRoutes() {
-	const routes = await glob('./src/routes/**/+page.svelte', { withFileTypes: true }).then((files) =>
-		files
-			.filter((file) => file.isFile())
-			.sort((a, b) => (a.path > b.path ? 1 : -1))
-			.map<Route>((file) =>
-				file
-					.relative()
-					.split(file.sep)
-					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-					.slice(2, -1)
-					.map(stringToSegment)
-					.filter((x): x is Segment => !!x)
-			)
+	const routes = await glob('./src/routes/**/+page?(@)*.svelte', { withFileTypes: true }).then(
+		(files) =>
+			files
+				.filter((file) => file.isFile())
+				.sort((a, b) => (a.path > b.path ? 1 : -1))
+				.map<Route>((file) =>
+					file
+						.relative()
+						.split(file.sep)
+						// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+						.slice(2, -1)
+						.map(stringToSegment)
+						.filter((x): x is Segment => !!x)
+				)
 	);
 	const routeType = routesToType(routes);
 	writeRouteFile(routeType).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
-	const watcher = watch('./src/routes/**/+page.svelte');
-	watcher.on('add', generateRoutes);
-	// note: doesn't trigger when a folder containing page is deleted - I don't know how to circumvent this
-	watcher.on('unlink', generateRoutes);
+	const pageWatcher = watch('./src/routes/**/+page?(@)*.svelte');
+	pageWatcher.on('add', generateRoutes);
+	pageWatcher.on('unlink', generateRoutes);
+
+	const dirWatcher = watch('./src/routes');
+	dirWatcher.on('addDir', generateRoutes);
+	dirWatcher.on('unlinkDir', generateRoutes);
 	return () => {
-		watcher.close();
+		pageWatcher.close();
+		dirWatcher.close();
 	};
 }
 
@@ -46,6 +51,7 @@ type Segment = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string }
 type Route = Segment[];
 function stringToSegment(segment: string): Segment | null {
 	if (segment.startsWith('(') && segment.endsWith(')')) return null;
+
 	if (!(segment.startsWith('[') || segment.endsWith(']'))) return { type: 'STATIC', key: segment };
 
 	// remove [], dots & matchers(=matcher)
