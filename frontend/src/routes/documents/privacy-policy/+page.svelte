@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { route } from "$lib/utils/route";
-
+	import { route } from '$lib/utils/route';
 </script>
 
 <a href={route('/documents')}>Back to documents</a>
