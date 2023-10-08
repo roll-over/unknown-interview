@@ -24,6 +24,8 @@ jobs:
         name: Setup workspace
       - uses: pnpm/action-setup@v2.4.0
         name: Setup pnpm
+        with:
+          package_json_file: "./frontend/package.json"
       - uses: actions/setup-node@v3
         name: Setup node
         id: node
