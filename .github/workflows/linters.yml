@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        uses: creyD/prettier_action@v4.3
+      - uses: creyD/prettier_action@v4.3
         with:
           src: './frontend/'
           prettier_options:  --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss        
