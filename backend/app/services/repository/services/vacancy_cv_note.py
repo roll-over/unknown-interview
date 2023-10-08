@@ -27,4 +27,4 @@ class VacancyCVNoteService:
         return await self.repo.fetch_one({"related_id": data_id})
 
     async def delete_notes(self, data_id):
-        return await self.repo.delete_one({"related_id": data_id})
+        return await self.repo.delete_data({"related_id": data_id})

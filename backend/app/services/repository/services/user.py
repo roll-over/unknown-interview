@@ -39,7 +39,7 @@ class UserService:
 
     @get_user_email
     async def delete_user(self, user_email, data):
-        return await self.repo.delete_one({"email": user_email})
+        return await self.repo.delete_data({"email": user_email})
 
     @get_user_email
     async def get_cv_vacancy_data(self, user_email, data):
