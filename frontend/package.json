@@ -13,7 +13,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "eslint .",
 		"format-check": "prettier . -c --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
-		"format": "pnpm check-format -w",
+		"format": "pnpm format-check -w",
 		"test:unit": "vitest",
 		"test:comp": "playwright test"
 	},
