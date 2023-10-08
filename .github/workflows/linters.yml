@@ -39,17 +39,17 @@ jobs:
       - run: pnpm format
         name: Formatter
         working-directory: ./frontend
-        if: steps.node.outcome=='success'
+        if: steps.node.outcome==always()
       - uses: sibiraj-s/action-eslint@v3
         name: Linter
         with:
           working-directory: "./frontend"
-        if: steps.node.outcome=='success'
+        if: steps.node.outcome==always()
       - run: pnpm lint
         name: Linter
         working-directory: ./frontend
-        if: steps.node.outcome=='success'
+        if: steps.node.outcome==always()
       - run: pnpm check
         name: Typechecker
         working-directory: ./frontend
-        if: steps.node.outcome=='success'
+        if: steps.node.outcome==always()
