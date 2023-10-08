@@ -24,7 +24,7 @@
 		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@tanstack/svelte-query": "5.0.0-beta.20",
 		"autoprefixer": "^10.4.16",
-		"openapi-fetch": "^0.7.6",
+		"openapi-fetch": "^0.7.9",
 		"postcss": "^8.4.30",
 		"svelte-local-storage-store": "^0.6.0",
 		"tailwindcss": "^3.3.3",
@@ -64,10 +64,10 @@
 	},
 	"pnpm": {
 		"patchedDependencies": {
-			"openapi-fetch@0.7.6": "patches/openapi-fetch@0.7.6.patch",
 			"@skeletonlabs/skeleton@2.2.0": "patches/@skeletonlabs__skeleton@2.2.0.patch",
 			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch",
-			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch"
+			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch",
+			"openapi-fetch@0.7.9": "patches/openapi-fetch@0.7.9.patch"
 		}
 	}
 }

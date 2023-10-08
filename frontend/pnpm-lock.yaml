@@ -14,9 +14,9 @@ patchedDependencies:
   '@types/gtag.js@0.0.15':
     hash: qe3nomneilxkxbxjy63wah5ci4
     path: patches/@types__gtag.js@0.0.15.patch
-  openapi-fetch@0.7.6:
-    hash: p3d3mond6vrkhji5dfurp2d6ga
-    path: patches/openapi-fetch@0.7.6.patch
+  openapi-fetch@0.7.9:
+    hash: cbadciyhb3rz4n5mrsukeawwxi
+    path: patches/openapi-fetch@0.7.9.patch
 
 dependencies:
   '@floating-ui/dom':
@@ -35,8 +35,8 @@ dependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.30)
   openapi-fetch:
-    specifier: ^0.7.6
-    version: 0.7.6(patch_hash=p3d3mond6vrkhji5dfurp2d6ga)
+    specifier: ^0.7.9
+    version: 0.7.9(patch_hash=cbadciyhb3rz4n5mrsukeawwxi)
   postcss:
     specifier: ^8.4.30
     version: 8.4.30
@@ -410,6 +410,11 @@ packages:
   /@faker-js/faker@8.1.0:
     resolution: {integrity: sha512-38DT60rumHfBYynif3lmtxMqMqmsOQIxQgEuPZxCk2yUYN0eqWpTACgxi0VpidvsJB8CRxCpvP7B3anK85FjtQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: true
+
+  /@fastify/busboy@2.0.0:
+    resolution: {integrity: sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==}
+    engines: {node: '>=14'}
     dev: true
 
   /@floating-ui/core@1.5.0:
@@ -2496,15 +2501,15 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openapi-fetch@0.7.6(patch_hash=p3d3mond6vrkhji5dfurp2d6ga):
-    resolution: {integrity: sha512-TmHTmzMqNmVUlRasfaSVsOYnFHHu0L31VGxbk75rk9P7RfOj70kc+Tiuu548koOpB5zs8yiUwW5wsYjeQifHcA==}
+  /openapi-fetch@0.7.9(patch_hash=cbadciyhb3rz4n5mrsukeawwxi):
+    resolution: {integrity: sha512-0qrOoE+qMiah/SN6sEChWDYhyGUowVPNG876XbEKaFKQibHV3vwWXqDCFb5jvY+BM59J2+MYtw50jDonbgLFcA==}
     dependencies:
-      openapi-typescript-helpers: 0.0.2
+      openapi-typescript-helpers: 0.0.4
     dev: false
     patched: true
 
-  /openapi-typescript-helpers@0.0.2:
-    resolution: {integrity: sha512-r5Z4tlGa2l6jYO1ENT9Giqo/ZWzWPmsYUR41O01kjYr7vg4iBFaMh0W0g8Ef72SpeU2F+TY6CAdKxTv7aq+WXA==}
+  /openapi-typescript-helpers@0.0.4:
+    resolution: {integrity: sha512-Q0MTapapFAG993+dx8lNw33X6P/6EbFr31yNymJHq56fNc6dODyRm8tWyRnGxuC74lyl1iCRMV6nQCGQsfVNKg==}
     dev: false
 
   /openapi-typescript@6.7.0:
@@ -2515,7 +2520,7 @@ packages:
       fast-glob: 3.3.1
       js-yaml: 4.1.0
       supports-color: 9.4.0
-      undici: 5.25.2
+      undici: 5.25.4
       yargs-parser: 21.1.1
     dev: true
 
@@ -3609,6 +3614,13 @@ packages:
     engines: {node: '>=14.0'}
     dependencies:
       busboy: 1.6.0
+    dev: true
+
+  /undici@5.25.4:
+    resolution: {integrity: sha512-450yJxT29qKMf3aoudzFpIciqpx6Pji3hEWaXqXmanbXF58LTAGCKxcJjxMXWu3iG+Mudgo3ZUfDB6YDFd/dAw==}
+    engines: {node: '>=14.0'}
+    dependencies:
+      '@fastify/busboy': 2.0.0
     dev: true
 
   /unplugin-icons@0.17.0:

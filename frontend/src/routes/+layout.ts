@@ -14,7 +14,7 @@ export const load = async ({ fetch }) => {
 
 	await queryClient.prefetchQuery({
 		queryKey: ['userInfo'],
-		queryFn: () => api.GET('/api/v1/auth/user_info', {}, fetch)
+		queryFn: () => api.GET('/api/v1/auth/user_info', { fetch })
 	});
 	return { queryClient };
 };
