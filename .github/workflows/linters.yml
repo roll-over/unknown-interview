@@ -28,7 +28,7 @@ jobs:
           cache-dependency-path: ./frontend/pnpm-lock.yaml
       - run: npm install
         working-directory: ./frontend
-      - run: prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss
+      - run: npx prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss
         working-directory: ./frontend
 
   eslint_frontend:
