@@ -21,10 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: creyD/prettier_action@v4.3
+      - uses: actions/setup-node@v3
         with:
-          src: './frontend/'
-          prettier_options:  --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss        
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: npm install
+      - run: prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss
+
+
   eslint_frontend:
     runs-on: ubuntu-latest
     steps:
