@@ -16,14 +16,17 @@ pnpm rscript scriptname
 ### Checks
 
 ```bash
-# run typechecking
+# run typechecker
 pnpm check
 
-# run typechecking in watch mode
+# run typechecker in watch mode
 pnpm check --watch
 
 # run formatter
 pnpm format
+
+# run format checker
+pnpm format-check
 
 # run linter
 pnpm lint

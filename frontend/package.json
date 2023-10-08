@@ -13,8 +13,8 @@
 		"check-all": "run-p typecheck lint format",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "eslint .",
-		"check-format": "prettier . -c --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
-		"format": "pnpm check-format -w",
+		"format-check": "prettier . -c --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
+		"format": "pnpm format-check -w",
 		"test:unit": "vitest",
 		"test:comp": "playwright test",
 		"logs": "docker compose logs frontend -f"
