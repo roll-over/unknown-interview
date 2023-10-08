@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-    ruff_backend:
+  ruff_backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
