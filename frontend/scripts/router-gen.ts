@@ -16,7 +16,7 @@ export default async function generateRoutes() {
 					.split(file.sep)
 					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
 					.slice(2, -1)
-					.map(stringToSegment)
+					.map(dirToSegment)
 					.filter((x): x is Segment => !!x)
 			)
 	);
@@ -50,7 +50,8 @@ function routesToType(routes: Route[]) {
 
 type Segment = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
 type Route = Segment[];
-function stringToSegment(segment: string): Segment | null {
+function dirToSegment(segment: string): Segment | null {
+	console.log(segment.split(/(\[+.+?\]+)/));
 	if (segment.startsWith('(') && segment.endsWith(')')) return null;
 
 	if (!(segment.startsWith('[') || segment.endsWith(']'))) return { type: 'STATIC', key: segment };
