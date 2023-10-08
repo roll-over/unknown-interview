@@ -5,7 +5,8 @@
 ## Scripts
 
 Scripts are stored in ./frontend/scripts in .ts files - just specify the filename w/o extension.
-Scripts are used for some menial tasks like codegen or starting a bulk of commands
+Scripts are used for some menial tasks like codegen or starting a bulk of commands.
+A script needs to a export a default function which will be executed when a command is ran.
 
 ```bash
 # run script
@@ -24,8 +25,11 @@ pnpm check --watch
 # run formatter
 pnpm format
 
-# run linting and check formatting
+# run linter
 pnpm lint
+
+# run linter, typechecker and formatter
+pnpm check-all
 ```
 
 ### Testing

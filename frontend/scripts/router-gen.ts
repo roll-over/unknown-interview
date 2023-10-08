@@ -3,28 +3,29 @@ import { glob } from 'glob';
 import { format } from 'prettier';
 import { watch } from 'chokidar';
 
+const pageGlobMatcher = './src/routes/**/+page?(@)*.svelte';
+
 export default async function generateRoutes() {
-	const routes = await glob('./src/routes/**/+page?(@)*.svelte', { withFileTypes: true }).then(
-		(files) =>
-			files
-				.filter((file) => file.isFile())
-				.sort((a, b) => (a.path > b.path ? 1 : -1))
-				.map<Route>((file) =>
-					file
-						.relative()
-						.split(file.sep)
-						// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-						.slice(2, -1)
-						.map(stringToSegment)
-						.filter((x): x is Segment => !!x)
-				)
+	const routes = await glob(pageGlobMatcher, { withFileTypes: true }).then((files) =>
+		files
+			.filter((file) => file.isFile())
+			.sort((a, b) => (a.path > b.path ? 1 : -1))
+			.map<Route>((file) =>
+				file
+					.relative()
+					.split(file.sep)
+					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+					.slice(2, -1)
+					.map(stringToSegment)
+					.filter((x): x is Segment => !!x)
+			)
 	);
 	const routeType = routesToType(routes);
 	writeRouteFile(routeType).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
-	const pageWatcher = watch('./src/routes/**/+page?(@)*.svelte');
+	const pageWatcher = watch(pageGlobMatcher);
 	pageWatcher.on('add', generateRoutes);
 	pageWatcher.on('unlink', generateRoutes);
 
