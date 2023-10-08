@@ -36,7 +36,7 @@ jobs:
       - run: pnpm install
         name: Setup node_modules
         working-directory: ./frontend
-      - run: pnpm check-format
+      - run: pnpm format-check
         name: Formatter
         working-directory: ./frontend
         if: always()
