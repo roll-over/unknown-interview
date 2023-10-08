@@ -17,3 +17,19 @@ jobs:
         with:
           src: './backend/'
           args: -q
+  prettier_frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        uses: creyD/prettier_action@v4.3
+        with:
+          src: './frontend/'
+          prettier_options:  --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss        
+  eslint_frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: sibiraj-s/action-eslint@v3
+        with:
+          src: './frontend/'
+          eslint-args: '--ignore-path=.gitignore --quiet'
