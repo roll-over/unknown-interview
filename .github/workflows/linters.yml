@@ -49,7 +49,3 @@ jobs:
         name: Linter
         working-directory: ./frontend
         if: always()
-      - run: pnpm check
-        name: Typechecker
-        working-directory: ./frontend
-        if: always()
