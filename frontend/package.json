@@ -12,7 +12,8 @@
 		"analyze": "pnpm vite-bundle-visualizer",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "eslint .",
-		"format": "prettier . -l -w --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
+		"check-format": "prettier . -c --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
+		"format": "pnpm check-format -w",
 		"test:unit": "vitest",
 		"test:comp": "playwright test"
 	},

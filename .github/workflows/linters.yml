@@ -36,14 +36,9 @@ jobs:
       - run: pnpm install
         name: Setup node_modules
         working-directory: ./frontend
-      - run: pnpm format
+      - run: pnpm check-format
         name: Formatter
         working-directory: ./frontend
-        if: always()
-      - uses: sibiraj-s/action-eslint@v3
-        name: Linter
-        with:
-          working-directory: "./frontend"
         if: always()
       - run: pnpm lint
         name: Linter
