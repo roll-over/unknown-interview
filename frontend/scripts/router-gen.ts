@@ -16,57 +16,61 @@ export default async function generateRoutes() {
 					.split(file.sep)
 					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
 					.slice(2, -1)
-					.map(dirToSegment)
+					.map(parseSegment)
 					.filter((x): x is Segment => !!x)
 			)
 	);
-	const routeType = routesToType(routes);
-	writeRouteFile(routeType).catch(console.error);
+	const routeType = stringifyRoutes(routes).join(' | ');
+	return writeRouteFile(routeType).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
+	let isGenerating = false;
+	async function handler() {
+		if (isGenerating) return;
+		isGenerating = true;
+		await generateRoutes();
+		isGenerating = false;
+	}
+
 	const pageWatcher = watch(pageGlobMatcher);
-	pageWatcher.on('add', generateRoutes);
-	pageWatcher.on('unlink', generateRoutes);
+	pageWatcher.on('add', handler);
+	pageWatcher.on('unlink', handler);
 
 	const dirWatcher = watch('./src/routes');
-	dirWatcher.on('addDir', generateRoutes);
-	dirWatcher.on('unlinkDir', generateRoutes);
+	dirWatcher.on('addDir', handler);
+	dirWatcher.on('unlinkDir', handler);
 	return () => {
 		pageWatcher.close();
 		dirWatcher.close();
 	};
 }
 
-function routesToType(routes: Route[]) {
-	const types = routes
-		.flatMap((route) => {
-			const routeForks = forkify(route.map(segmentToType));
-			return routeForks.map((fork) => '/' + fork.filter(Boolean).join('/'));
-		})
-		.map((route) => `\`${route}\``);
-	return [...new Set(types)].join(' | ');
-}
-
-type Segment = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
-type Route = Segment[];
-function dirToSegment(segment: string): Segment | null {
-	console.log(segment.split(/(\[+.+?\]+)/));
-	if (segment.startsWith('(') && segment.endsWith(')')) return null;
-
-	if (!(segment.startsWith('[') || segment.endsWith(']'))) return { type: 'STATIC', key: segment };
+type Chunk = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
+function parseChunk(chunk: string): Chunk {
+	if (!chunk.startsWith('[') && !chunk.endsWith(']')) return { type: 'STATIC', key: chunk };
 
 	// remove [], dots & matchers(=matcher)
-	const key = segment.replaceAll(/[[\].]|(=.+)/g, '');
-	if (segment.startsWith('[[')) return { type: 'OPTIONAL', key };
-	if (segment.startsWith('[...')) return { type: 'REST', key };
+	const key = chunk.replaceAll(/[[\].]|(=.+)/g, '');
+	if (chunk.startsWith('[[')) return { type: 'OPTIONAL', key };
+	if (chunk.startsWith('[...')) return { type: 'REST', key };
 	return { type: 'DYNAMIC', key };
 }
 
-function segmentToType(segment: Segment): string | [string, null] {
-	switch (segment.type) {
+type Segment = Chunk[];
+function parseSegment(segment: string): Segment | null {
+	if (segment.startsWith('(') && segment.endsWith(')')) return null;
+
+	return segment
+		.split(/(\[+.+?\]+)/)
+		.filter(Boolean)
+		.map(parseChunk);
+}
+
+function stringifyChunk(chunk: Chunk): string | [string, null] {
+	switch (chunk.type) {
 		case 'STATIC':
-			return segment.key;
+			return chunk.key;
 		case 'DYNAMIC':
 			return '${Param}';
 		case 'OPTIONAL':
@@ -74,10 +78,25 @@ function segmentToType(segment: Segment): string | [string, null] {
 		case 'REST':
 			return ['${RestParam}', null];
 		default: {
-			const x: never = segment.type;
+			const x: never = chunk.type;
 			return x;
 		}
 	}
+}
+
+function stringifySegment(segment: Segment): string[] {
+	return forkify(segment.map(stringifyChunk))
+		.map((fork) => fork.filter(Boolean).join(''))
+		.filter(Boolean);
+}
+
+type Route = Segment[];
+function stringifyRoute(route: Route): string[] {
+	return forkify(route.map(stringifySegment)).map((fork) => '`/' + fork.join('/') + '`');
+}
+
+function stringifyRoutes(routes: Route[]): string[] {
+	return [...new Set(routes.flatMap(stringifyRoute))];
 }
 
 async function writeRouteFile(routeType: string) {
