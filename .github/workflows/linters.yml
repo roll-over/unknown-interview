@@ -17,25 +17,37 @@ jobs:
         with:
           src: "./backend/"
           args: -q
-  prettier_frontend:
+  frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        name: Setup workspace
+      - uses: pnpm/action-setup@v2.4.0
+        name: Setup pnpm
       - uses: actions/setup-node@v3
+        name: Setup node
+        id: node
         with:
-          node-version: 18
-          cache: "npm"
-          cache-dependency-path: ./frontend/pnpm-lock.yaml
-      - run: npm install
+          node-version: ">=18.10.0"
+          cache: "pnpm"
+          cache-dependency-path: "./frontend/pnpm-lock.yaml"
+      - run: pnpm install
+        name: Setup node_modules
         working-directory: ./frontend
-      - run: npx prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss
+      - run: pnpm format
+        name: Formatter
         working-directory: ./frontend
-
-  eslint_frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+        if: steps.node.outcome=='success'
       - uses: sibiraj-s/action-eslint@v3
+        name: Linter
         with:
-          src: "./frontend/"
-          eslint-args: "--ignore-path=.gitignore --quiet"
+          working-directory: "./frontend"
+        if: steps.node.outcome=='success'
+      - run: pnpm lint
+        name: Linter
+        working-directory: ./frontend
+        if: steps.node.outcome=='success'
+      - run: pnpm check
+        name: Typechecker
+        working-directory: ./frontend
+        if: steps.node.outcome=='success'
