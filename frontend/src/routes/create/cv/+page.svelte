@@ -10,7 +10,7 @@
 
 	const CVStateData = persisted('CVState', defaultCVState);
 	$: submitMutation = createMutation({
-		mutationKey: ['create', "cv"],
+		mutationKey: ['create', 'cv'],
 		mutationFn(data: components['schemas']['CVRequestSchema']) {
 			return api.POST('/api/v1/cvs/', { body: data });
 		}
