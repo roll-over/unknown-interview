@@ -28,7 +28,7 @@
 		<div class="flex flex-col gap-7 rounded-lg bg-app-blue-50 px-11 py-10">
 			<div class="flex justify-between">
 				<h2 class="font-title text-3xl">Resume</h2>
-				<a href={route("/create/cv")}>
+				<a href={route('/create/cv')}>
 					<MaterialSymbolsEditOutline
 						class="h-8 w-8 rounded-full bg-app-blue-600 p-1 text-white duration-500 hover:bg-white hover:text-app-blue-500"
 					/>
