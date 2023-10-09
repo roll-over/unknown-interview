@@ -48,5 +48,6 @@
 		{/if}
 		<a href={route('/integrations')}>Api</a>
 		<a href={route('/documents')}>Documents</a>
+		<a href={route('/about')}>About</a>
 	</nav>
 </header>
