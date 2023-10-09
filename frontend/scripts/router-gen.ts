@@ -1,27 +1,15 @@
+import { watch } from 'chokidar';
 import { writeFile } from 'fs/promises';
 import { glob } from 'glob';
 import { format } from 'prettier';
-import { watch } from 'chokidar';
 
 const pageGlobMatcher = './src/routes/**/+page?(@)*.svelte';
 
 export default async function generateRoutes() {
-	const routes = await glob(pageGlobMatcher, { withFileTypes: true }).then((files) =>
-		files
-			.filter((file) => file.isFile())
-			.sort((a, b) => (a.path > b.path ? 1 : -1))
-			.map<Route>((file) =>
-				file
-					.relative()
-					.split(file.sep)
-					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-					.slice(2, -1)
-					.map(parseSegment)
-					.filter((x): x is Segment => !!x)
-			)
-	);
-	const routeType = stringifyRoutes(routes).join(' | ');
-	return writeRouteFile(routeType).catch(console.error);
+	const paths = await getPaths();
+	const routes = parsePaths(paths);
+	const type = stringifyRoutes(routes);
+	return writeRouteFile(type).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
@@ -46,7 +34,44 @@ export function generateRoutesWatcher() {
 	};
 }
 
+function getPaths() {
+	return glob(pageGlobMatcher, { withFileTypes: true }).then((files) =>
+		files
+			.filter((file) => file.isFile())
+			.sort((a, b) => (a.path > b.path ? 1 : -1))
+			.map((path) =>
+				path
+					.relative()
+					.split(path.sep)
+					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+					.slice(2, -1)
+			)
+	);
+}
+
 type Chunk = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
+type Segment = Chunk[];
+type Route = Segment[];
+export function parsePaths(paths: string[][]): Route[] {
+	return paths.map((segments) =>
+		segments
+			.map(parseSegment)
+			// filter null segments - null segments are a result of group routes
+			.filter((x): x is Segment => !!x)
+	);
+}
+function parseSegment(segment: string): Segment | null {
+	if (segment.startsWith('(') && segment.endsWith(')')) return null;
+
+	return (
+		segment
+			.split(/(\[+.+?\]+)/)
+			// filter empty strings which appear after split if matched splitter is at the start/end
+			.filter(Boolean)
+			.map(parseChunk)
+	);
+}
+
 function parseChunk(chunk: string): Chunk {
 	if (!chunk.startsWith('[') && !chunk.endsWith(']')) return { type: 'STATIC', key: chunk };
 
@@ -57,14 +82,24 @@ function parseChunk(chunk: string): Chunk {
 	return { type: 'DYNAMIC', key };
 }
 
-type Segment = Chunk[];
-function parseSegment(segment: string): Segment | null {
-	if (segment.startsWith('(') && segment.endsWith(')')) return null;
+export function stringifyRoutes(routes: Route[]): string {
+	return [...new Set(routes.flatMap(stringifyRoute))].join(' | ');
+}
 
-	return segment
-		.split(/(\[+.+?\]+)/)
-		.filter(Boolean)
-		.map(parseChunk);
+function stringifyRoute(route: Route): string[] {
+	return forkify(route.map(stringifySegment)).map(
+		(fork) =>
+			'`/' +
+			fork
+				// filter empty strings which are results of optional chunks
+				.filter(Boolean)
+				.join('/') +
+			'`'
+	);
+}
+
+function stringifySegment(segment: Segment): string[] {
+	return forkify(segment.map(stringifyChunk)).map((fork) => fork.filter(Boolean).join(''));
 }
 
 function stringifyChunk(chunk: Chunk): string | [string, null] {
@@ -82,21 +117,6 @@ function stringifyChunk(chunk: Chunk): string | [string, null] {
 			return x;
 		}
 	}
-}
-
-function stringifySegment(segment: Segment): string[] {
-	return forkify(segment.map(stringifyChunk))
-		.map((fork) => fork.filter(Boolean).join(''))
-		.filter(Boolean);
-}
-
-type Route = Segment[];
-function stringifyRoute(route: Route): string[] {
-	return forkify(route.map(stringifySegment)).map((fork) => '`/' + fork.join('/') + '`');
-}
-
-function stringifyRoutes(routes: Route[]): string[] {
-	return [...new Set(routes.flatMap(stringifyRoute))];
 }
 
 async function writeRouteFile(routeType: string) {
