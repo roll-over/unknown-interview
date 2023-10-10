@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import {
 	templateParam as Param,
+	templateRest as Rest,
 	parsePath,
-	stringifyRoute,
-	templateRest as Rest
+	stringifyRoute
 } from './router-gen';
 
 function parseType(path: string[]) {
@@ -47,5 +47,35 @@ describe('Test that router codegen parses', () => {
 		expect(parseType(['(x)'])).toEqual(construcUnion([`/`]));
 		expect(parseType(['(x)', 'y'])).toEqual(construcUnion([`/y`]));
 		expect(parseType(['x', '(y)'])).toEqual(construcUnion([`/x`]));
+	});
+
+	test('multiple params', () => {
+		expect(parseType(['x', 'a-[x]-[[x]]-y', 'z'])).toEqual(
+			construcUnion([`/x/a-${Param}-${Param}-y/z`, `/x/a-${Param}--y/z`])
+		);
+		expect(parseType(['a-[x]-[[x]]-y'])).toEqual(
+			construcUnion([`/a-${Param}-${Param}-y`, `/a-${Param}--y`])
+		);
+		expect(parseType(['a-[x]-[[x]]-y', 'y'])).toEqual(
+			construcUnion([`/a-${Param}-${Param}-y/y`, `/a-${Param}--y/y`])
+		);
+		expect(parseType(['x', 'a-[x]-[[x]]-y'])).toEqual(
+			construcUnion([`/x/a-${Param}-${Param}-y`, `/x/a-${Param}--y`])
+		);
+	});
+
+	test('some complicated route', () => {
+		expect(parseType(['(x)', '[[x]]-a-[...x]', '[x]-y', '(x)', 'y', '[x]-[[x]]', 'x'])).toEqual(
+			construcUnion([
+				`/${Param}-a-${Rest}/${Param}-y/y/${Param}-${Param}/x`,
+				`/-a-${Rest}/${Param}-y/y/${Param}-${Param}/x`,
+				`/${Param}-a-/${Param}-y/y/${Param}-${Param}/x`,
+				`/-a-/${Param}-y/y/${Param}-${Param}/x`,
+				`/${Param}-a-${Rest}/${Param}-y/y/${Param}-/x`,
+				`/-a-${Rest}/${Param}-y/y/${Param}-/x`,
+				`/${Param}-a-/${Param}-y/y/${Param}-/x`,
+				`/-a-/${Param}-y/y/${Param}-/x`
+			])
+		);
 	});
 });
