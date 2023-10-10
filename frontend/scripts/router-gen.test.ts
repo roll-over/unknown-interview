@@ -7,11 +7,11 @@ import {
 } from './router-gen';
 
 function parseType(path: string[]) {
-	return stringifyRoute(parsePath(path)).join(' | ');
+	return stringifyRoute(parsePath(path));
 }
 
 function construcUnion(types: string[]) {
-	return types.map((type) => '`' + type + '`').join(' | ');
+	return types.map((type) => '`' + type + '`');
 }
 
 describe('Test that router codegen parses', () => {
