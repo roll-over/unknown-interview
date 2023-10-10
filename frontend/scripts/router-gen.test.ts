@@ -53,14 +53,12 @@ describe('Test that router codegen parses', () => {
 		expect(parseType(['x', 'a-[x]-[[x]]-y', 'z'])).toEqual(
 			constructUnion([`/x/a-${Param}-${Param}-y/z`, `/x/a-${Param}--y/z`])
 		);
-		expect(parseType(['a-[x]-[[x]]-y'])).toEqual(
-			constructUnion([`/a-${Param}-${Param}-y`, `/a-${Param}--y`])
+		expect(parseType(['[x]-[[x]]'])).toEqual(constructUnion([`/${Param}-${Param}`, `/${Param}-`]));
+		expect(parseType(['[x]-[[x]]-y', 'y'])).toEqual(
+			constructUnion([`/${Param}-${Param}-y/y`, `/${Param}--y/y`])
 		);
-		expect(parseType(['a-[x]-[[x]]-y', 'y'])).toEqual(
-			constructUnion([`/a-${Param}-${Param}-y/y`, `/a-${Param}--y/y`])
-		);
-		expect(parseType(['x', 'a-[x]-[[x]]-y'])).toEqual(
-			constructUnion([`/x/a-${Param}-${Param}-y`, `/x/a-${Param}--y`])
+		expect(parseType(['x', 'a-[x]-[[x]]'])).toEqual(
+			constructUnion([`/x/a-${Param}-${Param}`, `/x/a-${Param}-`])
 		);
 	});
 

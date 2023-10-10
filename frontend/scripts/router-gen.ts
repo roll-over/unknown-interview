@@ -39,11 +39,8 @@ function getPaths() {
 			.filter((file) => file.isFile())
 			.sort((a, b) => (a.path > b.path ? 1 : -1))
 			.map((path) =>
-				path
-					.relative()
-					.split(path.sep)
-					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-					.slice(2, -1)
+				// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+				path.relative().split(path.sep).slice(2, -1)
 			)
 	);
 }
@@ -53,10 +50,8 @@ type Segment = Chunk[];
 type Route = Segment[];
 export function parsePath(path: string[]): Route {
 	return (
-		path
-			.map(parseSegment)
-			// filter null segments - null segments are a result of group routes
-			.filter((x): x is Segment => !!x)
+		// filter null segments - null segments are a result of group routes
+		path.map(parseSegment).filter((x): x is Segment => !!x)
 	);
 }
 
@@ -89,17 +84,13 @@ function stringifyRoutes(routes: Route[]): string {
 export function stringifyRoute(route: Route): string[] {
 	return forkify(route.map(stringifySegment)).map(
 		(fork) =>
-			'`/' +
-			fork
-				// filter empty strings which are results of optional chunks
-				.filter(Boolean)
-				.join('/') +
-			'`'
+			// filter empty strings which are results of optional chunks
+			'`/' + fork.filter(Boolean).join('/') + '`'
 	);
 }
 
 function stringifySegment(segment: Segment): string[] {
-	return forkify(segment.map(stringifyChunk)).map((fork) => fork.filter(Boolean).join(''));
+	return forkify(segment.map(stringifyChunk)).map((fork) => fork.join(''));
 }
 
 const PARAM = 'Param';
