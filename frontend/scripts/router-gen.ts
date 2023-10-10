@@ -7,7 +7,7 @@ const pageGlobMatcher = './src/routes/**/+page?(@)*.svelte';
 
 export default async function generateRoutes() {
 	const paths = await getPaths();
-	const routes = parsePaths(paths);
+	const routes = paths.map(parsePath);
 	const type = stringifyRoutes(routes);
 	return writeRouteFile(type).catch(console.error);
 }
@@ -51,14 +51,15 @@ function getPaths() {
 type Chunk = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
 type Segment = Chunk[];
 type Route = Segment[];
-export function parsePaths(paths: string[][]): Route[] {
-	return paths.map((segments) =>
-		segments
+export function parsePath(path: string[]): Route {
+	return (
+		path
 			.map(parseSegment)
 			// filter null segments - null segments are a result of group routes
 			.filter((x): x is Segment => !!x)
 	);
 }
+
 function parseSegment(segment: string): Segment | null {
 	if (segment.startsWith('(') && segment.endsWith(')')) return null;
 
@@ -81,11 +82,11 @@ function parseChunk(chunk: string): Chunk {
 	return { type: 'DYNAMIC', key };
 }
 
-export function stringifyRoutes(routes: Route[]): string {
+function stringifyRoutes(routes: Route[]): string {
 	return [...new Set(routes.flatMap(stringifyRoute))].join(' | ');
 }
 
-function stringifyRoute(route: Route): string[] {
+export function stringifyRoute(route: Route): string[] {
 	return forkify(route.map(stringifySegment)).map(
 		(fork) =>
 			'`/' +
