@@ -50,6 +50,9 @@ pnpm test:unit run
 
 # run tests with ui
 pnpm test:unit --ui
+
+# run tests with code coverage (you can combine it with ui flag)
+pnpm test:unit --coverage
 ```
 
 #### Component/Integration

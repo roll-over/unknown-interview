@@ -14,3 +14,4 @@ src/lib/router.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+/coverage
