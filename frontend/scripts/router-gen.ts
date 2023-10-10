@@ -26,7 +26,6 @@ export function generateRoutesWatcher() {
 	pageWatcher.on('unlink', handler);
 
 	const dirWatcher = watch('./src/routes');
-	dirWatcher.on('addDir', handler);
 	dirWatcher.on('unlinkDir', handler);
 	return () => {
 		pageWatcher.close();
@@ -102,16 +101,20 @@ function stringifySegment(segment: Segment): string[] {
 	return forkify(segment.map(stringifyChunk)).map((fork) => fork.filter(Boolean).join(''));
 }
 
+const PARAM = 'Param';
+const REST_PARAM = 'RestParam';
+export const templateParam = '${' + PARAM + '}';
+export const templateRest = '${' + REST_PARAM + '}';
 function stringifyChunk(chunk: Chunk): string | [string, null] {
 	switch (chunk.type) {
 		case 'STATIC':
 			return chunk.key;
 		case 'DYNAMIC':
-			return '${Param}';
+			return templateParam;
 		case 'OPTIONAL':
-			return ['${Param}', null];
+			return [templateParam, null];
 		case 'REST':
-			return ['${RestParam}', null];
+			return [templateRest, null];
 		default: {
 			const x: never = chunk.type;
 			return x;
@@ -124,10 +127,10 @@ async function writeRouteFile(routeType: string) {
 	// This file is auto-generated. Please do not modify it.
 	declare const Brand: unique symbol;
 	type TemplateToken = string | number;
-	type Param = TemplateToken & { readonly [Brand]: unique symbol };
-	type RestParam = (TemplateToken & { readonly [Brand]: unique symbol }) | Param;
+	type ${PARAM} = TemplateToken & { readonly [Brand]: unique symbol };
+	type ${REST_PARAM} = (TemplateToken & { readonly [Brand]: unique symbol }) | ${PARAM};
 	type Route = ${routeType};
-	export { Param, RestParam, Route, TemplateToken }
+	export { ${PARAM}, ${REST_PARAM}, Route, TemplateToken }
 	`;
 
 	writeFile('./src/lib/router.d.ts', await format(fileData, { parser: 'typescript' }))
