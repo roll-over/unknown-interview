@@ -9,8 +9,8 @@ class MongoBeanieRepository(AbstractBaseRepository):
 
         return found_data
 
-    async def fetch_many(self, data_id, sort=None, limit=None):
-        return await self.model.find(data_id).sort(sort).limit(limit).to_list()
+    async def fetch_many(self, data_id, sort=None, limit=None, skip=None):
+        return await self.model.find(data_id).sort(sort).limit(limit).skip(skip).to_list()
 
     async def fetch_one(self, data_id):
         found_data = await self.model.find_one(data_id)
