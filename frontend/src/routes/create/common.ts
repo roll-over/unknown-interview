@@ -20,6 +20,7 @@ export const professions = [
 ];
 export const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift'];
 export const currencies = ['USD', 'EUR'];
+// export const volunteering = [true, false];
 
 export const defaultCVState = {
 	title: 'member',

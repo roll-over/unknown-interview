@@ -130,6 +130,45 @@
 		</label>
 	</fieldset>
 
+	<!-- <fieldset>
+		<label>Volunteering
+		<input type="checkbox" class="" bind:value={$CVStateData.volunteering} />
+		</label>
+	</fieldset> -->
+
+	<!-- <fieldset class="w-80">
+		<legend class="pb-2 flex items-center gap-0.5">Location
+			<MaterialSymbolsSearch/>
+		</legend>
+		<Profession bind:selectedProfession={$CVStateData.profession.name} />
+	</fieldset>
+
+	<fieldset>
+		<legend class="pb-2">Schedule</legend>
+		<RadioGroup
+			options={grades}
+			bind:value={$CVStateData.grade}
+			name="position"
+		/>
+	</fieldset>
+
+	<fieldset>
+		<legend class="pb-2">Employment type</legend>
+		<RadioGroup
+			options={grades}
+			bind:value={$CVStateData.grade}
+			name="position"
+		/>
+	</fieldset>
+	
+	<fieldset>
+		<legend class="pb-2">About Me</legend>
+		<RadioGroup
+			options={titles}
+			bind:value={$CVStateData.title}
+			name="title"
+		/>
+	</fieldset> -->
 
 	<button
 	class="ml-auto group flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400"
