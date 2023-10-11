@@ -1,3 +1,5 @@
+from .chat import ChatService
+from .chat_message import ChatMessageService
 from .match import MatchService
 from .profession import ProfessionService
 from .skill import SkillService
@@ -12,4 +14,6 @@ __all__ = (
     "ProfessionService",
     "SkillService",
     "MatchService",
+    "ChatMessageService",
+    "ChatService"
 )
