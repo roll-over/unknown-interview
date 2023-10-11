@@ -25,9 +25,9 @@
 	$: chatQuery = createQuery({
 		async queryFn() {
 			const id = $page.params.id;
-			if (!id) return goto(route('/profile/matches')), null;
+			if (!id) return goto(route('/profile/chat')), null;
 			const chat = await getChat(id);
-			if (!chat || chat.id !== id) return goto(route('/profile/matches')), null;
+			if (!chat || chat.id !== id) return goto(route('/profile/chat')), null;
 			prevData = chat;
 			return chat;
 		},
