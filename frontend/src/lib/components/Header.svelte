@@ -25,17 +25,17 @@
 <header class="bg-app-blue-50 px-2">
 	<nav class="flex gap-3">
 		<a href={route('/')}>Home</a>
-		<a href={route('/profile/matches')}>Matches</a>
+		<a href={route('/profile/chat')}>Chats</a>
 		<button use:popup={navProfilePopup}>
-			Profile
+			Match
 			<div
 				data-popup={navProfilePopup.target}
 				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 			>
 				<div class="flex flex-col gap-2">
-					<a href={route('/profile/cv')}>CV</a>
+					<a href={route('/profile/match/cv')}>CV</a>
 					<hr />
-					<a href={route('/profile/vacancy')}>Vacancy</a>
+					<a href={route('/profile/match/vacancy')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>
