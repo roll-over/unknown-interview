@@ -5,6 +5,8 @@
 	import { AppShell, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
+	import '@fontsource-variable/montserrat';
+	import '@fontsource-variable/comfortaa';
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	export let data;

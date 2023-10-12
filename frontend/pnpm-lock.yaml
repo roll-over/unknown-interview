@@ -54,6 +54,12 @@ devDependencies:
   '@faker-js/faker':
     specifier: ^8.1.0
     version: 8.1.0
+  '@fontsource-variable/comfortaa':
+    specifier: ^5.0.15
+    version: 5.0.15
+  '@fontsource-variable/montserrat':
+    specifier: ^5.0.14
+    version: 5.0.14
   '@iconify-json/ic':
     specifier: ^1.1.14
     version: 1.1.14
@@ -440,6 +446,14 @@ packages:
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
     dev: false
+
+  /@fontsource-variable/comfortaa@5.0.15:
+    resolution: {integrity: sha512-CW/u6En8sqX2Y1Y18zXjUwvCCjSS/hK9ebOTAj4HZpVxZPrMKMUuef904q9kAQSNeftJpONJVF6fVYoX2gPWNA==}
+    dev: true
+
+  /@fontsource-variable/montserrat@5.0.14:
+    resolution: {integrity: sha512-OQzydsAhI7MBPB59HxzwHGpdJAZVONTgkGW+NWA98iRNDaUbR1HyEuD9ptxkjwr3egslLKV5/eJN4+22G3kl6A==}
+    dev: true
 
   /@humanwhocodes/config-array@0.11.11:
     resolution: {integrity: sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==}

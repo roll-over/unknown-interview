@@ -33,6 +33,8 @@
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.1.0",
+		"@fontsource-variable/comfortaa": "^5.0.15",
+		"@fontsource-variable/montserrat": "^5.0.14",
 		"@iconify-json/ic": "^1.1.14",
 		"@iconify-json/material-symbols": "^1.1.59",
 		"@playwright/experimental-ct-svelte": "^1.38.1",
