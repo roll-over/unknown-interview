@@ -45,6 +45,8 @@ services:
     build: ./backend/mongo
     depends_on:
       - unknown_mongo
+    environment:
+      - db_host=unknown_mongo
 
   client:
     image: nginx
