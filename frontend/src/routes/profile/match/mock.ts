@@ -67,7 +67,7 @@ const skills = [
 	'Objective-C',
 	'Tcl',
 	'Julia'
-].map((name) => ({ name }));
+];
 export const getRandomMatch = (): Match => {
 	const minSalary = faker.number.int({ min: 0, max: 50 });
 	const maxSalary = faker.number.int({ min: 0, max: 50 });
@@ -76,7 +76,9 @@ export const getRandomMatch = (): Match => {
 		profession: { name: faker.person.jobTitle() },
 		title: faker.helpers.arrayElement(titles),
 		grade: faker.helpers.arrayElement(grades),
-		skillset: faker.helpers.uniqueArray(skills, faker.number.int({ min: 0, max: 6 })),
+		skillset: faker.helpers
+			.uniqueArray(skills, faker.number.int({ min: 0, max: 6 }))
+			.map((name) => ({ name })),
 		salary: {
 			currency: faker.finance.currencyCode(),
 			min_level: faker.helpers.maybe(() => minSalary * 10) ?? null,

@@ -14,7 +14,7 @@ function constructUnion(types: string[]) {
 	return types.map((type) => '`' + type + '`');
 }
 
-describe('Test that router codegen parses', () => {
+describe('Router codegen parses', () => {
 	test('static paths', () => {
 		expect(parseType(['x', 'y', 'z'])).toEqual(constructUnion(['/x/y/z']));
 		expect(parseType([])).toEqual(constructUnion(['/']));

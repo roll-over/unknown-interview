@@ -3,9 +3,9 @@
 	import { page } from '$app/stores';
 	import api from '$lib/api';
 	import type { components } from '$lib/openapi';
+	import { isRangeOverlap, mapWithFilter } from '$lib/utils';
 	import { route } from '$lib/utils/route';
 	import { createQuery } from '@tanstack/svelte-query';
-	import { slide } from 'svelte/transition';
 	import DeleteIcon from '~icons/material-symbols/delete-outline';
 	import EditIcon from '~icons/material-symbols/edit-outline';
 	import ThumbsUpIcon from '~icons/material-symbols/thumb-up-outline';
@@ -37,31 +37,33 @@
 		staleTime: Infinity
 	});
 
+	// #region matcher
 	function compareStrings(user: string, match: string) {
 		return user.toLowerCase() === match.toLowerCase();
 	}
 	function compareSkills(userSkills: Cv['skillset'], matchSkill: Vacancy['skillset']) {
-		if (!userSkills || !matchSkill) return { matched: () => false };
+		if (!userSkills || !matchSkill) return () => false;
 
 		const setB = new Set(matchSkill.map((x) => x.name.toLowerCase()));
 
 		const result = new Set(
-			// map & filter
-			userSkills.reduce<string[]>((agg, value) => {
-				const x = value.name.toLowerCase();
-				if (setB.has(x)) agg.push(x);
-				return agg;
-			}, [])
+			mapWithFilter(
+				userSkills,
+				(x) => x.name.toLowerCase(),
+				(x) => setB.has(x)
+			)
 		);
 
-		return { matched: (value: string) => result.has(value.toLowerCase()) };
+		return (value: string) => result.has(value.toLowerCase());
 	}
 	function compareSalaries(userSalary: Cv['salary'], matchSalary: Vacancy['salary']) {
 		if (!userSalary || !matchSalary) return false;
-		// todo - currency conversion
-		return (
-			Math.max(userSalary.min_level ?? 0, matchSalary.min_level ?? 0) <=
-			Math.min(userSalary.max_level ?? Infinity, matchSalary.max_level ?? Infinity)
+		// todo - currency conversion?
+		return isRangeOverlap(
+			userSalary.min_level ?? 0,
+			userSalary.max_level ?? Infinity,
+			matchSalary.min_level ?? 0,
+			matchSalary.max_level ?? Infinity
 		);
 	}
 	function constructMatcher(userMatch?: Cv, randomVacancy?: Vacancy) {
@@ -76,6 +78,7 @@
 		};
 	}
 	$: matchers = constructMatcher($userMatchQuery.data?.data, $randomVacancyQuery.data);
+	// #endregion matcher
 </script>
 
 <div class="grid h-full grid-cols-[2fr,3fr] gap-x-5 px-12 py-5 text-2xl">
@@ -96,6 +99,7 @@
 						class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
 						on:click={async () => {
 							await api.DELETE('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: data.id } } });
+							data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
 							goto(route('/profile/match/cv'));
 						}}
 					>
@@ -119,7 +123,7 @@
 					<div class="flex flex-wrap items-center gap-2">
 						Skills:
 						{#each skills as { name: skill } (skill)}
-							<Chip highlight={matchers.skills?.matched(skill)}>{skill}</Chip>
+							<Chip highlight={matchers.skills?.(skill)}>{skill}</Chip>
 						{/each}
 					</div>
 				{/if}
@@ -149,59 +153,54 @@
 		</div>
 	</div>
 	<div class="flex h-full min-h-0 flex-col">
-		{#key $randomVacancyQuery.data}
-			<div
-				class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 pb-16"
-				transition:slide={{ axis: 'x' }}
-			>
-				{#if $randomVacancyQuery.data}
-					{@const randomVacancy = $randomVacancyQuery.data}
-					<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
-						{randomVacancy.grade}
-						{randomVacancy.profession.name}
-					</h2>
-					<div>
-						Profession:
-						<Chip highlight={matchers.profession}>{randomVacancy.profession.name}</Chip>
+		<div class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 pb-16">
+			{#if $randomVacancyQuery.data}
+				{@const randomVacancy = $randomVacancyQuery.data}
+				<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
+					{randomVacancy.grade}
+					{randomVacancy.profession.name}
+				</h2>
+				<div>
+					Profession:
+					<Chip highlight={matchers.profession}>{randomVacancy.profession.name}</Chip>
+				</div>
+				<div>
+					Grade:
+					<Chip highlight={matchers.grade}>{randomVacancy.grade}</Chip>
+				</div>
+				<div>
+					Title:
+					<Chip highlight={matchers.title}>{randomVacancy.title}</Chip>
+				</div>
+				{#if randomVacancy.skillset?.length}
+					{@const skills = randomVacancy.skillset}
+					<div class="flex flex-wrap items-center gap-2">
+						Skills:
+						{#each skills as { name: skill } (skill)}
+							<Chip highlight={matchers.skills?.(skill)}>{skill}</Chip>
+						{/each}
 					</div>
-					<div>
-						Grade:
-						<Chip highlight={matchers.grade}>{randomVacancy.grade}</Chip>
-					</div>
-					<div>
-						Title:
-						<Chip highlight={matchers.title}>{randomVacancy.title}</Chip>
-					</div>
-					{#if randomVacancy.skillset?.length}
-						{@const skills = randomVacancy.skillset}
-						<div class="flex flex-wrap items-center gap-2">
-							Skills:
-							{#each skills as { name: skill } (skill)}
-								<Chip highlight={matchers.skills?.matched(skill)}>{skill}</Chip>
-							{/each}
-						</div>
-					{/if}
-					{#if randomVacancy.salary}
-						{@const salary = randomVacancy.salary}
-						<div>
-							Salary
-							{#if salary.min_level}
-								from <Chip highlight={matchers.salary}>{salary.min_level}{salary.currency}</Chip>
-							{/if}
-							{#if salary.max_level}
-								to
-								<Chip highlight={matchers.salary}>{salary.max_level}{salary.currency}</Chip>
-							{/if}
-						</div>
-					{/if}
-					<p class="whitespace-pre-wrap">
-						{randomVacancy.extra_info}
-					</p>
-				{:else}
-					Loading...
 				{/if}
-			</div>
-		{/key}
+				{#if randomVacancy.salary}
+					{@const salary = randomVacancy.salary}
+					<div>
+						Salary
+						{#if salary.min_level}
+							from <Chip highlight={matchers.salary}>{salary.min_level}{salary.currency}</Chip>
+						{/if}
+						{#if salary.max_level}
+							to
+							<Chip highlight={matchers.salary}>{salary.max_level}{salary.currency}</Chip>
+						{/if}
+					</div>
+				{/if}
+				<p class="whitespace-pre-wrap">
+					{randomVacancy.extra_info}
+				</p>
+			{:else}
+				Loading...
+			{/if}
+		</div>
 		<div class="flex h-16 -translate-y-full justify-between">
 			<button
 				aria-label="dislike"
