@@ -7,7 +7,7 @@ class AbstractBaseRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def fetch_many(self, data_id, sort, limit):
+    async def fetch_many(self, data_id, sort, limit, skip):
         raise NotImplementedError
 
     @abstractmethod
