@@ -5,16 +5,16 @@ from pydantic import BaseModel
 
 
 class ChatRequestSchema(BaseModel):
-    user_one: UUID
-    user_two: UUID
+    employer: UUID
+    applicant: UUID
     vacancy_id: UUID
     cv_id: UUID
 
 
 class ChatResponseSchema(BaseModel):
     custom_id: UUID
-    user_one: UUID
-    user_two: UUID
+    employer: UUID
+    applicant: UUID
     vacancy_id: UUID
     cv_id: UUID
 
