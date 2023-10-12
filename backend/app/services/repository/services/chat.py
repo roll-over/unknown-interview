@@ -1,3 +1,4 @@
+from app.db.models.chat import Chat
 from app.services.repository.interfaces import AbstractBaseRepository
 
 
@@ -5,8 +6,8 @@ class ChatService:
     def __init__(self, repo_model: AbstractBaseRepository):
         self.repo: AbstractBaseRepository = repo_model()
 
-    async def get_chats(self):
+    async def get_chats(self) -> list[Chat]:
         return await self.repo.fetch_all()
 
-    async def create_one(self, data: dict):
+    async def create_one(self, data: Chat) -> Chat:
         return await self.repo.create_one(data=data)
