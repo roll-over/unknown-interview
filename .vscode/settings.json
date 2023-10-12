@@ -1,5 +1,9 @@
 {
-  "tailwindCSS.experimental.classRegex": [["class:([^=]*)"], ["region.+=\"([^\"]*)\""]],
+  "tailwindCSS.experimental.classRegex": [
+    ["class:([^=]*)"], 
+    ["region.+=\"([^\"]*)\""],
+    ["Classes:.+?'([^']*)'"]
+  ],
   "[svelte]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

@@ -1,4 +1,4 @@
-import type { components } from '$lib/openapi';
+import type { Cv, Vacancy } from '$lib/utils/types';
 import { faker } from '@faker-js/faker';
 export const cvContent = `Carrying  out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team.
 	
@@ -16,9 +16,7 @@ Requirements:
 `;
 export const vacancyContent = `We are looking for C++ developers to join our team, both talented Juniors and experienced Middle and Senior`;
 
-type Match =
-	| components['schemas']['VacancyResponseSchema']
-	| components['schemas']['CVResponseSchema'];
+type Match = Cv | Vacancy;
 const titles: Match['title'][] = ['director', 'lead', 'manager', 'member', 'teamlead'];
 const grades: Match['grade'][] = ['junior', 'lead', 'middle', 'principal', 'senior'];
 const skills = [

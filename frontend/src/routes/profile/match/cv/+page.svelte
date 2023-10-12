@@ -1,7 +1,11 @@
 <script lang="ts">
 	import api from '$lib/api';
 	import { route } from '$lib/utils/route';
+	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
+	import RandomMatch from '../RandomMatch.svelte';
+	import WarningModal from '../WarningModal.svelte';
+	import { getRandomMatch } from '../mock';
 
 	$: userCvsQuery = createQuery({
 		queryKey: ['user cvs and vacancies'],
@@ -12,18 +16,41 @@
 			return data.data?.cv_ids ?? [];
 		}
 	});
+
+	$: randomVacancyQuery = createQuery({
+		queryKey: ['random vacancy'],
+		queryFn() {
+			return getRandomMatch();
+		},
+		staleTime: Infinity
+	});
+
+	const modalStore = getModalStore();
+	function showModal() {
+		modalStore.trigger({
+			type: 'component',
+			component: { ref: WarningModal, props: { hasMatches: $userCvsQuery.data?.length } },
+			backdropClasses: 'backdrop-blur-md'
+		});
+	}
 </script>
 
-<div>
+<div class="mb-16 space-y-5 rounded-lg bg-app-blue-50 p-5">
+	<h2 class="font-title text-3xl">CV</h2>
 	{#if $userCvsQuery.isSuccess}
 		<div class="flex flex-col">
 			{#each $userCvsQuery.data as id (id)}
 				<a href={route((p) => `/profile/match/cv/${p(id)}`)}>CV {id}</a>
 			{:else}
-				<a href={route('/create/cv')}>Create your first CV!</a>
+				<a href={route('/create/cv')}>Fill out CV</a>
 			{/each}
 		</div>
 	{:else}
 		Loading...
 	{/if}
 </div>
+<RandomMatch
+	matchData={$randomVacancyQuery.data}
+	like={showModal}
+	dislike={showModal}
+/>
