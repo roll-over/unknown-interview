@@ -11,7 +11,7 @@
 
 ---
 Backend:
-- [] The ERD-diagram updated, if any related model changed/added
-- [] Tests updated/added  
-- [] Separate task for updating related test created and assigned
+- [ ] The ERD-diagram updated, if any related model changed/added
+- [ ] Tests updated/added  
+- [ ] Separate task for updating related test created and assigned
 ---
