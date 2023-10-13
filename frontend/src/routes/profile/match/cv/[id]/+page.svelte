@@ -8,7 +8,7 @@
 	import EditIcon from '~icons/material-symbols/edit-outline';
 	import Match, { constructMatcher } from '../../Match.svelte';
 	import RandomMatch from '../../RandomMatch.svelte';
-	import { cvContent, getRandomMatch } from '../../mock';
+	import { mockCvExtraInfo, getRandomVacancy } from '../../mock';
 
 	export let data;
 	$: userMatchQuery = createQuery({
@@ -26,7 +26,7 @@
 	$: randomVacancyQuery = createQuery({
 		queryKey: ['random vacancy'],
 		queryFn() {
-			return getRandomMatch();
+			return getRandomVacancy();
 		},
 		staleTime: Infinity
 	});
@@ -60,7 +60,7 @@
 			</div>
 			<Match
 				{matcher}
-				matchData={{ ...userMatch, extra_info: userMatch.extra_info ?? cvContent }}
+				matchData={{ ...userMatch, extra_info: userMatch.extra_info ?? mockCvExtraInfo }}
 			/>
 		{:else}
 			Loading...

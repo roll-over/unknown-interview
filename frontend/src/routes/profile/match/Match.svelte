@@ -52,28 +52,28 @@
 <script lang="ts">
 	import Chip from './Chip.svelte';
 
-	export let matcher: Matcher | undefined = undefined;
+	export let matcher: Matcher = {};
 	export let matchData: MatchData;
 </script>
 
 <div>
 	Profession:
-	<Chip highlight={matcher?.profession}>{matchData.profession.name}</Chip>
+	<Chip highlight={matcher.profession}>{matchData.profession.name}</Chip>
 </div>
 <div>
 	Grade:
-	<Chip highlight={matcher?.grade}>{matchData.grade}</Chip>
+	<Chip highlight={matcher.grade}>{matchData.grade}</Chip>
 </div>
 <div>
 	Title:
-	<Chip highlight={matcher?.title}>{matchData.title}</Chip>
+	<Chip highlight={matcher.title}>{matchData.title}</Chip>
 </div>
 {#if matchData.skillset?.length}
 	{@const skills = matchData.skillset}
 	<div class="flex flex-wrap items-center gap-2">
 		Skills:
 		{#each skills as { name: skill } (skill)}
-			<Chip highlight={matcher?.skills?.(skill)}>{skill}</Chip>
+			<Chip highlight={matcher.skills?.(skill)}>{skill}</Chip>
 		{/each}
 	</div>
 {/if}
@@ -82,11 +82,11 @@
 	<div>
 		Salary
 		{#if salary.min_level}
-			from <Chip highlight={matcher?.salary}>{salary.min_level}{salary.currency}</Chip>
+			from <Chip highlight={matcher.salary}>{salary.min_level}{salary.currency}</Chip>
 		{/if}
 		{#if salary.max_level}
 			to
-			<Chip highlight={matcher?.salary}>{salary.max_level}{salary.currency}</Chip>
+			<Chip highlight={matcher.salary}>{salary.max_level}{salary.currency}</Chip>
 		{/if}
 	</div>
 {/if}

@@ -2,7 +2,7 @@
 	import ThumbsUpIcon from '~icons/material-symbols/thumb-up-outline';
 	import Match, { type MatchData, type Matcher } from './Match.svelte';
 
-	export let matcher: Matcher | undefined = undefined;
+	export let matcher: Matcher = {};
 	export let matchData: MatchData | undefined = undefined;
 	export let like: () => void;
 	export let dislike: () => void;

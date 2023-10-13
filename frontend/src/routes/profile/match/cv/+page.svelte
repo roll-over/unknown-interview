@@ -5,7 +5,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import RandomMatch from '../RandomMatch.svelte';
 	import WarningModal from '../WarningModal.svelte';
-	import { getRandomMatch } from '../mock';
+	import { getRandomVacancy } from '../mock';
 
 	$: userCvsQuery = createQuery({
 		queryKey: ['user cvs and vacancies'],
@@ -20,7 +20,7 @@
 	$: randomVacancyQuery = createQuery({
 		queryKey: ['random vacancy'],
 		queryFn() {
-			return getRandomMatch();
+			return getRandomVacancy();
 		},
 		staleTime: Infinity
 	});

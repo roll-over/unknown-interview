@@ -1,6 +1,6 @@
 import type { Cv, Vacancy } from '$lib/utils/types';
 import { faker } from '@faker-js/faker';
-export const cvContent = `Carrying  out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team.
+export const mockCvExtraInfo = `Carrying  out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team.
 	
 Requirements:
 -Strong knowledge of C++, STL libraries (basic algorithms and containers). 
@@ -14,7 +14,7 @@ Requirements:
 - Knowledge of software development best practices, including unit testing, code reviews, and continuous integration.
 - Experience with software design patterns and the ability to apply them appropriately to solve complex problems.
 `;
-export const vacancyContent = `We are looking for C++ developers to join our team, both talented Juniors and experienced Middle and Senior`;
+export const mockVacancyExtraInfo = `We are looking for C++ developers to join our team, both talented Juniors and experienced Middle and Senior`;
 
 type Match = Cv | Vacancy;
 const titles: Match['title'][] = ['director', 'lead', 'manager', 'member', 'teamlead'];
@@ -66,7 +66,7 @@ const skills = [
 	'Tcl',
 	'Julia'
 ];
-export const getRandomMatch = (): Match => {
+export const getRandomCv = (): Cv => {
 	const minSalary = faker.number.int({ min: 0, max: 50 });
 	const maxSalary = faker.number.int({ min: 0, max: 50 });
 
@@ -87,3 +87,4 @@ export const getRandomMatch = (): Match => {
 		owner_id: ''
 	};
 };
+export const getRandomVacancy: () => Vacancy = getRandomCv;
