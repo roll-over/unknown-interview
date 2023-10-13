@@ -6,9 +6,9 @@
 	import { persisted } from 'svelte-local-storage-store';
 	import Profession from '../Profession.svelte';
 	import Skills from '../Skills.svelte';
-	import { currencies, defaultJobOfferState, grades, titles } from '../common';
+	import { currencies, defaultVacancyState, grades, titles } from '../common';
 
-	const jobOfferData = persisted('jobOfferState', defaultJobOfferState);
+	const jobOfferData = persisted('jobOfferState', defaultVacancyState);
 	$: submitMutation = createMutation({
 		mutationKey: ['create', 'vanacy'],
 		mutationFn(data: components['schemas']['VacancyRequestSchema']) {

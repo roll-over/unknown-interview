@@ -34,7 +34,7 @@ services:
     depends_on:
       - dev_backend
     environment:
-      - isDocker=true
+      - PUBLIC_IS_DOCKER=true
 
   dev_unknown_mongo:
     image: mongo

@@ -31,7 +31,7 @@ services:
     env_file:
       - .env
     environment:
-      - isDocker=true
+      - PUBLIC_IS_DOCKER=true
   unknown_mongo:
     image: mongo:4.4
     container_name: unknown_mongo

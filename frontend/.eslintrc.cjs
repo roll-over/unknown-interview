@@ -26,5 +26,9 @@ module.exports = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	]
+	],
+	rules: {
+		// typescript already handles that and it complains about globally exposed interfaces, namespaces etc
+		'no-undef': 'off'
+	}
 };

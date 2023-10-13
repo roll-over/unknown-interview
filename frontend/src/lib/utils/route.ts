@@ -1,7 +1,9 @@
 import type { Param, RestParam, Route, TemplateToken } from '$lib/router';
 
-function parseParam<T extends TemplateToken | [TemplateToken, ...TemplateToken[]]>(x: T) {
-	return (Array.isArray(x) ? x.join('/') : x) as T extends TemplateToken[] ? RestParam : Param;
+function parseParam<P extends TemplateToken, R extends TemplateToken[]>(p: P, ...r: R) {
+	return (r.length ? `${p}/${r.join('/')}` : p) as R extends [TemplateToken, ...TemplateToken[]]
+		? RestParam
+		: Param;
 }
 
 /**
@@ -12,9 +14,9 @@ function parseParam<T extends TemplateToken | [TemplateToken, ...TemplateToken[]
  *
  * Exmaple: `route(p => '/user/${p(id)}')`
  *
- * For multiple rest params an array needs to be passed in:
+ * For rest params a list of value is accepted:
  *
- * Example:  `route(p => '/compare/${p([id1, id2, id3])}')`
+ * Example:  `route(p => '/compare/${p(id1, id2, id3)}')`
  * @returns a string with a resolved route
  */
 export function route(path: Route | ((param: typeof parseParam) => Route)) {

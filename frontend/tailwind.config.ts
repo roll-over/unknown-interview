@@ -12,8 +12,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				title: ['Comfortaa', ...defaultTheme.fontFamily.sans],
-				body: ['Montserrat', ...defaultTheme.fontFamily.sans]
+				title: ['Comfortaa Variable', ...defaultTheme.fontFamily.sans],
+				body: ['Montserrat Variable', ...defaultTheme.fontFamily.sans]
 			},
 			colors: {
 				app: {
