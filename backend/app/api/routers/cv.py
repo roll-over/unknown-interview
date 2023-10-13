@@ -36,7 +36,7 @@ async def get_random_cv(
         CV: CVRecords,
         cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.get_matched_record(owner_data=cv_owner, role=UserRole.applicant)
+    return await CV.get_matched_record(owner_data=cv_owner, role=UserRole.employer)
 
 
 @cv_router.get(
@@ -57,10 +57,15 @@ async def update_user_cv(
     request: Request,
     data: CVRequestSchema,
     cv_id: UUID,
-    CV: CVsRepository,
+    CV: CVRecords,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.update_one(data, cv_id, owner_data=cv_owner)
+    return await CV.update_record(
+        data,
+        record_id=cv_id,
+        owner_data=cv_owner,
+        role=UserRole.applicant,
+    )
 
 
 @cv_router.delete(
@@ -74,7 +79,7 @@ async def delete_user_cv(
 
 ):
     deleted_cv = await CV.delete_record(
-        cv_id,
+        record_id=cv_id,
         owner_data=cv_owner,
         role=UserRole.applicant,
     )
