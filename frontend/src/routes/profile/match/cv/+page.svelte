@@ -6,6 +6,7 @@
 	import RandomMatch from '../RandomMatch.svelte';
 	import { showWarningModal } from '../WarningModal.svelte';
 	import { getRandomVacancy } from '../mock';
+	import Loading from '../Loading.svelte';
 
 	$: userCvsQuery = createQuery({
 		queryKey: ['user cvs and vacancies'],
@@ -48,8 +49,12 @@
 		Loading...
 	{/if}
 </div>
-<RandomMatch
-	matchQuery={$randomVacancyQuery}
-	like={showModal}
-	dislike={showModal}
-/>
+{#if $randomVacancyQuery.isSuccess}
+	<RandomMatch
+		matchData={$randomVacancyQuery.data}
+		like={showModal}
+		dislike={showModal}
+	/>
+{:else}
+	<Loading />
+{/if}

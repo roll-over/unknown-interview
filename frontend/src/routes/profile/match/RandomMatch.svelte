@@ -1,27 +1,24 @@
 <script lang="ts">
-	import type { QueryObserverResult } from '@tanstack/svelte-query';
 	import ThumbsUpIcon from '~icons/material-symbols/thumb-up-outline';
 	import Match, { type MatchData, type Matcher } from './Match.svelte';
 
 	export let matcher: Matcher = {};
-	export let matchQuery: QueryObserverResult<MatchData>;
+	export let matchData: MatchData;
 	export let like: () => void;
 	export let dislike: () => void;
 </script>
 
 <Match
 	{matcher}
-	{matchQuery}
+	{matchData}
 	mainClass="pb-16"
 	footerClass="flex -translate-y-full justify-between"
 >
 	<svelte:fragment slot="header">
-		{#if matchQuery.data}
-			<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
-				{matchQuery.data.grade}
-				{matchQuery.data.profession.name}
-			</h2>
-		{/if}
+		<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
+			{matchData.grade}
+			{matchData.profession.name}
+		</h2>
 	</svelte:fragment>
 
 	<svelte:fragment slot="footer">

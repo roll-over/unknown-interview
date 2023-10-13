@@ -9,6 +9,7 @@
 	import Match, { constructMatcher } from '../../Match.svelte';
 	import RandomMatch from '../../RandomMatch.svelte';
 	import { getRandomVacancy } from '../../mock';
+	import Loading from '../../Loading.svelte';
 
 	export let data;
 	$: userMatchQuery = createQuery({
@@ -37,42 +38,50 @@
 	$: matcher = constructMatcher($userMatchQuery.data, $randomVacancyQuery.data);
 </script>
 
-<Match
-	{matcher}
-	matchQuery={$userMatchQuery}
-	footerClass="gap-9 flex pt-5 text-base"
->
-	<svelte:fragment slot="header">
-		<div class="flex items-center gap-1">
-			<h2 class="font-title text-3xl">CV</h2>
-			<a
-				class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
-				href={route('/create/cv')}
-			>
-				<EditIcon />
-			</a>
-			<button
-				aria-label="delete cv"
-				class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
-				on:click={async () => {
-					await api.DELETE('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: data.id } } });
-					data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
-					goto(route('/profile/match/cv'));
-				}}
-			>
-				<DeleteIcon />
-			</button>
-		</div>
-	</svelte:fragment>
+{#if $userMatchQuery.isSuccess && $userMatchQuery.data}
+	<Match
+		{matcher}
+		matchData={$userMatchQuery.data}
+		footerClass="gap-9 flex pt-5 text-base"
+	>
+		<svelte:fragment slot="header">
+			<div class="flex items-center gap-1">
+				<h2 class="font-title text-3xl">CV</h2>
+				<a
+					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
+					href={route('/create/cv')}
+				>
+					<EditIcon />
+				</a>
+				<button
+					aria-label="delete cv"
+					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
+					on:click={async () => {
+						await api.DELETE('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: data.id } } });
+						data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
+						goto(route('/profile/match/cv'));
+					}}
+				>
+					<DeleteIcon />
+				</button>
+			</div>
+		</svelte:fragment>
 
-	<svelte:fragment slot="footer">
-		<span>Views: 16</span>
-		<span>Match: 7</span>
-	</svelte:fragment>
-</Match>
-<RandomMatch
-	{matcher}
-	matchQuery={$randomVacancyQuery}
-	like={() => data.queryClient.invalidateQueries({ queryKey: ['random vacancy'] })}
-	dislike={() => data.queryClient.invalidateQueries({ queryKey: ['random vacancy'] })}
-/>
+		<svelte:fragment slot="footer">
+			<span>Views: 16</span>
+			<span>Match: 7</span>
+		</svelte:fragment>
+	</Match>
+{:else}
+	<Loading />
+{/if}
+{#if $randomVacancyQuery.isSuccess}
+	<RandomMatch
+		{matcher}
+		matchData={$randomVacancyQuery.data}
+		like={() => data.queryClient.invalidateQueries({ queryKey: ['random vacancy'] })}
+		dislike={() => data.queryClient.invalidateQueries({ queryKey: ['random vacancy'] })}
+	/>
+{:else}
+	<Loading />
+{/if}
