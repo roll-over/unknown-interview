@@ -7,8 +7,8 @@
 	import Profession from '../Profession.svelte';
 	import Skills from '../Skills.svelte';
 	import { currencies, defaultCVState, grades, titles } from '../common';
-	import MaterialSymbolsSearch from '~icons/material-symbols/search'
-	import CilArrowRight from '~icons/cil/arrow-right'
+	import MaterialSymbolsSearch from '~icons/material-symbols/search';
+	import CilArrowRight from '~icons/cil/arrow-right';
 
 	const CVStateData = persisted('CVState', defaultCVState);
 	$: submitMutation = createMutation({
@@ -89,8 +89,9 @@
 	</fieldset>
 
 	<fieldset class="w-80">
-		<legend class="pb-2 flex items-center gap-0.5">Skills
-			<MaterialSymbolsSearch/>
+		<legend class="flex items-center gap-0.5 pb-2"
+			>Skills
+			<MaterialSymbolsSearch />
 		</legend>
 		<Skills bind:selectedSkills={$CVStateData.skillset} />
 	</fieldset>
@@ -171,13 +172,9 @@
 	</fieldset> -->
 
 	<button
-	class="ml-auto group flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400"
->
-View resume
-	<CilArrowRight
-	class="w-12 h-12"
-	/>
-</button>
-
-
+		class="group ml-auto flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400"
+	>
+		View resume
+		<CilArrowRight class="h-12 w-12" />
+	</button>
 </form>
