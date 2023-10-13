@@ -3,9 +3,13 @@
 # Документация по бэкенду
 
 The ERD-diagram of schema BD
-<img src="/backend/README/diagrams/schemabd-09-10-23.svg" alt="DIAGRAM" width="1000"/>
+<img src="README/diagrams/schemabd.svg" alt="DIAGRAM" width="1000"/>
 
-If any related model changed/added need to updated the ERD-diagram:
-
+If any related model has been changed/added update the ERD-diagram:
+- open https://draw.io
+- file → import → Github → choose repository ```roll-over/unknown-interview``` → choose branch ```main``` → choose path ```/backend/README/diagrams``` → choose diagram ```schemabd.svg```
+- update the ERD-diagram with draw.io
+- export files: ```schemabd.svg``` and ```schemabd.html```
+- upload new versions of files: ```schemabd.svg``` and ```schemabd.html``` to the repository
 
 [Тестирование](./README/testing.md)
