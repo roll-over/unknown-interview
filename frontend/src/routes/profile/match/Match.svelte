@@ -4,6 +4,7 @@
 >
 	import { isRangeOverlap, mapWithFilter } from '$lib/utils';
 	import type { Cv, Vacancy } from '$lib/utils/types';
+	import type { QueryObserverResult } from '@tanstack/svelte-query';
 
 	export type MatchData = Cv | Vacancy;
 
@@ -35,7 +36,7 @@
 			matchSalary.max_level ?? Infinity
 		);
 	}
-	export function constructMatcher(userMatch?: MatchData, randomMatch?: MatchData) {
+	export function constructMatcher(userMatch?: MatchData | null, randomMatch?: MatchData | null) {
 		if (!userMatch || !randomMatch) return {};
 
 		return {
@@ -51,45 +52,62 @@
 
 <script lang="ts">
 	import Chip from './Chip.svelte';
+	import { faker } from '@faker-js/faker/locale/af_ZA';
 
 	export let matcher: Matcher = {};
-	export let matchData: MatchData;
+	export let matchQuery: QueryObserverResult<MatchData | null>;
+	export let mainClass = '';
+	export let footerClass = '';
 </script>
 
-<div>
-	Profession:
-	<Chip highlight={matcher.profession}>{matchData.profession.name}</Chip>
-</div>
-<div>
-	Grade:
-	<Chip highlight={matcher.grade}>{matchData.grade}</Chip>
-</div>
-<div>
-	Title:
-	<Chip highlight={matcher.title}>{matchData.title}</Chip>
-</div>
-{#if matchData.skillset?.length}
-	{@const skills = matchData.skillset}
-	<div class="flex flex-wrap items-center gap-2">
-		Skills:
-		{#each skills as { name: skill } (skill)}
-			<Chip highlight={matcher.skills?.(skill)}>{skill}</Chip>
-		{/each}
-	</div>
-{/if}
-{#if matchData.salary}
-	{@const salary = matchData.salary}
-	<div>
-		Salary
-		{#if salary.min_level}
-			from <Chip highlight={matcher.salary}>{salary.min_level}{salary.currency}</Chip>
+<div class="flex h-full min-h-0 flex-col">
+	<div class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 {mainClass}">
+		{#if matchQuery.isSuccess && matchQuery.data}
+			{@const matchData = matchQuery.data}
+			<slot name="header" />
+			<div>
+				Profession:
+				<Chip highlight={matcher.profession}>{matchData.profession.name}</Chip>
+			</div>
+			<div>
+				Grade:
+				<Chip highlight={matcher.grade}>{matchData.grade}</Chip>
+			</div>
+			<div>
+				Title:
+				<Chip highlight={matcher.title}>{matchData.title}</Chip>
+			</div>
+			{#if matchData.skillset?.length}
+				{@const skills = matchData.skillset}
+				<div class="flex flex-wrap items-center gap-2">
+					Skills:
+					{#each skills as { name: skill } (skill)}
+						<Chip highlight={matcher.skills?.(skill)}>{skill}</Chip>
+					{/each}
+				</div>
+			{/if}
+			{#if matchData.salary}
+				{@const salary = matchData.salary}
+				<div>
+					Salary
+					{#if salary.min_level}
+						from <Chip highlight={matcher.salary}>{salary.min_level}{salary.currency}</Chip>
+					{/if}
+					{#if salary.max_level}
+						to
+						<Chip highlight={matcher.salary}>{salary.max_level}{salary.currency}</Chip>
+					{/if}
+				</div>
+			{/if}
+			<p class="whitespace-pre-wrap">
+				<!-- todo - remove faker when cv/vacancy creation is done -->
+				{matchData.extra_info ?? faker.lorem.paragraphs({ min: 1, max: 5 })}
+			</p>
+		{:else}
+			Loading...
 		{/if}
-		{#if salary.max_level}
-			to
-			<Chip highlight={matcher.salary}>{salary.max_level}{salary.currency}</Chip>
-		{/if}
 	</div>
-{/if}
-<p class="whitespace-pre-wrap">
-	{matchData.extra_info}
-</p>
+	<div class="h-16 shrink-0 {footerClass}">
+		<slot name="footer" />
+	</div>
+</div>

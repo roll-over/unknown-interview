@@ -1,6 +1,7 @@
 {
   "tailwindCSS.experimental.classRegex": [
     ["class:([^=]*)"], 
+    ["Class=\"([^\"]*)\""], 
     ["region.+=\"([^\"]*)\""],
     ["Classes:.+?'([^']*)'"]
   ],

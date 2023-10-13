@@ -1,21 +1,5 @@
 import type { Cv, Vacancy } from '$lib/utils/types';
 import { faker } from '@faker-js/faker';
-export const mockCvExtraInfo = `Carrying  out testing of customized / developed software, analysis of the results, formalization of comments and their discussion with the project team.
-	
-Requirements:
--Strong knowledge of C++, STL libraries (basic algorithms and containers). 
--Understanding of simple data structures, knowledge of object-oriented programming principles, and good problem-solving skills.
-- Familiarity with version control systems such as Git.
-- Experience with software development tools, including integrated development environments (IDEs), compilers, and debuggers.
-- A solid foundation in computer science concepts such as algorithms, data structures, and computer architecture.
-- Effective communication skills, both written and verbal, as you'll be collaborating with team members and possibly communicating with non-technical stakeholders.
-- The ability to work both independently and as part of a team, as software development often involves both individual tasks and collaborative efforts.
-- Attention to detail and a commitment to writing clean, maintainable, and well-documented code.
-- Knowledge of software development best practices, including unit testing, code reviews, and continuous integration.
-- Experience with software design patterns and the ability to apply them appropriately to solve complex problems.
-`;
-export const mockVacancyExtraInfo = `We are looking for C++ developers to join our team, both talented Juniors and experienced Middle and Senior`;
-
 type Match = Cv | Vacancy;
 const titles: Match['title'][] = ['director', 'lead', 'manager', 'member', 'teamlead'];
 const grades: Match['grade'][] = ['junior', 'lead', 'middle', 'principal', 'senior'];

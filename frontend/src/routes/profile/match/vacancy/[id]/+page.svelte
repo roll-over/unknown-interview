@@ -8,7 +8,7 @@
 	import EditIcon from '~icons/material-symbols/edit-outline';
 	import Match, { constructMatcher } from '../../Match.svelte';
 	import RandomMatch from '../../RandomMatch.svelte';
-	import { getRandomCv, mockVacancyExtraInfo } from '../../mock';
+	import { getRandomCv } from '../../mock';
 
 	export let data;
 	$: userMatchQuery = createQuery({
@@ -22,6 +22,9 @@
 				return null;
 			}
 			return res;
+		},
+		select(data) {
+			return data?.data ?? null;
 		}
 	});
 
@@ -33,51 +36,46 @@
 		staleTime: Infinity
 	});
 
-	$: matcher = constructMatcher($userMatchQuery.data?.data, $randomCvQuery.data);
+	$: matcher = constructMatcher($userMatchQuery.data, $randomCvQuery.data);
 </script>
 
-<div class="flex h-full min-h-0 flex-col">
-	<div class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5">
-		{#if $userMatchQuery.data}
-			{@const userMatch = $userMatchQuery.data.data}
-			<div class="flex items-center gap-1">
-				<h2 class="font-title text-3xl">Vacancy</h2>
-				<a
-					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
-					href={route('/create/vacancy')}
-				>
-					<EditIcon />
-				</a>
-				<button
-					aria-label="delete vacancy"
-					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
-					on:click={async () => {
-						await api.DELETE('/api/v1/vacancies/{vacancy_id}', {
-							params: { path: { vacancy_id: data.id } }
-						});
-						data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
-						goto(route('/profile/match/vacancy'));
-					}}
-				>
-					<DeleteIcon />
-				</button>
-			</div>
-			<Match
-				{matcher}
-				matchData={{ ...userMatch, extra_info: userMatch.extra_info ?? mockVacancyExtraInfo }}
-			/>
-		{:else}
-			Loading...
-		{/if}
-	</div>
-	<div class="flex h-16 gap-9 pt-5 text-base">
+<Match
+	{matcher}
+	matchQuery={$userMatchQuery}
+	footerClass="gap-9 flex pt-5 text-base"
+>
+	<svelte:fragment slot="header">
+		<div class="flex items-center gap-1">
+			<h2 class="font-title text-3xl">Vacancy</h2>
+			<a
+				class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
+				href={route('/create/vacancy')}
+			>
+				<EditIcon />
+			</a>
+			<button
+				aria-label="delete vacancy"
+				class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
+				on:click={async () => {
+					await api.DELETE('/api/v1/vacancies/{vacancy_id}', {
+						params: { path: { vacancy_id: data.id } }
+					});
+					data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
+					goto(route('/profile/match/vacancy'));
+				}}
+			>
+				<DeleteIcon />
+			</button>
+		</div>
+	</svelte:fragment>
+	<svelte:fragment slot="footer">
 		<span>Views: 16</span>
 		<span>Match: 7</span>
-	</div>
-</div>
+	</svelte:fragment>
+</Match>
 <RandomMatch
 	{matcher}
-	matchData={$randomCvQuery.data}
+	matchQuery={$randomCvQuery}
 	like={() => data.queryClient.invalidateQueries({ queryKey: ['random cv'] })}
 	dislike={() => data.queryClient.invalidateQueries({ queryKey: ['random cv'] })}
 />

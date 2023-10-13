@@ -27,8 +27,7 @@
 
 	const modalStore = getModalStore();
 	function showModal() {
-		showWarningModal({
-			modalStore,
+		showWarningModal(modalStore, {
 			hasMatches: !!$userCvsQuery.data?.length,
 			isCvRoute: true
 		});
@@ -50,7 +49,7 @@
 	{/if}
 </div>
 <RandomMatch
-	matchData={$randomVacancyQuery.data}
+	matchQuery={$randomVacancyQuery}
 	like={showModal}
 	dislike={showModal}
 />

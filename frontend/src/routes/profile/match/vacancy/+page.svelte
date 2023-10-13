@@ -49,7 +49,7 @@
 	{/if}
 </div>
 <RandomMatch
-	matchData={$randomCvQuery.data}
+	matchQuery={$randomCvQuery}
 	like={showModal}
 	dislike={showModal}
 />
