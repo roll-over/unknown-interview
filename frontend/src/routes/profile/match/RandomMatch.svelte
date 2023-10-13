@@ -17,10 +17,9 @@
 >
 	<svelte:fragment slot="header">
 		{#if matchQuery.data}
-			{@const { data } = matchQuery}
 			<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
-				{data.grade}
-				{data.profession.name}
+				{matchQuery.data.grade}
+				{matchQuery.data.profession.name}
 			</h2>
 		{/if}
 	</svelte:fragment>
