@@ -4,7 +4,7 @@
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
 	import RandomMatch from '../RandomMatch.svelte';
-	import WarningModal from '../WarningModal.svelte';
+	import { showWarningModal } from '../WarningModal.svelte';
 	import { getRandomVacancy } from '../mock';
 
 	$: userCvsQuery = createQuery({
@@ -27,10 +27,10 @@
 
 	const modalStore = getModalStore();
 	function showModal() {
-		modalStore.trigger({
-			type: 'component',
-			component: { ref: WarningModal, props: { hasMatches: $userCvsQuery.data?.length } },
-			backdropClasses: 'backdrop-blur-md'
+		showWarningModal({
+			modalStore,
+			hasMatches: !!$userCvsQuery.data?.length,
+			isCvRoute: true
 		});
 	}
 </script>

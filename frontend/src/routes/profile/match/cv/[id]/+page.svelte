@@ -8,7 +8,7 @@
 	import EditIcon from '~icons/material-symbols/edit-outline';
 	import Match, { constructMatcher } from '../../Match.svelte';
 	import RandomMatch from '../../RandomMatch.svelte';
-	import { mockCvExtraInfo, getRandomVacancy } from '../../mock';
+	import { getRandomVacancy, mockCvExtraInfo } from '../../mock';
 
 	export let data;
 	$: userMatchQuery = createQuery({
