@@ -4,8 +4,8 @@ from app.db.models.mixins import UUIDMixin
 
 
 class Chat(UUIDMixin):
-    employer: UUID
-    applicant: UUID
+    employer_id: UUID
+    applicant_id: UUID
     vacancy_id: UUID
     cv_id: UUID
     
