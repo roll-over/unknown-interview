@@ -70,8 +70,7 @@
 		"patchedDependencies": {
 			"@skeletonlabs/skeleton@2.2.0": "patches/@skeletonlabs__skeleton@2.2.0.patch",
 			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch",
-			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch",
-			"openapi-fetch@0.7.9": "patches/openapi-fetch@0.7.9.patch"
+			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch"
 		}
 	}
 }
