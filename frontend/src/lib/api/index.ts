@@ -1,14 +1,10 @@
 import createClient from 'openapi-fetch';
 import type { paths } from '$lib/openapi'; // generated from openapi-typescript
 import { browser } from '$app/environment';
+import { PUBLIC_EXTERNAL_URL, PUBLIC_INTERNAL_URL, PUBLIC_IS_DOCKER } from '$env/static/public';
 
-const baseUrl = browser
-	? undefined
-	: process.env.isDocker
-	? process.env.INTERNAL_URL
-	: process.env.EXTERNAL_URL;
+const baseUrl = browser ? undefined : PUBLIC_IS_DOCKER ? PUBLIC_INTERNAL_URL : PUBLIC_EXTERNAL_URL;
 
-const api = createClient<paths>({
-	baseUrl
-});
+const api = createClient<paths>({ baseUrl });
+
 export default api;

@@ -15,5 +15,9 @@ async function main() {
 	if (typeof module.default !== 'function')
 		throw Error(`Module ${moduleFile} default export is not of type Function`);
 
-	module.default();
+	try {
+		module.default();
+	} catch (error) {
+		console.error(error);
+	}
 }

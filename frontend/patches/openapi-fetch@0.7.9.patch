@@ -1,0 +1,109 @@
+diff --git a/dist/cjs/index.cjs b/dist/cjs/index.cjs
+index b03745e5565036a13d92b6f911d93c2c7546ecce..765fc58629c7b7b298101ae345b9dc6db2cd8108 100644
+--- a/dist/cjs/index.cjs
++++ b/dist/cjs/index.cjs
+@@ -31,13 +31,13 @@ var DEFAULT_HEADERS = {
+   "Content-Type": "application/json"
+ };
+ function createClient(clientOptions = {}) {
+-  const { fetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
++  const { fetch: baseFetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
+   let baseUrl = options.baseUrl ?? "";
+   if (baseUrl.endsWith("/")) {
+     baseUrl = baseUrl.slice(0, -1);
+   }
+   async function coreFetch(url, fetchOptions) {
+-    const { headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
++    const { fetch = baseFetch, headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
+     const finalURL = createFinalURL(url, { baseUrl, params, querySerializer });
+     const finalHeaders = mergeHeaders(DEFAULT_HEADERS, clientOptions?.headers, headers, params.header);
+     const requestInit = { redirect: "follow", ...options, ...init, headers: finalHeaders };
+diff --git a/dist/cjs/index.d.cts b/dist/cjs/index.d.cts
+index 39a575ad6a4a6b9df5b27b834b8c2f3dca765c59..0d550487de120063cac00aa8b299e7d4225d4ab7 100644
+--- a/dist/cjs/index.d.cts
++++ b/dist/cjs/index.d.cts
+@@ -48,6 +48,7 @@ export type RequestOptions<T> = ParamsOption<T> & RequestBodyOption<T> & {
+     querySerializer?: QuerySerializer<T>;
+     bodySerializer?: BodySerializer<T>;
+     parseAs?: ParseAs;
++    fetch?: ClientOptions['fetch'];
+ };
+ export default function createClient<Paths extends {}>(clientOptions?: ClientOptions): {
+     /** Call a GET endpoint */
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 39a575ad6a4a6b9df5b27b834b8c2f3dca765c59..0d550487de120063cac00aa8b299e7d4225d4ab7 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -48,6 +48,7 @@ export type RequestOptions<T> = ParamsOption<T> & RequestBodyOption<T> & {
+     querySerializer?: QuerySerializer<T>;
+     bodySerializer?: BodySerializer<T>;
+     parseAs?: ParseAs;
++    fetch?: ClientOptions['fetch'];
+ };
+ export default function createClient<Paths extends {}>(clientOptions?: ClientOptions): {
+     /** Call a GET endpoint */
+diff --git a/dist/index.js b/dist/index.js
+index b7748a92293d65f9b2633fada3dd6bc433986efc..7bd041e1858a367980abd0b0a34f8d9efe0f90f0 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -3,13 +3,13 @@ const DEFAULT_HEADERS = {
+     "Content-Type": "application/json",
+ };
+ export default function createClient(clientOptions = {}) {
+-    const { fetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
++    const { fetch: baseFetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
+     let baseUrl = options.baseUrl ?? "";
+     if (baseUrl.endsWith("/")) {
+         baseUrl = baseUrl.slice(0, -1); // remove trailing slash
+     }
+     async function coreFetch(url, fetchOptions) {
+-        const { headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
++        const { fetch = baseFetch, headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
+         // URL
+         const finalURL = createFinalURL(url, { baseUrl, params, querySerializer });
+         const finalHeaders = mergeHeaders(DEFAULT_HEADERS, clientOptions?.headers, headers, params.header);
+diff --git a/dist/index.min.d.ts b/dist/index.min.d.ts
+index 39a575ad6a4a6b9df5b27b834b8c2f3dca765c59..0d550487de120063cac00aa8b299e7d4225d4ab7 100644
+--- a/dist/index.min.d.ts
++++ b/dist/index.min.d.ts
+@@ -48,6 +48,7 @@ export type RequestOptions<T> = ParamsOption<T> & RequestBodyOption<T> & {
+     querySerializer?: QuerySerializer<T>;
+     bodySerializer?: BodySerializer<T>;
+     parseAs?: ParseAs;
++    fetch?: ClientOptions['fetch'];
+ };
+ export default function createClient<Paths extends {}>(clientOptions?: ClientOptions): {
+     /** Call a GET endpoint */
+diff --git a/dist/index.min.js b/dist/index.min.js
+index 9c1476874c8d6786a3178c4d17641ef8ade6b55f..918d929f16af929688e1780b8d560d4119f464d3 100644
+--- a/dist/index.min.js
++++ b/dist/index.min.js
+@@ -1 +1 @@
+-var b={"Content-Type":"application/json"};function q(a={}){let{fetch:s=globalThis.fetch,querySerializer:n,bodySerializer:r,...h}=a,i=h.baseUrl??"";i.endsWith("/")&&(i=i.slice(0,-1));async function p(e,t){let{headers:F,body:l,params:O={},parseAs:P="json",querySerializer:T=n??S,bodySerializer:x=r??H,...R}=t||{},m=g(e,{baseUrl:i,params:O,querySerializer:T}),f=M(b,a?.headers,F,O.header),d={redirect:"follow",...h,...R,headers:f};l&&(d.body=x(l)),d.body instanceof FormData&&f.delete("Content-Type");let o=await s(m,d);if(o.status===204||o.headers.get("Content-Length")==="0")return o.ok?{data:{},response:o}:{error:{},response:o};if(o.ok){let y;if(P!=="stream"){let u=o.clone();y=typeof u[P]=="function"?await u[P]():await u.text()}else y=o.clone().body;return{data:y,response:o}}let c={};try{c=await o.clone().json()}catch{c=await o.clone().text()}return{error:c,response:o}}return{async GET(e,...t){return p(e,{...t[0],method:"GET"})},async PUT(e,...t){return p(e,{...t[0],method:"PUT"})},async POST(e,...t){return p(e,{...t[0],method:"POST"})},async DELETE(e,...t){return p(e,{...t[0],method:"DELETE"})},async OPTIONS(e,...t){return p(e,{...t[0],method:"OPTIONS"})},async HEAD(e,...t){return p(e,{...t[0],method:"HEAD"})},async PATCH(e,...t){return p(e,{...t[0],method:"PATCH"})},async TRACE(e,...t){return p(e,{...t[0],method:"TRACE"})}}}function S(a){let s=new URLSearchParams;if(a&&typeof a=="object")for(let[n,r]of Object.entries(a))r!=null&&s.set(n,r);return s.toString()}function H(a){return JSON.stringify(a)}function g(a,s){let n=`${s.baseUrl}${a}`;if(s.params.path)for(let[r,h]of Object.entries(s.params.path))n=n.replace(`{${r}}`,encodeURIComponent(String(h)));if(s.params.query){let r=s.querySerializer(s.params.query);r&&(n+=`?${r}`)}return n}function M(...a){let s=new Headers;for(let n of a){if(!n||typeof n!="object")continue;let r=n instanceof Headers?n.entries():Object.entries(n);for(let[h,i]of r)i===null?s.delete(h):i!==void 0&&s.set(h,i)}return s}export{g as createFinalURL,q as default,H as defaultBodySerializer,S as defaultQuerySerializer,M as mergeHeaders};
++var q={"Content-Type":"application/json"};function S(a={}){let{fetch:s=globalThis.fetch,querySerializer:n,bodySerializer:r,...h}=a,i=h.baseUrl??"";i.endsWith("/")&&(i=i.slice(0,-1));async function p(e,t){let{fetch:F=s,headers:T,body:l,params:O={},parseAs:P="json",querySerializer:x=n??H,bodySerializer:R=r??g,...b}=t||{},m=M(e,{baseUrl:i,params:O,querySerializer:x}),f=z(q,a?.headers,T,O.header),d={redirect:"follow",...h,...b,headers:f};l&&(d.body=R(l)),d.body instanceof FormData&&f.delete("Content-Type");let o=await F(m,d);if(o.status===204||o.headers.get("Content-Length")==="0")return o.ok?{data:{},response:o}:{error:{},response:o};if(o.ok){let y;if(P!=="stream"){let u=o.clone();y=typeof u[P]=="function"?await u[P]():await u.text()}else y=o.clone().body;return{data:y,response:o}}let c={};try{c=await o.clone().json()}catch{c=await o.clone().text()}return{error:c,response:o}}return{async GET(e,...t){return p(e,{...t[0],method:"GET"})},async PUT(e,...t){return p(e,{...t[0],method:"PUT"})},async POST(e,...t){return p(e,{...t[0],method:"POST"})},async DELETE(e,...t){return p(e,{...t[0],method:"DELETE"})},async OPTIONS(e,...t){return p(e,{...t[0],method:"OPTIONS"})},async HEAD(e,...t){return p(e,{...t[0],method:"HEAD"})},async PATCH(e,...t){return p(e,{...t[0],method:"PATCH"})},async TRACE(e,...t){return p(e,{...t[0],method:"TRACE"})}}}function H(a){let s=new URLSearchParams;if(a&&typeof a=="object")for(let[n,r]of Object.entries(a))r!=null&&s.set(n,r);return s.toString()}function g(a){return JSON.stringify(a)}function M(a,s){let n=`${s.baseUrl}${a}`;if(s.params.path)for(let[r,h]of Object.entries(s.params.path))n=n.replace(`{${r}}`,encodeURIComponent(String(h)));if(s.params.query){let r=s.querySerializer(s.params.query);r&&(n+=`?${r}`)}return n}function z(...a){let s=new Headers;for(let n of a){if(!n||typeof n!="object")continue;let r=n instanceof Headers?n.entries():Object.entries(n);for(let[h,i]of r)i===null?s.delete(h):i!==void 0&&s.set(h,i)}return s}export{M as createFinalURL,S as default,g as defaultBodySerializer,H as defaultQuerySerializer,z as mergeHeaders};
+diff --git a/src/index.ts b/src/index.ts
+index c0b69ac0cda1660c82706545e9f28968f287d8b2..2efcdb189d21ed20745663ed8a9e27a7e7f47b80 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -40,10 +40,11 @@ export type RequestOptions<T> = ParamsOption<T> &
+     querySerializer?: QuerySerializer<T>;
+     bodySerializer?: BodySerializer<T>;
+     parseAs?: ParseAs;
++    fetch?: ClientOptions['fetch']
+   };
+ 
+ export default function createClient<Paths extends {}>(clientOptions: ClientOptions = {}) {
+-  const { fetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
++  const { fetch: baseFetch = globalThis.fetch, querySerializer: globalQuerySerializer, bodySerializer: globalBodySerializer, ...options } = clientOptions;
+ 
+   let baseUrl = options.baseUrl ?? "";
+   if (baseUrl.endsWith("/")) {
+@@ -51,7 +52,7 @@ export default function createClient<Paths extends {}>(clientOptions: ClientOpti
+   }
+ 
+   async function coreFetch<P extends keyof Paths, M extends HttpMethod>(url: P, fetchOptions: FetchOptions<M extends keyof Paths[P] ? Paths[P][M] : never>): Promise<FetchResponse<M extends keyof Paths[P] ? Paths[P][M] : unknown>> {
+-    const { headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
++    const { fetch = baseFetch ,headers, body: requestBody, params = {}, parseAs = "json", querySerializer = globalQuerySerializer ?? defaultQuerySerializer, bodySerializer = globalBodySerializer ?? defaultBodySerializer, ...init } = fetchOptions || {};
+ 
+     // URL
+     const finalURL = createFinalURL(url as string, { baseUrl, params, querySerializer });
