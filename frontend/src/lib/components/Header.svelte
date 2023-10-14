@@ -1,13 +1,9 @@
 <script lang="ts">
-	import api from '$lib/api';
+	import { getUserInfo } from '$lib/api';
 	import { route } from '$lib/utils/route';
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
-	import { createQuery } from '@tanstack/svelte-query';
 
-	$: userInfo = createQuery({
-		queryKey: ['userInfo'],
-		queryFn: () => api.GET('/api/v1/auth/user_info', {})
-	});
+	$: userInfo = getUserInfo();
 	$: data = $userInfo.isSuccess && $userInfo.data.data ? $userInfo.data.data : null;
 
 	const navCreatePopup: PopupSettings = {
