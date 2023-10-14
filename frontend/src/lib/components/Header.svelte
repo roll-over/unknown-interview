@@ -20,7 +20,7 @@
 <header class="bg-app-blue-50 px-2">
 	<nav class="flex gap-3">
 		<a href={route('/')}>Home</a>
-		<a href={route('/profile/matches')}>Matches</a>
+		<a href={route('/profile/chat')}>Chats</a>
 		<a href={route('/user')}>User</a>
 		<button use:popup={navPopup}>
 			Create
