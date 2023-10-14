@@ -34,7 +34,7 @@ function getOpenApiSpec() {
 					throw Error("Couldn't reach the server in 5 retries. Aborting generating openAPI types");
 				}
 				console.error("Couldn't reach the server, retrying in 10 seconds");
-				setTimeout(() => resolve(getOpenApiSpec()), 10);
+				setTimeout(() => resolve(getOpenApiSpec()), 10000);
 			})
 			.catch(reject);
 	});
