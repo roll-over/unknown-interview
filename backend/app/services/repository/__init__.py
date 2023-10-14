@@ -1,4 +1,6 @@
 from .dependencies import (
+    ChatMessagesRepository,
+    ChatsRepository,
     CVNotesRepository,
     CVsRepository,
     ProfessionsRepository,
@@ -16,4 +18,6 @@ __all__ = (
     "ProfessionsRepository",
     "VacanciesRepository",
     "VacancyNotesRepository",
+    "ChatsRepository",
+    "ChatMessagesRepository"
 )
