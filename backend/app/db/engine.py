@@ -3,6 +3,8 @@ from mongomock_motor import AsyncMongoMockClient
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.config import settings
+from app.db.models.chat import Chat
+from app.db.models.chat_message import ChatMessage
 from app.db.models.cv import CV
 from app.db.models.cv_note import CVNote
 from app.db.models.match import Match
@@ -27,6 +29,8 @@ async def init_client(db_name):
 async def __init_beanie(db_name):
     __models = [
         User,
+        Chat,
+        ChatMessage,
         CV,
         CVNote,
         Vacancy,
