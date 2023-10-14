@@ -2,6 +2,6 @@
 
 # Документация по бэкенду
 
-[The ERD-diagram of schema BD](.README/diagrams/schemabd.md)
+[The ERD-diagram of schema BD](README/diagrams/schemabd.md)
 
 [Тестирование](./README/testing.md)
