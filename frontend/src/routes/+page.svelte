@@ -1,8 +1,13 @@
 <script lang="ts">
+	import { testQuery } from '$lib/api';
 	import { route } from '$lib/utils/route';
+	import { createQuery } from '@tanstack/svelte-query';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
 	import Background from '~icons/main/background';
 	import Diversity from '~icons/main/diversity';
+
+	let id = 1;
+	$: test = createQuery({ ...testQuery(id) });
 </script>
 
 <div class="flex h-full flex-col items-center justify-center bg-white">
@@ -21,4 +26,9 @@
 			class="text-3xl text-app-blue-500 transition-colors group-current:text-app-blue-100"
 		/>
 	</a>
+	<input
+		bind:value={id}
+		placeholder="id"
+	/>
+	<div>{$test.data?.data?.email}</div>
 </div>
