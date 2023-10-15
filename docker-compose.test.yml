@@ -12,3 +12,21 @@ services:
       - .env
     environment:
       - STAGE=test
+  e2e-test:
+    build: ./tests/e2e_testing
+    working_dir: /e2e_testing
+    container_name: e2e_testing
+    command: pytest
+    volumes:
+      - ./tests/e2e_testing/src:/e2e_testing/src
+    env_file:
+      - .env
+  api-test:
+    build: ./tests/api_testing
+    working_dir: /api_testing
+    container_name: api_testing
+    command: pytest
+    volumes:
+      - ./tests/api_testing/src:/api_testing/src
+    env_file:
+      - .env
