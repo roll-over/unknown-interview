@@ -25,6 +25,7 @@ services:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
+      - ./frontend/pnpm-lock.yaml:/frontend/pnpm-lock.yaml
       - ./frontend/postcss.config.js:/frontend/postcss.config.js
       - ./frontend/svelte.config.js:/frontend/svelte.config.js
       - ./frontend/tailwind.config.ts:/frontend/tailwind.config.ts
@@ -34,7 +35,7 @@ services:
     depends_on:
       - dev_backend
     environment:
-      - isDocker=true
+      - PUBLIC_IS_DOCKER=true
 
   dev_unknown_mongo:
     image: mongo
