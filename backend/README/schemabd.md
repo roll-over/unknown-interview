@@ -1,6 +1,6 @@
 ## The ERD-diagram of schema BD
 
-<img src="schemadb.svg" alt="DIAGRAM" width="1000"/>
+<img src="diagrams/schemadb.svg" alt="DIAGRAM" width="1000"/>
 
 If any related model has been changed/added update the ERD-diagram:
 - open https://draw.io
