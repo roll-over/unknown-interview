@@ -9,7 +9,7 @@ patchedDependencies:
     hash: mikwa3ctd5wnlihsv24g62vuru
     path: patches/@playwright__experimental-ct-svelte@1.38.1.patch
   '@skeletonlabs/skeleton@2.2.0':
-    hash: 65mksxbjv2nguepplje3eymxki
+    hash: l2l6l66buwduyzqngncf4rvoom
     path: patches/@skeletonlabs__skeleton@2.2.0.patch
   '@types/gtag.js@0.0.15':
     hash: qe3nomneilxkxbxjy63wah5ci4
@@ -21,7 +21,7 @@ dependencies:
     version: 1.5.3
   '@skeletonlabs/skeleton':
     specifier: ^2.2.0
-    version: 2.2.0(patch_hash=65mksxbjv2nguepplje3eymxki)(svelte@4.2.1)
+    version: 2.2.0(patch_hash=l2l6l66buwduyzqngncf4rvoom)(svelte@4.2.1)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.1.0
     version: 0.1.0(tailwindcss@3.3.3)
@@ -616,7 +616,7 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@skeletonlabs/skeleton@2.2.0(patch_hash=65mksxbjv2nguepplje3eymxki)(svelte@4.2.1):
+  /@skeletonlabs/skeleton@2.2.0(patch_hash=l2l6l66buwduyzqngncf4rvoom)(svelte@4.2.1):
     resolution: {integrity: sha512-pSi1yeZo1tsGnMqbBeTfTxfEqcZUM1n9RT/7KQVSiBcENB9L0kesbkv5TlZhW6MxOwf0QRVfkaeCc5ymz4/OHw==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0

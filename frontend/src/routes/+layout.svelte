@@ -4,10 +4,11 @@
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import '@fontsource-variable/comfortaa';
 	import '@fontsource-variable/montserrat';
-	import { AppShell, storePopup } from '@skeletonlabs/skeleton';
+	import { AppShell, Modal, initializeStores, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import '../app.pcss';
 
+	initializeStores();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	export let data;
 </script>
@@ -15,6 +16,7 @@
 <svelte:head>
 	<title>Hide-Hire</title>
 </svelte:head>
+<Modal />
 <QueryClientProvider client={data.queryClient}>
 	<Analytics />
 	<AppShell

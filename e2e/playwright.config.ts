@@ -25,8 +25,9 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.PUBLIC_IS_DOCKER
-    ? process.env.PUBLIC_INTERNAL_URL
-    : process.env.PUBLIC_EXTERNAL_URL,
+      ? process.env.PUBLIC_INTERNAL_URL
+      : process.env.PUBLIC_EXTERNAL_URL,
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
   },
