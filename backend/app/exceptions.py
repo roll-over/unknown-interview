@@ -7,7 +7,7 @@ async def response_validation_exception_handler(request, exc):
     if exc.body is None:
         return JSONResponse(
             status_code=status.HTTP_200_OK,
-            content=jsonable_encoder([]),
+            content=jsonable_encoder(None),
         )
 
     message = f"Validation error. Data from database equal to: {exc.body}"
@@ -31,6 +31,14 @@ class UserNotAuthenticated(HTTPException):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User unauthorized, need to login to continue",
+        )
+
+
+class CheckUserAuthorization(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Check user authorization",
         )
 
 

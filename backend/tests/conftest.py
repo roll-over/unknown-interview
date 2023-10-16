@@ -46,4 +46,5 @@ async def test_employer():
 
 @pytest.fixture
 def no_db_entries_error() -> bytes:
-    return b"[]"
+    return b'null'
+
