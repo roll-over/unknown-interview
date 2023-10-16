@@ -105,14 +105,15 @@ class UserVacancyCVUoW:
             record_collection,
             owner_collection,
         ):
-            if record_id in owner_collection:
-                return await record_collection.update_one(
-                    data,
-                    record_id=record_id,
-                    owner_data=owner_data,
-                )
-            raise ForbiddenAction
-
+            if record_id not in owner_collection:
+                raise ForbiddenAction
+                
+            return await record_collection.update_one(
+                data,
+                record_id=record_id,
+                owner_data=owner_data,
+            )
+        
     async def delete(
         self,
         *,
