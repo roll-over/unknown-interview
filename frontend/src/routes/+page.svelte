@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { testQuery } from '$lib/api';
+	import { createGetCall } from '$lib/api';
 	import { route } from '$lib/utils/route';
 	import { createQuery } from '@tanstack/svelte-query';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
@@ -7,7 +7,13 @@
 	import Diversity from '~icons/main/diversity';
 
 	let id = 1;
-	$: test = createQuery({ ...testQuery(id) });
+	$: test1 = createQuery({
+		queryKey: [1],
+		async queryFn({ signal }) {
+			console.log(id);
+			return createGetCall('/api/ping', { signal }).invoke();
+		}
+	});
 </script>
 
 <div class="flex h-full flex-col items-center justify-center bg-white">
@@ -30,5 +36,5 @@
 		bind:value={id}
 		placeholder="id"
 	/>
-	<div>{$test.data?.data?.email}</div>
+	<div>{$test1.data?.data}</div>
 </div>
