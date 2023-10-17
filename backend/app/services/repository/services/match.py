@@ -14,14 +14,14 @@ class MatchService:
 
     async def get_records(
             self,
-            data_id: Dict[str, UUID],
+            data: Dict[str, UUID],
             sort: Tuple[str, int] = None,
             limit: Union[int | None] = None,
     ) -> Union[CV | Vacancy | None]:
-        record = await self.repo.fetch_many(data_id, sort=sort, limit=limit)
-
-        if record:
+        record = await self.repo.fetch_many(data, sort=sort, limit=limit)
+        if record and limit:
             return record.pop()
+        return record
 
     async def update_relation(
         self,

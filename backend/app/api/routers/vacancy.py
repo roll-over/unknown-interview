@@ -42,7 +42,7 @@ async def get_random_vacancy(
 ):
     return await Vacancy.get_matched_record(
         owner_data=vacancy_owner,
-        role=UserRole.employer,
+        role=UserRole.applicant,
     )
 
 
@@ -64,13 +64,14 @@ async def update_company_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
     vacancy_id: UUID,
-    Vacancy: VacanciesRepository,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await Vacancy.update_one(
+    return await Vacancy.update_record(
         vacancy_data,
-        vacancy_id,
+        record_id=vacancy_id,
         owner_data=vacancy_owner,
+        role=UserRole.employer,
     )
 
 
@@ -85,7 +86,7 @@ async def delete_company_vacancy(
 
 ):
     deleted_vacancy = await Vacancy.delete_record(
-        vacancy_id,
+        record_id=vacancy_id,
         owner_data=vacancy_owner,
         role=UserRole.employer,
     )

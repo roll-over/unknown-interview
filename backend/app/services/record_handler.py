@@ -20,11 +20,11 @@ class RecordHandler:
         self.job_records = UserVacancyCVUoW()
 
     async def prepare_record(
-        self,
-        data: Dict,
-        *,
-        owner_data: User,
-        role: Role,
+            self,
+            data: Dict,
+            *,
+            owner_data: User,
+            role: Role,
     ) -> Union[CV | Vacancy]:
         """Prepares a record by creating a new job record and preparing matches.
 
@@ -37,7 +37,7 @@ class RecordHandler:
             The created CV or Vacancy.
         """
 
-        created_record = await self.job_records.create_new(
+        created_record = await self.job_records.create(
             data, owner_data=owner_data, role=role
         )
         await self.matches.prepare_matches(
@@ -62,21 +62,71 @@ class RecordHandler:
         """
         return await self.matches.get_matches(owner_data, role)
 
-    async def delete_record(
+    async def update_record(
         self,
-        record_id: UUID,
+        new_record_data,
         *,
+        record_id: UUID,
         owner_data: User,
         role: Role,
-    ) -> bool:
-        deleted_record: bool = await self.job_records.delete_record(
-            record_id,
+    ) -> Union[CV | Vacancy | Exception]:
+        """Delete CV or Vacancy record from database & appropriate user collection,
+            delete related matches.
+
+        Args:
+            new_record_data: The data for the record update.
+            record_id: The ID of the record to delete.
+            owner_data: The owner data object associated with the record.
+            role: The role associated with the record.
+
+        Returns:
+            Updated CV or Vacancy, or Exception if raised
+        """
+        await self.matches.delete_matches(
+                record_id=record_id,
+                owner_data=owner_data,
+                role=role,
+            )
+        updated_record = await self.job_records.update(
+            new_record_data, owner_data=owner_data, role=role, record_id=record_id
+        )
+        await self.matches.prepare_matches(
+            updated_record,
+            owner_data=owner_data,
+            role=role,
+        )
+
+        return updated_record
+
+    async def delete_record(
+            self,
+            *,
+            record_id: UUID,
+            owner_data: User,
+            role: Role,
+    ) -> int:
+        """Delete CV or Vacancy record from database & appropriate user collection,
+            delete related matches.
+
+        Args:
+            record_id: The ID of the record to delete.
+            owner_data: The owner data object associated with the record.
+            role: The role associated with the record.
+
+        Returns:
+            Quantity of deleted records if success.
+        """
+        deleted_record = await self.job_records.delete(
+            record_id=record_id,
             owner_data=owner_data,
             role=role,
         )
         if deleted_record:
-            return await self.matches.delete_matches(
-                record_id,
+            await self.matches.delete_matches(
+                record_id=record_id,
                 owner_data=owner_data,
                 role=role,
+                record_deleted=True,
             )
+        return deleted_record
+

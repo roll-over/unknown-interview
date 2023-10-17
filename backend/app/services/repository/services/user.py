@@ -1,4 +1,4 @@
-from app.exceptions import UserEmailAlreadyExist
+from app.exceptions import CheckUserAuthorization, UserEmailAlreadyExist
 from app.services.repository.interfaces import AbstractBaseRepository
 
 
@@ -15,7 +15,11 @@ class UserService:
                 case str():
                     user_email = data
                 case _:
-                    user_email = data.email
+                    try:
+                        user_email = data.email
+                    except AttributeError:
+                        raise CheckUserAuthorization
+
             return func(self, user_email, data)
 
         return wrapper
@@ -23,7 +27,7 @@ class UserService:
     async def create_one(self, data):
         existing_user = await self.get_user(data)
         if existing_user:
-            raise UserEmailAlreadyExist()
+            raise UserEmailAlreadyExist
         new_user_data = self.repo.model(
             name=data.name,
             email=data.email,
