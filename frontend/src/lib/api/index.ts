@@ -5,7 +5,8 @@ import type { StrictOmit, StrictPick } from '$lib/utils/types';
 import createClient, { type FetchOptions } from 'openapi-fetch';
 
 const baseUrl = browser ? undefined : PUBLIC_IS_DOCKER ? PUBLIC_INTERNAL_URL : PUBLIC_EXTERNAL_URL;
-const api = createClient<paths>({ baseUrl });
+export const api = createClient<paths>({ baseUrl });
+
 type Api = typeof api;
 type HttpVerb = keyof Api;
 type PathId = keyof paths;
@@ -23,68 +24,79 @@ type Options =
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| FetchOptions<any>;
 type MOptions = Options | undefined;
-type InputOptions<O extends MOptions = Options> = StrictPick<NonNullable<O>, 'params' | 'body'>;
+type InputOptions = StrictPick<Options, 'params' | 'body'>;
 type ExtraOptions<O extends MOptions = Options> = StrictOmit<NonNullable<O>, 'params' | 'body'>;
 /**
- * QueryKey used to identify queries.
+ * Key used to identify queries.
  * Consists of two elements - domain and input.
  * Domain itself consists of two elements - path and http-verb.
  * Allows to invalidate queries hierarchically - all queries on a given path for specific or all verbs, with or w/o specific input
  */
-type QueryKey<WithVerb extends boolean = true> = [
-	[path: PathId, ...(WithVerb extends true ? [verb: HttpVerb] : [verb?: HttpVerb])],
+type DataKey<RequireVerb extends boolean = true> = [
+	[path: PathId, ...(RequireVerb extends true ? [verb: HttpVerb] : [verb?: HttpVerb])],
 	InputOptions?
 ];
 type Query<A extends Options = Options, R = unknown> = {
-	/**
-	 *
-	 * @param arg extra options which you may pass in, they will be merged with FetchOptions
-	 * @returns
-	 */
 	runQuery: (arg?: ExtraOptions<A>) => R;
-	key: QueryKey;
+	key: DataKey;
+};
+type Mutation<A extends unknown[] = unknown[], R = unknown> = {
+	runMutation: (...args: A) => R;
+	key: DataKey;
 };
 
-type twoArgFn<A extends unknown[], R> = (...x: [A[0], A[1]]) => R;
-function createApiRequest<A1 extends PathId, A2 extends [Options?], V extends HttpVerb, R>(
+function createApiQuery<A1 extends PathId, A2 extends [Options?], V extends HttpVerb, R>(
 	fn: (path: A1, ...opts: A2) => R,
 	verb: V
 ) {
 	return function (path: A1, ...[opts]: A2): Query<NonNullable<A2[0]>, R> {
 		return {
 			runQuery: (arg?: ExtraOptions<A2[0]>) =>
-				(fn as unknown as twoArgFn<[A1, A2[0]], R>)(path, arg ? { ...opts, ...arg } : opts),
-			key: createQueryKey(path, verb, opts)
+				(fn as unknown as (path: A1, opts: A2[0]) => R)(path, arg ? { ...opts, ...arg } : opts),
+			key: createKey(path, verb, opts)
+		};
+	};
+}
+function createApiMutation<A1 extends PathId, A2 extends [Options?], V extends HttpVerb, R>(
+	fn: (path: A1, ...opts: A2) => R,
+	verb: V
+) {
+	return function (path: A1): Mutation<A2, R> {
+		return {
+			runMutation: (...opts: A2) => fn(path, ...opts),
+			key: createKey(path, verb)
 		};
 	};
 }
 
-function createQueryKey(path: PathId, verb: HttpVerb, opts?: Options): QueryKey {
-	const domainKey: QueryKey[0] = [path, verb];
+function createKey(path: PathId, verb: HttpVerb, opts?: Options): DataKey {
+	const domainKey: DataKey[0] = [path, verb];
 	if (!opts) return [domainKey];
 
 	return [domainKey, { body: opts.body, params: opts.params }];
 }
 
-export const createGetQuery = createApiRequest(api.GET, 'GET');
-export const createHeadQuery = createApiRequest(api.HEAD, 'HEAD');
-export const createOptionsQuery = createApiRequest(api.OPTIONS, 'OPTIONS');
-export const createTraceQuery = createApiRequest(api.TRACE, 'TRACE');
+export const createGetQuery = createApiQuery(api.GET, 'GET');
+export const createHeadQuery = createApiQuery(api.HEAD, 'HEAD');
+export const createOptionsQuery = createApiQuery(api.OPTIONS, 'OPTIONS');
+export const createTraceQuery = createApiQuery(api.TRACE, 'TRACE');
 
-export const createPostMutation = createApiRequest(api.POST, 'POST');
-export const createPutMutation = createApiRequest(api.PUT, 'PUT');
-export const createDeleteMutation = createApiRequest(api.DELETE, 'DELETE');
-export const createPatchMutation = createApiRequest(api.PATCH, 'PATCH');
+export const createPostMutation = createApiMutation(api.POST, 'POST');
+export const createPutMutation = createApiMutation(api.PUT, 'PUT');
+export const createDeleteMutation = createApiMutation(api.DELETE, 'DELETE');
+export const createPatchMutation = createApiMutation(api.PATCH, 'PATCH');
 
-export function getQueryKey<O extends Options>(
-	{ key }: Query<O>,
+// todo - better config
+export function getQueryKey(
+	{ key }: StrictPick<Query | Mutation, 'key'>,
 	opts?: { allVerbs?: boolean; includeParams?: boolean }
-): QueryKey<false> {
+): DataKey<false> {
 	if (!opts) return key;
 
-	const domain: QueryKey<false>[0] = opts.allVerbs ? key[0] : [key[0][0]];
+	const domain: DataKey<false>[0] = opts.allVerbs ? [key[0][0]] : key[0];
 	if (opts.includeParams) {
 		return [domain, key[1]];
 	}
 	return [domain];
 }
+export const getMutationKey = getQueryKey;
