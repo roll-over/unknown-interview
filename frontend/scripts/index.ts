@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config({ path: '../.env' });
+
 // this file is run by script.ts to execute default export of provided module
 main();
 async function main() {
