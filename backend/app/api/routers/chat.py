@@ -14,15 +14,6 @@ from app.services.repository import ChatMessagesRepository, ChatsRepository
 chat_router = APIRouter(prefix="/chats", tags=["Chats"])
 
 
-@chat_router.post(
-    "/",
-    response_model=ChatResponseSchema,
-    summary="Post a chat."
-)
-async def create_new_chat(data: ChatRequestSchema, Chat: ChatsRepository):
-    return await Chat.create_one(data=data)
-
-
 @chat_router.get(
     "/",
     response_model=list[ChatResponseSchema],
