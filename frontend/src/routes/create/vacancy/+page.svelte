@@ -21,7 +21,7 @@
 		onSuccess(res) {
 			if (res.error) return;
 			data.queryClient.invalidateQueries({
-				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'))
+				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
 			});
 			vacancyId = res.data.custom_id;
 		}

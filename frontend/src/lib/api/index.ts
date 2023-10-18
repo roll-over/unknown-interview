@@ -11,7 +11,6 @@ type Api = typeof api;
 type HttpVerb = keyof Api;
 type PathId = keyof paths;
 
-// TODO - DOCUMENT THIS SHIT
 type Options =
 	// Post requests
 	| FetchOptions<{ requestBody?: { content?: { [x: `${string}/${string}`]: unknown } } }>
@@ -29,7 +28,7 @@ type ExtraOptions<O extends Options | undefined = Options> = StrictOmit<
 	'params' | 'body'
 >;
 /**
- * Key used to identify queries.
+ * Key used to identify queries/mutations.
  * Consists of two elements - domain and input.
  * Domain itself consists of two elements - path and http-verb.
  * Allows to invalidate queries hierarchically - all queries on a given path for specific or all verbs, with or w/o input
@@ -39,39 +38,69 @@ type DataKey<RequireVerb extends boolean = true> = [
 	InputOptions?
 ];
 type Query<A extends Options = Options, R = unknown> = {
-	runQuery: (arg?: ExtraOptions<A>) => R;
+	/**
+	 * Run a network query to specified resource.
+	 * @param opts these options will be merged with the options from create{Verb}Query
+	 */
+	runQuery: (opts?: ExtraOptions<A>) => R;
+	/**
+	 * Unique key to identify that query including path, verb & input.
+	 */
 	key: DataKey;
 };
 type Mutation<A extends unknown[] = unknown[], R = unknown> = {
-	runMutation: (...args: A) => R;
+	/**
+	 * Run a network mutation to specified resource.
+	 * @param opts input accepted by the resource.
+	 */
+	runMutation: (...opts: A) => R;
+	/**
+	 * Unique key to identify that mutation including path & verb.
+	 */
 	key: DataKey;
 };
 
+/**
+ * Generic function to create API queries.
+ * @param apiFn api call function like api.GET/HEAD/OPTIONS/TRACE
+ * @param verb verb corresponding to {@link apiFn}
+ * @returns a function which returns a {@link Query}
+ */
 function createApiQuery<P extends PathId, O extends [Options?], V extends HttpVerb, R>(
-	fn: (path: P, ...opts: O) => R,
+	apiFn: (path: P, ...opts: O) => R,
 	verb: V
 ) {
 	return function (path: P, ...[opts]: O): Query<NonNullable<O[0]>, R> {
 		return {
 			runQuery: (arg?: ExtraOptions<O[0]>) =>
-				fn(path, ...([arg ? { ...opts, ...arg } : opts] as unknown as O)),
-			key: createKey(path, verb, opts)
+				apiFn(path, ...([arg ? { ...opts, ...arg } : opts] as unknown as O)),
+			get key() {
+				return createKey(path, verb, opts);
+			}
 		};
 	};
 }
+/**
+ * Generic function to create API mutations.
+ * @param apiFn api call function like api.POST/PATCH/DELETE/PUT
+ * @param verb verb corresponding to {@link apiFn}
+ * @returns a function which returns a {@link Mutation}
+ */
 function createApiMutation<P extends PathId, O extends [Options?], V extends HttpVerb, R>(
-	fn: (path: P, ...opts: O) => R,
+	apiFn: (path: P, ...opts: O) => R,
 	verb: V
 ) {
 	return function (path: P): Mutation<O, R> {
 		return {
-			runMutation: (...opts: O) => fn(path, ...opts),
-			key: createKey(path, verb)
+			runMutation: (...opts: O) => apiFn(path, ...opts),
+			get key() {
+				return createKey(path, verb);
+			}
 		};
 	};
 }
 
-function createKey(path: PathId, verb: HttpVerb, opts?: Options): DataKey {
+function createKey(path: PathId, verb: HttpVerb, opts?: InputOptions): DataKey {
 	const domainKey: DataKey[0] = [path, verb];
 	if (!opts) return [domainKey];
 
@@ -88,17 +117,26 @@ export const createPutMutation = createApiMutation(api.PUT, 'PUT');
 export const createDeleteMutation = createApiMutation(api.DELETE, 'DELETE');
 export const createPatchMutation = createApiMutation(api.PATCH, 'PATCH');
 
-// todo - better config
+/**
+ * A helper to get query key with required precision
+ * @param query your {@link Query}
+ * @param type whether the key should invalidate all verbs on a given path or only the current one
+ */
 export function getQueryKey(
 	{ key }: StrictPick<Query | Mutation, 'key'>,
-	opts?: { allVerbs?: boolean; includeParams?: boolean }
+	type?: 'invalidate route' | 'invalidate verb'
 ): DataKey<false> {
-	if (!opts) return key;
-
-	const domain: DataKey<false>[0] = opts.allVerbs ? [key[0][0]] : key[0];
-	if (opts.includeParams) {
-		return [domain, key[1]];
+	switch (type) {
+		case 'invalidate route':
+			return [[key[0][0]]];
+		case 'invalidate verb':
+			return [key[0]];
+		default:
+			return key;
 	}
-	return [domain];
 }
+
+/**
+ * Alias for {@link getQueryKey}
+ */
 export const getMutationKey = getQueryKey;

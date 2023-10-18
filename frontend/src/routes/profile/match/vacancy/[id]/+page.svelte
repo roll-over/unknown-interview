@@ -67,7 +67,7 @@
 					on:click={async () => {
 						$userMatchMutation.mutate();
 						data.queryClient.invalidateQueries({
-							queryKey: getQueryKey(createGetQuery('/api/v1/users/records'))
+							queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
 						});
 						goto(route('/profile/match/vacancy'));
 					}}

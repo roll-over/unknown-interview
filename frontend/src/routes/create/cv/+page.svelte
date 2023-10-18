@@ -20,7 +20,7 @@
 			cvId = res.data.custom_id;
 
 			data.queryClient.invalidateQueries({
-				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'))
+				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
 			});
 		},
 		onSettled(res, err) {
