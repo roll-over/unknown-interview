@@ -50,6 +50,14 @@ class ForbiddenAction(HTTPException):
         )
 
 
+class InvalidRelationAction(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not possible to change relation to own records",
+        )
+
+
 class UserRoleMismatch(HTTPException):
     def __init__(self):
         super().__init__(
