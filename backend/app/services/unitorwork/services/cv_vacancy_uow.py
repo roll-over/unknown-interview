@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
-from typing import AsyncContextManager, Dict, List, Tuple, Union
+from typing import AsyncContextManager, List, Tuple, Union
 from uuid import UUID
 
+from app.api.schemas.base import RequestBaseSchema as RecordSchema
 from app.db.models import CV, Role, User, Vacancy
 from app.exceptions import ForbiddenAction, UserRoleMismatch
 from app.services.repository.repositories import cv_repo, user_repo, vacancy_repo
@@ -58,7 +59,7 @@ class UserVacancyCVUoW:
 
     async def create(
         self,
-        data: Dict[str, Union[CV | Vacancy]],
+        data: RecordSchema,
         *,
         owner_data: User,
         role: Role,
@@ -84,7 +85,7 @@ class UserVacancyCVUoW:
 
     async def update(
         self,
-        data: Dict[str, Union[CV | Vacancy]],
+        data: RecordSchema,
         *,
         record_id: UUID,
         owner_data: User,

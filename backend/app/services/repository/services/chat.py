@@ -12,4 +12,5 @@ class ChatService:
         return await self.repo.fetch_all()
 
     async def create_one(self, data: Chat) -> Chat:
-        return await self.repo.create_one(data=data)
+        new_data = self.repo.model(**data)  # !!! Replace after ChatUoV implementation
+        return await self.repo.create_one(data=new_data)

@@ -1,6 +1,7 @@
-from typing import Dict, Union
+from typing import Union
 from uuid import UUID
 
+from app.api.schemas.base import RequestBaseSchema as RecordSchema
 from app.db.models import CV, Role, User, Vacancy
 
 from .unitorwork import MatchVacancyCVUoW, UserVacancyCVUoW
@@ -21,7 +22,7 @@ class RecordHandler:
 
     async def prepare_record(
             self,
-            data: Dict,
+            data: RecordSchema,
             *,
             owner_data: User,
             role: Role,
@@ -63,15 +64,15 @@ class RecordHandler:
         return await self.matches.get_matches(owner_data, role)
 
     async def update_record(
-        self,
-        new_record_data,
-        *,
-        record_id: UUID,
-        owner_data: User,
-        role: Role,
+            self,
+            new_record_data: RecordSchema,
+            *,
+            record_id: UUID,
+            owner_data: User,
+            role: Role,
     ) -> Union[CV | Vacancy | Exception]:
-        """Delete CV or Vacancy record from database & appropriate user collection,
-            delete related matches.
+        """Update CV or Vacancy record and related matches,
+            delete related matches if they're not already shown.
 
         Args:
             new_record_data: The data for the record update.
@@ -83,10 +84,10 @@ class RecordHandler:
             Updated CV or Vacancy, or Exception if raised
         """
         await self.matches.delete_matches(
-                record_id=record_id,
-                owner_data=owner_data,
-                role=role,
-            )
+            record_id=record_id,
+            owner_data=owner_data,
+            role=role,
+        )
         updated_record = await self.job_records.update(
             new_record_data, owner_data=owner_data, role=role, record_id=record_id
         )
@@ -129,4 +130,3 @@ class RecordHandler:
                 record_deleted=True,
             )
         return deleted_record
-
