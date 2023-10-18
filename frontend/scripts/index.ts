@@ -1,6 +1,3 @@
-import { config } from 'dotenv';
-config({ path: '../.env' });
-
 // this file is run by script.ts to execute default export of provided module
 main();
 async function main() {
@@ -18,6 +15,10 @@ async function main() {
 	if (typeof module.default !== 'function')
 		throw Error(`Module ${moduleFile} default export is not of type Function`);
 
+	if (!process.env.PUBLIC_IS_DOCKER) {
+		const dotenv = await import('dotenv');
+		dotenv.config({ path: '../.env' });
+	}
 	try {
 		module.default();
 	} catch (error) {

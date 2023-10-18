@@ -20,17 +20,19 @@ type Options =
 			requestBody?: { content?: { [x: `${string}/${string}`]: unknown } };
 			parameters: unknown;
 	  }>
-	// Get requests & others
+	// Get requests & the rest
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| FetchOptions<any>;
-type MOptions = Options | undefined;
 type InputOptions = StrictPick<Options, 'params' | 'body'>;
-type ExtraOptions<O extends MOptions = Options> = StrictOmit<NonNullable<O>, 'params' | 'body'>;
+type ExtraOptions<O extends Options | undefined = Options> = StrictOmit<
+	NonNullable<O>,
+	'params' | 'body'
+>;
 /**
  * Key used to identify queries.
  * Consists of two elements - domain and input.
  * Domain itself consists of two elements - path and http-verb.
- * Allows to invalidate queries hierarchically - all queries on a given path for specific or all verbs, with or w/o specific input
+ * Allows to invalidate queries hierarchically - all queries on a given path for specific or all verbs, with or w/o input
  */
 type DataKey<RequireVerb extends boolean = true> = [
 	[path: PathId, ...(RequireVerb extends true ? [verb: HttpVerb] : [verb?: HttpVerb])],
@@ -45,25 +47,25 @@ type Mutation<A extends unknown[] = unknown[], R = unknown> = {
 	key: DataKey;
 };
 
-function createApiQuery<A1 extends PathId, A2 extends [Options?], V extends HttpVerb, R>(
-	fn: (path: A1, ...opts: A2) => R,
+function createApiQuery<P extends PathId, O extends [Options?], V extends HttpVerb, R>(
+	fn: (path: P, ...opts: O) => R,
 	verb: V
 ) {
-	return function (path: A1, ...[opts]: A2): Query<NonNullable<A2[0]>, R> {
+	return function (path: P, ...[opts]: O): Query<NonNullable<O[0]>, R> {
 		return {
-			runQuery: (arg?: ExtraOptions<A2[0]>) =>
-				(fn as unknown as (path: A1, opts: A2[0]) => R)(path, arg ? { ...opts, ...arg } : opts),
+			runQuery: (arg?: ExtraOptions<O[0]>) =>
+				fn(path, ...([arg ? { ...opts, ...arg } : opts] as unknown as O)),
 			key: createKey(path, verb, opts)
 		};
 	};
 }
-function createApiMutation<A1 extends PathId, A2 extends [Options?], V extends HttpVerb, R>(
-	fn: (path: A1, ...opts: A2) => R,
+function createApiMutation<P extends PathId, O extends [Options?], V extends HttpVerb, R>(
+	fn: (path: P, ...opts: O) => R,
 	verb: V
 ) {
-	return function (path: A1): Mutation<A2, R> {
+	return function (path: P): Mutation<O, R> {
 		return {
-			runMutation: (...opts: A2) => fn(path, ...opts),
+			runMutation: (...opts: O) => fn(path, ...opts),
 			key: createKey(path, verb)
 		};
 	};

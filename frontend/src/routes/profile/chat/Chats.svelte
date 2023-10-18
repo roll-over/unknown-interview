@@ -15,7 +15,7 @@
 
 <ul class="h-full overflow-y-scroll">
 	{#each chats as chat, i (chat.id)}
-		<li class=" border-b-2 border-b-app-blue-400 last:border-b-0">
+		<li class="border-b-2 border-b-app-blue-400 last:border-b-0">
 			<a
 				href={route((p) => `/profile/chat/${p(chat.id)}`)}
 				class="flex flex-col p-1 transition-colors aria-[current]:bg-app-blue-50"
