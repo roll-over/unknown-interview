@@ -1,0 +1,35 @@
+{
+    "chats": [
+        {
+            "employer_id": "80c90c5e-7ede-4794-a549-027f4800df6f",
+            "applicant_id": "b5cd9724-b9d9-4f62-a1ec-98fa6073a5d7",
+            "vacancy_id": "626371bb-59db-411c-bdb8-7b6bda68ddf9",
+            "cv_id": "daac4860-1b7e-48a8-af38-c26169a1a4e9"
+        },
+        {
+            "employer_id": "ed80ed63-7e9c-4398-b6c2-06d4e7463767",
+            "applicant_id": "e77f4664-838e-4dad-82e7-4fc991571f6a",
+            "vacancy_id": "1c440a27-c54f-4bc0-a859-cc4b608fc976",
+            "cv_id": "c6d5c4c7-fe29-41ea-91bc-c6813e96954c"
+        }
+    ],
+
+    "messages": [
+        {
+            "related_id": "c35338ec-d661-4cc8-8a7d-3e2188e96e84",
+            "text": "Warning! This is a test string!"
+        },
+        {
+            "related_id": "c35338ec-d661-4cc8-8a7d-3e2188e96e84",
+            "text": "Warning! This is yet an another test string!"
+        },
+        {
+            "related_id": "987dfcd6-c11d-4730-94dc-a49fff762795",
+            "text": "Warning! This is a test string number two!"
+        },
+        {
+            "related_id": "987dfcd6-c11d-4730-94dc-a49fff762795",
+            "text": "Warning! This is yet an another test string number two!"
+        }
+    ]
+}
