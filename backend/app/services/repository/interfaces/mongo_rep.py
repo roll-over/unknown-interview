@@ -9,8 +9,8 @@ class MongoBeanieRepository(AbstractBaseRepository):
 
         return found_data
 
-    async def fetch_many(self, data_id, limit):
-        return await self.model.find(data_id).limit(limit).to_list()
+    async def fetch_many(self, data_id, sort=None, limit=None, skip=None):
+        return await self.model.find(data_id).sort(sort).limit(limit).skip(skip).to_list()
 
     async def fetch_one(self, data_id):
         found_data = await self.model.find_one(data_id)
@@ -23,12 +23,10 @@ class MongoBeanieRepository(AbstractBaseRepository):
         if found_data:
             return found_data.pop()
 
-    async def delete_one(self, data_id):
-        found_data = await self.fetch_one(data_id)
-        if found_data:
-            await found_data.delete()
+    async def delete_data(self, data_id):
+        records = await self.model.find(data_id).delete()
 
-            return True
+        return records.deleted_count
 
     async def create_one(self, data):
         new_data = self.model(**data.model_dump())
@@ -44,6 +42,6 @@ class MongoBeanieRepository(AbstractBaseRepository):
         found_data = await self.fetch_one(data_id)
 
         if found_data:
-            await found_data.update({"$set": data.model_dump()})
+            await found_data.update({"$set": data})
 
             return found_data

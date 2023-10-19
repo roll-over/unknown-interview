@@ -17,8 +17,9 @@
 			return api.POST('/api/v1/cvs/', { body: data });
 		}
 	});
+	function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
 
-	function handleSubmit() {
 		const { skillset, ...rest } = $CVStateData;
 
 		$submitMutation.mutate(
@@ -64,7 +65,7 @@
 	class="flex flex-col items-start gap-5 p-3"
 	on:submit={handleSubmit}
 >
-	<h1>Your Resume</h1>
+	<h1>Your CV</h1>
 
 	<fieldset class="w-80">
 		<legend class="pb-2">Profession</legend>

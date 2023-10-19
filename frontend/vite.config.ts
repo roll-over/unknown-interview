@@ -32,5 +32,5 @@ export default defineConfig({
 		}
 	],
 	server: { watch: { usePolling: true } },
-	test: { include: ['./src/**/*.{test,spec}.?(c|m)[jt]s?(x)'] }
+	test: { include: ['./**/*.{test,spec}.?(c|m)[jt]s?(x)'] }
 });

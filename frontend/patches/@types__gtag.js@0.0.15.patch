@@ -1,0 +1,14 @@
+diff --git a/index.d.ts b/index.d.ts
+index 43e033259e8e270b218c7dd5bea028ee38a733f0..8c0a3c34fc33760193fb123c1a612ac2d220f20f 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -4,8 +4,7 @@
+ //                  Lucas Akira Uehara <https://github.com/KsAkira10>
+ // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+ 
+-declare var gtag: Gtag.Gtag;
+-declare namespace Gtag {
++export declare namespace Gtag {
+     interface GtagCommands {
+         config: [targetId: string, config?: ControlParams | EventParams | ConfigParams | CustomParams];
+         // eslint-disable-next-line @definitelytyped/no-single-element-tuple-type

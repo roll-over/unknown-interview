@@ -3,18 +3,21 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@8.8.0",
+	"packageManager": "pnpm@8.9.0",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"rscript": "node ./scripts/script.js",
 		"build": "vite build",
 		"preview": "vite preview",
 		"analyze": "pnpm vite-bundle-visualizer",
+		"check-all": "run-p typecheck lint format",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"lint": "prettier --check . --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss && eslint .",
-		"format": "prettier . -l -w --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
+		"lint": "eslint .",
+		"format-check": "prettier . -c --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss",
+		"format": "pnpm format-check -w",
 		"test:unit": "vitest",
-		"test:comp": "playwright test"
+		"test:comp": "playwright test",
+		"logs": "docker compose logs frontend -f"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.5.3",
@@ -22,7 +25,7 @@
 		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@tanstack/svelte-query": "5.0.0-beta.20",
 		"autoprefixer": "^10.4.16",
-		"openapi-fetch": "^0.7.6",
+		"openapi-fetch": "^0.7.10",
 		"postcss": "^8.4.30",
 		"svelte-local-storage-store": "^0.6.0",
 		"tailwindcss": "^3.3.3",
@@ -30,20 +33,25 @@
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.1.0",
+		"@fontsource-variable/comfortaa": "^5.0.15",
+		"@fontsource-variable/montserrat": "^5.0.14",
 		"@iconify-json/ic": "^1.1.14",
 		"@iconify-json/material-symbols": "^1.1.59",
 		"@playwright/experimental-ct-svelte": "^1.38.1",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.25.1",
+		"@types/gtag.js": "^0.0.15",
 		"@types/node": "^20.7.0",
 		"@typescript-eslint/eslint-plugin": "^6.7.3",
 		"@typescript-eslint/parser": "^6.7.3",
-		"@vitest/ui": "^0.34.5",
+		"@vitest/coverage-v8": "^0.34.6",
+		"@vitest/ui": "^0.34.6",
 		"chokidar": "^3.5.3",
 		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.33.2",
-		"glob": "^10.3.9",
+		"glob": "^10.3.10",
+		"npm-run-all": "^4.1.5",
 		"openapi-typescript": "^6.7.0",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^3.0.3",
@@ -60,10 +68,9 @@
 	},
 	"pnpm": {
 		"patchedDependencies": {
-			"openapi-fetch@0.7.6": "patches/openapi-fetch@0.7.6.patch",
-			"@sveltejs/kit@1.25.1": "patches/@sveltejs__kit@1.25.1.patch",
 			"@skeletonlabs/skeleton@2.2.0": "patches/@skeletonlabs__skeleton@2.2.0.patch",
-			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch"
+			"@playwright/experimental-ct-svelte@1.38.1": "patches/@playwright__experimental-ct-svelte@1.38.1.patch",
+			"@types/gtag.js@0.0.15": "patches/@types__gtag.js@0.0.15.patch"
 		}
 	}
 }

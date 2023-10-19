@@ -24,14 +24,15 @@ services:
       - ./frontend/src/:/frontend/src/
       - ./frontend/static/:/frontend/static/
       - ./frontend/package.json:/frontend/package.json
+      - ./frontend/pnpm-lock.yaml:/frontend/pnpm-lock.yaml
       - ./frontend/postcss.config.js:/frontend/postcss.config.js
       - ./frontend/svelte.config.js:/frontend/svelte.config.js
-      - ./frontend/tailwind.config.js:/frontend/tailwind.config.js
+      - ./frontend/tailwind.config.ts:/frontend/tailwind.config.ts
       - ./frontend/vite.config.ts:/frontend/vite.config.ts
     env_file:
       - .env
     environment:
-      - isDocker=true
+      - PUBLIC_IS_DOCKER=true
   unknown_mongo:
     image: mongo:4.4
     container_name: unknown_mongo

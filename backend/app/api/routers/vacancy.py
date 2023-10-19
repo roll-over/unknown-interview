@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
+from app.services import Records as VacancyRecords
 from app.services.repository import VacanciesRepository
-from app.services.unitorwork import UVC_dep as Vacancy_unit
 from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -21,10 +21,10 @@ vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 async def create_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
-    Vacancy: Vacancy_unit,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await Vacancy.create_new(
+    return await Vacancy.prepare_record(
         vacancy_data,
         owner_data=vacancy_owner,
         role=UserRole.employer,
@@ -36,8 +36,14 @@ async def create_vacancy(
     response_model=VacancyResponseSchema,
     summary="Return random company vacancy",
 )
-async def get_random_vacancy(Vacancy: VacanciesRepository):
-    return await Vacancy.get_random()
+async def get_random_vacancy(
+        Vacancy: VacancyRecords,
+        vacancy_owner: UserResponseSchema = Depends(current_user),
+):
+    return await Vacancy.get_matched_record(
+        owner_data=vacancy_owner,
+        role=UserRole.applicant,
+    )
 
 
 @vacancy_router.get(
@@ -58,10 +64,15 @@ async def update_company_vacancy(
     request: Request,
     vacancy_data: VacancyRequestSchema,
     vacancy_id: UUID,
-    Vacancy: VacanciesRepository,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await Vacancy.update_one(vacancy_data, vacancy_id, owner_data=vacancy_owner)
+    return await Vacancy.update_record(
+        vacancy_data,
+        record_id=vacancy_id,
+        owner_data=vacancy_owner,
+        role=UserRole.employer,
+    )
 
 
 @vacancy_router.delete(
@@ -70,12 +81,12 @@ async def update_company_vacancy(
 )
 async def delete_company_vacancy(
     vacancy_id: UUID,
-    Vacancy: Vacancy_unit,
+    Vacancy: VacancyRecords,
     vacancy_owner: UserResponseSchema = Depends(current_user),
 
 ):
     deleted_vacancy = await Vacancy.delete_record(
-        vacancy_id,
+        record_id=vacancy_id,
         owner_data=vacancy_owner,
         role=UserRole.employer,
     )

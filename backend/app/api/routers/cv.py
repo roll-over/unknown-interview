@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 from app.api.schemas.base import UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
+from app.services import Records as CVRecords
 from app.services.repository import CVsRepository
-from app.services.unitorwork import UVC_dep as CV_unit
 from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
@@ -21,10 +21,10 @@ cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
 async def create_cv(
     request: Request,
     data: CVRequestSchema,
-    CV: CV_unit,
+    CV: CVRecords,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.create_new(data, owner_data=cv_owner, role=UserRole.applicant)
+    return await CV.prepare_record(data, owner_data=cv_owner, role=UserRole.applicant)
 
 
 @cv_router.get(
@@ -32,8 +32,11 @@ async def create_cv(
     response_model=CVResponseSchema,
     summary="Return random user CV",
 )
-async def get_random_cv(CV: CVsRepository):
-    return await CV.get_random()
+async def get_random_cv(
+        CV: CVRecords,
+        cv_owner: UserResponseSchema = Depends(current_user),
+):
+    return await CV.get_matched_record(owner_data=cv_owner, role=UserRole.employer)
 
 
 @cv_router.get(
@@ -54,10 +57,15 @@ async def update_user_cv(
     request: Request,
     data: CVRequestSchema,
     cv_id: UUID,
-    CV: CVsRepository,
+    CV: CVRecords,
     cv_owner: UserResponseSchema = Depends(current_user),
 ):
-    return await CV.update_one(data, cv_id, owner_data=cv_owner)
+    return await CV.update_record(
+        data,
+        record_id=cv_id,
+        owner_data=cv_owner,
+        role=UserRole.applicant,
+    )
 
 
 @cv_router.delete(
@@ -66,12 +74,12 @@ async def update_user_cv(
 )
 async def delete_user_cv(
         cv_id: UUID,
-        CV: CV_unit,
+        CV: CVRecords,
         cv_owner: UserResponseSchema = Depends(current_user),
 
 ):
     deleted_cv = await CV.delete_record(
-        cv_id,
+        record_id=cv_id,
         owner_data=cv_owner,
         role=UserRole.applicant,
     )

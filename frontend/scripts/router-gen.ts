@@ -1,72 +1,114 @@
+import { watch } from 'chokidar';
 import { writeFile } from 'fs/promises';
 import { glob } from 'glob';
 import { format } from 'prettier';
-import { watch } from 'chokidar';
+
+const pageGlobMatcher = './src/routes/**/+page?(@)*.svelte';
 
 export default async function generateRoutes() {
-	const routes = await glob('./src/routes/**/+page.svelte', { withFileTypes: true }).then((files) =>
-		files
-			.filter((file) => file.isFile())
-			.sort((a, b) => (a.path > b.path ? 1 : -1))
-			.map<Route>((file) =>
-				file
-					.relative()
-					.split(file.sep)
-					// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-					.slice(2, -1)
-					.map(stringToSegment)
-					.filter((x): x is Segment => !!x)
-			)
-	);
-	const routeType = routesToType(routes);
-	writeRouteFile(routeType);
+	const paths = await getPaths();
+	const routes = paths.map(parsePath);
+	const type = stringifyRoutes(routes);
+	return writeRouteFile(type).catch(console.error);
 }
 
 export function generateRoutesWatcher() {
-	const watcher = watch('./src/routes/**/+page.svelte');
-	watcher.on('add', generateRoutes);
-	// note: doesn't trigger when a folder containing page is deleted - I don't know how to circumvent this
-	watcher.on('unlink', generateRoutes);
+	let isGenerating = false;
+	async function handler() {
+		if (isGenerating) return;
+		isGenerating = true;
+		await generateRoutes();
+		isGenerating = false;
+	}
+
+	const pageWatcher = watch(pageGlobMatcher);
+	pageWatcher.on('add', handler);
+	pageWatcher.on('unlink', handler);
+
+	const dirWatcher = watch('./src/routes');
+	dirWatcher.on('unlinkDir', handler);
 	return () => {
-		watcher.close();
+		pageWatcher.close();
+		dirWatcher.close();
 	};
 }
 
-function routesToType(routes: Route[]) {
-	const types = routes
-		.flatMap((route) => {
-			const routeForks = forkify(route.map(segmentToType));
-			return routeForks.map((fork) => '/' + fork.filter(Boolean).join('/'));
-		})
-		.map((route) => `\`${route}\``);
-	return [...new Set(types)].join(' | ');
+function getPaths() {
+	return glob(pageGlobMatcher, { withFileTypes: true }).then((files) =>
+		files
+			.filter((file) => file.isFile())
+			.sort((a, b) => (a.path > b.path ? 1 : -1))
+			.map((path) =>
+				// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+				path.relative().split(path.sep).slice(2, -1)
+			)
+	);
 }
 
-type Segment = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
+type Chunk = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
+type Segment = Chunk[];
 type Route = Segment[];
-function stringToSegment(segment: string): Segment | null {
+export function parsePath(path: string[]): Route {
+	return (
+		// filter null segments - null segments are a result of group routes
+		path.map(parseSegment).filter((x): x is Segment => !!x)
+	);
+}
+
+function parseSegment(segment: string): Segment | null {
 	if (segment.startsWith('(') && segment.endsWith(')')) return null;
-	if (!(segment.startsWith('[') || segment.endsWith(']'))) return { type: 'STATIC', key: segment };
+
+	return (
+		segment
+			.split(/(\[+.+?\]+)/)
+			// filter empty strings which appear after split if matched splitter is at the start/end
+			.filter(Boolean)
+			.map(parseChunk)
+	);
+}
+
+function parseChunk(chunk: string): Chunk {
+	if (!chunk.startsWith('[') && !chunk.endsWith(']')) return { type: 'STATIC', key: chunk };
 
 	// remove [], dots & matchers(=matcher)
-	const key = segment.replaceAll(/[[\].]|(=.+)/g, '');
-	if (segment.startsWith('[[')) return { type: 'OPTIONAL', key };
-	if (segment.startsWith('[...')) return { type: 'REST', key };
+	const key = chunk.replaceAll(/[[\].]|(=.+)/g, '');
+	if (chunk.startsWith('[[')) return { type: 'OPTIONAL', key };
+	if (chunk.startsWith('[...')) return { type: 'REST', key };
 	return { type: 'DYNAMIC', key };
 }
 
-function segmentToType(segment: Segment): string | [string, null] {
-	switch (segment.type) {
+function stringifyRoutes(routes: Route[]): string {
+	return [...new Set(routes.flatMap(stringifyRoute))].join(' | ');
+}
+
+export function stringifyRoute(route: Route): string[] {
+	return forkify(route.map(stringifySegment)).map(
+		(fork) =>
+			// filter empty strings which are results of optional chunks
+			'`/' + fork.filter(Boolean).join('/') + '`'
+	);
+}
+
+function stringifySegment(segment: Segment): string[] {
+	return forkify(segment.map(stringifyChunk)).map((fork) => fork.join(''));
+}
+
+const PARAM = 'Param';
+const REST_PARAM = 'RestParam';
+export const templateParam = '${' + PARAM + '}';
+export const templateRest = '${' + REST_PARAM + '}';
+function stringifyChunk(chunk: Chunk): string | [string, null] {
+	switch (chunk.type) {
 		case 'STATIC':
-			return segment.key;
+			return chunk.key;
 		case 'DYNAMIC':
-			return '${Param}';
+			return templateParam;
 		case 'OPTIONAL':
-			return ['${Param}', null];
+			return [templateParam, null];
 		case 'REST':
-			return ['${RestParam}', null];
+			return [templateRest, null];
 		default: {
-			const x: never = segment.type;
+			const x: never = chunk.type;
 			return x;
 		}
 	}
@@ -77,10 +119,10 @@ async function writeRouteFile(routeType: string) {
 	// This file is auto-generated. Please do not modify it.
 	declare const Brand: unique symbol;
 	type TemplateToken = string | number;
-	type Param = TemplateToken & { readonly [Brand]: unique symbol };
-	type RestParam = (TemplateToken & { readonly [Brand]: unique symbol }) | Param;
+	type ${PARAM} = TemplateToken & { readonly [Brand]: unique symbol };
+	type ${REST_PARAM} = (TemplateToken & { readonly [Brand]: unique symbol }) | ${PARAM};
 	type Route = ${routeType};
-	export { Param, RestParam, Route, TemplateToken }
+	export { ${PARAM}, ${REST_PARAM}, Route, TemplateToken }
 	`;
 
 	writeFile('./src/lib/router.d.ts', await format(fileData, { parser: 'typescript' }))

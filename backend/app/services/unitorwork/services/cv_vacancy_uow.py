@@ -3,7 +3,7 @@ from typing import AsyncContextManager, Dict, List, Tuple, Union
 from uuid import UUID
 
 from app.db.models import CV, Role, User, Vacancy
-from app.exceptions import UserRoleMismatch
+from app.exceptions import ForbiddenAction, UserRoleMismatch
 from app.services.repository.repositories import cv_repo, user_repo, vacancy_repo
 
 
@@ -56,7 +56,7 @@ class UserVacancyCVUoW:
         finally:
             await owner_data.save()
 
-    async def create_new(
+    async def create(
         self,
         data: Dict[str, Union[CV | Vacancy]],
         *,
@@ -82,13 +82,45 @@ class UserVacancyCVUoW:
 
         return new_data
 
-    async def delete_record(
+    async def update(
         self,
-        record_id: UUID,
+        data: Dict[str, Union[CV | Vacancy]],
         *,
+        record_id: UUID,
         owner_data: User,
         role: Role,
-    ) -> bool:
+    ) -> Union[CV | Vacancy | Exception]:
+        """Update existing CV or Vacancy.
+
+        Args:
+            data: The data for the record update.
+            record_id: The ID of existing record.
+            owner_data: The owner data object associated with the record.
+            role: The role associated with the record.
+
+        Returns:
+            Updated CV or Vacancy, or Exception if raised
+        """
+        async with self.get_collection(owner_data=owner_data, role=role) as (
+            record_collection,
+            owner_collection,
+        ):
+            if record_id not in owner_collection:
+                raise ForbiddenAction
+                
+            return await record_collection.update_one(
+                data,
+                record_id=record_id,
+                owner_data=owner_data,
+            )
+        
+    async def delete(
+        self,
+        *,
+        record_id: UUID,
+        owner_data: User,
+        role: Role,
+    ) -> int:
         """Delete CV or Vacancy record from database and appropriate user collection.
 
         Args:
@@ -97,13 +129,16 @@ class UserVacancyCVUoW:
             role: The role associated with the record.
 
         Returns:
-            True if the record was deleted successfully, False otherwise.
+            Quantity of deleted records if success.
         """
         async with self.get_collection(owner_data=owner_data, role=role) as (
             record_collection,
             owner_collection,
         ):
-            deleted_record = await record_collection.delete_one(record_id)
+            deleted_record = await record_collection.delete_one(
+                record_id=record_id,
+                owner_data=owner_data,
+            )
             if deleted_record:
                 owner_collection.remove(record_id)
 

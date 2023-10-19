@@ -10,9 +10,14 @@
 	});
 	$: data = $userInfo.isSuccess && $userInfo.data.data ? $userInfo.data.data : null;
 
-	const navPopup: PopupSettings = {
+	const navCreatePopup: PopupSettings = {
 		event: 'click',
-		target: 'nav-anchor-popup',
+		target: 'nav-create-popup',
+		placement: 'bottom'
+	};
+	const navProfilePopup: PopupSettings = {
+		event: 'click',
+		target: 'nav-profile-popup',
 		placement: 'bottom'
 	};
 </script>
@@ -20,18 +25,31 @@
 <header class="bg-app-blue-50 px-2">
 	<nav class="flex gap-3">
 		<a href={route('/')}>Home</a>
-		<a href={route('/profile/matches')}>Matches</a>
-		<a href={route('/user')}>User</a>
-		<button use:popup={navPopup}>
+		<a href={route('/profile/chat')}>Chats</a>
+		<button use:popup={navProfilePopup}>
+			Match
+			<div
+				data-popup={navProfilePopup.target}
+				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
+			>
+				<div class="flex flex-col gap-2">
+					<a href={route('/profile/match/cv')}>CV</a>
+					<hr />
+					<a href={route('/profile/match/vacancy')}>Vacancy</a>
+				</div>
+				<div class="arrow bg-app-blue-50"></div>
+			</div>
+		</button>
+		<button use:popup={navCreatePopup}>
 			Create
 			<div
-				data-popup={navPopup.target}
+				data-popup={navCreatePopup.target}
 				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 			>
 				<div class="flex flex-col gap-2">
 					<a href={route('/create/cv')}>CV</a>
 					<hr />
-					<a href={route('/create/offer')}>Offer</a>
+					<a href={route('/create/vacancy')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>

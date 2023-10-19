@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, Tuple, Union
 from uuid import UUID
 
 from app.db.models import CV, Match, MatchRelation, Vacancy
@@ -13,12 +13,15 @@ class MatchService:
         return await self.repo.create_many(data)
 
     async def get_records(
-        self, data_id: Dict[str, UUID], limit: Union[int | None] = None
+            self,
+            data: Dict[str, UUID],
+            sort: Tuple[str, int] = None,
+            limit: Union[int | None] = None,
     ) -> Union[CV | Vacancy | None]:
-        record = await self.repo.fetch_many(data_id, limit)
-
-        if record:
+        record = await self.repo.fetch_many(data, sort=sort, limit=limit)
+        if record and limit:
             return record.pop()
+        return record
 
     async def update_relation(
         self,
@@ -28,8 +31,14 @@ class MatchService:
     ) -> Union[CV | Vacancy]:
         match relation:
             case "applicant_relation":
-                data.applicant_relation = new_relation_type
+                updated_field = {"applicant_relation": new_relation_type}
             case "employer_relation":
-                data.employer_relation = new_relation_type
+                updated_field = {"employer_relation": new_relation_type}
 
-        return await self.repo.update_one(data, {"custom_id": data.custom_id})
+        return await self.repo.update_one(updated_field, {"custom_id": data.custom_id})
+
+    async def delete_matches(self, record_id):
+        return await self.repo.delete_data(record_id)
+
+    async def get_matches(self, filter_, limit=None):
+        return await self.repo.fetch_many(filter_, limit)

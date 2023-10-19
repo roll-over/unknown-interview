@@ -10,16 +10,16 @@
 		<div class="flex flex-wrap items-start justify-around">
 			<a
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
-				href={route('/create/offer')}
+				href={route('/create/vacancy')}
 			>
-				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post a job offer</span>
+				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post your vacancy</span>
 				<MaterialSymbolsLaptopMacOutline class="h-40 w-40 text-app-blue-500" />
 			</a>
 			<a
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
 				href={route('/create/cv')}
 			>
-				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post your resume</span>
+				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post your CV</span>
 				<IcOutlineGroups class="h-40 w-40 text-app-blue-500" />
 			</a>
 		</div>

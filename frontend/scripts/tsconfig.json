@@ -10,7 +10,8 @@
 		"strict": true,
 		"verbatimModuleSyntax": true,
 		"noUncheckedIndexedAccess": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext"
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"target": "ESNext"
 	}
 }

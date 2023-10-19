@@ -6,11 +6,17 @@ from tests.utils import get_test_data
 
 
 @pytest.mark.asyncio
-async def test_get_random_nothing(test_client: AsyncClient, no_db_entries_error: bytes):
+async def test_get_random_nothing(
+        test_client: AsyncClient,
+        test_employer,
+        no_db_entries_error: bytes,
+):
+    await test_employer.login(test_client)
     response = await test_client.get("/api/v1/vacancies/random_vacancy")
 
     assert response.status_code == status.HTTP_200_OK
     assert no_db_entries_error in response.content
+    await test_employer.logout(test_client)
 
 
 @pytest.mark.asyncio

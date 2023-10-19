@@ -1,0 +1,46 @@
+name: Linters
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  ruff_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: chartboost/ruff-action@v1
+        with:
+          src: "./backend/"
+          args: -q
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Setup workspace
+      - uses: pnpm/action-setup@v2.4.0
+        name: Setup pnpm
+        with:
+          package_json_file: "./frontend/package.json"
+      - uses: actions/setup-node@v3
+        name: Setup node
+        id: node
+        with:
+          node-version: ">=18.10.0"
+          cache: "pnpm"
+          cache-dependency-path: "./frontend/pnpm-lock.yaml"
+      - run: pnpm install
+        name: Setup node_modules
+        working-directory: ./frontend
+      - run: pnpm format-check
+        name: Formatter
+        working-directory: ./frontend
+        if: always()
+      - run: pnpm lint
+        name: Linter
+        working-directory: ./frontend
+        if: always()
