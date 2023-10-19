@@ -1,0 +1,14 @@
+[report]
+#skips files that have no executable code
+skip_empty = true
+
+#sort report by coverage in ascending order
+sort       = +cover
+
+[run]
+#excludes directories and files from report
+omit =
+    app/api/schemas/*
+    app/db/models/*
+    __init__.py
+    config.py
