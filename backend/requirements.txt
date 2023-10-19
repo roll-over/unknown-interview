@@ -16,6 +16,7 @@ authlib
 itsdangerous
 ruff
 pytest
+pytest-cov
 pytest-dotenv
 pytest-asyncio
 asgi-lifespan
