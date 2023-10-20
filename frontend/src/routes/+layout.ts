@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
-import api from '$lib/api';
 import { QueryClient } from '@tanstack/svelte-query';
+import { createGetQuery } from '../lib/api';
 
 export const load = async ({ fetch }) => {
 	const queryClient = new QueryClient({
@@ -12,9 +12,10 @@ export const load = async ({ fetch }) => {
 		}
 	});
 
+	const userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	await queryClient.prefetchQuery({
-		queryKey: ['userInfo'],
-		queryFn: () => api.GET('/api/v1/auth/user_info', { fetch })
+		queryKey: userInfoGet.key,
+		queryFn: () => userInfoGet.runQuery({ fetch })
 	});
 	return { queryClient };
 };

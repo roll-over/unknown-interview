@@ -1,5 +1,5 @@
 <script lang="ts">
-	import api from '$lib/api';
+	import { createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import RadioGroup from '$lib/components/RadioGroup.svelte';
 	import type { components } from '$lib/openapi';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
@@ -10,11 +10,23 @@
 	import MaterialSymbolsSearch from '~icons/material-symbols/search';
 	import CilArrowRight from '~icons/cil/arrow-right';
 
+	export let data;
 	const CVStateData = persisted('CVState', defaultCVState);
+	$: submitPost = createPostMutation('/api/v1/cvs/');
 	$: submitMutation = createMutation({
-		mutationKey: ['create', 'cv'],
 		mutationFn(data: components['schemas']['CVRequestSchema']) {
-			return api.POST('/api/v1/cvs/', { body: data });
+			return submitPost.runMutation({ body: data });
+		},
+		onSuccess(res) {
+			if (res.error) return;
+			cvId = res.data.custom_id;
+
+			data.queryClient.invalidateQueries({
+				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
+			});
+		},
+		onSettled(res, err) {
+			console.log({ res, err });
 		}
 	});
 	function handleSubmit(e: SubmitEvent) {
@@ -22,44 +34,24 @@
 
 		const { skillset, ...rest } = $CVStateData;
 
-		$submitMutation.mutate(
-			{ ...rest, skillset: skillset.map((name) => ({ name })) },
-			{
-				onSettled(d, e) {
-					console.log({ d, e });
-				},
-				onSuccess(d) {
-					console.log(d);
-					if (!d.data) return;
-					if ('custom_id' in d.data) {
-						cvId = d.data.custom_id;
-					}
-				}
-			}
-		);
+		$submitMutation.mutate({ ...rest, skillset: skillset.map((name) => ({ name })) });
 	}
 
 	// just a showcase that cv gets saved
 	let cvId: string;
-	$: CVInfo = createQuery({
-		queryKey: ['cv', cvId],
+	$: cvInfoGet = createGetQuery('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: cvId } } });
+	$: cvInfoQuery = createQuery({
+		queryKey: cvInfoGet.key,
 		async queryFn() {
-			return api
-				.GET('/api/v1/cvs/{cv_id}', {
-					params: { path: { cv_id: cvId } },
-					body: undefined
-				})
-				.catch((e) => {
-					console.error(e);
-					return null;
-				});
+			return cvInfoGet.runQuery();
 		},
 		enabled: !!cvId
 	});
 </script>
 
 <div>
-	{JSON.stringify($CVInfo.data?.data) ?? 'Your review will by displayed here after you save it'}
+	{JSON.stringify($cvInfoQuery.data?.data) ??
+		'Your review will by displayed here after you save it'}
 </div>
 <form
 	class="flex flex-col items-start gap-5 p-3"

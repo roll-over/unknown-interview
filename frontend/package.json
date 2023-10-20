@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@8.9.0",
+	"packageManager": "pnpm@8.9.2",
 	"scripts": {
 		"dev": "vite dev --host 0.0.0.0",
 		"rscript": "node ./scripts/script.js",
@@ -47,6 +47,7 @@
 		"@vitest/coverage-v8": "^0.34.6",
 		"@vitest/ui": "^0.34.6",
 		"chokidar": "^3.5.3",
+		"dotenv": "^16.3.1",
 		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.33.2",

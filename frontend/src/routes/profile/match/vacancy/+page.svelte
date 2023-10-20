@@ -1,5 +1,4 @@
 <script lang="ts">
-	import api from '$lib/api';
 	import { route } from '$lib/utils/route';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
@@ -7,11 +6,13 @@
 	import { showWarningModal } from '../WarningModal.svelte';
 	import { getRandomCv } from '../mock';
 	import Loading from '../Loading.svelte';
+	import { createGetQuery } from '$lib/api';
 
+	$: userVacanciesGet = createGetQuery('/api/v1/users/records');
 	$: userVacanciesQuery = createQuery({
-		queryKey: ['user cvs and vacancies'],
+		queryKey: userVacanciesGet.key,
 		queryFn() {
-			return api.GET('/api/v1/users/records');
+			return userVacanciesGet.runQuery();
 		},
 		select(data) {
 			return data.data?.vacancy_ids ?? [];

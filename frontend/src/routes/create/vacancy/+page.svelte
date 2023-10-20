@@ -1,5 +1,5 @@
 <script lang="ts">
-	import api from '$lib/api';
+	import { createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import RadioGroup from '$lib/components/RadioGroup.svelte';
 	import type { components } from '$lib/openapi';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
@@ -8,48 +8,40 @@
 	import Skills from '../Skills.svelte';
 	import { currencies, defaultVacancyState, grades, titles } from '../common';
 
+	export let data;
 	const jobOfferData = persisted('jobOfferState', defaultVacancyState);
+	$: submitPost = createPostMutation('/api/v1/vacancies/');
 	$: submitMutation = createMutation({
-		mutationKey: ['create', 'vanacy'],
 		mutationFn(data: components['schemas']['VacancyRequestSchema']) {
-			return api.POST('/api/v1/vacancies/', { body: data });
+			return submitPost.runMutation({ body: data });
+		},
+		onSettled(res, err) {
+			console.log({ res, err });
+		},
+		onSuccess(res) {
+			if (res.error) return;
+			data.queryClient.invalidateQueries({
+				queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
+			});
+			vacancyId = res.data.custom_id;
 		}
 	});
 
 	function handleSubmit() {
 		const { skillset, ...rest } = $jobOfferData;
 
-		$submitMutation.mutate(
-			{ ...rest, skillset: skillset.map((name) => ({ name })) },
-			{
-				onSettled(d, e) {
-					console.log({ d, e });
-				},
-				onSuccess(d) {
-					console.log(d);
-					if (!d.data) return;
-					if ('custom_id' in d.data) {
-						vacancyId = d.data.custom_id;
-					}
-				}
-			}
-		);
+		$submitMutation.mutate({ ...rest, skillset: skillset.map((name) => ({ name })) });
 	}
 
 	// just a showcase that cv gets saved
 	let vacancyId: string;
+	$: vacancyGet = createGetQuery('/api/v1/vacancies/{vacancy_id}', {
+		params: { path: { vacancy_id: vacancyId } }
+	});
 	$: vacancyInfo = createQuery({
-		queryKey: ['vanacy', vacancyId],
+		queryKey: vacancyGet.key,
 		async queryFn() {
-			return api
-				.GET('/api/v1/vacancies/{vacancy_id}', {
-					params: { path: { vacancy_id: vacancyId } },
-					body: undefined
-				})
-				.catch((e) => {
-					console.error(e);
-					return null;
-				});
+			return vacancyGet.runQuery();
 		},
 		enabled: !!vacancyId
 	});

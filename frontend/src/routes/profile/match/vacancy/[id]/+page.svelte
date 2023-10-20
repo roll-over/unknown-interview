@@ -1,31 +1,37 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import api from '$lib/api';
+	import { createDeleteMutation, createGetQuery, getQueryKey } from '$lib/api';
 	import { route } from '$lib/utils/route';
-	import { createQuery } from '@tanstack/svelte-query';
+	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import DeleteIcon from '~icons/material-symbols/delete-outline';
 	import EditIcon from '~icons/material-symbols/edit-outline';
+	import Loading from '../../Loading.svelte';
 	import Match, { constructMatcher } from '../../Match.svelte';
 	import RandomMatch from '../../RandomMatch.svelte';
 	import { getRandomCv } from '../../mock';
-	import Loading from '../../Loading.svelte';
 
 	export let data;
+	$: userMatchGet = createGetQuery('/api/v1/vacancies/{vacancy_id}', {
+		params: { path: { vacancy_id: data.id } }
+	});
 	$: userMatchQuery = createQuery({
-		queryKey: ['vacancy', $page.params.id],
+		queryKey: userMatchGet.key,
 		async queryFn() {
-			const res = await api.GET('/api/v1/vacancies/{vacancy_id}', {
-				params: { path: { vacancy_id: data.id } }
-			});
-			if (!res.data) {
+			const data = await userMatchGet.runQuery();
+			if (!data.data) {
 				await goto(route('/profile/match/vacancy'));
 				return null;
 			}
-			return res;
+			return data;
 		},
 		select(data) {
 			return data?.data ?? null;
+		}
+	});
+	$: userMatchDelete = createDeleteMutation('/api/v1/vacancies/{vacancy_id}');
+	$: userMatchMutation = createMutation({
+		mutationFn() {
+			return userMatchDelete.runMutation({ params: { path: { vacancy_id: data.id } } });
 		}
 	});
 
@@ -59,10 +65,10 @@
 					aria-label="delete vacancy"
 					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
 					on:click={async () => {
-						await api.DELETE('/api/v1/vacancies/{vacancy_id}', {
-							params: { path: { vacancy_id: data.id } }
+						$userMatchMutation.mutate();
+						data.queryClient.invalidateQueries({
+							queryKey: getQueryKey(createGetQuery('/api/v1/users/records'), 'invalidate route')
 						});
-						data.queryClient.invalidateQueries({ queryKey: ['user cvs and vacancies'] });
 						goto(route('/profile/match/vacancy'));
 					}}
 				>
