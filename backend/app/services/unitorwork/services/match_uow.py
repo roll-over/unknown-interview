@@ -4,6 +4,7 @@ from uuid import UUID
 from pymongo import DESCENDING
 
 from app.db.models import CV, Match, MatchRelation, Role, User, Vacancy
+from app.exceptions import ForbiddenAction, InvalidRelationAction
 from app.services.repository.repositories import (
     cv_repo,
     match_repo,
@@ -29,7 +30,7 @@ class MatchVacancyCVUoW:
         self.users = user_repo()
 
     async def __get_user_records(
-        self, owner_data: User, role: Role
+            self, owner_data: User, role: Role
     ) -> Union[List[UUID] | None]:
         """Provide access to the appropriate collections based on the role.
 
@@ -60,8 +61,8 @@ class MatchVacancyCVUoW:
 
         return user_records.get(self.id_type + "s")
 
-    async def __check_match_relation(
-        self, record_id: UUID
+    async def __check_match_shown_relation(
+            self, record_id: UUID
     ) -> Union[CV | Vacancy | None]:
         """Check the match relation for a given record ID.
 
@@ -87,10 +88,10 @@ class MatchVacancyCVUoW:
             return record
 
     async def __get_match_for_offer(
-        self,
-        reference_records: List[UUID],
-        owner_data: User,
-        role: Role,
+            self,
+            reference_records: List[UUID],
+            owner_data: User,
+            role: Role,
     ) -> Union[CV | Vacancy | None]:
         """Return matched offer for record depends on role.
 
@@ -103,7 +104,7 @@ class MatchVacancyCVUoW:
             The match if found, otherwise None.
         """
         record_id = reference_records[0]
-        match_record = await self.__check_match_relation(record_id)
+        match_record = await self.__check_match_shown_relation(record_id)
 
         if match_record:
             match role:
@@ -115,6 +116,14 @@ class MatchVacancyCVUoW:
             return await self.offer_repo.get_one(offer_record_id)
 
     async def __filter_existing_matches(self, record_id: UUID) -> List[Match]:
+        """Filter records based on relation type for further deleting.
+
+        Args:
+            record_id: The record_id of related record
+
+        Returns:
+            The filtered records from database.
+        """
         filter_field = {
             self.id_type: record_id,
             self.opposite_relation_type: MatchRelation.not_shown,
@@ -122,7 +131,7 @@ class MatchVacancyCVUoW:
         return await self.matches.get_records(filter_field)
 
     async def __filter_records(
-        self, record: Union[CV | Vacancy]
+            self, record: Union[CV | Vacancy]
     ) -> Union[List[CV] | List[Vacancy]]:
         """Filter records based on specific fields.
 
@@ -138,11 +147,62 @@ class MatchVacancyCVUoW:
         }
         return await self.offer_repo.get_many(filter_fields)
 
+    async def __remove_existing_matches(
+            self, data: Generator[Dict[str, UUID], None, None]
+    ) -> List[Dict[str, UUID]]:
+        """Check and remove existing matches in the database from the given data.
+
+        Args:
+            data: The data to remove existing matches from.
+
+        Returns:
+            The data with existing matches removed.
+        """
+        return [
+            record for record in data if not await self.matches.get_records(record)
+        ]
+
+    async def __check_collection_ids(
+            self,
+            *,
+            owner_data: User,
+            cv_id: UUID,
+            vacancy_id: UUID,
+    ) -> Union[str | Exception]:
+        """Check if provided CV and Vacancy id exists in user collections.
+
+        Args:
+            owner_data: The owner data object to retrieve the collections for.
+            cv_id: ID of provided CV
+            vacancy_id: ID of provided Vacancy
+
+        Returns:
+            Type of match relation
+        Raises:
+            ForbiddenAction if not id in user collections,
+            InvalidRelationAction if user try to change relation to own records.
+        """
+        user_records = await self.users.get_cv_vacancy_data(owner_data)
+
+        existing_cv = cv_id in user_records.get('cv_ids')
+        existing_vacancy = vacancy_id in user_records.get('vacancy_ids')
+
+        if all((existing_cv, existing_vacancy)):
+            raise InvalidRelationAction
+
+        elif existing_cv:
+            return "applicant_relation"
+
+        elif existing_vacancy:
+            return "employer_relation"
+
+        raise ForbiddenAction
+
     async def prepare_matches(
-        self,
-        record: Union[CV | Vacancy],
-        owner_data: User,
-        role: Role,
+            self,
+            record: Union[CV | Vacancy],
+            owner_data: User,
+            role: Role,
     ) -> None:
         """Prepare matches for a given record.
 
@@ -164,23 +224,8 @@ class MatchVacancyCVUoW:
         if checked_data:
             await self.matches.add_records(checked_data)
 
-    async def __remove_existing_matches(
-        self, data: Generator[Dict[str, UUID], None, None]
-    ) -> List[Dict[str, UUID]]:
-        """Check and remove existing matches in the database from the given data.
-
-        Args:
-            data: The data to remove existing matches from.
-
-        Returns:
-            The data with existing matches removed.
-        """
-        return [
-            record for record in data if not await self.matches.get_records(record)
-        ]
-
     async def get_matches(
-        self, owner_data: User, role: Role
+            self, owner_data: User, role: Role
     ) -> Union[CV | Vacancy | None]:
         """Return matches for a given owner data and role
 
@@ -197,6 +242,84 @@ class MatchVacancyCVUoW:
             return await self.__get_match_for_offer(reference_records, owner_data, role)
 
         return await self.offer_repo.get_random()
+
+    async def check_relation(self, match_record: Match) -> bool:
+        """Check applicant and employer relation in record.
+
+        Args:
+            match_record: Match record.
+
+        Returns:
+            True if relation is equal, False otherwise.
+        """
+        return all((
+            match_record.employer_relation == MatchRelation.liked,
+            match_record.applicant_relation == MatchRelation.liked,
+        ))
+
+    async def update_relation(
+            self,
+            *,
+            owner_data: User,
+            new_relation: MatchRelation,
+            cv_id: UUID,
+            vacancy_id: UUID,
+    ) -> Match:
+        """Update applicant or employer relation in match.
+
+        Args:
+            owner_data: The owner data associated with the record.
+            new_relation: new applicant or employer relation.
+            cv_id: CV id,
+            vacancy_id: Vacancy id,
+            role: The role associated with the record.
+
+        Returns:
+            True if relation is equal, False otherwise.
+        """
+        relation = await self.__check_collection_ids(
+            owner_data=owner_data,
+            cv_id=cv_id,
+            vacancy_id=vacancy_id,
+        )
+        query = {
+            "cv_id": cv_id,
+            "vacancy_id": vacancy_id,
+        }
+        match_record = await self.matches.get_records(query, limit=1)
+
+        if match_record:
+            updated_record = await self.matches.update_relation(
+                match_record,
+                relation,
+                new_relation,
+            )
+        else:
+            query.update({
+                relation: new_relation,
+            })
+            updated_record = await self.matches.add_records(query)
+
+        return updated_record
+
+    async def update_match_chat_id(
+            self,
+            chat_id: UUID,
+            match_record: Match,
+    ) -> None:
+        """Add id of already created chat to match
+
+        Args:
+            chat_id: Created chat id.
+            match_record: Related match record for update.
+
+        Returns:
+            None
+        """
+        await self.matches.update_chat_id(
+            match_record=match_record,
+            chat_id=chat_id,
+        )
 
     async def delete_matches(
             self,
@@ -226,4 +349,3 @@ class MatchVacancyCVUoW:
             data_to_delete = {"custom_id": {"$in": match_ids}}
 
         return await self.matches.delete_matches(data_to_delete)
-

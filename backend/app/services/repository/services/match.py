@@ -25,10 +25,10 @@ class MatchService:
 
     async def update_relation(
         self,
-        data: Union[CV | Vacancy],
+        data: Match,
         relation: MatchRelation,
         new_relation_type: MatchRelation,
-    ) -> Union[CV | Vacancy]:
+    ) -> Match:
         match relation:
             case "applicant_relation":
                 updated_field = {"applicant_relation": new_relation_type}
@@ -36,6 +36,16 @@ class MatchService:
                 updated_field = {"employer_relation": new_relation_type}
 
         return await self.repo.update_one(updated_field, {"custom_id": data.custom_id})
+
+    async def update_chat_id(
+            self,
+            *,
+            chat_id: UUID,
+            match_record: Match,
+    ) -> None:
+        return await self.repo.update_one(
+            {"chat_id": chat_id},
+            {"custom_id": match_record.custom_id})
 
     async def delete_matches(self, record_id):
         return await self.repo.delete_data(record_id)
