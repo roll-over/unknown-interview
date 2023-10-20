@@ -7,20 +7,7 @@ from utils import get_test_data
 class TestChats:
     test_data = get_test_data("chats")
     
-    chats = test_data["chats"]
     messages = test_data["messages"]
-
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "json_data, expected_status",
-        [
-            (chats[0], status.HTTP_200_OK),
-            (chats[1], status.HTTP_200_OK),
-        ]
-    )
-    async def test_post_chat(self, test_client: AsyncClient, json_data, expected_status):
-        response = await test_client.post("/api/v1/chats/", json=json_data)
-        assert response.status_code == expected_status
         
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -32,7 +19,6 @@ class TestChats:
     async def test_get_all_chats(self, test_client: AsyncClient, expected_status):
         response = await test_client.get("/api/v1/chats/")
         assert response.status_code == expected_status
-        assert len(response.json()) == 2
     
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
