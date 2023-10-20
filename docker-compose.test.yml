@@ -5,7 +5,7 @@ services:
     build: ./backend
     working_dir: /backend
     container_name: backend-test
-    command: pytest -v --cov-report term --cov-config=.coveragerc --cov=app tests/
+    command: pytest -v --cov-report term-missing:skip-covered --cov=app tests/
     volumes:
       - ./backend/:/backend
     env_file:
