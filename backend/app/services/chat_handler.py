@@ -4,8 +4,7 @@ from uuid import UUID
 from app.api.schemas.relation import RelationSchema
 from app.db.models import User
 
-from .repository.repositories import chat_repo
-from .unitorwork import MatchVacancyCVUoW
+from .unitorwork import MatchVacancyCVUoW, ChatMessageUoW
 
 
 class ChatHandler:
@@ -18,7 +17,7 @@ class ChatHandler:
 
     def __init__(self):
         self.matches = MatchVacancyCVUoW()
-        self.chats = chat_repo()
+        self.chats = ChatMessageUoW()
 
     async def update_match_relation(
             self,
@@ -35,24 +34,26 @@ class ChatHandler:
         Returns:
             ID of created chat, if relations equal, otherwise None.
         """
+        related_cv_id = relation_data.cv_id
+        related_vacancy_id = relation_data.vacancy_id
+
         match_record = await self.matches.update_relation(
             owner_data=owner_data,
             new_relation=relation_data.relation,
-            cv_id=relation_data.cv_id,
-            vacancy_id=relation_data.vacancy_id,
+            cv_id=related_cv_id,
+            vacancy_id=related_vacancy_id,
         )
 
         relation = await self.matches.check_relation(match_record)
         if not relation:
             return
 
-        chat = await self.chats.create_one(  # !!! Replace after ChatUoV implementation
-            {
-                "employer_id": owner_data.custom_id,
-                "applicant_id": owner_data.custom_id,
-                "match_id": match_record.custom_id,
-            }
+        chat = await self.chats.create_one(
+            cv_id=related_cv_id,
+            vacancy_id=related_vacancy_id,
+            match_id=match_record.custom_id,
         )
+
         await self.matches.update_match_chat_id(
             chat_id=chat.custom_id,
             match_record=match_record,
