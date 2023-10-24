@@ -1,5 +1,7 @@
 from .cv import CV
 from .cv_note import CVNote
+from .chat import Chat
+from .chat_message import ChatMessage
 from .match import Match
 from .mixins import MatchRelation, Role
 from .profession import Profession
@@ -19,4 +21,6 @@ __all__ = (
     "Profession",
     "Role",
     "MatchRelation",
+    "Chat",
+    "ChatMessage",
 )
