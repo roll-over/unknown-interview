@@ -1,14 +1,14 @@
 ### Description
 
-[Provide a brief description of the changes made in this PR.]
+<!--- Provide a brief description of the changes made in this PR. -->
 
 ### Related Issue
 
-[Indicate related issue or issues, if any.]
+<!--- Indicate related issue or issues, if any. -->
 
 ### Additional Information
 
-[Add any additional information or context that might be helpful for reviewers.]
+<!--- Add any additional information or context that might be helpful for reviewers. -->
 
 ### Checklist
 
