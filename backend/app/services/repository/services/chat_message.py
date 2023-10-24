@@ -1,7 +1,7 @@
 from typing import List
 from uuid import UUID
 
-from app.db.models.chat_message import ChatMessage
+from app.db.models import ChatMessage
 from app.services.repository.interfaces import AbstractBaseRepository
 
 
@@ -10,8 +10,11 @@ class ChatMessageService:
         self.repo: AbstractBaseRepository = repo_model()
 
     async def get_chat_messages(
-        self, chat_id: UUID, page: int, count: int
-        ) -> List[ChatMessage]:
+            self,
+            chat_id: UUID,
+            page: int,
+            count: int,
+    ) -> List[ChatMessage]:
         search_criteria = {"related_id": chat_id}
         sort_field = "+created_at"
         offset = page * count

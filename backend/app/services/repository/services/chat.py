@@ -1,6 +1,6 @@
 from typing import List
 
-from app.db.models.chat import Chat
+from app.db.models import Chat
 from app.services.repository.interfaces import AbstractBaseRepository
 
 
