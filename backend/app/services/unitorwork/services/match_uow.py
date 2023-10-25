@@ -31,7 +31,7 @@ class MatchVacancyCVUoW:
 
     async def __get_user_records(
             self, owner_data: User, role: Role
-    ) -> Union[List[UUID] | None]:
+    ) -> Union[List[UUID], None]:
         """Provide access to the appropriate collections based on the role.
 
         Args:
@@ -63,7 +63,7 @@ class MatchVacancyCVUoW:
 
     async def __check_match_shown_relation(
             self, record_id: UUID
-    ) -> Union[CV | Vacancy | None]:
+    ) -> Union[CV, Vacancy, None]:
         """Check the match relation for a given record ID.
 
         Args:
@@ -92,7 +92,7 @@ class MatchVacancyCVUoW:
             reference_records: List[UUID],
             owner_data: User,
             role: Role,
-    ) -> Union[CV | Vacancy | None]:
+    ) -> Union[CV, Vacancy, None]:
         """Return matched offer for record depends on role.
 
         Args:
@@ -131,8 +131,8 @@ class MatchVacancyCVUoW:
         return await self.matches.get_records(filter_field)
 
     async def __filter_records(
-            self, record: Union[CV | Vacancy]
-    ) -> Union[List[CV] | List[Vacancy]]:
+            self, record: Union[CV, Vacancy]
+    ) -> Union[List[CV], List[Vacancy]]:
         """Filter records based on specific fields.
 
         Args:
@@ -168,7 +168,7 @@ class MatchVacancyCVUoW:
             owner_data: User,
             cv_id: UUID,
             vacancy_id: UUID,
-    ) -> Union[str | Exception]:
+    ) -> Union[str, Exception]:
         """Check if provided CV and Vacancy id exists in user collections.
 
         Args:
@@ -200,7 +200,7 @@ class MatchVacancyCVUoW:
 
     async def prepare_matches(
             self,
-            record: Union[CV | Vacancy],
+            record: Union[CV, Vacancy],
             owner_data: User,
             role: Role,
     ) -> None:
@@ -226,7 +226,7 @@ class MatchVacancyCVUoW:
 
     async def get_matches(
             self, owner_data: User, role: Role
-    ) -> Union[CV | Vacancy | None]:
+    ) -> Union[CV, Vacancy, None]:
         """Return matches for a given owner data and role
 
         Args:

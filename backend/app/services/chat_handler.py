@@ -4,7 +4,7 @@ from uuid import UUID
 from app.api.schemas.relation import RelationSchema
 from app.db.models import User
 
-from .unitorwork import MatchVacancyCVUoW, ChatMessageUoW
+from .unitorwork import ChatMessageUoW, MatchVacancyCVUoW
 
 
 class ChatHandler:
@@ -24,7 +24,7 @@ class ChatHandler:
             *,
             relation_data: RelationSchema,
             owner_data: User,
-    ) -> Union[UUID | None]:
+    ) -> Union[UUID, None]:
         """Update relation in match, if relations equal create chat.
 
         Args:
