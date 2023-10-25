@@ -14,5 +14,5 @@ assignees: ''
 <!--- Предоставьте описание запрашиваемой фичи. -->
 
 ### Proposed Solution
-<!--- Provide the description of the solution or implementation you are suggesting. -->
-<!--- Предоставьте описание решения или реализации, которую вы предлагаете. -->
+<!--- Provide the description of the solution, implementation or link to Figma element you are suggesting. -->
+<!--- Предоставьте описание решения, реализации или ссылку на элемент Figma, которую вы предлагаете. -->

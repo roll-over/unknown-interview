@@ -26,10 +26,11 @@ labels:
 
 ### Screenshots (Optional)
 <!--- If applicable, add screenshots to help explain the problem. -->
+<!--- Если применимо, добавьте скриншоты экрана, которые помогут объяснить проблему. -->
 
 ### Possible solution (Optional)
 <!--- If you have any ideas on how to solve the issue, please describe them here. -->
-<!--- Если применимо, добавьте скриншоты экрана, которые помогут объяснить проблему. -->
+<!--- Если у вас есть идеи, как решить проблему, опишите их здесь. -->
 
 ### Related issues (Optional)
 <!--- Paste here list any related issues (e.g.: - [ ] #number_of_issue ) or pull requests. -->
@@ -45,7 +46,7 @@ labels:
 ### Environment (Optional)
 - Operating System: [e.g., Windows, macOS, Linux]
 - Browser: [e.g., Chrome, Firefox, Safari]
-- Version: [e.g., 22.0.1]
+- Commit: [e.g., f1c510]
 
 
 ### Additional information (Optional)
