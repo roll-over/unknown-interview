@@ -7,6 +7,24 @@
 	import { YourID, getChat } from '../getChats';
 	import { route } from '$lib/utils/route';
 
+	let currentMessage = '';
+
+	function getCurrentTimestamp(): string {
+		return new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+	}
+
+	function addMessage(): void {
+		const newMessage = {
+			id: messages.length,
+			author: { id: 'YOU', name: 'Svelte developer' },
+			chatId: '6a7b322a-c0ab-432c-9706-3fc5bfe170b6',
+			content: currentMessage,
+			timestamp: `Today @ ${getCurrentTimestamp()}`
+		};
+		messages = [...messages, newMessage];
+		currentMessage = '';
+	}
+
 	const dateFormatter = new Intl.DateTimeFormat('ru');
 	const relativeDateFormatter = new Intl.RelativeTimeFormat('en');
 	const msInMinute = 1000 * 60;
@@ -47,20 +65,23 @@
 
 	let initialLoad = true;
 
-	let notes = [
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 1', id: '1' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 2', id: '2' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 3', id: '3' },
-		{
-			text: 'Modi laboriosam quidem accusantium fugiat repellendus 4, Modi laboriosam quidem accusantium fugiat repellendus 4',
-			id: '4'
-		},
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 5', id: '5' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 6', id: '6' }
-	];
+	// let notes = [
+	// 	{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 1', id: '1' },
+	// 	{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 2', id: '2' },
+	// 	{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 3', id: '3' },
+	// 	{
+	// 		text: 'Modi laboriosam quidem accusantium fugiat repellendus 4, Modi laboriosam quidem accusantium fugiat repellendus 4',
+	// 		id: '4'
+	// 	},
+	// 	{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 5', id: '5' },
+	// 	{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 6', id: '6' }
+	// ];
 </script>
 
 <div class="flex h-full flex-col">
+	<h2 class="border-b-2 border-sky-800 bg-app-blue-50 pb-2 pt-2 text-center">
+		Junior Python Developer
+	</h2>
 	<div
 		class="h-full overflow-y-scroll"
 		bind:this={chatContainer}
@@ -75,12 +96,12 @@
 				>
 					{#each $chatQuery.data.messages as message (message.id)}
 						<li
-							class="max-w-lg rounded-lg p-3 text-white
-							{message.author.id === YourID ? 'bg-app-blue-400 max-xl:self-end' : 'bg-app-blue-600'}"
+							class="max-w-lg rounded-lg p-3 text-black
+							{message.author.id === YourID ? 'self-end bg-app-blue-50 max-xl:self-end' : 'bg-app-blue-100'}"
 						>
-							<div class="text-sm text-white/70">
+							<!-- <div class="text-sm text-black">
 								by {message.author.name} - {formatDate(message.timestamp)}
-							</div>
+							</div> -->
 							<div>{message.content}</div>
 						</li>
 					{/each}
@@ -94,14 +115,22 @@
 			{/if}
 		</div>
 	</div>
-	<div class="flex p-1">
-		<textarea
-			class="grow resize-none rounded-l-lg bg-blue-300/20 p-1 shadow-inner shadow-white/50"
-		/>
-		<button class="rounded-r-lg bg-black/30 px-4">SEND</button>
+	<div class="flex justify-center border-t-2 border-sky-800 p-5">
+		<div class="flex p-1">
+			<textarea
+				placeholder="Leave a message..."
+				bind:value={currentMessage}
+				class="grow resize-none rounded-l-lg border-2 border-sky-600 p-1 shadow-inner shadow-white/50"
+			/>
+			<button
+				type="submit"
+				on:click={addMessage}
+				class="rounded-r-lg bg-sky-600 px-4 text-white">SEND</button
+			>
+		</div>
 	</div>
 
-	<div class="flex h-1/3 flex-col justify-between border-t border-t-blue-500">
+	<!-- <div class="flex h-1/3 flex-col justify-between border-t border-t-blue-500">
 		<div class="h-full overflow-y-scroll">
 			{#if notes.length}
 				<ul class="flex h-full flex-col items-start gap-2 p-1">
@@ -123,5 +152,5 @@
 			/>
 			<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
 		</div>
-	</div>
+	</div> -->
 </div>
