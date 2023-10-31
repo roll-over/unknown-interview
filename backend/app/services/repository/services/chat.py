@@ -1,4 +1,5 @@
-from typing import List
+from typing import Dict, List
+from uuid import UUID
 
 from app.db.models import Chat
 from app.services.repository.interfaces import AbstractBaseRepository
@@ -7,10 +8,12 @@ from app.services.repository.interfaces import AbstractBaseRepository
 class ChatService:
     def __init__(self, repo_model: AbstractBaseRepository):
         self.repo: AbstractBaseRepository = repo_model()
+        
+    async def get_chat(self, chat_id: UUID) -> Chat:
+        return await self.repo.fetch_one({"custom_id": chat_id})
 
-    async def get_chats(self) -> List[Chat]:
-        return await self.repo.fetch_all()
+    async def get_chats(self, search_criteria: Dict[str, UUID]) -> List[Chat]:
+        return await self.repo.fetch_many(search_criteria)
 
     async def create_one(self, data: Chat) -> Chat:
-        new_data = self.repo.model(**data)  # !!! Replace after ChatUoV implementation
-        return await self.repo.create_one(data=new_data)
+        return await self.repo.create_one(data=data)
