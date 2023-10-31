@@ -1,8 +1,10 @@
+from beanie import Document
+
 from .base import AbstractBaseRepository
 
 
 class MongoBeanieRepository(AbstractBaseRepository):
-    model = None
+    model: Document = None
 
     async def fetch_all(self, limit=None):
         found_data = await self.model.all().limit(limit).to_list()
