@@ -1,7 +1,7 @@
-from .cv import CV
-from .cv_note import CVNote
 from .chat import Chat
 from .chat_message import ChatMessage
+from .cv import CV
+from .cv_note import CVNote
 from .match import Match
 from .mixins import MatchRelation, Role
 from .profession import Profession
