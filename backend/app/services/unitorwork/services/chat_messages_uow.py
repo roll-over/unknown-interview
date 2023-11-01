@@ -1,8 +1,8 @@
-from typing import List
+from typing import List, Union
 from uuid import UUID
 
 from app.db.models import Chat, ChatMessage
-from app.exceptions import RelatedRecordDoesNotExists
+from app.exceptions import RelatedRecordDoesNotExist
 from app.services.repository.repositories import (
     chat_message_repo,
     chat_repo,
@@ -51,79 +51,79 @@ class ChatMessageUoW:
             applicant_id=applicant.owner_id,
             match_id=match_id
         )
-        created_chat = await self.chats.create_one(data=data)
-        return created_chat
+        return await self.chats.create_one(data=data)
 
-    async def get_chat(self, chat_id: UUID) -> Chat | None:
+    async def get_chat(self, chat_id: UUID) -> Union[Chat, None]:
         """Get a chat from db collection by chat id.
 
         Args:
             chat_id: ID of a chat.
 
         Returns:
-            Chat (if exists). 
+            Chat (if exist). 
             None otherwise.
         """
-        found_chat = await self.chats.get_chat(chat_id=chat_id)
-        return found_chat
+        return await self.chats.get_chat(chat_id=chat_id)
 
-    async def get_many_chats(self, cv_or_vacancy_id: UUID) -> List[Chat]:
+    async def get_many_chats(self, record_id: UUID) -> Union[List[Chat], None]:
         """Get chats from db collection related to a given cv/vacancy ID.
         
         Args:
             related_id: ID of a related vacancy or cv.
 
         Returns:
-            None if related record (cv/vacancy) does not exists.
-            List of the chats (if exists) related to a given cv/vacancy ID.
+            None if related record (cv/vacancy) does not exist.
+            List of the chats (if exist) related to a given cv/vacancy ID.
             Empty list if there no chats related to a given cv/vacancy ID.
         """
-        if vacancy := await self.vacancies.get_one(cv_or_vacancy_id):
-            search_criteria = {
-                "employer_id": vacancy.owner_id
-            }
-        elif cv := await self.cvs.get_one(cv_or_vacancy_id):
-            search_criteria = {
-                "applicant_id": cv.owner_id
-            }
-        else:
-            return None
-            
-        found_chats = await self.chats.get_chats(search_criteria)
-        return found_chats
+        vacancy = await self.vacancies.get_one(record_id)
+        cv = await self.cvs.get_one(record_id)
 
-    async def create_message(self, data: ChatMessage) -> ChatMessage:
+        if vacancy or cv:
+            query = {'$or': [
+                {"employer_id": vacancy.owner_id if vacancy else None},
+                {"applicant_id": cv.owner_id if cv else None},
+            ]}
+
+        return await self.chats.get_chats(query)
+
+    async def create_message(self, data: ChatMessage) -> Union[ChatMessage, Exception]:
         """Create a new massage for a given chat.
         
         Args:
-            chat_id: ID of a chat you want message to be created for.
+            data: The ChatMessage data object.
         
         Returns:
             Created message.
             
         Raises:
-            RelatedRecordDoesNotExists: If a chat with given ID does not exists.
+            RelatedRecordDoesNotExist: If a chat with given ID does not exist.
         """
         if self.get_chat(chat_id=data.related_id) is None:
-            raise RelatedRecordDoesNotExists
+            raise RelatedRecordDoesNotExist
 
-        created_message = await self.messages.create_one(data=data)
-        return created_message
+        return await self.messages.create_one(data=data)
 
-    async def get_messages(self, chat_id, page, count) -> List[ChatMessage]:
+    async def get_messages(
+        self, 
+        chat_id: UUID, 
+        page: int, 
+        count: int
+        ) -> List[ChatMessage]:
         """Get a sorted list of all chat messages for a given chat.
         
         Args:
-            chat_id: ID of a chat you want messages from.
+            chat_id: ID of a chat.
+            page: # of a page.
+            count: # of elements per page.
             
         Returns:
-            Sorted list of all messages (if exists) for a given chat.
+            Sorted list of all messages for a given chat.
             Empty list otherwise.
         """
-        
-        found_messages = await self.messages.get_chat_messages(
+
+        return await self.messages.get_chat_messages(
             chat_id=chat_id,
             page=page,
             count=count
         )
-        return found_messages
