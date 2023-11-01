@@ -11,6 +11,7 @@ class ChatMessageService:
 
     async def get_chat_messages(
             self,
+            *,
             chat_id: UUID,
             page: int,
             count: int,
