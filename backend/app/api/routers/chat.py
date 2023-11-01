@@ -28,9 +28,9 @@ async def get_all_chats(Chat: Chat_dep, vacancy_or_cv_id: UUID):
     summary="Post a new message."
 )
 async def create_new_chat_message(
-    request_body: ChatMessageRequestSchema, Message: Chat_dep
+    data: ChatMessageRequestSchema, Message: Chat_dep
 ):
-    return await Message.create_message(request_body)
+    return await Message.create_message(data=data)
 
 
 @chat_router.get(
