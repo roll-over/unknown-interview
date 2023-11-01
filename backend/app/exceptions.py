@@ -65,9 +65,9 @@ class UserRoleMismatch(HTTPException):
             detail="The user role does not match the record or action type",
         )
         
-class RelatedRecordDoesNotExists(HTTPException):
+class RelatedRecordDoesNotExist(HTTPException):
     def __init__(self):
         super().__init__(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Related to this action record does not exists in DB."
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Related record does not exist."
         )
