@@ -69,7 +69,7 @@ class ChatMessageUoW:
         """Get chats from db collection related to a given cv/vacancy ID.
         
         Args:
-            related_id: ID of a related vacancy or cv.
+            record_id: ID of a related vacancy or cv.
 
         Returns:
             None if related record (cv/vacancy) does not exist.
