@@ -60,7 +60,7 @@ class ChatMessageUoW:
             chat_id: ID of a chat.
 
         Returns:
-            Chat (if exist). 
+            Chat (if exists). 
             None otherwise.
         """
         return await self.chats.get_chat(chat_id=chat_id)
@@ -73,7 +73,7 @@ class ChatMessageUoW:
 
         Returns:
             None if related record (cv/vacancy) does not exist.
-            List of the chats (if exist) related to a given cv/vacancy ID.
+            List of the chats (if exists) related to a given cv/vacancy ID.
             Empty list if there no chats related to a given cv/vacancy ID.
         """
         vacancy = await self.vacancies.get_one(record_id)
