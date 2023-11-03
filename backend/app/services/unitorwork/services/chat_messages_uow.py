@@ -99,7 +99,7 @@ class ChatMessageUoW:
         Raises:
             RelatedRecordDoesNotExist: If a chat with given ID does not exist.
         """
-        if self.get_chat(chat_id=data.related_id) is None:
+        if await self.get_chat(chat_id=data.related_id) is None:
             raise RelatedRecordDoesNotExist
 
         return await self.messages.create_one(data=data)
@@ -114,8 +114,8 @@ class ChatMessageUoW:
         
         Args:
             chat_id: ID of a chat.
-            page: # of a page.
-            count: # of elements per page.
+            page: Page number.
+            count: Number of elements per page.
             
         Returns:
             Sorted list of all messages for a given chat.
