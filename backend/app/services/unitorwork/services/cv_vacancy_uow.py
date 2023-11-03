@@ -28,7 +28,7 @@ class UserVacancyCVUoW:
         owner_data: User,
         role: Role,
     ) -> AsyncContextManager[
-        Union[Tuple[cv_repo, List[UUID]] | Tuple[vacancy_repo, List[UUID]]]
+        Union[Tuple[cv_repo, List[UUID]], Tuple[vacancy_repo, List[UUID]]]
     ]:
         """Provide access to the appropriate collections based on the role.
 
@@ -63,7 +63,7 @@ class UserVacancyCVUoW:
         *,
         owner_data: User,
         role: Role,
-    ) -> Union[CV | Vacancy]:
+    ) -> Union[CV, Vacancy]:
         """Create a new CV or Vacancy and add id to appropriate user collection.
 
         Args:
@@ -90,7 +90,7 @@ class UserVacancyCVUoW:
         record_id: UUID,
         owner_data: User,
         role: Role,
-    ) -> Union[CV | Vacancy | Exception]:
+    ) -> Union[CV, Vacancy, Exception]:
         """Update existing CV or Vacancy.
 
         Args:

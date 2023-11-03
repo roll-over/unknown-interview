@@ -26,7 +26,7 @@ class RecordHandler:
             *,
             owner_data: User,
             role: Role,
-    ) -> Union[CV | Vacancy]:
+    ) -> Union[CV, Vacancy]:
         """Prepares a record by creating a new job record and preparing matches.
 
         Args:
@@ -51,7 +51,7 @@ class RecordHandler:
 
     async def get_matched_record(
             self, owner_data: User, role: Role
-    ) -> Union[CV | Vacancy | None]:
+    ) -> Union[CV, Vacancy, None]:
         """Return matched record from prepared matches collection.
 
         Args:
@@ -70,7 +70,7 @@ class RecordHandler:
             record_id: UUID,
             owner_data: User,
             role: Role,
-    ) -> Union[CV | Vacancy | Exception]:
+    ) -> Union[CV, Vacancy, Exception]:
         """Update CV or Vacancy record and related matches,
             delete related matches if they're not already shown.
 
