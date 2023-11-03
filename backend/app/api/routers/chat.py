@@ -18,8 +18,8 @@ chat_router = APIRouter(prefix="/chats", tags=["Chats"])
     response_model=list[ChatResponseSchema],
     summary="Get all chats that are related to a given vacancy/cv id."
 )
-async def get_all_chats(Chat: Chat_dep, vacancy_or_cv_id: UUID):
-    return await Chat.get_many_chats(vacancy_or_cv_id)
+async def get_all_chats(Chat: Chat_dep, record_id: UUID):
+    return await Chat.get_many_chats(record_id=record_id)
 
 
 @chat_router.post(
