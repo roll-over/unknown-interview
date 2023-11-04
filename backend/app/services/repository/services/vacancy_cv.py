@@ -31,27 +31,27 @@ class VacancyCVService:
 
     async def create_one(
             self,
-            data: Union[CV | Vacancy],
+            data: Union[CV, Vacancy],
             *,
             owner_data: User,
-    ) -> Union[CV | Vacancy]:
+    ) -> Union[CV, Vacancy]:
         joined_data = self.repo.model(
             owner_id=owner_data.custom_id,
             **data.model_dump(),
         )
         return await self.repo.create_one(joined_data)
 
-    async def get_one(self, data_id: UUID) -> Union[CV | Vacancy]:
+    async def get_one(self, data_id: UUID) -> Union[CV, Vacancy]:
         return await self.repo.fetch_one({"custom_id": data_id})
 
     async def get_many(
             self,
             filter_: Dict[str, str],
-            limit: Union[int | None] = None,
-    ) -> List[Union[CV | Vacancy]]:
+            limit: Union[int, None] = None,
+    ) -> List[Union[CV, Vacancy]]:
         return await self.repo.fetch_many(filter_, limit=limit)
 
-    async def get_random(self) -> Union[CV | Vacancy]:
+    async def get_random(self) -> Union[CV, Vacancy]:
         return await self.repo.fetch_random()
 
     @check_owner
@@ -63,11 +63,11 @@ class VacancyCVService:
     @check_owner
     async def update_one(
             self,
-            data: Union[CV | Vacancy],
+            data: Union[CV, Vacancy],
             *,
             record_id: UUID,
             owner_data: User,
-    ) -> Union[CV | Vacancy]:
+    ) -> Union[CV, Vacancy]:
         return await self.repo.update_one(
             data,
             {"custom_id": record_id},
