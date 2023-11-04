@@ -2,7 +2,7 @@
 	import Analytics from '$lib/components/Analytics.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import '@fontsource-variable/comfortaa';
+	import '@fontsource-variable/inter';
 	import '@fontsource-variable/montserrat';
 	import { AppShell, Modal, initializeStores, storePopup } from '@skeletonlabs/skeleton';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
