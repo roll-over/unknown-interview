@@ -23,7 +23,7 @@
 		"@floating-ui/dom": "^1.5.3",
 		"@skeletonlabs/skeleton": "^2.2.0",
 		"@skeletonlabs/tw-plugin": "^0.1.0",
-		"@tanstack/svelte-query": "5.0.0-beta.20",
+		"@tanstack/svelte-query": "5.6.1",
 		"autoprefixer": "^10.4.16",
 		"openapi-fetch": "^0.7.10",
 		"postcss": "^8.4.30",
