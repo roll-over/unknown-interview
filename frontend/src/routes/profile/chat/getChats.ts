@@ -39,7 +39,6 @@ function randomInt(min: number, max: number) {
 }
 
 export const YourID = 'YOU';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateChats(): Chat[] {
 	const chats: Chat[] = Array.from({ length: 50 })
 		.map(() => {
