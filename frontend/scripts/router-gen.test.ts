@@ -49,6 +49,14 @@ describe('Router codegen parses', () => {
 		expect(parseType(['x', '(y)'])).toEqual(constructUnion([`/x`]));
 	});
 
+	test('matchers', () => {
+		expect(parseType(['x', '[y=match]', 'z'])).toEqual(constructUnion([`/x/${Param}/z`]));
+		expect(parseType(['[[x=match]]'])).toEqual(constructUnion([`/${Param}`, '/']));
+		expect(parseType(['[...x=match]', 'y'])).toEqual(constructUnion([`/${Rest}/y`, '/y']));
+		expect(parseType(['x', '[[y=match]]'])).toEqual(constructUnion([`/x/${Param}`, '/x']));
+		expect(parseType(['x', '[[y=type]]'])).toEqual(constructUnion([`/x/cv`, '/x/vacancy', '/x']));
+	});
+
 	test('multiple params', () => {
 		expect(parseType(['x', 'a-[x]-[[x]]-y', 'z'])).toEqual(
 			constructUnion([`/x/a-${Param}-${Param}-y/z`, `/x/a-${Param}--y/z`])

@@ -10,14 +10,14 @@
 		<div class="flex flex-wrap items-start justify-around">
 			<a
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
-				href={route('/create/vacancy')}
+				href={route('/vacancy/create')}
 			>
 				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post your vacancy</span>
 				<MaterialSymbolsLaptopMacOutline class="h-40 w-40 text-app-blue-500" />
 			</a>
 			<a
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
-				href={route('/create/cv')}
+				href={route('/cv/create')}
 			>
 				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl">Post your CV</span>
 				<IcOutlineGroups class="h-40 w-40 text-app-blue-500" />
