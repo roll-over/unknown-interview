@@ -1,6 +1,6 @@
 [tool.ruff]
-select = ["E", "F", 'I']  # Default + iSort
-ignore = []
+select = ["E", "F", 'I', 'W']  # Default + iSort
+ignore = ['W293']
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]

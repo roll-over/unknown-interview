@@ -39,9 +39,9 @@ async def create_new_chat_message(
     summary="Get a sorted list of the messages of a chat."
 )
 async def get_messages(
-    Message: Chat_dep, 
-    chat_id: UUID, 
-    page: Annotated[int, Query(ge=0)] = 0, 
+    Message: Chat_dep,
+    chat_id: UUID,
+    page: Annotated[int, Query(ge=0)] = 0,
     count: Annotated[int, Query(ge=0)] = 50
 ):
     return await Message.get_messages(chat_id=chat_id, page=page, count=count)
