@@ -13,7 +13,7 @@
 		<p class="text-2xl text-black">Fill out a short form to get started!</p>
 	</div>
 	<a
-		href={route('/create')}
+		href={route('/purpose')}
 		class="group flex items-center justify-end gap-6 rounded-lg bg-app-blue-100 px-14 py-2.5 text-2xl text-black transition-colors current:bg-app-blue-400"
 	>
 		go to survey!

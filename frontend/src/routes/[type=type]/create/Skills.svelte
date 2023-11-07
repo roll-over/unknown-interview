@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Autocomplete, type AutocompleteOption } from '@skeletonlabs/skeleton';
 	import { slide } from 'svelte/transition';
-	import { skills } from './common';
+
+	const skills = ['java', 'javascript', 'python', 'c#', 'c++', 'php', 'swift'];
 
 	export let selectedSkills: string[];
 	let newSkill = '';

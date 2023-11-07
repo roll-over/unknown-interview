@@ -12,7 +12,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				title: ['Comfortaa Variable', ...defaultTheme.fontFamily.sans],
+				title: ['Inter Variable', ...defaultTheme.fontFamily.sans],
 				body: ['Montserrat Variable', ...defaultTheme.fontFamily.sans]
 			},
 			colors: {
@@ -30,10 +30,11 @@ export default {
 		}
 	},
 	plugins: [
-		plugin(({ addVariant }) => {
+		plugin(({ addVariant, matchVariant }) => {
 			addVariant('current', ['&:focus-within', '&:hover']);
 			addVariant('group-current', [':merge(.group):focus-within &', ':merge(.group):hover &']);
 			addVariant('peer-current', [':merge(.peer):focus-within ~ &', ':merge(.peer):hover ~ &']);
+			matchVariant('not', (value) => `&:not(${value})`);
 		}),
 		skeleton
 	]

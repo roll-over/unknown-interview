@@ -3,6 +3,12 @@ import { writeFile } from 'fs/promises';
 import { glob } from 'glob';
 import { format } from 'prettier';
 
+// if some matcher have known values you can put them here and they will replace parameter values
+// doesn't work for rest params because I don't want to
+const matcherTypes: Record<string, string[]> = {
+	type: ['cv', 'vacancy']
+};
+
 const pageGlobMatcher = './src/routes/**/+page?(@)*.svelte';
 
 export default async function generateRoutes() {
@@ -38,43 +44,42 @@ function getPaths() {
 		files
 			.filter((file) => file.isFile())
 			.sort((a, b) => (a.path > b.path ? 1 : -1))
-			.map((path) =>
-				// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
-				path.relative().split(path.sep).slice(2, -1)
-			)
+			// slice removes first 2 elements("src" & "routes") and last one("+page.svelte")
+			.map((path) => path.relative().split(path.sep).slice(2, -1))
 	);
 }
 
-type Chunk = { type: 'STATIC' | 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string };
+type Chunk =
+	| { type: 'STATIC'; key: string }
+	| { type: 'DYNAMIC' | 'OPTIONAL' | 'REST'; key: string; matcher?: string };
 type Segment = Chunk[];
 type Route = Segment[];
 export function parsePath(path: string[]): Route {
-	return (
-		// filter null segments - null segments are a result of group routes
-		path.map(parseSegment).filter((x): x is Segment => !!x)
-	);
+	// filter null segments - null segments are a result of group routes
+	return path.map(parseSegment).filter((x): x is Segment => !!x);
 }
 
 function parseSegment(segment: string): Segment | null {
 	if (segment.startsWith('(') && segment.endsWith(')')) return null;
 
-	return (
-		segment
-			.split(/(\[+.+?\]+)/)
-			// filter empty strings which appear after split if matched splitter is at the start/end
-			.filter(Boolean)
-			.map(parseChunk)
-	);
+	// filter empty strings which appear after split if matched splitter is at the start/end
+	return segment
+		.split(/(\[+.+?\]+)/)
+		.filter(Boolean)
+		.map(parseChunk);
 }
 
 function parseChunk(chunk: string): Chunk {
 	if (!chunk.startsWith('[') && !chunk.endsWith(']')) return { type: 'STATIC', key: chunk };
 
+	// extract matcher if any
+	const matcher = chunk.match(/\[.+=(.+?)\]/)?.[1];
+
 	// remove [], dots & matchers(=matcher)
 	const key = chunk.replaceAll(/[[\].]|(=.+)/g, '');
-	if (chunk.startsWith('[[')) return { type: 'OPTIONAL', key };
-	if (chunk.startsWith('[...')) return { type: 'REST', key };
-	return { type: 'DYNAMIC', key };
+	if (chunk.startsWith('[[')) return { type: 'OPTIONAL', key, matcher };
+	if (chunk.startsWith('[...')) return { type: 'REST', key, matcher };
+	return { type: 'DYNAMIC', key, matcher };
 }
 
 function stringifyRoutes(routes: Route[]): string {
@@ -83,9 +88,8 @@ function stringifyRoutes(routes: Route[]): string {
 
 export function stringifyRoute(route: Route): string[] {
 	return forkify(route.map(stringifySegment)).map(
-		(fork) =>
-			// filter empty strings which are results of optional chunks
-			'`/' + fork.filter(Boolean).join('/') + '`'
+		// filter empty strings which are results of optional chunks
+		(fork) => '`/' + fork.filter(Boolean).join('/') + '`'
 	);
 }
 
@@ -97,18 +101,21 @@ const PARAM = 'Param';
 const REST_PARAM = 'RestParam';
 export const templateParam = '${' + PARAM + '}';
 export const templateRest = '${' + REST_PARAM + '}';
-function stringifyChunk(chunk: Chunk): string | [string, null] {
+
+function stringifyChunk(chunk: Chunk): string | Array<string | null> {
+	const matcherType = chunk.type !== 'STATIC' && chunk.matcher ? matcherTypes[chunk.matcher] : null;
+
 	switch (chunk.type) {
 		case 'STATIC':
 			return chunk.key;
 		case 'DYNAMIC':
-			return templateParam;
+			return matcherType ? matcherType : templateParam;
 		case 'OPTIONAL':
-			return [templateParam, null];
+			return matcherType ? [...matcherType, null] : [templateParam, null];
 		case 'REST':
 			return [templateRest, null];
 		default: {
-			const x: never = chunk.type;
+			const x: never = chunk;
 			return x;
 		}
 	}
