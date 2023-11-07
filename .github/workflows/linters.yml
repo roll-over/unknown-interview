@@ -44,3 +44,7 @@ jobs:
         name: Linter
         working-directory: ./frontend
         if: always()
+      - run: pnpm build
+        name: Building
+        working-directory: ./frontend
+        if: always()
