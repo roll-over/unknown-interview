@@ -35,6 +35,7 @@
 		"@faker-js/faker": "^8.2.0",
 		"@fontsource-variable/inter": "^5.0.15",
 		"@fontsource-variable/montserrat": "^5.0.16",
+		"@iconify-json/cil": "^1.1.5",
 		"@iconify-json/ic": "^1.1.14",
 		"@iconify-json/material-symbols": "^1.1.61",
 		"@playwright/experimental-ct-svelte": "^1.39.0",
