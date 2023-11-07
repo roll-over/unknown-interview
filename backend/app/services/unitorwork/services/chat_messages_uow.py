@@ -60,7 +60,7 @@ class ChatMessageUoW:
             chat_id: ID of a chat.
 
         Returns:
-            Chat (if exists). 
+            Chat (if exists).
             None otherwise.
         """
         return await self.chats.get_chat(chat_id=chat_id)
@@ -105,9 +105,9 @@ class ChatMessageUoW:
         return await self.messages.create_one(data=data)
 
     async def get_messages(
-        self, 
-        chat_id: UUID, 
-        page: int, 
+        self,
+        chat_id: UUID,
+        page: int,
         count: int
         ) -> List[ChatMessage]:
         """Get a sorted list of all chat messages for a given chat.
