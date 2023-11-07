@@ -22,7 +22,7 @@
 	<AppShell
 		regionPage="h-full w-full"
 		slotPageContent="h-full w-full"
-		class="text-neutral-800 flex flex-col-reverse sm:flex-col"
+		class="flex flex-col-reverse text-neutral-800 sm:flex-col"
 	>
 		<svelte:fragment slot="header">
 			<Header />

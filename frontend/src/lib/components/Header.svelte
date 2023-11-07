@@ -81,7 +81,7 @@
 			{:else if $userInfo.status === 'error'}
 				<div>error</div>
 			{:else if data}
-				<button on:click={() => (dialog.showModal())}>
+				<button on:click={() => dialog.showModal()}>
 					<img
 						src={data.picture}
 						alt="avatar"
@@ -97,7 +97,6 @@
 	<dialog
 		bind:this={dialog}
 		class="rounded-md bg-white p-10 shadow-md"
-
 	>
 		<div class="flex flex-col items-start gap-4">
 			<h1 class="text-xl">Are you sure you want to logout?</h1>
@@ -109,7 +108,7 @@
 			/>
 			<div class="flex w-full flex-row justify-between">
 				<a href="/api/v1/auth/logout">Logout</a>
-				<button on:click={() => (dialog.close())}>Close</button>
+				<button on:click={() => dialog.close()}>Close</button>
 			</div>
 		</div>
 	</dialog>
