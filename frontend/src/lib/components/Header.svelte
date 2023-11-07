@@ -3,11 +3,9 @@
 	import { route } from '$lib/utils/route';
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
-	$: showModal = false;
 
 	let dialog; // HTMLDialogElement
 
-	$: if (dialog && showModal) dialog.showModal();
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
 		queryKey: userInfoGet.key,
@@ -83,7 +81,7 @@
 			{:else if $userInfo.status === 'error'}
 				<div>error</div>
 			{:else if data}
-				<button on:click={() => (showModal = true)}>
+				<button on:click={() => (dialog.showModal())}>
 					<img
 						src={data.picture}
 						alt="avatar"
@@ -99,8 +97,7 @@
 	<dialog
 		bind:this={dialog}
 		class="rounded-md bg-white p-10 shadow-md"
-		on:close={() => (showModal = false)}
-		on:click|self={() => dialog.close()}
+
 	>
 		<div class="flex flex-col items-start gap-4">
 			<h1 class="text-xl">Are you sure you want to logout?</h1>
@@ -112,7 +109,7 @@
 			/>
 			<div class="flex w-full flex-row justify-between">
 				<a href="/api/v1/auth/logout">Logout</a>
-				<button on:click={() => (showModal = false)}>Close</button>
+				<button on:click={() => (dialog.close())}>Close</button>
 			</div>
 		</div>
 	</dialog>
