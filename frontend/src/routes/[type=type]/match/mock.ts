@@ -1,6 +1,6 @@
-import type { Cv, Vacancy } from '$lib/utils/types';
+import type { CvResponse, VacancyResponse } from '$lib/utils/types';
 import { faker } from '@faker-js/faker';
-type Match = Cv | Vacancy;
+type Match = CvResponse | VacancyResponse;
 const titles: Match['title'][] = ['director', 'lead', 'manager', 'member', 'teamlead'];
 const grades: Match['grade'][] = ['junior', 'lead', 'middle', 'principal', 'senior'];
 const skills = [
@@ -50,7 +50,7 @@ const skills = [
 	'Tcl',
 	'Julia'
 ];
-export const getRandomCv = (): Cv => {
+export const getRandomCv = (): CvResponse => {
 	const minSalary = faker.number.int({ min: 0, max: 50 });
 	const maxSalary = faker.number.int({ min: 0, max: 50 });
 
@@ -71,4 +71,4 @@ export const getRandomCv = (): Cv => {
 		owner_id: ''
 	};
 };
-export const getRandomVacancy: () => Vacancy = getRandomCv;
+export const getRandomVacancy: () => VacancyResponse = getRandomCv;

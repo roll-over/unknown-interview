@@ -1,12 +1,5 @@
 <script
 	lang="ts"
-	context="module"
->
-	type V = unknown;
-</script>
-
-<script
-	lang="ts"
 	generics="V"
 >
 	export let options: V[];

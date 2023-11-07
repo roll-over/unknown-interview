@@ -34,9 +34,9 @@
 				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 			>
 				<div class="flex flex-col gap-2">
-					<a href={route('/profile/match/cv')}>CV</a>
+					<a href={route('/cv/match')}>CV</a>
 					<hr />
-					<a href={route('/profile/match/vacancy')}>Vacancy</a>
+					<a href={route('/vacancy/match')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>
@@ -48,9 +48,9 @@
 				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 			>
 				<div class="flex flex-col gap-2">
-					<a href={route('/create/cv')}>CV</a>
+					<a href={route('/cv/create')}>CV</a>
 					<hr />
-					<a href={route('/create/vacancy')}>Vacancy</a>
+					<a href={route('/vacancy/create')}>Vacancy</a>
 				</div>
 				<div class="arrow bg-app-blue-50"></div>
 			</div>

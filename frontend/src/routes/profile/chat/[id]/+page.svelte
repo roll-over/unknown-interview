@@ -1,127 +1,134 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { createQuery } from '@tanstack/svelte-query';
-	import { tick } from 'svelte';
-	import { scale } from 'svelte/transition';
-	import { YourID, getChat } from '../getChats';
 	import { route } from '$lib/utils/route';
+	import { createQuery, keepPreviousData } from '@tanstack/svelte-query';
+	import { derived } from 'svelte/store';
+	import { YourID, getChat } from '../getChats';
 
-	const dateFormatter = new Intl.DateTimeFormat('ru');
-	const relativeDateFormatter = new Intl.RelativeTimeFormat('en');
+	const dateFormatter = new Intl.DateTimeFormat('en', { month: 'short', day: '2-digit' });
+	const timeFormatter = new Intl.DateTimeFormat('en', {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false
+	});
+	const relativeTimeFormatter = new Intl.RelativeTimeFormat('en');
 	const msInMinute = 1000 * 60;
 	const msInHour = msInMinute * 60;
-	const msInDay = msInHour * 24;
-	function formatDate(timestamp: number) {
+	function formatTimestamp(timestamp: number) {
 		const msDiff = Date.now() - timestamp;
-		if (msDiff > 3 * msInDay) return dateFormatter.format(timestamp);
-		if (msDiff > msInDay) return relativeDateFormatter.format(-Math.round(msDiff / msInDay), 'day');
-		if (msDiff > msInHour)
-			return relativeDateFormatter.format(-Math.round(msDiff / msInHour), 'hour');
-		return relativeDateFormatter.format(-Math.round(msDiff / msInMinute), 'minute');
+		if (msDiff < 1 * msInHour)
+			return relativeTimeFormatter.format(-Math.floor(msDiff / msInMinute), 'minute');
+		if (msDiff < 6 * msInHour) {
+			return relativeTimeFormatter.format(-Math.floor(msDiff / msInHour), 'hour');
+		}
+		return timeFormatter.format(timestamp);
 	}
-	let chatContainer: HTMLDivElement;
-	let prevData: Awaited<ReturnType<typeof getChat>>;
-	$: chatQuery = createQuery({
-		async queryFn() {
-			const id = $page.params.id;
-			if (!id) return goto(route('/profile/chat')), null;
-			const chat = await getChat(id);
-			if (!chat || chat.id !== id) return goto(route('/profile/chat')), null;
-			prevData = chat;
-			return chat;
-		},
-		queryKey: ['chat', $page.params.id],
-		placeholderData: prevData
-	});
-
-	$: isPlaceholder = $chatQuery.isPlaceholderData;
-	async function ScrollToBottom(isPlaceHolder: boolean, id: string | undefined) {
-		id;
-		if (!chatContainer || isPlaceHolder) return;
-
-		await tick();
-		chatContainer.scrollTo({ top: chatContainer.scrollHeight });
+	function groupBy<T, V>(array: T[], getGroupValue: (value: T) => V) {
+		const groupByMap = new Map<V, T[]>();
+		for (const value of array) {
+			const groupBy = getGroupValue(value);
+			const grouppedvalues = groupByMap.get(groupBy);
+			if (grouppedvalues) {
+				grouppedvalues.push(value);
+			} else {
+				groupByMap.set(groupBy, [value]);
+			}
+		}
+		return [...groupByMap];
 	}
-	$: ScrollToBottom(isPlaceholder, $page.params.id);
 
-	let initialLoad = true;
+	$: chatQuery = createQuery(
+		derived(page, (page) => {
+			return {
+				queryKey: ['chat', page.params.id],
+				async queryFn() {
+					const id = page.params.id;
+					if (!id) {
+						goto(route('/profile/chat'));
+						return null;
+					}
+					const chat = await getChat(id);
+					if (!chat || chat.id !== id) {
+						goto(route('/profile/chat'));
+						return null;
+					}
+					return chat;
+				},
+				placeholderData: keepPreviousData
+			};
+		})
+	);
 
-	let notes = [
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 1', id: '1' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 2', id: '2' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 3', id: '3' },
-		{
-			text: 'Modi laboriosam quidem accusantium fugiat repellendus 4, Modi laboriosam quidem accusantium fugiat repellendus 4',
-			id: '4'
-		},
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 5', id: '5' },
-		{ text: 'Modi laboriosam quidem accusantium fugiat repellendus 6', id: '6' }
-	];
+	let chatBottom: HTMLElement;
+	$: if (chatBottom && $chatQuery.data) {
+		chatBottom.scrollIntoView();
+	}
 </script>
 
-<div class="flex h-full flex-col">
-	<div
-		class="h-full overflow-y-scroll"
-		bind:this={chatContainer}
-	>
-		<div class="relative min-h-full">
-			{#if $chatQuery.isSuccess && $chatQuery.data}
-				<ul
-					class="flex origin-[center_calc(100%-50vh)] flex-col items-start gap-2 p-1 transition-opacity"
-					class:opacity-40={$chatQuery.isPlaceholderData && !initialLoad}
-					in:scale={{ start: 0.7 }}
-					on:introstart={() => (initialLoad = false)}
-				>
-					{#each $chatQuery.data.messages as message (message.id)}
-						<li
-							class="max-w-lg rounded-lg p-3 text-white
-							{message.author.id === YourID ? 'bg-app-blue-400 max-xl:self-end' : 'bg-app-blue-600'}"
-						>
-							<div class="text-sm text-white/70">
-								by {message.author.name} - {formatDate(message.timestamp)}
-							</div>
-							<div>{message.content}</div>
-						</li>
+<div class="grid h-full grid-rows-5 border-2 border-l-0 border-sky-900">
+	{#if $chatQuery.isSuccess && $chatQuery.data}
+		{@const messageGroups = groupBy($chatQuery.data.messages, (message) =>
+			dateFormatter.format(message.timestamp)
+		)}
+		<div
+			class="row-span-4 flex flex-col transition-opacity"
+			class:opacity-70={$chatQuery.isPlaceholderData}
+		>
+			<p class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900">
+				{$chatQuery.data.label}
+			</p>
+			<div class="overflow-y-hidden p-5">
+				<div class="h-full overflow-y-auto px-10 text-xl">
+					{#each messageGroups as [date, messages] (date)}
+						<p class="p-3 text-center">{date}</p>
+						<div class="flex flex-col gap-2">
+							{#each messages as message}
+								{@const isYourMessage = message.author.id === YourID}
+								<div
+									class="max-w-lg"
+									class:max-2xl:self-end={isYourMessage}
+								>
+									<div
+										class="rounded-lg px-4 py-2 {isYourMessage
+											? 'bg-app-blue-50'
+											: 'bg-app-blue-100'}"
+									>
+										{message.content}
+									</div>
+									<p
+										class="text-neutral-700/50"
+										class:max-2xl:text-right={isYourMessage}
+									>
+										{formatTimestamp(message.timestamp)}
+									</p>
+								</div>
+							{/each}
+						</div>
 					{/each}
-				</ul>
-			{:else}
-				<div
-					class="absolute bottom-[50vh] flex w-full origin-[center_calc(100%-50vh)] justify-center"
-				>
-					<span out:scale={{ start: 3 }}> Loading... </span>
+					<div
+						class="sr-only static"
+						bind:this={chatBottom}
+					/>
 				</div>
-			{/if}
+			</div>
 		</div>
-	</div>
-	<div class="flex p-1">
-		<textarea
-			class="grow resize-none rounded-l-lg bg-blue-300/20 p-1 shadow-inner shadow-white/50"
-		/>
-		<button class="rounded-r-lg bg-black/30 px-4">SEND</button>
-	</div>
-
-	<div class="flex h-1/3 flex-col justify-between border-t border-t-blue-500">
-		<div class="h-full overflow-y-scroll">
-			{#if notes.length}
-				<ul class="flex h-full flex-col items-start gap-2 p-1">
-					{#each notes as { text, id } (id)}
-						<li class="max-w-lg rounded-lg bg-slate-500 p-3">
-							<p class="p-1">{id}. {text}</p>
-						</li>
-					{/each}
-				</ul>
-			{:else}
-				<div class="flex h-full w-full items-center justify-center">
-					<span> Loading... </span>
-				</div>
-			{/if}
+		<div class="flex gap-2 px-16 py-10 font-title outline outline-2 outline-sky-900">
+			<div
+				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2"
+			>
+				<textarea
+					class="h-full w-full resize-none outline-none placeholder:text-neutral-800"
+					placeholder="Leave a message..."
+				/>
+			</div>
+			<button
+				class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white"
+			>
+				SEND
+			</button>
 		</div>
-		<div class="flex p-1">
-			<textarea
-				class="grow resize-none rounded-l-lg bg-slate-500 p-1 text-black shadow-inner shadow-black/50"
-			/>
-			<button class="rounded-r-lg bg-slate-600 px-4">SEND</button>
-		</div>
-	</div>
+	{:else}
+		<div class="row-span-full m-auto">Loading...</div>
+	{/if}
 </div>

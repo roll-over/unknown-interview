@@ -35,7 +35,7 @@
 			Please select a {isCvRoute ? 'CV' : 'vacancy'}
 		{:else}
 			<a
-				href={route(isCvRoute ? '/create/cv' : '/create/vacancy')}
+				href={route(isCvRoute ? '/cv/create' : '/vacancy/create')}
 				on:click={() => modalStore.close()}
 			>
 				Fill out a {isCvRoute ? 'CV' : 'vacancy'} for further use of the service
