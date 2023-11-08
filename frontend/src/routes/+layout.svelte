@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Analytics from '$lib/components/Analytics.svelte';
-	import Header from '$lib/components/Header.svelte';
+	import Header from '$lib/components/header/Header.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import '@fontsource-variable/inter';
 	import '@fontsource-variable/montserrat';

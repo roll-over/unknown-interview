@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { createGetQuery } from '$lib/api';
 	import { route } from '$lib/utils/route';
-	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
-
-	let dialog; // HTMLDialogElement
+	import { showLogoutModal } from './LogoutModal.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
 		queryKey: userInfoGet.key,
 		queryFn: () => userInfoGet.runQuery()
 	});
-	$: data = $userInfo.isSuccess && $userInfo.data.data ? $userInfo.data.data : null;
 
 	const navCreatePopup: PopupSettings = {
 		event: 'click',
@@ -23,17 +21,18 @@
 		target: 'nav-profile-popup',
 		placement: 'bottom'
 	};
+	const modalStore = getModalStore();
 </script>
 
 <header class="p-2">
 	<nav class="flex items-center justify-between gap-3">
-		<a href={route('/')}
-			><img
+		<a href={route('/')}>
+			<img
 				src="/favicon.png"
-				alt="logo"
+				alt=""
 				class="max-w-10 max-h-10"
-			/></a
-		>
+			/>
+		</a>
 		<div class="flex items-center gap-3">
 			<a href={route('/profile/chat')}>Chats</a>
 			<button use:popup={navProfilePopup}>
@@ -78,14 +77,18 @@
 			>
 			{#if $userInfo.status === 'pending'}
 				<div>loading...</div>
-			{:else if $userInfo.status === 'error'}
+			{:else if $userInfo.status === 'error' || $userInfo.data.error}
 				<div>error</div>
-			{:else if data}
-				<button on:click={() => dialog.showModal()}>
+			{:else if $userInfo.data}
+				{@const { email, picture } = $userInfo.data.data}
+				<button
+					on:click={() => showLogoutModal(modalStore, { email, image: picture })}
+					aria-label="Logout"
+				>
 					<img
-						src={data.picture}
-						alt="avatar"
-						class="max-w-10 max-h-10 rounded-full"
+						src={picture}
+						alt=""
+						class="h-10 w-10 rounded-full"
 					/>
 				</button>
 			{:else}
@@ -93,23 +96,4 @@
 			{/if}
 		</div>
 	</nav>
-
-	<dialog
-		bind:this={dialog}
-		class="rounded-md bg-white p-10 shadow-md"
-	>
-		<div class="flex flex-col items-start gap-4">
-			<h1 class="text-xl">Are you sure you want to logout?</h1>
-			{data?.email}
-			<img
-				src={data?.picture}
-				alt="avatar"
-				class="max-w-20 max-h-20 rounded-full"
-			/>
-			<div class="flex w-full flex-row justify-between">
-				<a href="/api/v1/auth/logout">Logout</a>
-				<button on:click={() => dialog.close()}>Close</button>
-			</div>
-		</div>
-	</dialog>
 </header>
