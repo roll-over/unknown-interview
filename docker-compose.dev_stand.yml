@@ -25,7 +25,7 @@ services:
     depends_on:
       - dev_backend
     environment:
-      - PUBLIC_IS_DOCKER=true
+      - PORT=3000
 
   dev_unknown_mongo:
     image: mongo

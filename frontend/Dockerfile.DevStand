@@ -5,6 +5,9 @@ WORKDIR /frontend
 
 RUN corepack enable    
 RUN pnpm install
+
 ARG PUBLIC_INTERNAL_URL=''
 ARG PUBLIC_EXTERNAL_URL=''
+ARG PUBLIC_IS_DOCKER=true
+
 RUN pnpm run build
