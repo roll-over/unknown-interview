@@ -14,28 +14,18 @@ services:
       - .env
 
   dev_frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.DevStand
     container_name: dev_frontend
     working_dir: /frontend
-    command: pnpm rscript docker-dev
-    volumes:
-      - ./frontend/.svelte-kit/:/frontend/.svelte-kit/
-      - ./frontend/patches/:/frontend/patches/
-      - ./frontend/scripts/:/frontend/scripts/
-      - ./frontend/src/:/frontend/src/
-      - ./frontend/static/:/frontend/static/
-      - ./frontend/package.json:/frontend/package.json
-      - ./frontend/pnpm-lock.yaml:/frontend/pnpm-lock.yaml
-      - ./frontend/postcss.config.js:/frontend/postcss.config.js
-      - ./frontend/svelte.config.js:/frontend/svelte.config.js
-      - ./frontend/tailwind.config.ts:/frontend/tailwind.config.ts
-      - ./frontend/vite.config.ts:/frontend/vite.config.ts
+    command: node build
     env_file:
       - .env
     depends_on:
       - dev_backend
     environment:
-      - PUBLIC_IS_DOCKER=true
+      - PORT=3000
 
   dev_unknown_mongo:
     image: mongo
