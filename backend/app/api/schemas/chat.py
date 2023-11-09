@@ -1,29 +1,28 @@
 from datetime import datetime
 from uuid import UUID
-
+from typing import List, Union
 from pydantic import BaseModel
 
 
-class ChatRequestSchema(BaseModel):
-    employer_id: UUID
-    applicant_id: UUID
-    vacancy_id: UUID
-    cv_id: UUID
+class MessageRequestSchema(BaseModel):
+    related_id: UUID
+    text: str
+
+
+class MessageResponseSchema(BaseModel):
+    custom_id: UUID
+    author_id: UUID
+    created_at: datetime
+    text: str
+    own: Union[bool, None]
 
 
 class ChatResponseSchema(BaseModel):
-    custom_id: UUID
-    employer_id: UUID
-    applicant_id: UUID
-    match_id: UUID
+    chat_name: str
+    messages: List[MessageResponseSchema]
 
 
-class ChatMessageRequestSchema(BaseModel):
-    related_id: UUID
-    text: str
-
-
-class ChatMessageResponseSchema(BaseModel):
-    related_id: UUID
-    created_at: datetime
-    text: str
+class ChatsResponseSchema(BaseModel):
+    chat_id: UUID
+    chat_name: str
+    last_message: List[MessageResponseSchema]
