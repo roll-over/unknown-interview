@@ -1,16 +1,16 @@
 from typing import Annotated, List
 from uuid import UUID
 
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, Depends, Query
 
 from app.api.schemas.chat import (
-    MessageRequestSchema,
-    MessageResponseSchema,
     ChatResponseSchema,
     ChatsResponseSchema,
+    MessageRequestSchema,
+    MessageResponseSchema,
 )
-from app.services.unitorwork import Chat_dep
 from app.api.schemas.user import UserResponseSchema
+from app.services.unitorwork import Chat_dep
 from app.utils import current_user
 
 chat_router = APIRouter(prefix="/chats", tags=["Chats"])

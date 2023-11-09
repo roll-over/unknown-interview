@@ -1,7 +1,7 @@
-from typing import List, Union, Dict, Tuple
+from typing import Dict, List, Union
 from uuid import UUID
 
-from app.db.models import Chat, ChatMessage, User, Profession, Grade
+from app.db.models import Chat, ChatMessage, Grade, Profession, User
 from app.exceptions import RelatedRecordDoesNotExist
 from app.services.repository.repositories import (
     chat_message_repo,
@@ -248,7 +248,9 @@ class ChatMessageUoW:
         Returns:
             Value of the 'name' field for chat.
         """
-        return ' '.join(value.capitalize() for value in (grade.value, *profession.name.split()))
+        return ' '.join(
+            value.capitalize() for value in (grade.value, *profession.name.split())
+        )
 
     async def __get_chat_data(
             self,

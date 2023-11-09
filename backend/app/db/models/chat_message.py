@@ -1,8 +1,8 @@
 from datetime import datetime
+from typing import Union
 from uuid import UUID
 
 from pydantic import Field
-from typing import Union
 
 from app.db.models.mixins import UUIDMixin
 

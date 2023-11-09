@@ -3,13 +3,12 @@ from .chat_message import ChatMessage
 from .cv import CV
 from .cv_note import CVNote
 from .match import Match
-from .mixins import MatchRelation, Role
+from .mixins import Grade, MatchRelation, Role
 from .profession import Profession
 from .skill import Skill
 from .user import User
 from .vacancy import Vacancy
 from .vacancy_note import VacancyNote
-from .mixins import Grade
 
 __all__ = (
     "User",

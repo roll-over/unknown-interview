@@ -1,6 +1,7 @@
 from datetime import datetime
-from uuid import UUID
 from typing import List, Union
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
