@@ -48,7 +48,7 @@ class ChatHandler:
         if not relation:
             return
 
-        chat = await self.chats.create_one(
+        chat = await self.chats.create_chat(
             cv_id=related_cv_id,
             vacancy_id=related_vacancy_id,
             match_id=match_record.custom_id,
