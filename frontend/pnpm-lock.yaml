@@ -57,6 +57,9 @@ devDependencies:
   '@fontsource-variable/montserrat':
     specifier: ^5.0.14
     version: 5.0.14
+  '@iconify-json/cil':
+    specifier: ^1.1.5
+    version: 1.1.5
   '@iconify-json/ic':
     specifier: ^1.1.14
     version: 1.1.14
@@ -468,6 +471,12 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify-json/cil@1.1.5:
+    resolution: {integrity: sha512-vyeEU3EIVGA43zOI0o/hwYaFFkWlzn8l1bbuPpxzZyGfizAIJdJA4I9+zm4zWRWzqj5WPusilX9wAxKTBwlazA==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify-json/ic@1.1.14:
