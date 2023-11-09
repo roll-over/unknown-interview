@@ -9,6 +9,7 @@ from .skill import Skill
 from .user import User
 from .vacancy import Vacancy
 from .vacancy_note import VacancyNote
+from .mixins import Grade
 
 __all__ = (
     "User",
@@ -23,4 +24,5 @@ __all__ = (
     "MatchRelation",
     "Chat",
     "ChatMessage",
+    "Grade",
 )
