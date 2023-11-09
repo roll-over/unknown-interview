@@ -1,0 +1,20 @@
+[
+  {
+    "_id":{"$oid":"654cf6d07c98f40106e73287"},
+    "custom_id":{"$binary":{"base64":"HoLBXZvtR6K53kMhttMExg==","subType":"04"}},
+    "cv_id":{"$binary":{"base64":"02CtRYXeSFSrwM8f6PnHpg==","subType":"04"}},
+    "applicant_relation":"not_shown",
+    "vacancy_id":{"$binary":{"base64":"Wk+WAzcZTymV8Wut3anHgQ==","subType":"04"}},
+    "employer_relation":"not_shown",
+    "chat_id":null
+  },
+  {
+    "_id":{"$oid":"654cf6d07c98f40106e73288"},
+    "custom_id":{"$binary":{"base64":"Ig4/eraHS9S3Tpz9epnN4Q==","subType":"04"}},
+    "cv_id":{"$binary":{"base64":"02CtRYXeSFSrwM8f6PnHpg==","subType":"04"}},
+    "applicant_relation":"liked",
+    "vacancy_id":{"$binary":{"base64":"szgQSerwTr6dEHqTangS6g==","subType":"04"}},
+    "employer_relation":"liked",
+    "chat_id":{"$binary":{"base64":"hLLdwy8hR1KA46bhnKBepA==","subType":"04"}}
+  }
+]
