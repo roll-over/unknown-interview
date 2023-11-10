@@ -27,7 +27,7 @@ docker-compose -f docker-compose.test.yml up e2e-test
 ### Установка зависимостей
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirments.txt
 ```
 
 ## api tests

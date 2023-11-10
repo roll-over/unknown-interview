@@ -16,8 +16,8 @@ class MatchService:
             self,
             data: Dict[str, UUID],
             sort: Tuple[str, int] = None,
-            limit: Union[int | None] = None,
-    ) -> Union[CV | Vacancy | None]:
+            limit: Union[int, None] = None,
+    ) -> Union[CV, Vacancy, None]:
         record = await self.repo.fetch_many(data, sort=sort, limit=limit)
         if record and limit:
             return record.pop()

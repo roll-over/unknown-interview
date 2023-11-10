@@ -1,5 +1,3 @@
-export const prerender = true;
-
 type GithubApiContributorsResponse = {
 	login: string;
 	id: number;

@@ -15,8 +15,7 @@ class ChatResponseSchema(BaseModel):
     custom_id: UUID
     employer_id: UUID
     applicant_id: UUID
-    vacancy_id: UUID
-    cv_id: UUID
+    match_id: UUID
 
 
 class ChatMessageRequestSchema(BaseModel):

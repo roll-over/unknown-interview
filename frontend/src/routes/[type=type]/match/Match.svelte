@@ -3,9 +3,9 @@
 	context="module"
 >
 	import { isRangeOverlap, mapWithFilter } from '$lib/utils';
-	import type { Cv, Vacancy } from '$lib/utils/types';
+	import type { CvResponse, VacancyResponse } from '$lib/utils/types';
 
-	export type MatchData = Cv | Vacancy;
+	export type MatchData = CvResponse | VacancyResponse;
 
 	function compareStrings(user: string, match: string) {
 		return user.toLowerCase() === match.toLowerCase();

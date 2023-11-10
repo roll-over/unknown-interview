@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { Autocomplete, type AutocompleteOption } from '@skeletonlabs/skeleton';
-	import { professions } from './common';
+
+	const professions = [
+		'programmer',
+		'designer',
+		'project manager',
+		'engineer',
+		'devops',
+		'full-stack',
+		'frontend',
+		'backend'
+	];
 
 	export let selectedProfession: string;
 	$: autocompleteProfessions = professions.map((profession) => ({

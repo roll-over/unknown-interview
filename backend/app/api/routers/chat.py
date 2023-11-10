@@ -8,7 +8,7 @@ from app.api.schemas.chat import (
     ChatMessageResponseSchema,
     ChatResponseSchema,
 )
-from app.services.repository import ChatMessagesRepository, ChatsRepository
+from app.services.unitorwork import Chat_dep
 
 chat_router = APIRouter(prefix="/chats", tags=["Chats"])
 
@@ -16,10 +16,10 @@ chat_router = APIRouter(prefix="/chats", tags=["Chats"])
 @chat_router.get(
     "/",
     response_model=list[ChatResponseSchema],
-    summary="Get all chats."
+    summary="Get all chats that are related to a given vacancy/cv id."
 )
-async def get_all_chats(Chat: ChatsRepository):
-    return await Chat.get_chats()
+async def get_all_chats(Chat: Chat_dep, record_id: UUID):
+    return await Chat.get_many_chats(record_id=record_id)
 
 
 @chat_router.post(
@@ -28,20 +28,20 @@ async def get_all_chats(Chat: ChatsRepository):
     summary="Post a new message."
 )
 async def create_new_chat_message(
-    data: ChatMessageRequestSchema, Message: ChatMessagesRepository
+    data: ChatMessageRequestSchema, Message: Chat_dep
 ):
-    return await Message.create_one(data=data)
+    return await Message.create_message(data=data)
 
 
 @chat_router.get(
     "/{chat_id}",
     response_model=list[ChatMessageResponseSchema],
-    summary="Get a list of the messages of a given chat id."
+    summary="Get a sorted list of the messages of a chat."
 )
-async def get_chat_messages(
-    Message: ChatMessagesRepository, 
-    chat_id: UUID, 
-    page: Annotated[int, Query(ge=0)] = 0, 
+async def get_messages(
+    Message: Chat_dep,
+    chat_id: UUID,
+    page: Annotated[int, Query(ge=0)] = 0,
     count: Annotated[int, Query(ge=0)] = 50
 ):
-    return await Message.get_chat_messages(chat_id=chat_id, page=page, count=count)
+    return await Message.get_messages(chat_id=chat_id, page=page, count=count)
