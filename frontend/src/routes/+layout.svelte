@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Analytics from '$lib/components/Analytics.svelte';
-	import Header from '$lib/components/Header.svelte';
+	import Header from '$lib/components/header/Header.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import '@fontsource-variable/inter';
 	import '@fontsource-variable/montserrat';
@@ -22,14 +22,11 @@
 	<AppShell
 		regionPage="h-full w-full"
 		slotPageContent="h-full w-full"
-		class="text-neutral-800"
+		class="flex flex-col-reverse text-neutral-800 sm:flex-col"
 	>
 		<svelte:fragment slot="header">
 			<Header />
 		</svelte:fragment>
 		<slot />
-		<svelte:fragment slot="footer">
-			<footer class="bg-app-blue-50">feet</footer>
-		</svelte:fragment>
 	</AppShell>
 </QueryClientProvider>

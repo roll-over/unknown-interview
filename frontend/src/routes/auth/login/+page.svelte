@@ -1,53 +1,23 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import Input from '$lib/components/Input.svelte';
+	import GoogleLogo from '~icons/logos/google-icon';
 </script>
 
-<div class="flex min-h-screen items-center justify-center">
-	<div class="flex flex-col gap-2 rounded-lg bg-slate-600 p-4">
-		<p class="bg-gradient-to-r from-white to-slate-400 bg-clip-text font-bold text-transparent">
-			Login with provider
-		</p>
+<div class="flex min-h-full items-center justify-center">
+	<div class="flex flex-col gap-48 rounded-lg p-4">
+		<div class="flex flex-col items-center gap-10">
+			<h1 class="font-title text-5xl text-black">WELCOME!</h1>
+			<p class="text-3xl text-black">You need to be logged in to use the service</p>
+		</div>
 		<a
-			class="w-full rounded-lg bg-white p-2 text-lg font-bold text-slate-900 transition-[letter-spacing] current:tracking-widest"
+			class="group flex items-center justify-between rounded-2xl bg-app-blue-100 px-4 py-3 transition-colors current:bg-app-blue-400"
 			href="/api/v1/auth/login/google"
 		>
-			<span class="text-blue-500">G</span><span class="text-red-500">o</span><span
-				class="text-yellow-500">o</span
-			><span class="text-blue-500">g</span><span class="text-green-600">l</span><span
-				class="text-red-500">e</span
+			<GoogleLogo class="h-full w-16" />
+			<span
+				class="shrink-0 grow px-10 text-center text-4xl transition-colors group-current:text-white"
 			>
+				continue with google
+			</span>
 		</a>
-		<div
-			class="h-1 w-[105%] self-center rounded-full bg-gradient-to-r from-slate-300 to-slate-500"
-		/>
-		<form
-			class="flex flex-col gap-2"
-			on:submit={(e) => {
-				new FormData(e.currentTarget).forEach((value, key) => {
-					console.log({ [key]: value });
-				});
-			}}
-		>
-			<p class="bg-gradient-to-r from-white to-slate-400 bg-clip-text font-bold text-transparent">
-				Login with email
-			</p>
-			<Input
-				attrs={{
-					placeholder: 'Email',
-					type: 'email',
-					autocomplete: 'username',
-					required: true,
-					name: 'email'
-				}}
-				class="text-lg text-black"
-			/>
-			<button
-				disabled={!browser}
-				class="rounded-lg bg-slate-500 p-2 shadow-sm transition-shadow hover:shadow-lg disabled:bg-slate-300"
-			>
-				Log-in
-			</button>
-		</form>
 	</div>
 </div>
