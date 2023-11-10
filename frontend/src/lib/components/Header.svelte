@@ -3,6 +3,7 @@
 	import { route } from '$lib/utils/route';
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
+	import LightSwitch from '../utils/LightSwitch/LightSwitch.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -68,5 +69,6 @@
 		<a href={route('/integrations')}>Api</a>
 		<a href={route('/documents')}>Documents</a>
 		<a href={route('/about')}>About</a>
+		<LightSwitch rounded="rounded-full" />
 	</nav>
 </header>

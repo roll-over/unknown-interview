@@ -4,7 +4,7 @@
 	import { route } from '$lib/utils/route';
 </script>
 
-<div class="flex h-full justify-center">
+<div class="flex bg-light-background dark:bg-dark-background h-full justify-center">
 	<div class="grid h-full w-full max-w-5xl grid-rows-2">
 		<h1 class="m-auto text-center font-title text-6xl">Visit Purpose</h1>
 		<div class="flex flex-wrap items-start justify-around">
