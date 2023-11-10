@@ -32,15 +32,9 @@
 		"unplugin-icons": "^0.17.3"
 	},
 	"devDependencies": {
-<<<<<<< HEAD
-		"@faker-js/faker": "^8.1.0",
-		"@fontsource-variable/comfortaa": "^5.0.15",
-		"@fontsource-variable/montserrat": "^5.0.14",
-=======
 		"@faker-js/faker": "^8.2.0",
 		"@fontsource-variable/inter": "^5.0.15",
 		"@fontsource-variable/montserrat": "^5.0.16",
->>>>>>> 647ab819de6b09a3bdc36afe5530565c752de86a
 		"@iconify-json/cil": "^1.1.5",
 		"@iconify-json/ic": "^1.1.14",
 		"@iconify-json/material-symbols": "^1.1.61",
