@@ -10,7 +10,7 @@
   },
   "explorer.fileNesting.patterns": {
     "+*.svelte": "+${capture}.ts, +${capture}.server.ts",
-    "*.svelte": "${capture}.spec.ts, ${capture}.test.ts, ${capture}.cspec.ts, ${capture}.ctest.ts",
+    "*.svelte": "${capture}.spec.ts, ${capture}.test.ts, ${capture}.cspec.ts, ${capture}.ctest.ts, ${capture}.*.svelte",
     "docker-compose.yml": "docker-compose.*.yml",
     "Dockerfile":"Dockerfile.*"
   },
