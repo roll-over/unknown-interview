@@ -49,7 +49,11 @@ export function setModeUserPrefers(value: boolean): void {
 export function setModeCurrent(value: boolean) {
 	const elemHtmlClasses = document.documentElement.classList;
 	const classDark = `dark`;
-	value === true ? elemHtmlClasses.remove(classDark) : elemHtmlClasses.add(classDark);
+	if (value === true) {
+		elemHtmlClasses.remove(classDark);
+	} else {
+		elemHtmlClasses.add(classDark);
+	}
 	modeCurrent.set(value);
 }
 
