@@ -4,6 +4,7 @@
 	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
+	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -75,6 +76,7 @@
 				href={route('/about')}
 				class="hidden sm:block">About</a
 			>
+			<LightSwitch rounded="rounded-full" />
 			{#if $userInfo.status === 'pending'}
 				<div>loading...</div>
 			{:else if $userInfo.status === 'error' || $userInfo.data.error}

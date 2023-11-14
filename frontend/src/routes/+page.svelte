@@ -4,10 +4,12 @@
 	import Logo from '~icons/main/logo';
 </script>
 
-<div class="flex h-full flex-col items-center justify-center bg-light-background dark:bg-dark-background">
+<div
+	class="flex h-full flex-col items-center justify-center bg-light-background dark:bg-dark-background"
+>
 	<div class="relative z-0 mb-12 flex w-full flex-col items-center font-title">
 		<Logo class="h-52 w-full text-app-blue-500" />
-		<h1 class="text-2xl text-black uppercase">Skills first. Unbiased Hiring.</h1>
+		<h1 class="text-2xl uppercase text-black">Skills first. Unbiased Hiring.</h1>
 	</div>
 	<a
 		href={route('/purpose')}

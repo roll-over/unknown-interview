@@ -27,7 +27,11 @@ function getStorage(type: StorageType) {
 	return type === 'local' ? localStorage : sessionStorage;
 }
 
-export function localStorageStore<T>(key: string, initialValue: T, options?: Options<T>): Writable<T> {
+export function localStorageStore<T>(
+	key: string,
+	initialValue: T,
+	options?: Options<T>
+): Writable<T> {
 	const serializer = options?.serializer ?? JSON;
 	const storageType = options?.storage ?? 'local';
 
