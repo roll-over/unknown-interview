@@ -27,9 +27,9 @@
 	/** Provide classes to set border radius styles. */
 	export let rounded: CssClasses = 'rounded-token';
 	/** Provide classes to set the light SVG fill color. */
-	export let fillLight: CssClasses = 'text-black';
+	export let fillLight: CssClasses = 'fill-black';
 	/** Provide classes to set the dark SVG fill color. */
-	export let fillDark: CssClasses = 'text-white';
+	export let fillDark: CssClasses = 'fill-white';
 
 	// Classes
 	const cTransition = `transition-all duration-[300ms]`;
