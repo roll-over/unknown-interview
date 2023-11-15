@@ -6,7 +6,6 @@
 	import Loading from './Loading.svelte';
 	import RandomMatch from './RandomMatch.svelte';
 	import { showWarningModal } from './WarningModal.svelte';
-	import { getRandomCv, getRandomVacancy } from './mock';
 
 	export let data;
 
@@ -21,10 +20,13 @@
 		}
 	});
 
+	$: randomMatchGet = data.isCvRoute
+		? createGetQuery('/api/v1/vacancies/random_vacancy')
+		: createGetQuery('/api/v1/cvs/random_cv');
 	$: randomMatchQuery = createQuery({
-		queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv'],
+		queryKey: randomMatchGet.key,
 		queryFn() {
-			return data.isCvRoute ? getRandomVacancy() : getRandomCv();
+			return randomMatchGet.runQuery();
 		},
 		staleTime: Infinity
 	});
@@ -61,9 +63,9 @@
 		{/if}
 	</div>
 </div>
-{#if $randomMatchQuery.isSuccess}
+{#if $randomMatchQuery.isSuccess && $randomMatchQuery.data.data}
 	<RandomMatch
-		matchData={$randomMatchQuery.data}
+		matchData={$randomMatchQuery.data.data}
 		like={showModal}
 		dislike={showModal}
 	/>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { createDeleteMutation, createGetQuery, getQueryKey } from '$lib/api';
+	import { createDeleteMutation, createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import { route } from '$lib/utils/route';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import DeleteIcon from '~icons/material-symbols/delete-outline';
@@ -8,7 +8,6 @@
 	import Loading from '../Loading.svelte';
 	import Match, { constructMatcher } from '../Match.svelte';
 	import RandomMatch from '../RandomMatch.svelte';
-	import { getRandomCv, getRandomVacancy } from '../mock';
 
 	export let data;
 	$: userMatchGet = data.isCvRoute
@@ -44,15 +43,21 @@
 		}
 	});
 
+	$: randomMatchGet = data.isCvRoute
+		? createGetQuery('/api/v1/vacancies/random_vacancy')
+		: createGetQuery('/api/v1/cvs/random_cv');
 	$: randomMatchQuery = createQuery({
-		queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv'],
+		queryKey: randomMatchGet.key,
 		queryFn() {
-			return data.isCvRoute ? getRandomVacancy() : getRandomCv();
+			return randomMatchGet.runQuery();
 		},
 		staleTime: Infinity
 	});
 
-	$: matcher = constructMatcher($userMatchQuery.data, $randomMatchQuery.data);
+	const randomMatchPost = createPostMutation('/api/v1/relation');
+	const randomMatchMutation = createMutation({ mutationFn: randomMatchPost.runMutation });
+
+	$: matcher = constructMatcher($userMatchQuery.data, $randomMatchQuery.data?.data);
 </script>
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
@@ -94,18 +99,31 @@
 {:else}
 	<Loading />
 {/if}
-{#if $randomMatchQuery.isSuccess}
+{#if $randomMatchQuery.isSuccess && $randomMatchQuery.data.data}
+	{@const match = $randomMatchQuery.data.data}
 	<RandomMatch
 		{matcher}
-		matchData={$randomMatchQuery.data}
-		like={() =>
-			data.queryClient.invalidateQueries({
-				queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv']
-			})}
-		dislike={() =>
-			data.queryClient.invalidateQueries({
-				queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv']
-			})}
+		matchData={match}
+		like={() => {
+			$randomMatchMutation.mutate({
+				body: {
+					relation: 'liked',
+					cv_id: data.isCvRoute ? data.id : match.custom_id,
+					vacancy_id: data.isCvRoute ? match.custom_id : data.id
+				}
+			});
+			data.queryClient.invalidateQueries({ queryKey: randomMatchGet.key });
+		}}
+		dislike={() => {
+			$randomMatchMutation.mutate({
+				body: {
+					relation: 'disliked',
+					cv_id: data.isCvRoute ? data.id : match.custom_id,
+					vacancy_id: data.isCvRoute ? match.custom_id : data.id
+				}
+			});
+			data.queryClient.invalidateQueries({ queryKey: randomMatchGet.key });
+		}}
 	/>
 {:else}
 	<Loading />

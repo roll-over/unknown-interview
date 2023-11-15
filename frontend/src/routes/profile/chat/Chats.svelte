@@ -23,7 +23,9 @@
 				bind:this={chatNodes[i]}
 			>
 				<div class="rounded-lg border-2 border-app-blue-100 p-3">
-					<span class="text-xl">{chat.label}</span>
+					<span class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-xl"
+						>{chat.label}</span
+					>
 					{#if chat.lastMessage}
 						{@const isYourMessage = chat.lastMessage.author.id === YourID}
 						<span
