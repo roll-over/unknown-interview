@@ -75,11 +75,13 @@
 				href={route('/about')}
 				class="hidden sm:block">About</a
 			>
-			{#if $userInfo.status === 'pending'}
+			{#if $userInfo.isPending}
 				<div>loading...</div>
-			{:else if $userInfo.status === 'error' || $userInfo.data.error}
+			{:else if $userInfo.isError}
 				<div>error</div>
-			{:else if $userInfo.data}
+			{:else if $userInfo.data.error}
+				<a href={route('/auth/login')}>Log-in</a>
+			{:else}
 				{@const { email, picture } = $userInfo.data.data}
 				<button
 					on:click={() => showLogoutModal(modalStore, { email, image: picture })}
@@ -91,8 +93,6 @@
 						class="h-10 w-10 rounded-full"
 					/>
 				</button>
-			{:else}
-				<a href={route('/auth/login')}>Log-in</a>
 			{/if}
 		</div>
 	</nav>
