@@ -87,7 +87,7 @@ export const hideHireTheme: CustomThemeConfig = {
 		"--color-error-800": "153 0 0", // #990000
 		"--color-error-900": "125 0 0", // #7d0000
 		// surface | #161616 
-		"--color-surface-50": "220 220 220", // #dcdcdc
+		"--color-surface-50": "255 255 255", // #dcdcdc
 		"--color-surface-100": "208 208 208", // #d0d0d0
 		"--color-surface-200": "197 197 197", // #c5c5c5
 		"--color-surface-300": "162 162 162", // #a2a2a2
