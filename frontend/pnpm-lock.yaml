@@ -4,13 +4,24 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@playwright/experimental-ct-svelte@1.39.0':
+    hash: mikwa3ctd5wnlihsv24g62vuru
+    path: patches/@playwright__experimental-ct-svelte@1.39.0.patch
+  '@skeletonlabs/skeleton@2.4.0':
+    hash: l2l6l66buwduyzqngncf4rvoom
+    path: patches/@skeletonlabs__skeleton@2.4.0.patch
+  '@types/gtag.js@0.0.15':
+    hash: qe3nomneilxkxbxjy63wah5ci4
+    path: patches/@types__gtag.js@0.0.15.patch
+
 dependencies:
   '@floating-ui/dom':
     specifier: ^1.5.3
     version: 1.5.3
   '@skeletonlabs/skeleton':
-    specifier: ^2.5.0
-    version: 2.5.0(svelte@4.2.4)
+    specifier: ^2.4.0
+    version: 2.4.0(patch_hash=l2l6l66buwduyzqngncf4rvoom)(svelte@4.2.4)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.1.0
     version: 0.1.0(tailwindcss@3.3.5)
@@ -38,7 +49,7 @@ dependencies:
 
 devDependencies:
   '@faker-js/faker':
-    specifier: ^8.3.1
+    specifier: ^8.2.0
     version: 8.3.1
   '@fontsource-variable/inter':
     specifier: ^5.0.15
@@ -56,28 +67,28 @@ devDependencies:
     specifier: ^1.1.38
     version: 1.1.38
   '@iconify-json/material-symbols':
-    specifier: ^1.1.63
+    specifier: ^1.1.61
     version: 1.1.63
   '@playwright/experimental-ct-svelte':
-    specifier: ^1.40.0
-    version: 1.40.0(@types/node@20.9.1)(svelte@4.2.4)(vite@4.5.0)
+    specifier: ^1.39.0
+    version: 1.39.0(patch_hash=mikwa3ctd5wnlihsv24g62vuru)(@types/node@20.9.1)(svelte@4.2.4)(vite@4.5.0)
   '@sveltejs/adapter-node':
     specifier: ^1.3.1
     version: 1.3.1(@sveltejs/kit@1.27.6)
   '@sveltejs/kit':
-    specifier: ^1.27.6
+    specifier: ^1.27.3
     version: 1.27.6(svelte@4.2.4)(vite@4.5.0)
   '@types/gtag.js':
     specifier: ^0.0.15
-    version: 0.0.15
+    version: 0.0.15(patch_hash=qe3nomneilxkxbxjy63wah5ci4)
   '@types/node':
-    specifier: ^20.9.1
+    specifier: ^20.8.10
     version: 20.9.1
   '@typescript-eslint/eslint-plugin':
-    specifier: ^6.11.0
+    specifier: ^6.9.1
     version: 6.11.0(@typescript-eslint/parser@6.11.0)(eslint@8.53.0)(typescript@5.2.2)
   '@typescript-eslint/parser':
-    specifier: ^6.11.0
+    specifier: ^6.9.1
     version: 6.11.0(eslint@8.53.0)(typescript@5.2.2)
   '@vitest/coverage-v8':
     specifier: ^0.34.6
@@ -98,7 +109,7 @@ devDependencies:
     specifier: ^9.0.0
     version: 9.0.0(eslint@8.53.0)
   eslint-plugin-svelte:
-    specifier: ^2.35.0
+    specifier: ^2.34.1
     version: 2.35.0(eslint@8.53.0)(svelte@4.2.4)
   glob:
     specifier: ^10.3.10
@@ -107,25 +118,25 @@ devDependencies:
     specifier: ^4.1.5
     version: 4.1.5
   openapi-typescript:
-    specifier: ^6.7.1
+    specifier: ^6.7.0
     version: 6.7.1
   postcss-load-config:
     specifier: ^4.0.1
     version: 4.0.1(postcss@8.4.31)
   prettier:
-    specifier: ^3.1.0
+    specifier: ^3.0.3
     version: 3.1.0
   prettier-plugin-svelte:
-    specifier: ^3.1.0
+    specifier: ^3.0.3
     version: 3.1.0(prettier@3.1.0)(svelte@4.2.4)
   prettier-plugin-tailwindcss:
-    specifier: ^0.5.7
+    specifier: ^0.5.6
     version: 0.5.7(prettier-plugin-svelte@3.1.0)(prettier@3.1.0)
   svelte:
-    specifier: ^4.2.4
+    specifier: ^4.2.2
     version: 4.2.4
   svelte-check:
-    specifier: ^3.6.0
+    specifier: ^3.5.2
     version: 3.6.0(postcss-load-config@4.0.1)(postcss@8.4.31)(svelte@4.2.4)
   tslib:
     specifier: ^2.6.2
@@ -140,7 +151,7 @@ devDependencies:
     specifier: ^4.5.0
     version: 4.5.0(@types/node@20.9.1)
   vite-bundle-visualizer:
-    specifier: ^0.10.1
+    specifier: ^0.10.0
     version: 0.10.1
   vitest:
     specifier: ^0.34.6
@@ -584,13 +595,13 @@ packages:
     dev: true
     optional: true
 
-  /@playwright/experimental-ct-core@1.40.0(@types/node@20.9.1):
-    resolution: {integrity: sha512-fsavfzF5RR4kuXuHpqUAZz1eWhlQLVSSHQAzFFuGklV1RCePtUPfo6Vfru/K4SfcYK6QKKmWnvBxt/3PIamQgA==}
+  /@playwright/experimental-ct-core@1.39.0(@types/node@20.9.1):
+    resolution: {integrity: sha512-1b/qrlB5A/CdEZns8f2RDkWFmSnGkNyec8n72iinmw07+GHsdMP8fIpazeFB0umxWfo+gPLhkjhTGdB3WXJTBw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright: 1.40.0
-      playwright-core: 1.40.0
+      playwright: 1.39.0
+      playwright-core: 1.39.0
       vite: 4.5.0(@types/node@20.9.1)
     transitivePeerDependencies:
       - '@types/node'
@@ -602,12 +613,12 @@ packages:
       - terser
     dev: true
 
-  /@playwright/experimental-ct-svelte@1.40.0(@types/node@20.9.1)(svelte@4.2.4)(vite@4.5.0):
-    resolution: {integrity: sha512-Bwqfdg57LNJqJNxdWfG4Nf0Y4o/6tWCl75dAiZd17Q1WHLaIh1sSTTqfBv9ZOPRxqyFYfR+BDl7IL3V3mtvz/Q==}
+  /@playwright/experimental-ct-svelte@1.39.0(patch_hash=mikwa3ctd5wnlihsv24g62vuru)(@types/node@20.9.1)(svelte@4.2.4)(vite@4.5.0):
+    resolution: {integrity: sha512-8L7BJOi19XPPrKl6NqRgC6vBlA7VRtdCe2/UeaPIrKPVtcyYwKTZwCdTIp3BRedSdsOCY4Aq2cV4iRl9qn5LTw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@playwright/experimental-ct-core': 1.40.0(@types/node@20.9.1)
+      '@playwright/experimental-ct-core': 1.39.0(@types/node@20.9.1)
       '@sveltejs/vite-plugin-svelte': 2.5.2(svelte@4.2.4)(vite@4.5.0)
     transitivePeerDependencies:
       - '@types/node'
@@ -621,6 +632,7 @@ packages:
       - terser
       - vite
     dev: true
+    patched: true
 
   /@polka/url@1.0.0-next.23:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
@@ -694,14 +706,15 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@skeletonlabs/skeleton@2.5.0(svelte@4.2.4):
-    resolution: {integrity: sha512-g9b59IkvByM9D/2RfwBXRP1dqTlaz85opqDHEWEDlJ/wPJ2SaUueBXDwuQfO5oLX8BBXQKIGnb/eUr03hnjgjg==}
+  /@skeletonlabs/skeleton@2.4.0(patch_hash=l2l6l66buwduyzqngncf4rvoom)(svelte@4.2.4):
+    resolution: {integrity: sha512-8IVspCMarg1h4yMV6GFSaVqh9jIeQXV3XPNUnVONjkUofHkcKuLYTR4jGlR1ICF5CmIl+z746q3+Cj8rLAtAag==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
       esm-env: 1.0.0
       svelte: 4.2.4
     dev: false
+    patched: true
 
   /@skeletonlabs/tw-plugin@0.1.0(tailwindcss@3.3.5):
     resolution: {integrity: sha512-ufnm4FS+s/khuho4yJ/uqfW91u2YXnH3E5N541MtX9XjmoimQzYIcxWyTIuX9AM/brIPP6M6l0et3nRx17CRoQ==}
@@ -817,9 +830,10 @@ packages:
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  /@types/gtag.js@0.0.15:
+  /@types/gtag.js@0.0.15(patch_hash=qe3nomneilxkxbxjy63wah5ci4):
     resolution: {integrity: sha512-HT912iMVOWvj4yGwNTt5tBPMBWtrqIBH9xuOPrkXMuzXohXv1+lFw4fihX8fv1fl+7BqAca/ij7ezQjL2jLWlQ==}
     dev: true
+    patched: true
 
   /@types/istanbul-lib-coverage@2.0.6:
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
@@ -2882,18 +2896,18 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
 
-  /playwright-core@1.40.0:
-    resolution: {integrity: sha512-fvKewVJpGeca8t0ipM56jkVSU6Eo0RmFvQ/MaCQNDYm+sdvKkMBBWTE1FdeMqIdumRaXXjZChWHvIzCGM/tA/Q==}
+  /playwright-core@1.39.0:
+    resolution: {integrity: sha512-+k4pdZgs1qiM+OUkSjx96YiKsXsmb59evFoqv8SKO067qBA+Z2s/dCzJij/ZhdQcs2zlTAgRKfeiiLm8PQ2qvw==}
     engines: {node: '>=16'}
     hasBin: true
     dev: true
 
-  /playwright@1.40.0:
-    resolution: {integrity: sha512-gyHAgQjiDf1m34Xpwzaqb76KgfzYrhK7iih+2IzcOCoZWr/8ZqmdBw+t0RU85ZmfJMgtgAiNtBQ/KS2325INXw==}
+  /playwright@1.39.0:
+    resolution: {integrity: sha512-naE5QT11uC/Oiq0BwZ50gDmy8c8WLPRTEWuSSFVG2egBka/1qMoSqYQcROMT9zLwJ86oPofcTH2jBY/5wWOgIw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright-core: 1.40.0
+      playwright-core: 1.39.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
