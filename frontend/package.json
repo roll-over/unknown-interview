@@ -29,7 +29,7 @@
 		"postcss": "^8.4.31",
 		"svelte-local-storage-store": "^0.6.4",
 		"tailwindcss": "^3.3.5",
-		"unplugin-icons": "^0.13.1"
+		"unplugin-icons": "^0.17.4"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.2.0",
@@ -37,8 +37,8 @@
 		"@fontsource-variable/montserrat": "^5.0.16",
 		"@iconify-json/cil": "^1.1.5",
 		"@iconify-json/ic": "^1.1.14",
-		"@iconify-json/material-symbols": "^1.1.61",
 		"@iconify-json/logos": "^1.1.38",
+		"@iconify-json/material-symbols": "^1.1.61",
 		"@playwright/experimental-ct-svelte": "^1.39.0",
 		"@sveltejs/adapter-node": "^1.3.1",
 		"@sveltejs/kit": "^1.27.3",
