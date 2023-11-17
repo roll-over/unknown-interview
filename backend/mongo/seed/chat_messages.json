@@ -1,0 +1,29 @@
+[
+  {
+    "_id":{"$oid":"654cf7ac7c98f40106e7328a"},
+    "custom_id":{"$binary":{"base64":"Hy+2IEsQQp+QzSaT6XzhYA==","subType":"04"}},
+    "related_id":{"$binary":{"base64":"hLLdwy8hR1KA46bhnKBepA==","subType":"04"}},
+    "author_id":{"$binary":{"base64":"1y/hoh6dTm+dZ/ytn8tLlw==","subType":"04"}},
+    "created_at":{"$date":"2023-11-09T15:15:56.154Z"},
+    "text":"Hi there! My name is Jankaus and i'm very interested in your vacancy",
+    "own":null
+  },
+  {
+    "_id":{"$oid":"654cfb398fc04b6b47772e84"},
+    "custom_id":{"$binary":{"base64":"LC6rG/HgRPG6O5Jo7YyrRw==","subType":"04"}},
+    "related_id":{"$binary":{"base64":"hLLdwy8hR1KA46bhnKBepA==","subType":"04"}},
+    "author_id":{"$binary":{"base64":"/v2jByD5TO+Lig7iaVqVlw==","subType":"04"}},
+    "created_at":{"$date":"2023-11-09T15:31:05.759Z"},
+    "text":"Hello, Jankaus. Very nice to meet you! Before we get to know each other better, can you please complete the test task?",
+    "own":null
+  },
+  {
+    "_id":{"$oid":"654cfbe58fc04b6b47772e85"},
+    "custom_id":{"$binary":{"base64":"6hdK5MBpQHabU9UFX4ZwqQ==","subType":"04"}},
+    "related_id":{"$binary":{"base64":"hLLdwy8hR1KA46bhnKBepA==","subType":"04"}},
+    "author_id":{"$binary":{"base64":"1y/hoh6dTm+dZ/ytn8tLlw==","subType":"04"}},
+    "created_at":{"$date":"2023-11-09T15:33:57.315Z"},
+    "text":"Yes, of course, but I'd like to get acquainted with it first.",
+    "own":null
+  }
+]
