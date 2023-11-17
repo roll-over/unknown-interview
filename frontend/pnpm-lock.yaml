@@ -19,9 +19,6 @@ dependencies:
   '@floating-ui/dom':
     specifier: ^1.5.3
     version: 1.5.3
-  '@iconify-json/logos':
-    specifier: ^1.1.38
-    version: 1.1.38
   '@skeletonlabs/skeleton':
     specifier: ^2.4.0
     version: 2.4.0(patch_hash=l2l6l66buwduyzqngncf4rvoom)(svelte@4.2.2)
@@ -66,6 +63,9 @@ devDependencies:
   '@iconify-json/ic':
     specifier: ^1.1.14
     version: 1.1.14
+  '@iconify-json/logos':
+    specifier: ^1.1.38
+    version: 1.1.38
   '@iconify-json/material-symbols':
     specifier: ^1.1.61
     version: 1.1.61
@@ -475,7 +475,7 @@ packages:
     resolution: {integrity: sha512-26sPSWn/Y3nY4Kx3kbHOPU8zzEFaDMeuStFhDbW2SpLy6grusqTAgf0o4r4irNAPkdI1gPF8kuSyGDKeSPFzZw==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
 
   /@iconify-json/material-symbols@1.1.61:
     resolution: {integrity: sha512-NbLHV5VF5MZsfydXvr4M/jCODjBHzOg3ctLMQ39yOtY7+VZgVkBuJiMlp3zKWcWPHIt1J3t0CLwVLZ9szyL8BA==}
@@ -489,6 +489,7 @@ packages:
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: true
 
   /@iconify/utils@1.0.33:
     resolution: {integrity: sha512-vGeAqo7aGPxOQmGdVoXFUOuyN+0V7Lcrx2EvaiRjxUD1x6Om0Tvq2bdm7E24l2Pz++4S0mWMCVFXe/17EtKImQ==}
