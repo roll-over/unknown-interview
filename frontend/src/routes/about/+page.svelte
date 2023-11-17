@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let data;
-	let HideHire = './src/assets/img/about/hide-hire.png';
+	import Logo from '~icons/main/logo';
 	let IconLinkedin = './src/assets/img/about/linkedin.svg';
 	let IconTwitter = './src/assets/img/about/twitter.svg';
 	let IconRollOver = './src/assets/img/about/roll-over.svg';
@@ -22,11 +22,7 @@
 			</p>
 		</div>
 		<div class="items-cente flex flex-col space-y-8">
-			<img
-				class="w-full"
-				src={HideHire}
-				alt="hide-hire"
-			/>
+			<Logo class="" />
 			<p class="text-center text-2xl uppercase">Skills first<br />Unbiased Hiring</p>
 		</div>
 	</div>
