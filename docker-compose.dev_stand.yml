@@ -5,6 +5,7 @@ services:
     build: ./backend
     working_dir: /backend
     container_name: dev_backend
+    restart: unless-stopped
     command: python3 dev-entry.py
     volumes:
       - ./backend/:/backend
@@ -18,6 +19,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.DevStand
     container_name: dev_frontend
+    restart: unless-stopped
     working_dir: /frontend
     command: node build
     env_file:
@@ -45,6 +47,7 @@ services:
 
   dev_client:
     image: nginx
+    restart: unless-stopped
     ports:
       - 2081:80
     volumes:
