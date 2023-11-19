@@ -14,7 +14,7 @@
     "cv_id":{"$binary":{"base64":"02CtRYXeSFSrwM8f6PnHpg==","subType":"04"}},
     "applicant_relation":"liked",
     "vacancy_id":{"$binary":{"base64":"szgQSerwTr6dEHqTangS6g==","subType":"04"}},
-    "employer_relation":"liked",
+    "employer_relation":"not_shown",
     "chat_id":{"$binary":{"base64":"hLLdwy8hR1KA46bhnKBepA==","subType":"04"}}
   }
 ]
