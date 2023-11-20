@@ -1,9 +1,9 @@
 <script lang="ts">
 	export let data;
-	import Logo from '~icons/main/logo';
-	let IconLinkedin = './src/assets/img/about/linkedin.svg';
-	let IconTwitter = './src/assets/img/about/twitter.svg';
-	let IconRollOver = './src/assets/img/about/roll-over.svg';
+	import Logo from '~icons/about/logo';
+	import Linkedin from '~icons/about/linkedin';
+	import Twitter from '~icons/about/twitter';
+	import RollOver from '~icons/about/roll-over';
 </script>
 
 <div class="flex flex-col items-center justify-center">
@@ -40,22 +40,14 @@
 					target="_blank"
 					href="https://twitter.com/roll_over_group"
 				>
-					<img
-						class="h-16 w-16"
-						src={IconTwitter}
-						alt="link"
-					/>
+					<Linkedin class="h-16 w-16" />
 				</a>
 				<a
 					class="inline-block"
 					target="_blank"
 					href="https://www.linkedin.com/company/hide-hire"
 				>
-					<img
-						class="h-16 w-16"
-						src={IconLinkedin}
-						alt="link"
-					/>
+					<Twitter class="h-16 w-16" />
 				</a>
 			</div>
 			<div class="flex items-center gap-2">
@@ -67,11 +59,7 @@
 					target="_blank"
 					href="mailto:red.flags.service@gmail.com"
 				>
-					<img
-						class="h-16 w-24"
-						src={IconRollOver}
-						alt="link"
-					/>
+					<RollOver class="h-16 w-24" />
 				</a>
 			</div>
 		</div>
