@@ -4,7 +4,6 @@
 	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
-	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -25,7 +24,7 @@
 	const modalStore = getModalStore();
 </script>
 
-<header class="p-2 dark:text-white">
+<header class="p-2">
 	<nav class="flex items-center justify-between gap-3">
 		<a href={route('/')}>
 			<img
@@ -40,7 +39,7 @@
 				Match
 				<div
 					data-popup={navProfilePopup.target}
-					class="bg-app-blue-50 px-4 py-2 drop-shadow-md"
+					class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 				>
 					<div class="flex flex-col gap-2">
 						<a href={route('/cv/match')}>CV</a>
@@ -54,7 +53,7 @@
 				Create
 				<div
 					data-popup={navCreatePopup.target}
-					class="bg-app-blue-50 px-4 py-2 drop-shadow-md"
+					class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 				>
 					<div class="flex flex-col gap-2">
 						<a href={route('/cv/create')}>CV</a>
@@ -76,12 +75,13 @@
 				href={route('/about')}
 				class="hidden sm:block">About</a
 			>
-			<LightSwitch rounded="rounded-full" />
-			{#if $userInfo.status === 'pending'}
+			{#if $userInfo.isPending}
 				<div>loading...</div>
-			{:else if $userInfo.status === 'error' || $userInfo.data.error}
+			{:else if $userInfo.isError}
 				<div>error</div>
-			{:else if $userInfo.data}
+			{:else if $userInfo.data.error}
+				<a href={route('/auth/login')}>Log-in</a>
+			{:else}
 				{@const { email, picture } = $userInfo.data.data}
 				<button
 					on:click={() => showLogoutModal(modalStore, { email, image: picture })}
@@ -93,8 +93,6 @@
 						class="h-10 w-10 rounded-full"
 					/>
 				</button>
-			{:else}
-				<a href={route('/auth/login')}>Log-in</a>
 			{/if}
 		</div>
 	</nav>
