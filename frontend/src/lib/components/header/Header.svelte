@@ -4,6 +4,7 @@
 	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
+	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -80,6 +81,7 @@
 			{:else if $userInfo.isError}
 				<div>error</div>
 			{:else if $userInfo.data.error}
+				<LightSwitch rounded="rounded-full" />
 				<a href={route('/auth/login')}>Log-in</a>
 			{:else}
 				{@const { email, picture } = $userInfo.data.data}
