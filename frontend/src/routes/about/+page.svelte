@@ -3,7 +3,6 @@
 	import Logo from '~icons/about/logo';
 	import Linkedin from '~icons/about/linkedin';
 	import Twitter from '~icons/about/twitter';
-	import RollOver from '~icons/about/roll-over';
 </script>
 
 <div class="flex flex-col items-center justify-center">
@@ -59,7 +58,11 @@
 					target="_blank"
 					href="mailto:red.flags.service@gmail.com"
 				>
-					<RollOver class="h-16 w-24" />
+					<img
+						src="/roll-over.webp"
+						class="h-16 w-24"
+						alt="roll-over logo"
+					/>
 				</a>
 			</div>
 		</div>
