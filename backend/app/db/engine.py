@@ -6,13 +6,12 @@ from app.config import settings
 from app.db.models.chat import Chat
 from app.db.models.chat_message import ChatMessage
 from app.db.models.cv import CV
-from app.db.models.cv_note import CVNote
 from app.db.models.match import Match
+from app.db.models.note import Note
 from app.db.models.profession import Profession
 from app.db.models.skill import Skill
 from app.db.models.user import User
 from app.db.models.vacancy import Vacancy
-from app.db.models.vacancy_note import VacancyNote
 
 
 async def init_client(db_name):
@@ -32,12 +31,11 @@ async def __init_beanie(db_name):
         Chat,
         ChatMessage,
         CV,
-        CVNote,
         Vacancy,
-        VacancyNote,
         Profession,
         Skill,
         Match,
+        Note
     ]
 
     client = await init_client(db_name)
