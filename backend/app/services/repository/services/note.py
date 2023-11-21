@@ -4,12 +4,12 @@ from uuid import UUID
 
 from app.api.schemas.note import NotePatchSchema, NoteRequestSchema
 from app.db.models import Note
-from app.services.repository.interfaces import MongoBeanieRepository
+from app.services.repository.interfaces import AbstractBaseRepository
 
 
 class NoteService:
-    def __init__(self, repo_model: MongoBeanieRepository):
-        self.repo: MongoBeanieRepository = repo_model()
+    def __init__(self, repo_model: AbstractBaseRepository):
+        self.repo: AbstractBaseRepository = repo_model()
         
     async def add_note(self, data: NoteRequestSchema) -> Note:
         return await self.repo.create_one(data)
@@ -34,8 +34,4 @@ class NoteService:
         return note
     
     async def delete_note(self, note_id: UUID) -> Note:
-        note: Note = await self.get_note(note_id)
-        if note:
-            await note.delete()
-        
-        return note
+        return await self.repo.delete_data({"custom_id": note_id})
