@@ -52,11 +52,7 @@ async def delete_note(Note: NotesRepository, note_id: UUID):
     if deleted_note:
         return JSONResponse(
             content={
-                "message": "Note has been deleted successfuly!",
-                "deleted_note": {
-                    "note_id": str(note_id),
-                    "note_text": deleted_note.note_text
-                }
+                "message": "Note has been deleted successfuly!"
             },
             status_code=status.HTTP_200_OK
         )
@@ -65,7 +61,6 @@ async def delete_note(Note: NotesRepository, note_id: UUID):
         return JSONResponse(
             content={
                 "message": "There is no such note with a given ID.",
-                "given_id": str(note_id)
             },
             status_code=status.HTTP_404_NOT_FOUND
         )
