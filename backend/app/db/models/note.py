@@ -20,7 +20,7 @@ class Note(UUIDMixin):
     
     author_id: UUID
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    note_text: str
+    note_text: str = Field(..., max_length=500)
     
     #mongo collection name
     class Settings:
