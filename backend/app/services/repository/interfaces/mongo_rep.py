@@ -25,7 +25,7 @@ class MongoBeanieRepository(AbstractBaseRepository):
     async def fetch_one(self, data_id: Dict[str, UUID]) -> Union[Document, None]:
         return await self.model.find_one(data_id)
 
-    async def fetch_random(self) -> Document:
+    async def fetch_random(self) -> Union[Document, None]:
         found_data = await self.model.aggregate([{"$sample": {"size": 1}}]).to_list(1)
 
         if found_data:
@@ -42,7 +42,7 @@ class MongoBeanieRepository(AbstractBaseRepository):
 
         return new_data
 
-    async def create_many(self, data: BaseModel) -> List[UUID]:
+    async def create_many(self, data: List[BaseModel]) -> List[UUID]:
         prepared_data = [self.model(**value) for value in data]
         return await self.model.insert_many(prepared_data)
 
