@@ -1,8 +1,5 @@
 <script lang="ts">
 	export let data;
-	import Logo from '~icons/about/logo';
-	import Linkedin from '~icons/about/linkedin';
-	import Twitter from '~icons/about/twitter';
 </script>
 
 <div class="flex flex-col items-center justify-center">
@@ -21,7 +18,11 @@
 			</p>
 		</div>
 		<div class="items-cente flex flex-col space-y-8">
-			<Logo class="" />
+			<img
+				src="/hidehire.webp"
+				class=""
+				alt="hide hire"
+			/>
 			<p class="text-center text-2xl uppercase">Skills first<br />Unbiased Hiring</p>
 		</div>
 	</div>
@@ -39,14 +40,22 @@
 					target="_blank"
 					href="https://twitter.com/roll_over_group"
 				>
-					<Linkedin class="h-16 w-16" />
+					<img
+						src="/linkedin.webp"
+						class="h-20 w-20"
+						alt="linkedin logo"
+					/>
 				</a>
 				<a
 					class="inline-block"
 					target="_blank"
 					href="https://www.linkedin.com/company/hide-hire"
 				>
-					<Twitter class="h-16 w-16" />
+					<img
+						src="/twitter.webp"
+						class="h-20 w-20"
+						alt="twitter logo"
+					/>
 				</a>
 			</div>
 			<div class="flex items-center gap-2">
