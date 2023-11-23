@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
-from app.services.chat_handler import ChatHandler
+from app.services.relation_handler import ChatHandler
 
 
 class AbstractChatHandler(ABC):
