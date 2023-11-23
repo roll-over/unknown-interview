@@ -2,7 +2,7 @@ from typing import Dict, List, Union
 from uuid import UUID
 
 from app.db.models import Chat, ChatMessage, Grade, Profession, User
-from app.exceptions import RelatedRecordDoesNotExist
+from app.exceptions import RelatedRecordDoesNotExist, ForbiddenAction
 from app.services.repository.repositories import (
     chat_message_repo,
     chat_repo,
@@ -67,9 +67,15 @@ class ChatMessageUoW:
 
         Returns:
             Chat (if exists).
-            None otherwise.
+
+        Raises:
+            RelatedRecordDoesNotExist: If a chat with given ID does not exist.
         """
-        return await self.chats.get_chat(chat_id=chat_id)
+        chat = await self.chats.get_chat(chat_id=chat_id)
+        if chat is None:
+            raise RelatedRecordDoesNotExist
+
+        return chat
 
     async def fetch_chat(
             self,
@@ -178,8 +184,7 @@ class ChatMessageUoW:
         Raises:
             RelatedRecordDoesNotExist: If a chat with given ID does not exist.
         """
-        if await self.__get_chat(chat_id=data.related_id) is None:
-            raise RelatedRecordDoesNotExist
+        await self.__get_chat(chat_id=data.related_id)
 
         return await self.messages.create_one(data=data, author_id=author.custom_id)
 
@@ -265,13 +270,16 @@ class ChatMessageUoW:
 
         Returns:
             Opposite name of the chat, related by ID of authorized user.
+
+        Raises:
+            ForbiddenAction: If user doesn't match with employer or applicant.
         """
         chat = await self.__get_chat(chat_id=chat_id)
-        if chat is None:
-            raise RelatedRecordDoesNotExist
 
         match current_user_id:
             case chat.applicant_id:
                 return chat.employer_chat_name
             case chat.employer_id:
                 return chat.applicant_chat_name
+            case _:
+                raise ForbiddenAction
