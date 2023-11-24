@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional, Union
+from typing import List, Union
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -25,5 +25,5 @@ class ChatResponseSchema(BaseModel):
 
 class ChatsResponseSchema(BaseModel):
     chat_id: UUID
-    chat_name: Optional[str]
+    chat_name: str
     last_message: List[MessageResponseSchema]
