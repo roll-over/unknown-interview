@@ -1,14 +1,13 @@
 from .chat import Chat
 from .chat_message import ChatMessage
 from .cv import CV
-from .cv_note import CVNote
 from .match import Match
 from .mixins import Grade, MatchRelation, Role
+from .note import Note
 from .profession import Profession
 from .skill import Skill
 from .user import User
 from .vacancy import Vacancy
-from .vacancy_note import VacancyNote
 
 __all__ = (
     "User",
@@ -24,4 +23,5 @@ __all__ = (
     "Chat",
     "ChatMessage",
     "Grade",
+    "Note"
 )

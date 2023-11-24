@@ -61,3 +61,13 @@ services:
     depends_on:
       - frontend
       - backend
+
+  mongo_express:
+      image: mongo-express
+      env_file:
+        - .env
+      depends_on:
+          - unknown_mongo
+      restart: unless-stopped
+      ports:
+        - "8888:8081"
