@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
-from app.services.relation_handler import ChatHandler
+from app.services.chat_handler import ChatHandler
 
 
 class AbstractChatHandler(ABC):
-    """Abstract class for unit of work with chats representation."""
+    """Abstract class for unit of work with records representation."""
 
     records: Type[ChatHandler]
 
@@ -21,6 +21,23 @@ class AbstractChatHandler(ABC):
     async def __aexit__(self, *args):
         raise NotImplementedError
 
-    @abstractmethod
-    async def update_match_relation(self, *args):
+    async def get_chat_data(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def fetch_related_chats(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def create_message(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def add_note(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def get_note(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def update_note(self, *args, **kwargs):
+        raise NotImplementedError
+
+    async def delete_note(self, *args, **kwargs):
         raise NotImplementedError
