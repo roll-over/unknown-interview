@@ -16,8 +16,5 @@ class NoteResponseSchema(BaseModel):
     note_text: str
 
 
-# class NotePatchSchema(BaseModel):
-#     updated_text: str = Field(..., max_length=500)
-
 class NotePatchSchema(BaseModel):
     note_text: str = Field(..., max_length=500)
