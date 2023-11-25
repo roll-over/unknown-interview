@@ -3,14 +3,10 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query
 
-from app.api.schemas.chat import (
-    ChatResponseSchema,
-    ChatsResponseSchema,
-    MessageRequestSchema,
-    MessageResponseSchema,
-)
+from app.api.schemas.chat import ChatResponseSchema, ChatsResponseSchema
+from app.api.schemas.messages import MessageRequestSchema, MessageResponseSchema
 from app.api.schemas.user import UserResponseSchema
-from app.services.unitorwork import Chat_dep
+from app.services import Chats as Chat_dep
 from app.utils import current_user
 
 chat_router = APIRouter(prefix="/chats", tags=["Chats"])
@@ -19,7 +15,7 @@ chat_router = APIRouter(prefix="/chats", tags=["Chats"])
 @chat_router.get(
     "/",
     response_model=List[ChatsResponseSchema],
-    summary="Get all chats that are related to a given vacancy/cv id."
+    summary="Get all chats that are related to given record_id (ID of Vacancy or CV)"
 )
 async def get_all_chats(
         Chat: Chat_dep,
@@ -48,13 +44,13 @@ async def create_new_chat_message(
     summary="Get chat with messages and notes."
 )
 async def get_chat_data(
-        Message: Chat_dep,
+        Chat: Chat_dep,
         chat_id: UUID,
         user: UserResponseSchema = Depends(current_user),
         page: Annotated[int, Query(ge=0)] = 0,
         count: Annotated[int, Query(ge=0)] = 50,
 ):
-    return await Message.fetch_chat(
+    return await Chat.get_chat_data(
         chat_id=chat_id,
         current_user=user,
         page=page,

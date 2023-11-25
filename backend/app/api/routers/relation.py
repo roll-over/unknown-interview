@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 
 from app.api.schemas.relation import RelationSchema
 from app.api.schemas.user import UserResponseSchema
-from app.services import Chats as MatchRelation
+from app.services import Relations as MatchRelation
 from app.utils import current_user
 
 relation_router = APIRouter(prefix="/relation", tags=["Relations"])
