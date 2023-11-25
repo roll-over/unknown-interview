@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Awaitable, Callable, List, Union
+from typing import Any, Awaitable, Callable, Dict, List, Union
 from uuid import UUID
 
 from app.api.schemas.note import NotePatchSchema, NoteRequestSchema
@@ -91,7 +91,7 @@ class ChatNoteUoW:
         author: User,
         author_id: UUID,
     ) -> Note:
-        """Update note with new text provided.
+        """Add new note with provided text.
 
         Args:
             data: New note.
@@ -99,7 +99,7 @@ class ChatNoteUoW:
             author_id: ID of authorized user.
 
         Returns:
-            Updated note.
+            Created note.
         """
         await self.__check_user_permission(
             chat_id=data.related_id,
@@ -114,7 +114,12 @@ class ChatNoteUoW:
         return await self.notes.add_note(data=joined_data)
 
     @get_existing_user_id
-    async def get_note(self, note_id: UUID, author: User, author_id: UUID) -> Note:
+    async def get_note(
+        self,
+        note_id: UUID,
+        author: User,
+        author_id: UUID,
+    ) -> Note:
         """Fetch note by ID from database.
 
         Args:
@@ -125,7 +130,10 @@ class ChatNoteUoW:
         Returns:
             Note.
         """
-        return await self.notes.get_note(note_id=note_id, author_id=author_id)
+        return await self.notes.get_note(
+            note_id=note_id,
+            author_id=author_id,
+        )
 
     @get_existing_user_id
     async def get_notes(
@@ -133,7 +141,7 @@ class ChatNoteUoW:
         chat_id: UUID,
         author: User,
         author_id: UUID,
-    ) -> List[Note]:
+    ) -> Dict[str, List[Note]]:
         """Return all notes for chat specified by ID.
 
         Args:
@@ -152,11 +160,11 @@ class ChatNoteUoW:
             user_id=author_id,
         )
 
-        return await self.notes.get_notes(
+        return {"notes": await self.notes.get_notes(
             query={
                 "author_id": author_id,
                 "related_id": chat_id,
-            })
+            })}
 
     @get_existing_user_id
     async def update_note(
@@ -195,7 +203,7 @@ class ChatNoteUoW:
         author: User,
         author_id: UUID,
     ) -> int:
-        """Update note with new text provided.
+        """Delete note from database.
 
         Args:
             note_id: ID of the note to be updated.
