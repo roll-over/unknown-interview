@@ -1,3 +1,3 @@
-from .dependencies import Chats, Records
+from .dependencies import Chats, Records, Relations
 
-__all__ = (Records, Chats)
+__all__ = (Records, Relations, Chats)

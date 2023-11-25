@@ -7,7 +7,7 @@ from app.db.models import User
 from .unitorwork import ChatMessageUoW, MatchVacancyCVUoW
 
 
-class ChatHandler:
+class RelationHandler:
     """A class that handles chat activities.
 
     Attributes:
