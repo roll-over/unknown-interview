@@ -1,7 +1,7 @@
 from typing import Dict, List, Union
 from uuid import UUID
 
-from app.db.models import CV, Chat, ChatMessage, Grade, Profession, User, Vacancy
+from app.db.models import CV, Chat, ChatMessage, Grade, Profession, Vacancy
 from app.exceptions import ForbiddenAction, RelatedRecordDoesNotExist
 from app.services.repository.repositories import (
     chat_message_repo,
@@ -64,16 +64,16 @@ class ChatMessageUoW:
     async def fetch_chat(
             self,
             *,
-            current_user: User,
+            user_id: UUID,
             chat_id: UUID,
             page: int,
             count: int
     ) -> Dict[str, Union[str, List[ChatMessage]]]:
-        """Prepare chats data: chat ID, chat name and last message to related chat.
+        """Prepare chat's data: chat name, chat messages.
 
         Args:
             chat_id: ID of a chat.
-            current_user: Authorized user.
+            user_id: ID of authorized user.
             page: Page number.
             count: Number of elements per page.
 
@@ -82,10 +82,10 @@ class ChatMessageUoW:
         """
         chat_name = await self.__get_chat_data(
             chat_id=chat_id,
-            current_user_id=current_user.custom_id,
+            current_user_id=user_id,
         )
         messages = await self.__get_messages(
-            author_id=current_user.custom_id,
+            author_id=user_id,
             chat_id=chat_id,
             page=page,
             count=count,
@@ -99,38 +99,37 @@ class ChatMessageUoW:
     async def fetch_related_chats(
             self,
             record_id: UUID,
-            current_user: User,
+            user_id: UUID,
     ) -> List[Dict[str, Union[UUID, str]]]:
         """Prepare chats data: chat ID, chat name and last message to related chat.
 
         Args:
             record_id: ID of a related vacancy or cv.
-            current_user: Authorized user
+            user_id: ID of authorized user
 
         Returns:
             List of the prepared data.
         """
-        current_user_id = current_user.custom_id
         chats = await self.__fetch_many_chats(
             record_id=record_id,
-            user_id=current_user_id,
+            user_id=user_id,
         )
 
         return [{
             "chat_id": chat.custom_id,
             "chat_name": await self.__get_chat_data(
                 chat.custom_id,
-                current_user_id=current_user_id,
+                current_user_id=user_id,
             ),
             "last_message": await self.__get_messages(
-                author_id=current_user_id,
+                author_id=user_id,
                 chat_id=chat.custom_id,
                 last_message=True,
             )
         } for chat in chats]
 
+    @staticmethod
     async def __check_user_permission(
-        self,
         record: Union[CV, Vacancy],
         user_id: UUID,
     ) -> Union[UUID, Exception]:
@@ -189,7 +188,7 @@ class ChatMessageUoW:
 
     async def __fetch_related_matches(
         self,
-        query: Dict[str, Union[UUID, None]],
+        query: Dict[str, List[Dict[str, UUID | Exception | None]]],
     ) -> List[Union[UUID, None]]:
         """Prepare list of match IDs filtered by CV or Vacancy ID.
 
@@ -202,18 +201,17 @@ class ChatMessageUoW:
         matches = await self.matches.get_matches(query)
         return [match.custom_id for match in matches]
 
-
     async def create_message(
             self,
             data: ChatMessage,
             *,
-            author: User,
+            author_id: UUID,
     ) -> Union[ChatMessage, Exception]:
         """Create a new message for a given chat.
         
         Args:
             data: The ChatMessage data object.
-            author: Author of created message.
+            author_id: ID of created message's author.
         
         Returns:
             Created message.
@@ -223,7 +221,7 @@ class ChatMessageUoW:
         """
         await self.chats.get_chat(chat_id=data.related_id)
 
-        return await self.messages.create_one(data=data, author_id=author.custom_id)
+        return await self.messages.create_one(data=data, author_id=author_id)
 
     async def __get_messages(
             self,
