@@ -1,62 +1,172 @@
-from typing import Union
+from typing import Dict, List, Union
 from uuid import UUID
 
-from app.api.schemas.relation import RelationSchema
-from app.db.models import User
+from app.api.schemas.note import NotePatchSchema, NoteRequestSchema
+from app.db.models import ChatMessage, Note, User
 
-from .unitorwork import ChatMessageUoW, MatchVacancyCVUoW
+from .unitorwork import ChatMessageUoW, ChatNoteUoW
 
 
 class ChatHandler:
-    """A class that handles chat activities.
+    """A class that handles record preparation.
 
     Attributes:
-        matches: An instance of MatchVacancyCVUoW for managing matches.
-        chats: An instance of ChatUoW (now user repo directly) for managing chat.
+        chats_and_messages: An instance of ChatMessageUoW for managing chat messages.
+        notes: An instance of ChatNoteUoW for managing chat notes.
     """
 
     def __init__(self):
-        self.matches = MatchVacancyCVUoW()
-        self.chats = ChatMessageUoW()
+        self.chats_and_messages = ChatMessageUoW()
+        self.notes = ChatNoteUoW()
 
-    async def update_match_relation(
+    async def get_chat_data(
             self,
             *,
-            relation_data: RelationSchema,
-            owner_data: User,
-    ) -> Union[UUID, None]:
-        """Update relation in match, if relations equal create chat.
+            current_user: User,
+            chat_id: UUID,
+            page: int,
+            count: int
+    ) -> Dict[str, Union[str, List[ChatMessage], List[Note]]]:
+        """Prepare chat's data: name, messages and notes.
 
         Args:
-            owner_data: The owner data object associated with the record.
-            relation_data: The dictionary of CV, Vacancy ID and new relation.
+            chat_id: ID of a chat.
+            current_user: Authorized user.
+            page: Page number.
+            count: Number of elements per page.
 
         Returns:
-            ID of created chat, if relations equal, otherwise None.
+            Prepared chat data.
         """
-        related_cv_id = relation_data.cv_id
-        related_vacancy_id = relation_data.vacancy_id
-
-        match_record = await self.matches.update_relation(
-            owner_data=owner_data,
-            new_relation=relation_data.relation,
-            cv_id=related_cv_id,
-            vacancy_id=related_vacancy_id,
+        chat_messages = await self.chats_and_messages.fetch_chat(
+            user_id=current_user.custom_id,
+            chat_id=chat_id,
+            page=page,
+            count=count,
+        )
+        chat_notes = await self.notes.get_notes(
+            chat_id=chat_id,
+            author=current_user,
         )
 
-        relation = await self.matches.check_relation(match_record)
-        if not relation:
-            return
+        return dict(**chat_messages, **chat_notes)
 
-        chat = await self.chats.create_chat(
-            cv_id=related_cv_id,
-            vacancy_id=related_vacancy_id,
-            match_id=match_record.custom_id,
+    async def fetch_related_chats(
+            self,
+            record_id: UUID,
+            current_user: User,
+    ) -> List[Dict[str, Union[UUID, str]]]:
+        """Call UoW method to fetch all chats related to job record.
+
+        Args:
+            record_id: ID of a related vacancy or cv.
+            current_user: Authorized user.
+
+        Returns:
+            List of the prepared data.
+        """
+        return await self.chats_and_messages.fetch_related_chats(
+            record_id=record_id,
+            user_id=current_user.custom_id,
         )
 
-        await self.matches.update_match_chat_id(
-            chat_id=chat.custom_id,
-            match_record=match_record,
+    async def create_message(
+            self,
+            data: ChatMessage,
+            author: User,
+    ) -> Union[ChatMessage, Exception]:
+        """Call UoW method to create new message.
+
+        Args:
+            data: Text of message with ID of related chat.
+            author: Authorized user.
+
+        Returns:
+            Created message.
+
+        Raises:
+            RelatedRecordDoesNotExist: If a chat with given ID does not exist.
+        """
+        return await self.chats_and_messages.create_message(
+            data=data,
+            author_id=author.custom_id,
         )
 
-        return chat.custom_id
+    async def add_note(
+            self,
+            data: NoteRequestSchema,
+            author: User,
+    ) -> Note:
+        """Call UoW method to add new note.
+
+        Args:
+            data: New note.
+            author: Authorized user, supposed author of the note.
+
+        Returns:
+            Created note.
+        """
+        return await self.notes.add_note(
+            data=data,
+            author=author,
+        )
+
+    async def get_note(
+            self,
+            note_id: UUID,
+            author: User,
+    ) -> Note:
+        """Call UoW method to fetch on note data.
+
+        Args:
+            note_id: ID of the note.
+            author: Authorized user, supposed author of the note.
+
+        Returns:
+            Note data from database.
+        """
+        return await self.notes.get_note(
+            note_id=note_id,
+            author=author,
+        )
+
+    async def update_note(
+        self,
+        data: NotePatchSchema,
+        note_id: UUID,
+        author: User,
+    ) -> Note:
+        """Call UoW method to note with new text.
+
+        Args:
+            data: New text of the note.
+            note_id: ID of the note to be updated.
+            author: Authorized user, supposed author of the note.
+
+        Returns:
+            Updated note.
+        """
+        return await self.notes.update_note(
+            data=data,
+            note_id=note_id,
+            author=author,
+        )
+
+    async def delete_note(
+            self,
+            note_id: UUID,
+            author: User,
+    ) -> int:
+        """Call UoW method to delete note from database.
+
+        Args:
+            note_id: ID of the note to be updated.
+            author: Authorized user, supposed author of the note.
+
+        Returns:
+            1 if deleting success, otherwise 0.
+        """
+        return await self.notes.delete_note(
+            note_id=note_id,
+            author=author,
+        )

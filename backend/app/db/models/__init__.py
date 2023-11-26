@@ -13,8 +13,6 @@ __all__ = (
     "User",
     "CV",
     "Vacancy",
-    "CVNote",
-    "VacancyNote",
     "Match",
     "Skill",
     "Profession",
