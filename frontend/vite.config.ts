@@ -12,7 +12,10 @@ export default defineConfig({
 		Icons({
 			compiler: 'svelte',
 			autoInstall: true,
-			customCollections: { main: FileSystemIconLoader('./src/assets/img/main') },
+			customCollections: {
+				main: FileSystemIconLoader('./src/assets/img/main'),
+				about: FileSystemIconLoader('./src/assets/img/about')
+			},
 			scale: 1
 		}),
 		{

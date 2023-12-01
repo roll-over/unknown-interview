@@ -1,12 +1,13 @@
 from typing import Dict, List, Union
 from uuid import UUID
 
-from app.db.models import Chat, ChatMessage, Grade, Profession, User
-from app.exceptions import RelatedRecordDoesNotExist
+from app.db.models import CV, Chat, ChatMessage, Grade, Profession, Vacancy
+from app.exceptions import ForbiddenAction, RelatedRecordDoesNotExist
 from app.services.repository.repositories import (
     chat_message_repo,
     chat_repo,
     cv_repo,
+    match_repo,
     vacancy_repo,
 )
 
@@ -26,6 +27,7 @@ class ChatMessageUoW:
         self.vacancies = vacancy_repo()
         self.chats = chat_repo()
         self.messages = chat_message_repo()
+        self.matches = match_repo()
 
     async def create_chat(
             self,
@@ -59,31 +61,19 @@ class ChatMessageUoW:
 
         return await self.chats.create_one(data=data)
 
-    async def __get_chat(self, chat_id: UUID) -> Union[Chat, None]:
-        """Get a chat from db collection by chat id.
-
-        Args:
-            chat_id: ID of a chat.
-
-        Returns:
-            Chat (if exists).
-            None otherwise.
-        """
-        return await self.chats.get_chat(chat_id=chat_id)
-
     async def fetch_chat(
             self,
             *,
-            current_user: User,
+            user_id: UUID,
             chat_id: UUID,
             page: int,
             count: int
     ) -> Dict[str, Union[str, List[ChatMessage]]]:
-        """Prepare chats data: chat ID, chat name and last message to related chat.
+        """Prepare chat's data: chat name, chat messages.
 
         Args:
             chat_id: ID of a chat.
-            current_user: Authorized user.
+            user_id: ID of authorized user.
             page: Page number.
             count: Number of elements per page.
 
@@ -92,10 +82,10 @@ class ChatMessageUoW:
         """
         chat_name = await self.__get_chat_data(
             chat_id=chat_id,
-            current_user_id=current_user.custom_id,
+            current_user_id=user_id,
         )
         messages = await self.__get_messages(
-            author_id=current_user.custom_id,
+            author_id=user_id,
             chat_id=chat_id,
             page=page,
             count=count,
@@ -109,38 +99,66 @@ class ChatMessageUoW:
     async def fetch_related_chats(
             self,
             record_id: UUID,
-            current_user: User,
+            user_id: UUID,
     ) -> List[Dict[str, Union[UUID, str]]]:
         """Prepare chats data: chat ID, chat name and last message to related chat.
 
         Args:
             record_id: ID of a related vacancy or cv.
-            current_user: Authorized user
+            user_id: ID of authorized user
 
         Returns:
             List of the prepared data.
         """
-        current_user_id = current_user.custom_id
-        chats = await self.__fetch_many_chats(record_id=record_id)
+        chats = await self.__fetch_many_chats(
+            record_id=record_id,
+            user_id=user_id,
+        )
 
         return [{
             "chat_id": chat.custom_id,
             "chat_name": await self.__get_chat_data(
                 chat.custom_id,
-                current_user_id=current_user_id,
+                current_user_id=user_id,
             ),
             "last_message": await self.__get_messages(
-                author_id=current_user_id,
+                author_id=user_id,
                 chat_id=chat.custom_id,
                 last_message=True,
             )
         } for chat in chats]
 
-    async def __fetch_many_chats(self, record_id: UUID) -> Union[List[Chat], None]:
+    @staticmethod
+    async def __check_user_permission(
+        record: Union[CV, Vacancy],
+        user_id: UUID,
+    ) -> Union[UUID, Exception]:
+        """Check user permission to access data.
+
+        Args:
+            record: Vacancy or CV.
+            user_id: Authorised user, supposed owner of the record.
+
+        Returns:
+            UUID of owner, if user have permission, otherwise raise exception.
+
+        Raises:
+            ForbiddenAction if user have no permission.
+        """
+        if record.owner_id == user_id:
+            return record.custom_id
+        raise ForbiddenAction
+
+    async def __fetch_many_chats(
+        self,
+        record_id: UUID,
+        user_id: UUID,
+    ) -> Union[List[Chat], None]:
         """Get chats from db collection related to a given cv/vacancy ID.
         
         Args:
             record_id: ID of a related vacancy or cv.
+            user_id: Authorised user, supposed owner of the record.
 
         Returns:
             None if related record (cv/vacancy) does not exist.
@@ -152,25 +170,48 @@ class ChatMessageUoW:
 
         if vacancy or cv:
             query = {'$or': [
-                {"employer_id": vacancy.owner_id if vacancy else None},
-                {"applicant_id": cv.owner_id if cv else None},
+                {"vacancy_id": await self.__check_user_permission(
+                    record=vacancy,
+                    user_id=user_id,
+                ) if vacancy else None},
+                {"cv_id": await self.__check_user_permission(
+                    record=cv,
+                    user_id=user_id,
+                ) if cv else None},
             ]}
         else:
-            raise RelatedRecordDoesNotExist
+            raise RelatedRecordDoesNotExist(record="job record")
+        related_matches = await self.__fetch_related_matches(query)
 
-        return await self.chats.get_chats(query)
+        new_query = {"match_id": {"$in": related_matches}}
+        return await self.chats.get_chats(new_query)
+
+    async def __fetch_related_matches(
+        self,
+        query: Dict[str, List[Dict[str, UUID | Exception | None]]],
+    ) -> List[Union[UUID, None]]:
+        """Prepare list of match IDs filtered by CV or Vacancy ID.
+
+        Args:
+            query: Filter query contain related CV or Vacancy ID.
+
+        Returns:
+            List with match IDs, otherwise empty list.
+        """
+        matches = await self.matches.get_matches(query)
+        return [match.custom_id for match in matches]
 
     async def create_message(
             self,
             data: ChatMessage,
             *,
-            author: User,
+            author_id: UUID,
     ) -> Union[ChatMessage, Exception]:
         """Create a new message for a given chat.
         
         Args:
             data: The ChatMessage data object.
-            author: Author of created message.
+            author_id: ID of created message's author.
         
         Returns:
             Created message.
@@ -178,10 +219,9 @@ class ChatMessageUoW:
         Raises:
             RelatedRecordDoesNotExist: If a chat with given ID does not exist.
         """
-        if await self.__get_chat(chat_id=data.related_id) is None:
-            raise RelatedRecordDoesNotExist
+        await self.chats.get_chat(chat_id=data.related_id)
 
-        return await self.messages.create_one(data=data, author_id=author.custom_id)
+        return await self.messages.create_one(data=data, author_id=author_id)
 
     async def __get_messages(
             self,
@@ -265,13 +305,16 @@ class ChatMessageUoW:
 
         Returns:
             Opposite name of the chat, related by ID of authorized user.
+
+        Raises:
+            ForbiddenAction: If user ID doesn't match with ID of employer or applicant.
         """
-        chat = await self.__get_chat(chat_id=chat_id)
-        if chat is None:
-            raise RelatedRecordDoesNotExist
+        chat = await self.chats.get_chat(chat_id=chat_id)
 
         match current_user_id:
             case chat.applicant_id:
                 return chat.employer_chat_name
             case chat.employer_id:
                 return chat.applicant_chat_name
+            case _:
+                raise ForbiddenAction
