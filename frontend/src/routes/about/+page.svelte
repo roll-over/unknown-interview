@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let data;
+	import { teamList } from './getTeamList';
+	import { popup } from '@skeletonlabs/skeleton';
 </script>
 
 <div class="flex flex-col items-center justify-center">
@@ -75,19 +76,44 @@
 				</a>
 			</div>
 		</div>
-
+		
 		<div class="flex flex-col items-center space-y-8">
 			<p class="max-w-sm text-center text-2xl font-normal uppercase">
 				the people who created this product for you
 			</p>
-			<ul class="grid max-w-md grid-cols-4 gap-2">
-				{#each data.contributorsList as contributor (contributor.id)}
-					<li class="">
-						<img
-							class="grow"
-							src={contributor.avatar_url}
-							alt="avatar contributor"
-						/>
+			<ul class="w-full max-w-md columns-4 space-y-2 gap-2">
+				{#each teamList as member (member.id)}
+					<li>
+						<button
+							aria-label="navigation"
+							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}>
+							<div 
+								class="w-44 space-y-2 z-10 bg-white" 
+								data-popup="loopExample-{member.id}">
+								<img
+									class="h-auto max-w-full"
+									src={member.avatar_path}
+									alt="avatar contributor"
+								/>
+								<div class="text-sm">
+									<p class="font-extrabold">{member.fullname}</p>
+									<p>{member.role}</p>
+								</div>
+								<a
+									href={member.social_media.link}
+									target="_blank"
+									rel="noreferrer"
+								>
+									<p class="text-xs py-2">{member.social_media.title}</p>
+								</a>
+								<div class="arrow" />
+							</div>
+							<img
+								class="h-auto max-w-full grayscale"
+								src={member.avatar_path}
+								alt="avatar contributor"
+							/>
+						</button>
 					</li>
 				{/each}
 			</ul>
