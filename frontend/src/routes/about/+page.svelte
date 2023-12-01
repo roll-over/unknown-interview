@@ -76,20 +76,22 @@
 				</a>
 			</div>
 		</div>
-		
+
 		<div class="flex flex-col items-center space-y-8">
 			<p class="max-w-sm text-center text-2xl font-normal uppercase">
 				the people who created this product for you
 			</p>
-			<ul class="w-full max-w-md columns-4 space-y-2 gap-2">
+			<ul class="w-full max-w-md columns-4 gap-2 space-y-2">
 				{#each teamList as member (member.id)}
 					<li>
 						<button
 							aria-label="navigation"
-							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}>
-							<div 
-								class="w-44 space-y-2 z-10 bg-white" 
-								data-popup="loopExample-{member.id}">
+							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}
+						>
+							<div
+								class="z-10 w-44 space-y-2 bg-white"
+								data-popup="loopExample-{member.id}"
+							>
 								<img
 									class="h-auto max-w-full"
 									src={member.avatar_path}
@@ -104,7 +106,7 @@
 									target="_blank"
 									rel="noreferrer"
 								>
-									<p class="text-xs py-2">{member.social_media.title}</p>
+									<p class="py-2 text-xs">{member.social_media.title}</p>
 								</a>
 								<div class="arrow" />
 							</div>
