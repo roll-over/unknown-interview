@@ -3,6 +3,19 @@
 	import { onMount } from 'svelte';
 	import { YourID, type ChatGist } from './getChats';
 	import { route } from '$lib/utils/route';
+	import { createGetQuery } from '$lib/api';
+	import { createQuery } from '@tanstack/svelte-query';
+
+	$: getChats = createGetQuery('/api/v1/chats/', {
+		params: { query: { record_id: 'b3381049-eaf0-4ebe-9d10-7a936a7812ea' } }
+	});
+	$: queryChats = createQuery({
+		queryKey: getChats.key,
+		async queryFn() {
+			const res = await getChats.runQuery();
+			return res;
+		}
+	});
 
 	export let chats: ChatGist[];
 	let chatNodes: HTMLAnchorElement[] = [];
@@ -12,6 +25,14 @@
 		selectedChatNode.scrollIntoView({ block: 'nearest' });
 	});
 </script>
+
+{#if $queryChats.status === 'pending'}
+	<p>Loading...</p>
+{/if}
+
+{#if $queryChats.status === 'error'}
+	<p>Error :(</p>
+{/if}
 
 <ul class="flex flex-col gap-3 overflow-y-auto pr-10">
 	{#each chats as chat, i (chat.id)}
