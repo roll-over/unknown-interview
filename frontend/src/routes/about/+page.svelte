@@ -81,7 +81,7 @@
 			<p class="max-w-sm text-center text-2xl font-normal uppercase">
 				the people who created this product for you
 			</p>
-			<ul class="w-full max-w-md columns-4 gap-2 space-y-2">
+			<ul class="grid max-w-md grid-cols-4 gap-2">
 				{#each teamList as member (member.id)}
 					<li>
 						<button
