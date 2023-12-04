@@ -77,5 +77,5 @@ export function localStorageStore<T>(
 		};
 	}
 
-	return stores[key];
+	return stores[key] as Writable<T>;
 }
