@@ -68,7 +68,7 @@
 				href={route('/integrations')}
 				class="hidden sm:block">Api</a
 			>
-			
+
 			<a
 				href={route('/documents')}
 				class="hidden sm:block">Documents</a
