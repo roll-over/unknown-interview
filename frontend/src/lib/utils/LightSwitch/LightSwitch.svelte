@@ -77,6 +77,7 @@
 	$: classesIcon = `${cIcon} ${iconFill}`;
 </script>
 
+<!-- eslint-disable -->
 <svelte:head>
 	<!-- Workaround for a svelte parsing error: https://github.com/sveltejs/eslint-plugin-svelte/issues/492 -->
 	{@html `<\u{73}cript nonce="%sveltekit.nonce%">(${setInitialClassState.toString()})();</script>`}
