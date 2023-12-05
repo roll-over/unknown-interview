@@ -29,8 +29,10 @@ class MatchVacancyCVUoW:
         self.vacancies = vacancy_repo()
         self.users = user_repo()
 
-    async def __get_user_records(
-            self, owner_data: User, role: Role
+    async def __prepare_user_data(
+            self,
+            owner_data: User,
+            role: Role,
     ) -> Union[List[UUID], None]:
         """Provide access to the appropriate collections based on the role.
 
@@ -58,7 +60,6 @@ class MatchVacancyCVUoW:
                 self.repo = self.vacancies
 
         user_records = await self.users.get_cv_vacancy_data(owner_data)
-
         return user_records.get(self.id_type + "s")
 
     async def __check_match_shown_relation(
@@ -89,21 +90,18 @@ class MatchVacancyCVUoW:
 
     async def __get_match_for_offer(
             self,
-            reference_records: List[UUID],
-            owner_data: User,
+            record_id: UUID,
             role: Role,
     ) -> Union[CV, Vacancy, None]:
         """Return matched offer for record depends on role.
 
         Args:
-            reference_records: The reference records to find a match for.
-            owner_data: The owner data associated with the records.
+            record_id: The reference record ID to find a match for.
             role: The role associated with the records.
 
         Returns:
             The match if found, otherwise None.
         """
-        record_id = reference_records[0]
         match_record = await self.__check_match_shown_relation(record_id)
 
         if match_record:
@@ -198,6 +196,27 @@ class MatchVacancyCVUoW:
 
         raise ForbiddenAction
 
+    @staticmethod
+    async def __check_existing_record(
+            record_id: UUID,
+            records: List[UUID],
+    ) -> Union[UUID, Exception]:
+        """Check if record ID is existing in the user records.
+
+        Args:
+            record_id: The ID of the record to check if exists.
+            records: User records.
+
+        Returns:
+            Record ID if exists in records.
+
+        Raises:
+            ForbiddenAction is record ID not exists.
+        """
+        if record_id in records:
+            return record_id
+        raise ForbiddenAction
+
     async def prepare_matches(
             self,
             record: Union[CV, Vacancy],
@@ -211,7 +230,7 @@ class MatchVacancyCVUoW:
             owner_data: The owner data associated with the record.
             role: The role associated with the record.
         """
-        await self.__get_user_records(owner_data, role)
+        await self.__prepare_user_data(owner_data, role)
         filtered_data = await self.__filter_records(record)
         prepared_data = (
             {
@@ -225,21 +244,32 @@ class MatchVacancyCVUoW:
             await self.matches.add_records(checked_data)
 
     async def get_matches(
-            self, owner_data: User, role: Role
+        self,
+        owner_data: User,
+        role: Role,
+        record_id: Union[UUID, None],
     ) -> Union[CV, Vacancy, None]:
         """Return matches for a given owner data and role
 
         Args:
             owner_data: The owner data associated with the matches.
             role: The role associated with the matches.
+            record_id: Reference ID of user record.
 
         Returns:
             Matched offer record,
-            otherwise if owner haven't exiting jb records - a random offer record.
+            otherwise if owner haven't exiting job records - a random offer record.
         """
-        reference_records = await self.__get_user_records(owner_data, role)
-        if reference_records:
-            return await self.__get_match_for_offer(reference_records, owner_data, role)
+        reference_records = await self.__prepare_user_data(owner_data, role)
+        if record_id:
+            checked_record_id = await self.__check_existing_record(
+                record_id,
+                reference_records,
+            )
+            return await self.__get_match_for_offer(
+                checked_record_id,
+                role,
+            )
 
         return await self.offer_repo.get_random()
 
@@ -272,7 +302,6 @@ class MatchVacancyCVUoW:
             new_relation: new applicant or employer relation.
             cv_id: CV id,
             vacancy_id: Vacancy id,
-            role: The role associated with the record.
 
         Returns:
             True if relation is equal, False otherwise.
@@ -340,7 +369,7 @@ class MatchVacancyCVUoW:
         Returns:
             Quantity of deleted records if success.
         """
-        await self.__get_user_records(owner_data, role)
+        await self.__prepare_user_data(owner_data, role)
         if record_deleted:
             data_to_delete = {self.id_type: record_id}
         else:
