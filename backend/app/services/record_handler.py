@@ -50,18 +50,22 @@ class RecordHandler:
         return created_record
 
     async def get_matched_record(
-            self, owner_data: User, role: Role
+        self,
+        owner_data: User,
+        role: Role,
+        record_id: Union[UUID, None],
     ) -> Union[CV, Vacancy, None]:
         """Return matched record from prepared matches collection.
 
         Args:
             owner_data: The owner data associated with the record.
             role: The role associated with the record.
+            record_id: Reference ID of record to return matched random records.
 
         Returns:
             Offer CV or Vacancy if existed, otherwise None
         """
-        return await self.matches.get_matches(owner_data, role)
+        return await self.matches.get_matches(owner_data, role, record_id)
 
     async def update_record(
             self,
