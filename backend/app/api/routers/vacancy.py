@@ -34,15 +34,17 @@ async def create_vacancy(
 @vacancy_router.get(
     "/random_vacancy",
     response_model=VacancyResponseSchema,
-    summary="Return random company vacancy",
+    summary="Return matched vacancy record by provided CV ID, otherwise random vacancy",
 )
 async def get_random_vacancy(
         Vacancy: VacancyRecords,
         vacancy_owner: UserResponseSchema = Depends(current_user),
+        cv_id: UUID = None,
 ):
     return await Vacancy.get_matched_record(
         owner_data=vacancy_owner,
         role=UserRole.applicant,
+        record_id=cv_id,
     )
 
 

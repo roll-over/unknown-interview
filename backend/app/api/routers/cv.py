@@ -30,13 +30,18 @@ async def create_cv(
 @cv_router.get(
     "/random_cv",
     response_model=CVResponseSchema,
-    summary="Return random user CV",
+    summary="Return matched CV record by provided vacancy ID, otherwise random CV",
 )
 async def get_random_cv(
         CV: CVRecords,
         cv_owner: UserResponseSchema = Depends(current_user),
+        vacancy_id: UUID = None,
 ):
-    return await CV.get_matched_record(owner_data=cv_owner, role=UserRole.employer)
+    return await CV.get_matched_record(
+        owner_data=cv_owner,
+        role=UserRole.employer,
+        record_id=vacancy_id,
+    )
 
 
 @cv_router.get(
