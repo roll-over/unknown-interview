@@ -219,6 +219,7 @@ class MatchVacancyCVUoW:
                 self.opposite_id_type: offer_record.custom_id,
             }
             for offer_record in filtered_data
+            if offer_record.owner_id != owner_data.custom_id
         )
         checked_data = await self.__remove_existing_matches(prepared_data)
         if checked_data:
@@ -270,9 +271,8 @@ class MatchVacancyCVUoW:
         Args:
             owner_data: The owner data associated with the record.
             new_relation: new applicant or employer relation.
-            cv_id: CV id,
-            vacancy_id: Vacancy id,
-            role: The role associated with the record.
+            cv_id: CV id.
+            vacancy_id: Vacancy id.
 
         Returns:
             True if relation is equal, False otherwise.
