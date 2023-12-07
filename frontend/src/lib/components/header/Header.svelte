@@ -4,6 +4,7 @@
 	import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
+	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -24,7 +25,7 @@
 	const modalStore = getModalStore();
 </script>
 
-<header class="p-2">
+<header class="p-2 text-black dark:text-white">
 	<nav class="flex items-center justify-between gap-3">
 		<a href={route('/')}>
 			<img
@@ -67,6 +68,7 @@
 				href={route('/integrations')}
 				class="hidden sm:block">Api</a
 			>
+
 			<a
 				href={route('/documents')}
 				class="hidden sm:block">Documents</a
@@ -75,6 +77,7 @@
 				href={route('/about')}
 				class="hidden sm:block">About</a
 			>
+			<LightSwitch rounded="rounded-full" />
 			{#if $userInfo.isPending}
 				<div>loading...</div>
 			{:else if $userInfo.isError}
