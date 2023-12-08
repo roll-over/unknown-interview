@@ -1,22 +1,22 @@
 import type { StrictOmit } from '$lib/utils/types';
 
 type User = {
-  id: string;
-  name: string;
+	id: string;
+	name: string;
 };
 
 type Message = {
-  id: string;
-  content: string;
-  timestamp: number;
-  author: User;
-  chatId: string;
+	id: string;
+	content: string;
+	timestamp: number;
+	author: User;
+	chatId: string;
 };
 
 type Chat = {
-  id: string;
-  label: string;
-  messages: Message[];
+	id: string;
+	label: string;
+	messages: Message[];
 };
 
 export const YourID = 'YOU';
@@ -24,51 +24,58 @@ export const YourID = 'YOU';
 export type ChatGist = StrictOmit<Chat, 'messages'> & { lastMessage?: Message };
 
 export async function getChatList(recordId: string): Promise<ChatGist[]> {
-  const response = await fetch(`http://localhost:2080/api/v1/chats/?record_id=${recordId}`);
-  const data = await response.json();
+	if (!recordId) {
+		return [];
+	}
+	const response = await fetch(`http://localhost:2080/api/v1/chats/?record_id=${recordId}`);
+	const data = await response.json();
 
-  return data.map((chatData: any) => {
-    const { chat_id, chat_name, last_message } = chatData;
-    const lastMessage = last_message?.[0];
-    
-    return {
-      id: chat_id,
-      label: chat_name,
-      lastMessage: {
-        id: lastMessage?.custom_id,
-        content: lastMessage?.text || '',
-        timestamp: new Date(lastMessage?.created_at).getTime() || 0,
-        author: {
-          id: lastMessage?.author_id,
-          name: 'Svelte developer',
-        },
-        chatId: chat_id,
-      },
-    };
-  });
+	return data.map((chatData: any) => {
+		const { chat_id, chat_name, last_message } = chatData;
+		const lastMessage = last_message?.[0];
+
+		return {
+			id: chat_id,
+			label: chat_name,
+			lastMessage: {
+				id: lastMessage?.custom_id,
+				content: lastMessage?.text || '',
+				timestamp: new Date(lastMessage?.created_at).getTime() || 0,
+				author: {
+					id: lastMessage?.author_id,
+					name: 'Svelte developer'
+				},
+				chatId: chat_id
+			}
+		};
+	});
 }
 
-export async function getChat(chatId: string, page: number = 0, count: number = 50): Promise<Chat | undefined> {
-  const response = await fetch(`http://localhost:2080/api/v1/chats/${chatId}?page=${page}&count=${count}`);
-  const data = await response.json();
+export async function getChat(
+	chatId: string,
+	page: number = 0,
+	count: number = 50
+): Promise<Chat | undefined> {
+	const response = await fetch(
+		`http://localhost:2080/api/v1/chats/${chatId}?page=${page}&count=${count}`
+	);
+	const data = await response.json();
 
-  return {
-    id: chatId,
-    label: data.chat_name,
-    messages: data.messages.map((message: any) => ({
-      id: message.custom_id,
-      content: message.text || '',
-      timestamp: new Date(message.created_at).getTime() || 0,
-      author: {
-        id: message.author_id,
-        name: 'Svelte developer',
-      },
-      chatId: chatId,
-    })),
-  };
+	return {
+		id: chatId,
+		label: data.chat_name,
+		messages: data.messages.map((message: any) => ({
+			id: message.custom_id,
+			content: message.text || '',
+			timestamp: new Date(message.created_at).getTime() || 0,
+			author: {
+				id: message.author_id,
+				name: 'Svelte developer'
+			},
+			chatId: chatId
+		}))
+	};
 }
-
-
 
 // // THIS IS A TEMP FILE WITH CHAT FIXTURES.
 // // DELETE WHEN BACKEND WILL IMPLEMENT THIS FEATURE
@@ -108,7 +115,6 @@ export async function getChat(chatId: string, page: number = 0, count: number = 
 // function randomInt(min: number, max: number) {
 // 	return Math.random() * (max - min) + min;
 // }
-
 
 // function generateChats(): Chat[] {
 // 	const chats: Chat[] = Array.from({ length: 50 })
