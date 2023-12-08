@@ -50,7 +50,6 @@
 </script>
 
 <script lang="ts">
-	import { faker } from '@faker-js/faker/locale/af_ZA';
 	import Chip from './Chip.svelte';
 
 	export let matcher: Matcher = {};
@@ -60,7 +59,7 @@
 </script>
 
 <div class="flex h-full min-h-0 flex-col">
-	<div class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 {mainClass}">
+	<div class="bg-app-blue-50 h-full space-y-5 overflow-y-auto rounded-lg p-5 {mainClass}">
 		<slot name="header" />
 		<div>
 			Profession:
@@ -97,8 +96,7 @@
 			</div>
 		{/if}
 		<p class="whitespace-pre-wrap">
-			<!-- todo - remove faker when cv/vacancy creation is done -->
-			{matchData.extra_info ?? faker.lorem.paragraphs({ min: 1, max: 5 })}
+			{matchData.extra_info}
 		</p>
 	</div>
 	<div class="h-16 shrink-0 {footerClass}">

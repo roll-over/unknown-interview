@@ -6,7 +6,6 @@
 	import Loading from './Loading.svelte';
 	import RandomMatch from './RandomMatch.svelte';
 	import { showWarningModal } from './WarningModal.svelte';
-	import { getRandomCv, getRandomVacancy } from './mock';
 
 	export let data;
 
@@ -21,14 +20,18 @@
 		}
 	});
 
+	$: randomMatchGet = createGetQuery(
+		data.isCvRoute ? '/api/v1/vacancies/random_vacancy' : '/api/v1/vacancies/random_vacancy'
+	);
 	$: randomMatchQuery = createQuery({
-		queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv'],
+		queryKey: randomMatchGet.key,
 		queryFn() {
-			return data.isCvRoute ? getRandomVacancy() : getRandomCv();
+			return randomMatchGet.runQuery();
 		},
-		staleTime: Infinity
+		select(res) {
+			return res.data;
+		}
 	});
-
 	const modalStore = getModalStore();
 	function showModal() {
 		showWarningModal(modalStore, {
@@ -39,7 +42,7 @@
 </script>
 
 <div class="overflow-y-hidden pb-16">
-	<div class="flex max-h-full flex-col space-y-5 rounded-lg bg-app-blue-50 p-5">
+	<div class="bg-app-blue-50 flex max-h-full flex-col space-y-5 rounded-lg p-5">
 		<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 		{#if $userRecordsQuery.isSuccess}
 			<div class="flex flex-col overflow-y-auto">
@@ -61,7 +64,7 @@
 		{/if}
 	</div>
 </div>
-{#if $randomMatchQuery.isSuccess}
+{#if $randomMatchQuery.isSuccess && $randomMatchQuery.data}
 	<RandomMatch
 		matchData={$randomMatchQuery.data}
 		like={showModal}
