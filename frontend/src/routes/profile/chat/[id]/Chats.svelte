@@ -7,7 +7,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 
 	$: getChats = createGetQuery('/api/v1/chats/', {
-		params: { query: { record_id: $page.params.recordId } }
+		params: { query: { record_id: $page.params.id } }
 	});
 	$: queryChats = createQuery({
 		queryKey: getChats.key,

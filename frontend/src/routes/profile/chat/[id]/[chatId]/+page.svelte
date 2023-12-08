@@ -76,9 +76,9 @@
 	$: chatQuery = createQuery(
 		derived(page, (page) => {
 			return {
-				queryKey: ['chat', page.params.id],
+				queryKey: ['chat', page.params.chatId],
 				async queryFn() {
-					const id = page.params.id;
+					const id = page.params.chatId;
 					if (!id) {
 						goto(route('/profile/chat'));
 						return null;

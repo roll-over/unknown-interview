@@ -5,6 +5,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
 	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
+	import { page } from '$app/stores';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -12,17 +13,38 @@
 		queryFn: () => userInfoGet.runQuery()
 	});
 
+	$: userRecordsGet = createGetQuery('/api/v1/users/records');
+	$: userRecordsQuery = createQuery({
+		queryKey: userRecordsGet.key,
+		queryFn() {
+			return userRecordsGet.runQuery();
+		},
+		select(res) {
+			return res.data || null;
+		}
+	});
+
 	const navCreatePopup: PopupSettings = {
 		event: 'click',
 		target: 'nav-create-popup',
 		placement: 'bottom'
 	};
-	const navProfilePopup: PopupSettings = {
+
+	const modalStore = getModalStore();
+
+	$: recordId = $page.params.id || '';
+	$: isCV = ($userRecordsQuery.data?.cv_ids || []).includes(recordId) || false;
+	$: chatPickerPopup = {
 		event: 'click',
-		target: 'nav-profile-popup',
+		target: 'chat-picker-popup',
 		placement: 'bottom'
 	};
-	const modalStore = getModalStore();
+
+	$: matchPickerPopup = {
+		event: 'click',
+		target: 'match-picker-popup',
+		placement: 'bottom'
+	};
 </script>
 
 <header class="p-2 text-black dark:text-white">
@@ -35,35 +57,76 @@
 			/>
 		</a>
 		<div class="flex items-center gap-3">
-			<a href={route('/profile/chat')}>Chats</a>
-			<button use:popup={navProfilePopup}>
-				Match
+			{#if $userRecordsQuery.data?.cv_ids || $userRecordsQuery.data?.vacancy_ids}
+				<button use:popup={matchPickerPopup}> Match </button>
 				<div
-					data-popup={navProfilePopup.target}
+					data-popup={matchPickerPopup.target}
 					class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 				>
-					<div class="flex flex-col gap-2">
-						<a href={route('/cv/match')}>CV</a>
-						<hr />
-						<a href={route('/vacancy/match')}>Vacancy</a>
-					</div>
-					<div class="arrow bg-app-blue-50"></div>
+					{#if $userRecordsQuery.data?.cv_ids}
+						<h3>CV:</h3>
+						<ul class="list pl-2">
+							{#each $userRecordsQuery.data.cv_ids as id}
+								<li>
+									<a href={route('/cv/match/' + id)}> {id} </a>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+					{#if $userRecordsQuery.data?.vacancy_ids}
+						<h3>Vacancy:</h3>
+						<ul class="list pl-2">
+							{#each $userRecordsQuery.data.vacancy_ids as id}
+								<li>
+									<a href={route('/vacancy/match/' + id)}> {id} </a>
+								</li>
+							{/each}
+						</ul>
+					{/if}
 				</div>
-			</button>
-			<button use:popup={navCreatePopup}>
-				Create
+			{/if}
+
+			{#if $userRecordsQuery.data?.cv_ids || $userRecordsQuery.data?.vacancy_ids}
+				<button use:popup={chatPickerPopup}> Chats </button>
 				<div
-					data-popup={navCreatePopup.target}
+					data-popup={chatPickerPopup.target}
 					class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
 				>
-					<div class="flex flex-col gap-2">
-						<a href={route('/cv/create')}>CV</a>
-						<hr />
-						<a href={route('/vacancy/create')}>Vacancy</a>
-					</div>
-					<div class="arrow bg-app-blue-50"></div>
+					{#if $userRecordsQuery.data?.cv_ids}
+						<h3>CV:</h3>
+						<ul class="list pl-2">
+							{#each $userRecordsQuery.data.cv_ids as id}
+								<li>
+									<a href={route('/profile/chat/' + id)}> {id} </a>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+					{#if $userRecordsQuery.data?.vacancy_ids}
+						<h3>Vacancy:</h3>
+						<ul class="list pl-2">
+							{#each $userRecordsQuery.data.vacancy_ids as id}
+								<li>
+									<a href={route('/profile/chat/' + id)}> {id} </a>
+								</li>
+							{/each}
+						</ul>
+					{/if}
 				</div>
-			</button>
+			{/if}
+
+			<button use:popup={navCreatePopup}> Create </button>
+			<div
+				data-popup={navCreatePopup.target}
+				class="bg-app-blue-50 px-4 py-2 text-black drop-shadow-md"
+			>
+				<div class="flex flex-col gap-2">
+					<a href={route('/cv/create')}>CV</a>
+					<hr />
+					<a href={route('/vacancy/create')}>Vacancy</a>
+				</div>
+				<div class="arrow bg-app-blue-50"></div>
+			</div>
 			<a
 				href={route('/integrations')}
 				class="hidden sm:block">Api</a
