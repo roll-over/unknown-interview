@@ -8,7 +8,6 @@
 	import Loading from '../Loading.svelte';
 	import Match, { constructMatcher } from '../Match.svelte';
 	import RandomMatch from '../RandomMatch.svelte';
-	import { getRandomCv, getRandomVacancy } from '../mock';
 
 	export let data;
 	$: userMatchGet = data.isCvRoute
@@ -44,14 +43,18 @@
 		}
 	});
 
+	$: randomMatchGet = createGetQuery(
+		data.isCvRoute ? '/api/v1/vacancies/random_vacancy' : '/api/v1/vacancies/random_vacancy'
+	);
 	$: randomMatchQuery = createQuery({
-		queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv'],
+		queryKey: randomMatchGet.key,
 		queryFn() {
-			return data.isCvRoute ? getRandomVacancy() : getRandomCv();
+			return randomMatchGet.runQuery();
 		},
-		staleTime: Infinity
+		select(res) {
+			return res.data;
+		}
 	});
-
 	$: matcher = constructMatcher($userMatchQuery.data, $randomMatchQuery.data);
 </script>
 
@@ -65,14 +68,14 @@
 			<div class="flex items-center gap-1">
 				<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 				<a
-					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
+					class="bg-app-blue-600 current:bg-white current:text-app-blue-600 ml-auto rounded-full p-1 text-white transition-colors"
 					href={route(data.isCvRoute ? '/cv/create' : '/vacancy/create')}
 				>
 					<EditIcon />
 				</a>
 				<button
 					aria-label={data.isCvRoute ? 'delete cv' : 'delete vacancy'}
-					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
+					class="current:bg-white current:text-red-600 rounded-full bg-red-600 p-1 text-white transition-colors"
 					on:click={async () => {
 						$userMatchMutation.mutate();
 						data.queryClient.invalidateQueries({
