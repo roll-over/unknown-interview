@@ -7,7 +7,6 @@ from app.api.schemas.base import UserRole
 from app.api.schemas.user import UserResponseSchema
 from app.api.schemas.vacancy import VacancyRequestSchema, VacancyResponseSchema
 from app.services import Records as VacancyRecords
-from app.services.repository import VacanciesRepository
 from app.utils import current_user
 
 vacancy_router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
@@ -51,8 +50,16 @@ async def get_random_vacancy(
     response_model=VacancyResponseSchema,
     summary="Return company vacancy by ID",
 )
-async def get_company_vacancy(vacancy_id: UUID, Vacancy: VacanciesRepository):
-    return await Vacancy.get_one(vacancy_id)
+async def get_company_vacancy(
+        vacancy_id: UUID,
+        Vacancy: VacancyRecords,
+        record_owner: UserResponseSchema = Depends(current_user),
+):
+    return await Vacancy.get_record(
+        record_id=vacancy_id,
+        owner_data=record_owner,
+        role=UserRole.employer,
+    )
 
 
 @vacancy_router.patch(
@@ -96,8 +103,3 @@ async def delete_company_vacancy(
             content={"message": "Company vacancy deleted successfully"},
             status_code=status.HTTP_200_OK,
         )
-
-    return JSONResponse(
-        content={"message": "There is no company vacancy with such ID"},
-        status_code=status.HTTP_404_NOT_FOUND,
-    )
