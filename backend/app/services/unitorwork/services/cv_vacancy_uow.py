@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from typing import AsyncContextManager, List, Tuple, Union
+from typing import Any, AsyncContextManager, Awaitable, Callable, List, Tuple, Union
 from uuid import UUID
 
 from app.api.schemas.base import RequestBaseSchema as RecordSchema
@@ -57,6 +57,32 @@ class UserVacancyCVUoW:
         finally:
             await owner_data.save()
 
+    @staticmethod
+    def __check_existing_record(
+            func: Callable[..., Awaitable[Any]]
+    ) -> Callable[..., Awaitable[Union[Any, Exception]]]:
+        async def wrapper(self, *args, **kwargs) -> Union[Any, Exception]:
+            """Check if record exists in user collection.
+
+            Args:
+                **kwargs:
+                    record_id: ID of record.
+                    owner_data: The owner data object associated with the record.
+
+            Raises:
+                ForbiddenAction if record not exist in the collection.
+            """
+            owner_data = kwargs.get('owner_data')
+            record_id = kwargs.get('record_id')
+            if not any((
+                    record_id in owner_data.vacancies_list,
+                    record_id in owner_data.cvs_list
+            )):
+                raise ForbiddenAction
+            return await func(self, *args, **kwargs)
+
+        return wrapper
+
     async def create(
         self,
         data: RecordSchema,
@@ -83,6 +109,37 @@ class UserVacancyCVUoW:
 
         return new_data
 
+    @__check_existing_record
+    async def get(
+            self,
+            *,
+            record_id: UUID,
+            owner_data: User,
+            role: Role,
+    ) -> Union[CV, Vacancy, Exception]:
+        """Return existing CV or Vacancy if owner matches.
+
+        Args:
+            record_id: The ID of existing record.
+            owner_data: The owner data object associated with the record.
+            role: The role associated with the record.
+
+        Returns:
+            CV or Vacancy
+
+        Raises:
+            ForbiddenAction if authorised user is not owner of record.
+        """
+        async with self.get_collection(owner_data=owner_data, role=role) as (
+                record_collection,
+                owner_collection,
+        ):
+            return await record_collection.get_record(
+                record_id=record_id,
+                owner_data=owner_data,
+            )
+
+    @__check_existing_record
     async def update(
         self,
         data: RecordSchema,
@@ -100,21 +157,22 @@ class UserVacancyCVUoW:
             role: The role associated with the record.
 
         Returns:
-            Updated CV or Vacancy, or Exception if raised
+            Updated CV or Vacancy.
+
+        Raises:
+            ForbiddenAction if authorised user is not owner of record.
         """
         async with self.get_collection(owner_data=owner_data, role=role) as (
             record_collection,
             owner_collection,
         ):
-            if record_id not in owner_collection:
-                raise ForbiddenAction
-                
             return await record_collection.update_one(
                 data,
                 record_id=record_id,
                 owner_data=owner_data,
             )
-        
+
+    @__check_existing_record
     async def delete(
         self,
         *,

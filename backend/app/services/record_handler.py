@@ -63,6 +63,32 @@ class RecordHandler:
         """
         return await self.matches.get_matches(owner_data, role)
 
+    async def get_record(
+            self,
+            *,
+            record_id: UUID,
+            owner_data: User,
+            role: Role,
+    ) -> Union[CV, Vacancy, None, Exception]:
+        """Return job record by ID.
+
+        Args:
+            owner_data: The owner data associated with the record.
+            record_id: Vacancy or CV ID.
+            role: The role associated with the record.
+
+        Returns:
+            CV or Vacancy if existed, otherwise None
+
+        Raises:
+            ForbiddenAction if authorised user is not owner of record.
+        """
+        return await self.job_records.get(
+            record_id=record_id,
+            owner_data=owner_data,
+            role=role,
+        )
+
     async def update_record(
             self,
             new_record_data: RecordSchema,
@@ -82,6 +108,9 @@ class RecordHandler:
 
         Returns:
             Updated CV or Vacancy, or Exception if raised
+
+        Raises:
+            ForbiddenAction if authorised user is not owner of record.
         """
         await self.matches.delete_matches(
             record_id=record_id,
@@ -116,6 +145,9 @@ class RecordHandler:
 
         Returns:
             Quantity of deleted records if success.
+
+        Raises:
+            ForbiddenAction if authorised user is not owner of record.
         """
         deleted_record = await self.job_records.delete(
             record_id=record_id,
