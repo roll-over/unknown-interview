@@ -39,7 +39,7 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="https://twitter.com/roll_over_group"
+					href="https://www.linkedin.com/company/hide-hire"
 				>
 					<img
 						src="/linkedin.webp"
@@ -50,7 +50,7 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="https://www.linkedin.com/company/hide-hire"
+					href="https://twitter.com/roll_over_group"
 				>
 					<img
 						src="/twitter.webp"
@@ -66,7 +66,7 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="mailto:red.flags.service@gmail.com"
+					href="https://roll-over.org/?utm_source=hide-hire.roll-over.org"
 				>
 					<img
 						src="/roll-over.webp"
@@ -89,7 +89,7 @@
 							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}
 						>
 							<div
-								class="z-10 w-44 space-y-2 bg-white"
+								class="z-10 w-44 space-y-2 bg-white card card-hover"
 								data-popup="loopExample-{member.id}"
 							>
 								<img
