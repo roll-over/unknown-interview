@@ -89,7 +89,7 @@
 							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}
 						>
 							<div
-								class="z-10 w-44 space-y-2 bg-white card card-hover transition-none"
+								class="card card-hover z-10 w-44 space-y-2 bg-white transition-none"
 								data-popup="loopExample-{member.id}"
 							>
 								<img
