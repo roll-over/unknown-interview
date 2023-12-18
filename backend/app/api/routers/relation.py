@@ -17,11 +17,11 @@ async def update_relation(
     request: Request,
     data: RelationSchema,
     Match: MatchRelation,
-    cv_owner: UserResponseSchema = Depends(current_user),
+    record_owner: UserResponseSchema = Depends(current_user),
 ):
     relation_match = await Match.update_match_relation(
         relation_data=data,
-        owner_data=cv_owner,
+        owner_data=record_owner,
     )
 
     if relation_match:

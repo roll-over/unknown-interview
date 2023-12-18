@@ -2,7 +2,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Union
 from uuid import UUID
 
 from app.db.models import CV, User, Vacancy
-from app.exceptions import ForbiddenAction
+from app.exceptions import ForbiddenAction, RelatedRecordDoesNotExist
 from app.services.repository.interfaces import AbstractBaseRepository
 
 
@@ -22,7 +22,7 @@ class VacancyCVService:
             try:
                 owner_record_id = record.owner_id
             except AttributeError:
-                return
+                raise RelatedRecordDoesNotExist('record')
             if owner_id == owner_record_id:
                 return await func(self, *args, record_id=record_id, owner_data=owner_data)
             raise ForbiddenAction
@@ -43,6 +43,15 @@ class VacancyCVService:
 
     async def get_one(self, data_id: UUID) -> Union[CV, Vacancy]:
         return await self.repo.fetch_one({"custom_id": data_id})
+
+    @check_owner
+    async def get_record(
+            self,
+            *,
+            record_id: UUID,
+            owner_data: User,
+    ) -> Union[CV, Vacancy]:
+        return await self.get_one(record_id)
 
     async def get_many(
             self,

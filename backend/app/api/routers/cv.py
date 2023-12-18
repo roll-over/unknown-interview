@@ -7,7 +7,6 @@ from app.api.schemas.base import UserRole
 from app.api.schemas.cv import CVRequestSchema, CVResponseSchema
 from app.api.schemas.user import UserResponseSchema
 from app.services import Records as CVRecords
-from app.services.repository import CVsRepository
 from app.utils import current_user
 
 cv_router = APIRouter(prefix="/cvs", tags=["CVs"])
@@ -44,8 +43,16 @@ async def get_random_cv(
     response_model=CVResponseSchema,
     summary="Return user CV by ID",
 )
-async def get_user_cv(cv_id: UUID, CV: CVsRepository):
-    return await CV.get_one(cv_id)
+async def get_user_cv(
+        cv_id: UUID,
+        CV: CVRecords,
+        record_owner: UserResponseSchema = Depends(current_user),
+):
+    return await CV.get_record(
+        record_id=cv_id,
+        owner_data=record_owner,
+        role=UserRole.applicant,
+    )
 
 
 @cv_router.patch(
@@ -89,8 +96,3 @@ async def delete_user_cv(
             content={"message": "User CV deleted successfully"},
             status_code=status.HTTP_200_OK,
         )
-
-    return JSONResponse(
-        content={"message": "There is no user CV with such ID"},
-        status_code=status.HTTP_404_NOT_FOUND,
-    )
