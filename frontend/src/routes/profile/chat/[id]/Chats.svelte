@@ -1,65 +1,58 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { YourID, type ChatGist } from './getChats';
-	import { route } from '$lib/utils/route';
-	import { createGetQuery } from '$lib/api';
-	import { createQuery } from '@tanstack/svelte-query';
-
-	$: getChats = createGetQuery('/api/v1/chats/', {
-		params: { query: { record_id: $page.params.id } }
+  import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+  import { route } from '$lib/utils/route';
+  import { createGetQuery } from '$lib/api';
+  import { createQuery } from '@tanstack/svelte-query';
+	import type { Chats } from './interFace';
+  
+	const getChats = createGetQuery('/api/v1/chats/', {
+  params: { query: { record_id: $page.params.id || '' } }
 	});
-	$: queryChats = createQuery({
-		queryKey: getChats.key,
-		async queryFn() {
-			const res = await getChats.runQuery();
-			return res;
-		}
-	});
+ 
+ $: queryChats = createQuery({
+  queryKey: getChats.key,
+  async queryFn() {
+    const res = await getChats.runQuery();
+    return (res.data || []).map((chat: Chats) => {
+      const lastMessage = chat.last_message && chat.last_message.length > 0 ? chat.last_message[0] : null;
+      return {
+        chat_id: chat.chat_id,
+        chat_name: chat.chat_name,
+        last_message_text: lastMessage ? lastMessage.text : null,
+        own: lastMessage ? lastMessage.own : null
+      };
+    });
+  }
+});
 
-	export let chats: ChatGist[];
-	let chatNodes: HTMLAnchorElement[] = [];
-	onMount(() => {
-		const selectedChatNode = chatNodes.find((node) => node.ariaCurrent);
-		if (!selectedChatNode) return;
-		selectedChatNode.scrollIntoView({ block: 'nearest' });
-	});
-</script>
-
-{#if $queryChats.status === 'pending'}
-	<p>Loading...</p>
-{/if}
-
-{#if $queryChats.status === 'error'}
-	<p>Error :(</p>
-{/if}
-
-<ul class="flex flex-col gap-3 overflow-y-auto pr-10">
-	{#each chats as chat, i (chat.id)}
-		<li>
-			<a
-				href={route((p) => `/profile/chat/${p(chat.id)}`)}
-				class="group relative block overflow-hidden rounded-lg transition after:absolute after:-right-3 after:top-0 after:h-full after:w-3 after:bg-sky-900 after:transition-transform aria-[current]:translate-x-4 aria-[current]:bg-app-blue-100 aria-[current]:after:-translate-x-3"
-				aria-current={$page.params.id === chat.id || undefined}
-				bind:this={chatNodes[i]}
-			>
-				<div class="rounded-lg border-2 border-app-blue-100 p-3">
-					<span class="text-xl">{chat.label}</span>
-					{#if chat.lastMessage}
-						{@const isYourMessage = chat.lastMessage.author.id === YourID}
-						<span
-							class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap transition-[font-weight] {isYourMessage
-								? ''
-								: 'font-bold group-aria-[current]:font-normal'}"
-						>
-							{#if isYourMessage}
-								<span class="text-app-blue-600">You:</span>
-							{/if}
-							{chat.lastMessage.content}
-						</span>
-					{/if}
-				</div>
-			</a>
-		</li>
-	{/each}
+ </script> 
+ <ul class="flex flex-col gap-3 overflow-y-auto pr-10">
+  {#if $queryChats.data && $queryChats.data.length > 0}
+    {#each $queryChats.data as { chat_id, chat_name, last_message_text, own } (chat_id)}
+      <li>
+        <a
+          href={`/profile/chat/${chat_id}`}
+          class="group relative block overflow-hidden rounded-lg transition after:absolute after:-right-3 after:top-0 after:h-full after:w-3 after:bg-sky-900 after:transition-transform"
+          aria-current="page">
+          <div class="rounded-lg border-2 border-app-blue-100 p-3">
+            <span class="text-xl">{chat_name}</span>
+            {#if own}
+              <span
+                class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap transition-[font-weight] font-normal"
+              >
+                <span class="text-app-blue-600">You:</span> {last_message_text}
+              </span>
+            {:else}
+              <span class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap transition-[font-weight] font-bold">
+                {last_message_text}
+              </span>
+            {/if}
+          </div>
+        </a>
+      </li>
+    {/each}
+  {:else}
+    <p>No chats available</p>
+  {/if}
 </ul>
