@@ -1,33 +1,36 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import { route } from '$lib/utils/route';
   import { createGetQuery } from '$lib/api';
   import { createQuery } from '@tanstack/svelte-query';
-	import type { Chats } from './interFace';
-  
-	const getChats = createGetQuery('/api/v1/chats/', {
-  params: { query: { record_id: $page.params.id || '' } }
-	});
- 
- $: queryChats = createQuery({
-  queryKey: getChats.key,
-  async queryFn() {
-    const res = await getChats.runQuery();
-    return (res.data || []).map((chat: Chats) => {
-      const lastMessage = chat.last_message && chat.last_message.length > 0 ? chat.last_message[0] : null;
-      return {
-        chat_id: chat.chat_id,
-        chat_name: chat.chat_name,
-        last_message_text: lastMessage ? lastMessage.text : null,
-        own: lastMessage ? lastMessage.own : null
-      };
-    });
-  }
-});
+  import type { Chats } from './interFace';
+  import { page } from '$app/stores';
 
- </script> 
- <ul class="flex flex-col gap-3 overflow-y-auto pr-10">
+  // Создание запроса на получение чатов
+  const getChats = createGetQuery('/api/v1/chats/', {
+    params: { query: { record_id: $page.params.id || '' } }
+  });
+
+  // Создание запроса с использованием Svelte Query
+  $: queryChats = createQuery({
+    queryKey: getChats.key,
+    async queryFn() {
+      const res = await getChats.runQuery();
+      // Преобразование данных о чатах для отображения в списке
+      return (res.data || []).map((chat: Chats) => {
+        // Получение последнего сообщения чата
+        const lastMessage = chat.last_message?.[0];
+        return {
+          chat_id: chat.chat_id,
+          chat_name: chat.chat_name,
+          last_message_text: lastMessage?.text || null,
+          own: lastMessage?.own || null
+        };
+      });
+    }
+  });
+</script>
+
+<ul class="flex flex-col gap-3 overflow-y-auto pr-10">
   {#if $queryChats.data && $queryChats.data.length > 0}
     {#each $queryChats.data as { chat_id, chat_name, last_message_text, own } (chat_id)}
       <li>
@@ -38,12 +41,14 @@
           <div class="rounded-lg border-2 border-app-blue-100 p-3">
             <span class="text-xl">{chat_name}</span>
             {#if own}
+              <!-- Отображение информации о последнем сообщении, если оно отправлено пользователем -->
               <span
                 class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap transition-[font-weight] font-normal"
               >
                 <span class="text-app-blue-600">You:</span> {last_message_text}
               </span>
             {:else}
+              <!-- Отображение информации о последнем сообщении, если оно не отправлено пользователем -->
               <span class="block w-full overflow-x-hidden text-ellipsis whitespace-nowrap transition-[font-weight] font-bold">
                 {last_message_text}
               </span>

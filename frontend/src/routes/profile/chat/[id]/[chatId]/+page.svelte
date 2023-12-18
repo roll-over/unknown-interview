@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { createGetQuery } from '$lib/api';
-  import { createQuery } from '@tanstack/svelte-query';
-	import { dateFormatter, type Chat, type Message, formatTimestamp } from '../interFace';
+  import { createQuery, createMutation } from '@tanstack/svelte-query';
+  import { dateFormatter, type Chat, type Message, formatTimestamp } from '../interFace';
 
- function groupBy<T>(array: T[], keyFunc: (item: T) => string) {
+  // Функция для группировки элементов массива по заданному ключу
+  function groupBy<T>(array: T[], keyFunc: (item: T) => string) {
     return array.reduce((result: Record<string, T[]>, item) => {
       const key = keyFunc(item);
       result[key] = result[key] || [];
@@ -13,28 +14,109 @@
     }, {});
   }
 
-  $: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$page.params.id || ''}`);
+  // Определение типа для чата с сообщениями
+  type ChatWithMessages = {
+    chat_name: string;
+    messages: (Message & { chat_name: string })[];
+  } | undefined;
 
-		$: queryMessage = createQuery({
-  queryKey: messagesGet.key,
-  async queryFn() {
-    try {
-      const res = await messagesGet.runQuery();
-      const data = res.data || { chat_name: '', messages: [] };
+  // Инициализация переменной для текста нового сообщения
+	let newMessageText = '';
 
-      return {
-        chat_name: data.chat_name,
-        messages: (data.messages || []).map((message: Message) => ({
-          text: message.text || null,
-          own: message.own || null,
-          created_at: message.created_at || null
-        }))
+// Создание мутации для добавления нового сообщения
+const addMessageMutation = createMutation<
+  string, // Тип для нового текста сообщения
+  Error,
+  Message, // Тип для данных сообщения
+  { newMessageText: string } // Тип для параметров мутации
+>({
+  onMutate: async (newMessageText: string) => {
+    // Сохранение текущего состояния сообщений перед мутацией
+    const prevMessages = $queryMessage.data?.messages || [];
+
+    // Создание сообщения
+    const optimisticMessage: Message = {
+      text: newMessageText,
+      own: true,
+      created_at: new Date().toISOString(),
+      chat_name: $queryMessage.data?.chat_name || 'Default Chat Name',
+    };
+
+    // Обновление данных запроса
+    $queryMessage.data = {
+      ...$queryMessage.data!,
+      messages: [...prevMessages, optimisticMessage],
+    };
+
+    // Очистка поля ввода
+    newMessageText = '';
+
+    // Возврат предыдущего состояния для возможной отмены в случае ошибки
+    return () => {
+      $queryMessage.data = {
+        ...$queryMessage.data!,
+        messages: prevMessages,
       };
+    };
+  },
+  onSuccess: async (data) => {
+    // Проверка структуры полученных данных
+    const receivedMessage: Message = {
+      text: (data as Message).text || null,
+      own: (data as Message).own || null,
+      created_at: (data as Message).created_at || null,
+      chat_name: $queryMessage.data?.chat_name || 'Default Chat Name',
+    };
+
+    // Обновление данных запроса после успешной мутации
+    $queryMessage.data = {
+      ...$queryMessage.data!,
+      messages: [...($queryMessage.data?.messages || []), receivedMessage],
+    };
+  },
+});
+
+// Функция для отправки сообщения
+const sendMessage = async () => {
+  // Проверка, что текст нового сообщения не пустой
+  if (newMessageText.trim() !== '') {
+    try {
+      // Выполнение мутации (отправка сообщения на сервер)
+      await addMessageMutation.mutate({ newMessageText });
     } catch (error) {
-      throw error;
+      // Обработка ошибки при необходимости
+      console.error('Error sending message:', error);
     }
   }
-});
+};
+
+  // Создание запроса для получения чата
+  $: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$page.params.id || ''}`);
+
+  // Создание запроса с использованием Svelte Query
+  $: queryMessage = createQuery({
+    queryKey: messagesGet.key,
+    async queryFn() {
+      try {
+        // Выполнение запроса для получения данных о чате
+        const res = await messagesGet.runQuery();
+        const data = res.data || { chat_name: '', messages: [] };
+
+        // Возврат данных
+        return {
+          chat_name: data.chat_name,
+          messages: (data.messages || []).map((message: Message) => ({
+            text: message.text || null,
+            own: message.own || null,
+            created_at: message.created_at || null,
+            chat_name: data.chat_name || 'Default Chat Name',
+          })),
+        };
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
 </script>
 
 {#if $queryMessage.isSuccess && $queryMessage.data}
@@ -79,6 +161,19 @@
       </div>
     {/if}
   {/each}
+  
+  <div class="flex gap-2 px-16 py-10 font-title outline outline-2 outline-sky-900">
+    <div class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2">
+      <input
+        bind:value={newMessageText}
+        placeholder="Type your message..."
+        class="flex-grow px-4 py-2 mr-4 border rounded-lg focus:outline-none"
+      />
+    </div>
+    <button on:click={sendMessage} class="px-4 py-2 text-white bg-blue-500 rounded-lg">
+      Send
+    </button>
+  </div>
 {:else}
   <div class="row-span-full m-auto">Loading...</div>
 {/if}
