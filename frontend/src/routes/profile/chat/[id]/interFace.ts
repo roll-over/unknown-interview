@@ -49,6 +49,17 @@ export const dateFormatter = (dateString: string | null): string => {
 };
 
 // Функция форматирования временной метки
+export function formatTime(timestamp: string | null): string {
+  if (!timestamp) return '';
+
+  const date = new Date(timestamp);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+export function formatDate(dateString: string | null): string {
+  return dateFormatter(dateString);
+}
+
 export const formatTimestamp = (timestamp: number | null | string): string => {
   const timestampAsNumber = typeof timestamp === 'string' ? Date.parse(timestamp) / 1000 : timestamp;
 

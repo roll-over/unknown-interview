@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, QueryObserver } from '@tanstack/svelte-query';
-	import { dateFormatter, type Chat, type Message, formatTimestamp } from '../interFace';
+	import { dateFormatter, type Chat, type Message, formatTime } from './interFace';
 	
 	// Функция для группировки массива по заданному ключу
 	function groupBy<T>(array: T[], keyFunc: (item: T) => string) {
@@ -95,7 +95,7 @@
 											<p
 												class="text-neutral-700/50 {isYourMessage ? 'text-right max-2xl' : ''}"
 											>
-												{formatTimestamp(msg.created_at)}
+												{formatTime(msg.created_at)}
 											</p>
 										</div>
 									{/each}
