@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { createGetQuery } from '$lib/api';
-	import { createQuery, QueryObserver } from '@tanstack/svelte-query';
+	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import { dateFormatter, type Chat, type Message, formatTime } from './interFace';
 
+	const queryClient = useQueryClient();
+
 	// Функция для группировки массива по заданному ключу
-	function groupBy<T>(array: T[], keyFunc: (item: T) => string) {
-		return array.reduce((result: Record<string, T[]>, item) => {
+	const groupBy = <T,>(array: T[], keyFunc: (item: T) => string) =>
+		array.reduce((result: Record<string, T[]>, item) => {
 			const key = keyFunc(item);
-			result[key] = result[key] || [];
-			result[key].push(item);
+			result[key] = [...(result[key] || []), item];
 			return result;
 		}, {});
-	}
 
 	// Запрос на получение данных о чате
 	$: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$page.params.id || ''}`);
@@ -61,6 +61,9 @@
 			}
 
 			newMessageText = '';
+
+			// После успешной отправки сообщения вызываем invalidateQueries для обновления данных
+			queryClient.invalidateQueries(messagesGet.key as any);
 		} catch (error) {
 			console.error('Error sending message:', error);
 			// Обработка ошибки по необходимости
@@ -69,8 +72,8 @@
 </script>
 
 {#if $queryMessage.isSuccess && $queryMessage.data}
-	{@const messageGroups = groupBy($queryMessage.data.messages, (msg) =>
-		dateFormatter(msg.created_at)
+	{@const messageGroups = Object.entries(
+		groupBy($queryMessage.data.messages, (msg) => dateFormatter(msg.created_at))
 	)}
 
 	<div class="grid h-full grid-rows-5 border-2 border-l-0 border-sky-900">
@@ -80,13 +83,13 @@
 			</p>
 			<div class="overflow-y-hidden p-5">
 				<div class="h-full overflow-y-auto px-10 text-xl">
-					{#each Object.entries(messageGroups) as [date, messages] (date)}
+					{#each messageGroups as [date, messages]}
 						{#if messages.length > 0}
 							<p class="p-3 text-center">{date}</p>
 							<div class="flex flex-col gap-2">
 								{#each messages as msg (msg.created_at)}
 									{@const isYourMessage = msg.own}
-									<div class="max-w-lg {isYourMessage ? 'self-end' : ''}">
+									<div class="max-w-lg {isYourMessage && 'self-end'}">
 										<div
 											class="rounded-lg px-4 py-2 {isYourMessage
 												? 'bg-app-blue-50'
@@ -94,7 +97,7 @@
 										>
 											{msg.text}
 										</div>
-										<p class="text-neutral-700/50 {isYourMessage ? 'max-2xl text-right' : ''}">
+										<p class="text-neutral-700/50 {isYourMessage && 'max-2xl text-right'}">
 											{formatTime(msg.created_at)}
 										</p>
 									</div>
@@ -112,7 +115,7 @@
 				<textarea
 					bind:value={newMessageText}
 					placeholder="Type your message..."
-					class="mr-4 flex-grow rounded-lg border px-4 py-2 focus:outline-none"
+					class="w-full flex-grow rounded-lg focus:outline-none"
 				/>
 			</div>
 			<button
