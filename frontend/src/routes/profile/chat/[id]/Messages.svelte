@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, QueryObserver } from '@tanstack/svelte-query';
@@ -104,25 +104,25 @@
 					{/each}
 				</div>
 			</div>
-			<div class="flex gap-2 px-16 py-6 font-title outline outline-2 outline-sky-900">
-				<div
-					class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2"
-				>
-					<textarea
-						bind:value={newMessageText}
-						placeholder="Type your message..."
-						class="mr-4 flex-grow rounded-lg border px-4 py-2 focus:outline-none"
-					/>
-				</div>
-				<button
-					on:click={sendMessage}
-					class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white"
-				>
-					SEND
-				</button>
+		</div>
+		<div class="flex gap-2 px-16 py-6 font-title outline outline-2 outline-sky-900">
+			<div
+				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2"
+			>
+				<textarea
+					bind:value={newMessageText}
+					placeholder="Type your message..."
+					class="mr-4 flex-grow rounded-lg border px-4 py-2 focus:outline-none"
+				/>
 			</div>
+			<button
+				on:click={sendMessage}
+				class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white"
+			>
+				SEND
+			</button>
 		</div>
 	</div>
 {:else}
 	<div class="row-span-full m-auto">Loading...</div>
-{/if} -->
+{/if}

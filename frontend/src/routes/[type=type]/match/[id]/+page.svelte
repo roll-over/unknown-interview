@@ -68,14 +68,14 @@
 			<div class="flex items-center gap-1">
 				<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 				<a
-					class="bg-app-blue-600 current:bg-white current:text-app-blue-600 ml-auto rounded-full p-1 text-white transition-colors"
+					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
 					href={route(data.isCvRoute ? '/cv/create' : '/vacancy/create')}
 				>
 					<EditIcon />
 				</a>
 				<button
 					aria-label={data.isCvRoute ? 'delete cv' : 'delete vacancy'}
-					class="current:bg-white current:text-red-600 rounded-full bg-red-600 p-1 text-white transition-colors"
+					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"
 					on:click={async () => {
 						$userMatchMutation.mutate();
 						data.queryClient.invalidateQueries({
