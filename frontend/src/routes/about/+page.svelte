@@ -20,7 +20,7 @@
 		</div>
 		<div class="items-cente flex flex-col space-y-8">
 			<img
-				src="/hidehire.webp"
+				src="hidehire.webp"
 				class=""
 				alt="hide hire"
 			/>
@@ -39,10 +39,10 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="https://twitter.com/roll_over_group"
+					href="https://www.linkedin.com/company/hide-hire"
 				>
 					<img
-						src="/linkedin.webp"
+						src="linkedin.webp"
 						class="h-20 w-20"
 						alt="linkedin logo"
 					/>
@@ -50,10 +50,10 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="https://www.linkedin.com/company/hide-hire"
+					href="https://twitter.com/roll_over_group"
 				>
 					<img
-						src="/twitter.webp"
+						src="twitter.webp"
 						class="h-20 w-20"
 						alt="twitter logo"
 					/>
@@ -66,10 +66,10 @@
 				<a
 					class="inline-block"
 					target="_blank"
-					href="mailto:red.flags.service@gmail.com"
+					href="https://roll-over.org/?utm_source=hide-hire.roll-over.org"
 				>
 					<img
-						src="/roll-over.webp"
+						src="roll-over.webp"
 						class="h-16 w-24"
 						alt="roll-over logo"
 					/>
@@ -89,7 +89,7 @@
 							use:popup={{ event: 'click', target: 'loopExample-' + member.id, placement: 'top' }}
 						>
 							<div
-								class="z-10 w-44 space-y-2 bg-white"
+								class="card card-hover z-10 w-44 space-y-2 bg-white transition-none"
 								data-popup="loopExample-{member.id}"
 							>
 								<img
