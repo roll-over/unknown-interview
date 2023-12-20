@@ -3,6 +3,7 @@
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import { dateFormatter, type Chat, type Message, formatTime } from './interFace';
+	import { tick } from 'svelte';
 
 	const queryClient = useQueryClient();
 
@@ -41,12 +42,14 @@
 	});
 
 	// Прокрутка вниз при получении новых сообщений
-	$: if ($queryMessage.isSuccess && $queryMessage.data) {
-		const chatBottom = document.getElementById('chatBottom');
-		if (chatBottom) {
-			chatBottom.scrollIntoView();
-		}
-	}
+  $: if ($queryMessage.isSuccess && $queryMessage.data) {
+    tick().then(() => {
+      const chatBottom = document.getElementById('chatBottom');
+      if (chatBottom) {
+        chatBottom.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
 
 	// Функция для отправки нового сообщения
 	async function sendMessage() {
