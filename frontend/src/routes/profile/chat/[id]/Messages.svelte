@@ -6,13 +6,14 @@
 
 	const queryClient = useQueryClient();
 
-	// Функция для группировки массива по заданному ключу
 	const groupBy = <T,>(array: T[], keyFunc: (item: T) => string) =>
 		array.reduce((result: Record<string, T[]>, item) => {
 			const key = keyFunc(item);
 			result[key] = [...(result[key] || []), item];
 			return result;
 		}, {});
+
+	let newMessageText = '';
 
 	// Запрос на получение данных о чате
 	$: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$page.params.id || ''}`);
@@ -39,8 +40,13 @@
 		}
 	});
 
-	// Переменная для хранения текста нового сообщения
-	let newMessageText = '';
+	// Прокрутка вниз при получении новых сообщений
+	$: if ($queryMessage.isSuccess && $queryMessage.data) {
+		const chatBottom = document.getElementById('chatBottom');
+		if (chatBottom) {
+			chatBottom.scrollIntoView();
+		}
+	}
 
 	// Функция для отправки нового сообщения
 	async function sendMessage() {
@@ -105,6 +111,7 @@
 							</div>
 						{/if}
 					{/each}
+					<div id="chatBottom"></div>
 				</div>
 			</div>
 		</div>
@@ -116,6 +123,7 @@
 					bind:value={newMessageText}
 					placeholder="Type your message..."
 					class="w-full flex-grow rounded-lg focus:outline-none"
+					on:keydown={(event) => event.key === 'Enter' && sendMessage()}
 				/>
 			</div>
 			<button
