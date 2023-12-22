@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Chats from './Chats.svelte';
 	import Notion from './Notion.svelte';
-	import Messages from './Messages.svelte';
 </script>
 
 <div class="grid h-full grid-rows-4">
@@ -11,7 +10,7 @@
 			<Chats />
 		</div>
 		<div class="col-span-2 overflow-y-hidden">
-			<Messages />
+			<slot />
 		</div>
 		<Notion />
 	</div>
