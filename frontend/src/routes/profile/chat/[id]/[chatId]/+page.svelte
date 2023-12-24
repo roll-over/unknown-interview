@@ -3,7 +3,8 @@
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import { dateFormatter, type Chat, type Message, formatTime } from '../interFace';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	const queryClient = useQueryClient();
 
@@ -14,10 +15,18 @@
 			return result;
 		}, {});
 
+	$: lastId = writable('');
+
+	onMount(() => {
+		const url = window.location.href;
+		const parts = url.split("/");
+		lastId.set(parts.pop() || '');
+	});
+
 	let newMessageText = '';
 
 	// Запрос на получение данных о чате
-	$: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$page.params.id || ''}`);
+	$: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$lastId}`);
 
 	// Запрос на получение сообщений чата с использованием библиотеки svelte-query
 	$: queryMessage = createQuery({
@@ -42,14 +51,14 @@
 	});
 
 	// Прокрутка вниз при получении новых сообщений
-  $: if ($queryMessage.isSuccess && $queryMessage.data) {
-    tick().then(() => {
-      const chatBottom = document.getElementById('chatBottom');
-      if (chatBottom) {
-        chatBottom.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  }
+	$: if ($queryMessage.isSuccess && $queryMessage.data) {
+		tick().then(() => {
+			const chatBottom = document.getElementById('chatBottom');
+			if (chatBottom) {
+				chatBottom.scrollIntoView({ behavior: 'smooth' });
+			}
+		});
+	}
 
 	// Функция для отправки нового сообщения
 	async function sendMessage() {
@@ -60,7 +69,7 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					related_id: $page.params.id,
+					related_id: $lastId,
 					text: newMessageText
 				})
 			});
@@ -138,5 +147,5 @@
 		</div>
 	</div>
 {:else}
-	<div class="row-span-full m-auto">Loading...</div>
+	<!-- <div class="row-span-full m-auto">Loading...</div> -->
 {/if}
