@@ -28,16 +28,6 @@
 			});
 		}
 	});
-
-	// Массив для хранения DOM-элементов чатов
-	let chatNodes: HTMLAnchorElement[] = [];
-
-	// После монтирования компонента прокрутить к выбранному чату
-	onMount(() => {
-		const selectedChatNode = chatNodes.find((node) => node.ariaCurrent);
-		if (!selectedChatNode) return;
-		selectedChatNode.scrollIntoView({ block: 'nearest' });
-	});
 </script>
 
 <ul class="flex flex-col gap-3 overflow-y-auto pr-10">
@@ -48,7 +38,6 @@
 					href={route((p) => `/profile/chat/[id]/${p(chat_id)}`)}
 					class="group relative block overflow-hidden rounded-lg transition after:absolute after:-right-3 after:top-0 after:h-full after:w-3 after:bg-sky-900 after:transition-transform aria-[current]:translate-x-4 aria-[current]:bg-app-blue-100 aria-[current]:after:-translate-x-3"
 					aria-current={$page.params.id === chat_id || undefined}
-					bind:this={chatNodes[i]}
 				>
 					<div class="rounded-lg border-2 border-app-blue-100 p-3">
 						<span class="text-xl">{chat_name}</span>
