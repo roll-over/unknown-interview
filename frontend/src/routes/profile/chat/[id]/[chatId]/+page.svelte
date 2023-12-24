@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import { dateFormatter, type Chat, type Message, formatTime } from '../interFace';
