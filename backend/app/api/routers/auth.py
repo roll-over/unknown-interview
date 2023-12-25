@@ -23,7 +23,7 @@ oauth.register(
 @auth_router.get("/login/google")
 async def google_login(request: Request):
     # Redirect Google OAuth back to our application
-    redirect_uri = f"{settings.PUBLIC_EXTERNAL_URL}api/v1/auth/google"
+    redirect_uri = f"{settings.PUBLIC_EXTERNAL_URL}/api/v1/auth/google"
 
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
