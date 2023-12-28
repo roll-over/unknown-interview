@@ -1,7 +1,8 @@
 <script lang="ts">
+	import MaterialSymbolsNewWindow from '~icons/material-symbols/new-window';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
-	import { dateFormatter, type Chat, type Message, formatTime } from '../interFace';
+	import { dateFormatter, type Chat, type Message, type Note, formatTime } from '../interFace';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -25,14 +26,14 @@
 	let newMessageText = '';
 
 	// Запрос на получение данных о чате
-	$: messagesGet = createGetQuery<Chat>(`/api/v1/chats/${$lastId}`);
+	$: messagesNotesGet = createGetQuery<Chat>(`/api/v1/chats/${$lastId}`);
 
 	// Запрос на получение сообщений чата с использованием библиотеки svelte-query
 	$: queryMessage = createQuery({
-		queryKey: messagesGet.key,
+		queryKey: messagesNotesGet.key,
 		async queryFn() {
 			try {
-				const res = await messagesGet.runQuery();
+				const res = await messagesNotesGet.runQuery();
 				const data = res.data || { chat_name: '', messages: [] };
 
 				return {
@@ -48,6 +49,25 @@
 			}
 		}
 	});
+
+	$: queryNotes = createQuery({
+    queryKey: messagesNotesGet.key,
+    async queryFn() {
+        try {
+            const res = await messagesNotesGet.runQuery();
+            const data = res.data || [];
+
+            return data.map((note: Note) => ({
+                custom_id: note.custom_id || null,
+                related_id: note.related_id || null,
+                created_at: note.created_at || null,
+                note_text: note.note_text || null
+            }));
+        } catch (error) {
+            throw error;
+        }
+    }
+});
 
 	// Прокрутка вниз при получении новых сообщений
 	$: if ($queryMessage.isSuccess && $queryMessage.data) {
@@ -80,7 +100,7 @@
 			newMessageText = '';
 
 			// После успешной отправки сообщения вызываем invalidateQueries для обновления данных
-			queryClient.invalidateQueries(messagesGet.key as any);
+			queryClient.invalidateQueries(messagesNotesGet.key as any);
 		} catch (error) {
 			console.error('Error sending message:', error);
 			// Обработка ошибки по необходимости
@@ -93,7 +113,7 @@
 		groupBy($queryMessage.data.messages, (msg) => dateFormatter(msg.created_at))
 	)}
 
-	<div class="grid h-full grid-rows-5 border-2 border-l-0 border-sky-900">
+	<div class="grid grow h-full grid-rows-5 border-2 border-l-0 border-sky-900">
 		<div class="row-span-4 flex flex-col transition-opacity">
 			<p class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900">
 				{$queryMessage.data.chat_name}
@@ -148,3 +168,32 @@
 {:else}
 	<!-- <div class="row-span-full m-auto">Loading...</div> -->
 {/if}
+
+<div class="flex w-80 flex-col border-r-0 overflow-y-hidden border-2 border-sky-900">
+	<p class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900">Notes</p>
+	<div class="flex flex-col justify-between overflow-y-auto pl-5 pr-5 pt-3">
+			<button aria-label={'create notion'} class="flex items-center pb-5">
+					<MaterialSymbolsNewWindow class="mr-4 text-3xl" />ADD NEW NOTE
+			</button>
+
+{#if $queryNotes.isSuccess}
+    {#if $queryNotes.data.length > 0}
+        <ul class="flex flex-col gap-3 overflow-y-auto pr-5">
+            {#each $queryNotes.data as { custom_id, note_text } (custom_id)}
+                <li class="max-w-lg rounded-lg bg-app-blue-50 p-3">
+                    <p class="p-1">{custom_id}. {note_text}</p>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+        <div class="flex h-full w-full items-center justify-center">
+            <span>No notes available.</span>
+        </div>
+    {/if}
+{:else}
+    <div class="flex h-full w-full items-center justify-center">
+        <span>Loading...</span>
+    </div>
+{/if}
+	</div>
+</div>
