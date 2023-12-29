@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import type { Chats } from './interFace';
 	import { page } from '$app/stores';
-	import { route } from '$lib/utils/route';
 
 	// Создание запроса на получение чатов
 	$: getChats = createGetQuery('/api/v1/chats/', {
@@ -32,13 +30,13 @@
 
 <ul class="flex flex-col gap-3 overflow-y-auto pr-10">
 	{#if $queryChats.data && $queryChats.data.length > 0}
-		{#each $queryChats.data as { chat_id, chat_name, last_message_text, own }, i (chat_id)}
+		{#each $queryChats.data as { chat_id, chat_name, last_message_text, own }}
 			<li>
 				<a
-				href={`/profile/chat/${$page.params.id}/${chat_id}`}
-				class="group relative block overflow-hidden rounded-lg transition after:absolute after:-right-3 after:top-0 after:h-full after:w-3 after:bg-sky-900 after:transition-transform aria-[current]:translate-x-4 aria-[current]:bg-app-blue-100 aria-[current]:after:-translate-x-3"
-				aria-current={$page.params.chatId === chat_id ? 'page' : null}
-			>
+					href={`/profile/chat/${$page.params.id}/${chat_id}`}
+					class="group relative block overflow-hidden rounded-lg transition after:absolute after:-right-3 after:top-0 after:h-full after:w-3 after:bg-sky-900 after:transition-transform aria-[current]:translate-x-4 aria-[current]:bg-app-blue-100 aria-[current]:after:-translate-x-3"
+					aria-current={$page.params.chatId === chat_id ? 'page' : null}
+				>
 					<div class="rounded-lg border-2 border-app-blue-100 p-3">
 						<span class="text-xl">{chat_name}</span>
 						{#if own}
