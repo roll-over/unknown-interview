@@ -46,12 +46,12 @@ export interface Chat {
 
 export const dateFormatter = (dateString: string | null): string => {
 	return dateString
-			? new Date(dateString).toLocaleDateString(undefined, {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric'
-				})
-			: '';
+		? new Date(dateString).toLocaleDateString(undefined, {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric'
+		  })
+		: '';
 };
 
 export function formatTime(timestamp: string | null): string {
@@ -67,14 +67,14 @@ export function formatDate(dateString: string | null): string {
 
 export const formatTimestamp = (timestamp: number | null | string): string => {
 	const timestampAsNumber =
-			typeof timestamp === 'string' ? Date.parse(timestamp) / 1000 : timestamp;
+		typeof timestamp === 'string' ? Date.parse(timestamp) / 1000 : timestamp;
 
 	if (timestampAsNumber === null || isNaN(timestampAsNumber)) {
-			return '';
+		return '';
 	}
 
 	return new Date(timestampAsNumber * 1000).toLocaleDateString(undefined, {
-			hour: 'numeric',
-			minute: 'numeric'
+		hour: 'numeric',
+		minute: 'numeric'
 	});
 };

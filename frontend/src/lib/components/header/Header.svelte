@@ -5,7 +5,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import { showLogoutModal } from './LogoutModal.svelte';
 	import LightSwitch from '../../utils/LightSwitch/LightSwitch.svelte';
-	import { page } from '$app/stores';
+	// import { page } from '$app/stores';
 
 	$: userInfoGet = createGetQuery('/api/v1/auth/user_info');
 	$: userInfo = createQuery({
@@ -32,8 +32,8 @@
 
 	const modalStore = getModalStore();
 
-	$: recordId = $page.params.id || '';
-	$: isCV = ($userRecordsQuery.data?.cv_ids || []).includes(recordId) || false;
+	// $: recordId = $page.params.id || '';
+	// $: isCV = ($userRecordsQuery.data?.cv_ids || []).includes(recordId) || false;
 	$: chatPickerPopup = {
 		event: 'click',
 		target: 'chat-picker-popup',

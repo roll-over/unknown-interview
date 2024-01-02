@@ -10,8 +10,9 @@
 		type Chat,
 		formatDate
 	} from '../interFace';
-	import { onMount, tick } from 'svelte';
+	import { tick } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { page } from '$app/stores';
 
 	// Инициализация клиента для запросов
 	const queryClient = useQueryClient();
@@ -22,19 +23,12 @@
 			result[key] = [...(result[key] || []), item];
 			return result;
 		}, {});
-	// Создание хранилища для последнего идентификатора
-	$: lastId = writable('');
-	// При монтировании компонента получаем последний идентификатор из URL
-	onMount(() => {
-		const url = window.location.href;
-		const parts = url.split('/');
-		lastId.set(parts.pop() || '');
-	});
-	// Инициализация переменной для текста нового сообщения
-	let newMessageText = '';
 
-	// Запрос на получение данных о чате
-	$: messagesNotesGet = createGetQuery<Chat>(`/api/v1/chats/${$lastId}`);
+	const newMessageText = writable(''); // Инициализация переменной для текста нового сообщения
+
+	let lastId = $page.params.chatId; // Создание хранилища для последнего идентификатора
+	$: messagesNotesGet = createGetQuery<Chat>(`/api/v1/chats/${lastId}`); // Запрос на получение данных о чате
+
 	// Запрос на получение данных о сообщениях и заметках с использованием библиотеки svelte-query
 	$: queryMessagesNotes = createQuery({
 		queryKey: messagesNotesGet.key,
@@ -78,17 +72,17 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					related_id: $lastId,
-					text: newMessageText
+					related_id: lastId,
+					text: $newMessageText
 				})
 			});
 			if (!response.ok) {
 				throw new Error('Failed to send message');
 			}
 			// Очистка текста нового сообщения после успешной отправки
-			newMessageText = '';
+			$newMessageText = '';
 			// После успешной отправки сообщения вызываем invalidateQueries для обновления данных
-			queryClient.invalidateQueries(messagesNotesGet.key as any);
+			queryClient.invalidateQueries({ queryKey: messagesNotesGet.key });
 		} catch (error) {
 			console.error('Error sending message:', error);
 			// Обработка ошибки
@@ -105,7 +99,7 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					related_id: $lastId,
+					related_id: lastId,
 					note_text: newNoteText
 				})
 			});
@@ -115,7 +109,7 @@
 			// Очистка текста новой заметки после успешного добавления
 			newNoteText = '';
 			// После успешного добавления заметки вызываем invalidateQueries для обновления данных
-			queryClient.invalidateQueries(messagesNotesGet.key as any);
+			queryClient.invalidateQueries({ queryKey: messagesNotesGet.key });
 		} catch (error) {
 			console.error('Error adding note:', error);
 			// Обработка ошибки
@@ -166,7 +160,7 @@
 				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2"
 			>
 				<input
-					bind:value={newMessageText}
+					bind:value={$newMessageText}
 					placeholder="Type your message..."
 					class="w-full flex-grow rounded-lg focus:outline-none"
 					on:keydown={(event) => event.key === 'Enter' && sendMessage()}
