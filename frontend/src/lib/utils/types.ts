@@ -8,3 +8,9 @@ export type VacancyRequest = components['schemas']['VacancyRequestSchema'];
 
 export type CvResponse = components['schemas']['CVResponseSchema'];
 export type VacancyResponse = components['schemas']['VacancyResponseSchema'];
+
+export type MessageRequestSchema = components['schemas']['MessageRequestSchema'];
+export type MessageResponseSchema = components['schemas']['MessageResponseSchema'];
+
+export type ChatResponseSchema = components['schemas']['ChatResponseSchema'];
+export type ChatsResponseSchema = components['schemas']['ChatsResponseSchema'];

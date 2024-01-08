@@ -8,7 +8,6 @@
 	import Loading from '../Loading.svelte';
 	import Match, { constructMatcher } from '../Match.svelte';
 	import RandomMatch from '../RandomMatch.svelte';
-	import { getRandomCv, getRandomVacancy } from '../mock';
 
 	export let data;
 	$: userMatchGet = data.isCvRoute
@@ -44,14 +43,18 @@
 		}
 	});
 
+	$: randomMatchGet = createGetQuery(
+		data.isCvRoute ? '/api/v1/vacancies/random_vacancy' : '/api/v1/vacancies/random_vacancy'
+	);
 	$: randomMatchQuery = createQuery({
-		queryKey: data.isCvRoute ? ['random vacancy'] : ['random cv'],
+		queryKey: randomMatchGet.key,
 		queryFn() {
-			return data.isCvRoute ? getRandomVacancy() : getRandomCv();
+			return randomMatchGet.runQuery();
 		},
-		staleTime: Infinity
+		select(res) {
+			return res.data;
+		}
 	});
-
 	$: matcher = constructMatcher($userMatchQuery.data, $randomMatchQuery.data);
 </script>
 

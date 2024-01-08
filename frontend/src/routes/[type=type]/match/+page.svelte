@@ -32,6 +32,7 @@
 			return res.data;
 		}
 	});
+
 	const modalStore = getModalStore();
 	function showModal() {
 		showWarningModal(modalStore, {
