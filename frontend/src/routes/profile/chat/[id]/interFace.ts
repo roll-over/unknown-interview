@@ -46,11 +46,13 @@ export interface Chat {
 
 export const dateFormatter = (dateString: string | null): string => {
 	return dateString
-		? new Date(dateString).toLocaleDateString(undefined, {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric'
-		  })
+		? new Date(dateString)
+				.toLocaleDateString(undefined, {
+					year: 'numeric',
+					month: 'short',
+					day: 'numeric'
+				})
+				.replace(/[г.]/g, '') // убираем букву "г" и точки
 		: '';
 };
 

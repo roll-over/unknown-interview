@@ -28,7 +28,7 @@
 	});
 </script>
 
-<ul class="flex flex-col gap-3 overflow-y-auto pr-10">
+<ul class="flex flex-col gap-3 overflow-y-auto pr-7">
 	{#if $queryChats.data && $queryChats.data.length > 0}
 		{#each $queryChats.data as { chat_id, chat_name, last_message_text, own }}
 			<li>
