@@ -43,7 +43,9 @@
 			grade: compareStrings(userMatch.grade, randomMatch.grade),
 			title: compareStrings(userMatch.title, randomMatch.title),
 			skills: compareSkills(userMatch.skillset, randomMatch.skillset),
-			salary: compareSalaries(userMatch.salary, randomMatch.salary)
+			salary: compareSalaries(userMatch.salary, randomMatch.salary),
+			user_id: userMatch.custom_id,
+			random_id: randomMatch.custom_id
 		};
 	}
 	export type Matcher = ReturnType<typeof constructMatcher>;

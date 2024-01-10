@@ -6,6 +6,30 @@
 	export let matchData: MatchData;
 	export let like: () => void;
 	export let dislike: () => void;
+
+	const sendRelation = async (relation: string) => {
+		await fetch('/api/v1/relation', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				cv_id: matcher.random_id,
+				vacancy_id: matcher.user_id,
+				relation
+			})
+		});
+	};
+
+	const handleLike = () => {
+		like();
+		sendRelation('liked');
+	};
+
+	const handleDislike = () => {
+		dislike();
+		sendRelation('disliked');
+	};
 </script>
 
 <Match
@@ -25,14 +49,14 @@
 		<button
 			aria-label="dislike"
 			class="aspect-square h-32 -scale-100 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-red-400"
-			on:click={dislike}
+			on:click={handleDislike}
 		>
 			<ThumbsUpIcon class="h-full w-full" />
 		</button>
 		<button
 			aria-label="like"
 			class="aspect-square h-32 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-green-400"
-			on:click={like}
+			on:click={handleLike}
 		>
 			<ThumbsUpIcon class="h-full w-full" />
 		</button>
