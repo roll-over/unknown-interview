@@ -8,28 +8,36 @@
 	export let dislike: () => void;
 
 	const sendRelation = async (relation: string) => {
-		await fetch('/api/v1/relation', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				cv_id: matcher.random_id,
-				vacancy_id: matcher.user_id,
-				relation
-			})
-		});
-	};
+   let cv_id = matcher.random_id;
+   let vacancy_id = matcher.user_id;
 
-	const handleLike = () => {
-		like();
-		sendRelation('liked');
-	};
+   if (window.location.pathname.includes('/cv/match/')) {
+       cv_id = matcher.user_id;
+       vacancy_id = matcher.random_id;
+   }
 
-	const handleDislike = () => {
-		dislike();
-		sendRelation('disliked');
-	};
+   await fetch('/api/v1/relation', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+           cv_id,
+           vacancy_id,
+           relation
+       })
+   });
+};
+
+const handleLike = () => {
+   like();
+   sendRelation('liked');
+};
+
+const handleDislike = () => {
+   dislike();
+   sendRelation('disliked');
+};
 </script>
 
 <Match
