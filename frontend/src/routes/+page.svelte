@@ -13,7 +13,7 @@
 	</div>
 	<a
 		href={route('/purpose')}
-		class="group flex items-center justify-end gap-6 rounded-lg bg-white px-14 py-2.5 text-2xl text-black transition-colors current:bg-app-blue-400 dark:bg-app-dark-blue dark:text-white"
+		class="group flex items-center justify-end gap-6 rounded-lg bg-white px-14 py-2.5 text-2xl text-black transition-colors current:bg-app-blue-400 dark:bg-app-dark-blue dark:text-white dark:hover:bg-app-dark-light"
 	>
 		go to survey!
 		<IcOutlineArrowForwardIos

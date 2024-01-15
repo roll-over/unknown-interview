@@ -61,7 +61,9 @@
 </script>
 
 <div class="flex h-full min-h-0 flex-col">
-	<div class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 {mainClass}">
+	<div
+		class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray {mainClass}"
+	>
 		<slot name="header" />
 		<div>
 			Profession:

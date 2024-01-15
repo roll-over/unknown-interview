@@ -43,7 +43,9 @@
 </script>
 
 <div class="overflow-y-hidden pb-16">
-	<div class="flex max-h-full flex-col space-y-5 rounded-lg bg-app-blue-50 p-5">
+	<div
+		class="flex max-h-full flex-col space-y-5 rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray"
+	>
 		<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 		{#if $userRecordsQuery.isSuccess}
 			<div class="flex flex-col overflow-y-auto">

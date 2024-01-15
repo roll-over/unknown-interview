@@ -12,7 +12,8 @@
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
 				href={route('/vacancy/create')}
 			>
-				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl dark:bg-app-dark-blue"
+				<span
+					class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl transition-colors hover:bg-sky-400 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
 					>Post your vacancy</span
 				>
 				<MaterialSymbolsLaptopMacOutline
@@ -23,7 +24,8 @@
 				class="flex flex-col items-center gap-4 transition-transform current:scale-105"
 				href={route('/cv/create')}
 			>
-				<span class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl dark:bg-app-dark-blue"
+				<span
+					class="rounded-xl bg-app-blue-100 px-16 py-6 text-3xl transition-colors hover:bg-sky-400 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
 					>Post your CV</span
 				>
 				<IcOutlineGroups class="h-40 w-40 text-app-blue-500 dark:text-app-dark-gray" />
