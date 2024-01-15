@@ -38,6 +38,8 @@
 		dislike();
 		sendRelation('disliked');
 	};
+
+	const isMatchDataAvailable: boolean = !!matchData;
 </script>
 
 <Match
@@ -47,10 +49,14 @@
 	footerClass="flex -translate-y-full justify-between"
 >
 	<svelte:fragment slot="header">
-		<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
-			{matchData.grade}
-			{matchData.profession.name}
-		</h2>
+		{#if isMatchDataAvailable}
+			<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
+				{matchData.grade}
+				{matchData.profession.name}
+			</h2>
+		{:else}
+			<p class="text-center">Please wait. We are looking for the best match</p>
+		{/if}
 	</svelte:fragment>
 
 	<svelte:fragment slot="footer">

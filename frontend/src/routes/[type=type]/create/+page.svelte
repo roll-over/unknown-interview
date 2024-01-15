@@ -2,7 +2,7 @@
 	import { createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import RadioGroup from '$lib/components/RadioGroup.svelte';
 	import type { CvRequest, StrictOmit, VacancyRequest } from '$lib/utils/types';
-	import { createMutation } from '@tanstack/svelte-query';
+	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { persisted } from 'svelte-local-storage-store';
 	import CilArrowRight from '~icons/cil/arrow-right';
 	import MaterialSymbolsSearch from '~icons/material-symbols/search';
@@ -69,25 +69,25 @@
 	}
 
 	// just a showcase that form gets saved
-	// let savedFormId: string;
-	// $: formInfoGet = data.isCvRoute
-	// 	? createGetQuery('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: savedFormId } } })
-	// 	: createGetQuery('/api/v1/vacancies/{vacancy_id}', {
-	// 			params: { path: { vacancy_id: savedFormId } }
-	// 	  });
-	// $: formInfoQuery = createQuery({
-	// 	queryKey: formInfoGet.key,
-	// 	async queryFn() {
-	// 		return formInfoGet.runQuery();
-	// 	},
-	// 	enabled: !!savedFormId
-	// });
+	let savedFormId: string;
+	$: formInfoGet = data.isCvRoute
+		? createGetQuery('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: savedFormId } } })
+		: createGetQuery('/api/v1/vacancies/{vacancy_id}', {
+				params: { path: { vacancy_id: savedFormId } }
+		  });
+	$: formInfoQuery = createQuery({
+		queryKey: formInfoGet.key,
+		async queryFn() {
+			return formInfoGet.runQuery();
+		},
+		enabled: !!savedFormId
+	});
 </script>
 
-<!-- <div class="pl-12">
+<div class="pl-12">
 	{JSON.stringify($formInfoQuery.data?.data) ??
 		'Your review will by displayed here after you save it'}
-</div> -->
+</div>
 <form
 	class="flex flex-col items-start gap-7 px-12 py-7 text-xl dark:text-white"
 	on:submit={handleSubmit}
