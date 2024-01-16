@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ThumbsUpIcon from '~icons/material-symbols/thumb-up-outline';
 	import Match, { type MatchData, type Matcher } from './Match.svelte';
+	import { page } from '$app/stores';
 
 	export let matcher: Matcher = {};
 	export let matchData: MatchData;
@@ -11,10 +12,10 @@
 		let cv_id = matcher.random_id;
 		let vacancy_id = matcher.user_id;
 
-		if (window.location.pathname.includes('/cv/match/')) {
-			cv_id = matcher.user_id;
-			vacancy_id = matcher.random_id;
-		}
+		if ($page.params.type === 'cv') {
+    cv_id = matcher.user_id;
+    vacancy_id = matcher.random_id;
+  }
 
 		await fetch('/api/v1/relation', {
 			method: 'POST',
