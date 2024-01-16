@@ -28,7 +28,7 @@
 	const modalStore = getModalStore();
 </script>
 
-<div class="rounded-md bg-white p-10 shadow-md">
+<div class="rounded-md bg-white p-10 shadow-md dark:bg-app-dark-gray dark:text-white">
 	<div class="flex flex-col items-start gap-4">
 		<h1 class="text-xl">Are you sure you want to logout?</h1>
 		{email}

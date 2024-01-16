@@ -84,7 +84,7 @@
 	});
 </script>
 
-<div class="pl-12">
+<div class="pl-12 dark:text-white">
 	{JSON.stringify($formInfoQuery.data?.data) ??
 		'Your review will by displayed here after you save it'}
 </div>
