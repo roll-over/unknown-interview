@@ -13,21 +13,31 @@
 		let vacancy_id = matcher.user_id;
 
 		if ($page.params.type === 'cv') {
-    cv_id = matcher.user_id;
-    vacancy_id = matcher.random_id;
-  }
+			cv_id = matcher.user_id;
+			vacancy_id = matcher.random_id;
+		}
 
-		await fetch('/api/v1/relation', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				cv_id,
-				vacancy_id,
-				relation
-			})
-		});
+		try {
+			const response = await fetch('/api/v1/relation', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					cv_id,
+					vacancy_id,
+					relation
+				})
+			});
+			if (response.ok) {
+				console.log('Relation sent successfully');
+				location.reload();
+			} else {
+				console.error('Failed to send relation:', response.status, response.statusText);
+			}
+		} catch (error) {
+			console.error('Error during fetch:', error);
+		}
 	};
 
 	const handleLike = () => {
