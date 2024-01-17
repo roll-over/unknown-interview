@@ -7,7 +7,7 @@
 	export let name: string;
 </script>
 
-<div class="flex gap-2">
+<div class="flex flex-wrap gap-2">
 	{#each options as option (option)}
 		<label
 			class="cursor-pointer rounded-md bg-app-blue-100 px-2 transition-colors hover:bg-app-blue-50 dark:bg-app-dark-light dark:hover:bg-app-dark-gray {value ===
