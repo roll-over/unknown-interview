@@ -16,11 +16,11 @@
 </script>
 
 <div class="flex flex-col gap-2 text-xl">
-	<div class="rounded-md bg-app-blue-50 px-2 py-1 dark:bg-app-dark-gray">
+	<div class="bg-app-blue-50 dark:bg-app-dark-gray rounded-md px-2 py-1">
 		<div class="flex flex-wrap gap-2">
 			{#each selectedSkills as skill, i (skill)}
 				<button
-					class="chip bg-app-blue-100 text-xl dark:bg-app-dark-light"
+					class="chip bg-app-blue-100 dark:bg-app-dark-light text-xl"
 					type="button"
 					on:click={() => {
 						selectedSkills.splice(i, 1);
@@ -32,7 +32,7 @@
 				</button>
 			{/each}
 			<input
-				class="w-20 rounded p-2 text-xl caret-app-blue-600"
+				class="caret-app-blue-600 w-24 rounded p-2 text-xl"
 				bind:value={newSkill}
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {
@@ -43,7 +43,7 @@
 						newSkill = '';
 					}
 				}}
-				placeholder="skill..."
+				placeholder="new skill"
 			/>
 		</div>
 	</div>
@@ -56,7 +56,7 @@
 				selectedSkills.push(e.detail.value);
 				selectedSkills = selectedSkills;
 			}}
-			class="rounded bg-app-blue-50 p-4 dark:bg-app-dark-gray"
+			class="bg-app-blue-50 dark:bg-app-dark-gray rounded p-4"
 			regionList="flex flex-col gap-2"
 			regionItem="bg-app-blue-600 dark:hover:bg-app-dark-light hover:bg-app-blue-400 dark:bg-app-dark-blue transition-colors rounded-md"
 			regionButton="w-full text-left text-white px-3"
