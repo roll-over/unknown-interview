@@ -88,87 +88,97 @@
 	{JSON.stringify($formInfoQuery.data?.data) ??
 		'Your review will by displayed here after you save it'}
 </div>
-<form
-	class="flex flex-col items-start gap-7 p-2 md:px-12 md:py-7 text-xl dark:text-white"
-	on:submit={handleSubmit}
->
-	<fieldset class="w-2/4">
-		<legend class="pb-2">Profession</legend>
-		<Profession bind:selectedProfession={$formData.profession.name} />
-	</fieldset>
-	<fieldset>
-		<legend class="pb-2">Grade</legend>
-		<RadioGroup
-			options={grades}
-			bind:value={$formData.grade}
-			name="position"
-		/>
-	</fieldset>
-	<fieldset>
-		<legend class="pb-2">Position</legend>
-		<RadioGroup
-			options={titles}
-			bind:value={$formData.title}
-			name="title"
-		/>
-	</fieldset>
-
-	<fieldset class="w-2/4">
-		<legend class="flex items-center gap-0.5 pb-2"
-			>Skills
-			<MaterialSymbolsSearch />
-		</legend>
-		<Skills bind:selectedSkills={$formData.skillset} />
-	</fieldset>
-
-	<fieldset>
-		<div class="flex items-center gap-1">
-			<legend>Estimated salary</legend>
-			<label>
-				from
-				<input
-					type="number"
-					min="0"
-					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
-					bind:value={$formData.salary.min_level}
-				/>
-			</label>
-			<label>
-				to
-				<input
-					type="number"
-					min={$formData.salary.min_level}
-					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
-					bind:value={$formData.salary.max_level}
-				/>
-			</label>
-		</div>
-		<label>
-			Currency:
-			<select
-				class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
-				bind:value={$formData.salary.currency}
-			>
-				{#each currencies as currency}
-					<option value={currency}>{currency}</option>
-				{/each}
-			</select>
-		</label>
-	</fieldset>
-	<fieldset class="w-full">
-		<legend class="pb-2">About Me:</legend>
-		<label>
-			<textarea
-				class="bg-app-blue-50 dark:bg-app-dark-gray h-80 w-full rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-16"
-				bind:value={$formData.extra_info}
-				placeholder="tell us about yourself..."
-			></textarea>
-		</label>
-	</fieldset>
-	<button
-		class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
+<div class="flex w-full items-center justify-center">
+	<form
+		class="flex w-full max-w-2xl flex-col items-start gap-7 p-2 text-xl dark:text-white md:px-12 md:py-7"
+		on:submit={handleSubmit}
 	>
-		{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
-		<CilArrowRight class="h-12 w-12" />
-	</button>
-</form>
+		<fieldset class=" flex flex-col gap-2">
+			<legend class="pb-2">Profession</legend>
+			<Profession bind:selectedProfession={$formData.profession.name} />
+		</fieldset>
+		<fieldset class=" flex flex-col gap-2">
+			<legend class="pb-2">Grade</legend>
+			<RadioGroup
+				options={grades}
+				bind:value={$formData.grade}
+				name="position"
+			/>
+		</fieldset>
+		<fieldset class=" flex flex-col gap-2">
+			<legend class="pb-2">Position</legend>
+			<RadioGroup
+				options={titles}
+				bind:value={$formData.title}
+				name="title"
+			/>
+		</fieldset>
+
+		<fieldset class=" flex flex-col gap-2">
+			<legend class="flex items-center gap-0.5 pb-2"
+				>Skills
+				<MaterialSymbolsSearch />
+			</legend>
+			<Skills bind:selectedSkills={$formData.skillset} />
+		</fieldset>
+
+		<fieldset class=" flex flex-col gap-2">
+			<legend>Estimated salary</legend>
+			<div class="flex flex-col gap-2">
+				<div class="align-center flex content-center items-center justify-center gap-5 pl-2">
+					<label for="from"> from: </label>
+					<input
+						type="number"
+						id="from"
+						min="0"
+						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						bind:value={$formData.salary.min_level}
+					/>
+				</div>
+				<div class="align-center flex content-center items-center justify-between gap-5 pl-2">
+					<label for="to"> to: </label>
+					<input
+						type="number"
+						id="to"
+						min={$formData.salary.min_level}
+						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						bind:value={$formData.salary.max_level}
+					/>
+				</div>
+			</div>
+			<div class="align-center flex content-center gap-5 pl-2">
+				<label
+					class="flex items-center gap-1"
+					for="currency"
+				>
+					Currency:
+				</label>
+				<select
+					id="currency"
+					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					bind:value={$formData.salary.currency}
+				>
+					{#each currencies as currency}
+						<option value={currency}>{currency}</option>
+					{/each}
+				</select>
+			</div>
+		</fieldset>
+		<fieldset class="w-full">
+			<legend class="pb-2">About Me:</legend>
+			<label>
+				<textarea
+					class="bg-app-blue-50 dark:bg-app-dark-gray h-80 w-full rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
+					bind:value={$formData.extra_info}
+					placeholder="tell us about yourself..."
+				></textarea>
+			</label>
+		</fieldset>
+		<button
+			class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
+		>
+			{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
+			<CilArrowRight class="h-12 w-12" />
+		</button>
+	</form>
+</div>
