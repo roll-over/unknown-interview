@@ -28,4 +28,4 @@ jobs:
       - name: stop containers
         run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && docker-compose -f docker-compose.dev_stand.yml down "
       - name: build and run containers
-        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && docker-compose -f docker-compose.dev_stand.yml up -d"
+        run: ssh ${{ vars.DEV_SSH_USER }}@${{ vars.DEV_SSH_HOST }} "cd ${{ vars.DEV_DIR }} && docker-compose -f docker-compose.dev_stand.yml up -d --build"
