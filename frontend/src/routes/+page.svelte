@@ -9,7 +9,7 @@
 >
 	<div class="relative z-0 mb-12 flex w-full flex-col items-center font-title">
 		<Logo class="h-52 w-full dark:fill-white" />
-		<h1 class="text-2xl uppercase dark:text-white">Skills first. Unbiased Hiring.</h1>
+		<h1 class="text-2xl uppercase dark:text-white text-center">Skills first. Unbiased Hiring.</h1>
 	</div>
 	<a
 		href={route('/purpose')}
