@@ -89,7 +89,7 @@
 		'Your review will by displayed here after you save it'}
 </div>
 <form
-	class="flex flex-col items-start gap-7 px-12 py-7 text-xl dark:text-white"
+	class="flex flex-col items-start gap-7 p-2 md:px-12 md:py-7 text-xl dark:text-white"
 	on:submit={handleSubmit}
 >
 	<fieldset class="w-2/4">
@@ -129,7 +129,7 @@
 				<input
 					type="number"
 					min="0"
-					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.min_level}
 				/>
 			</label>
@@ -138,7 +138,7 @@
 				<input
 					type="number"
 					min={$formData.salary.min_level}
-					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.max_level}
 				/>
 			</label>
@@ -146,7 +146,7 @@
 		<label>
 			Currency:
 			<select
-				class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+				class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
 				bind:value={$formData.salary.currency}
 			>
 				{#each currencies as currency}
@@ -159,14 +159,14 @@
 		<legend class="pb-2">About Me:</legend>
 		<label>
 			<textarea
-				class="h-80 w-full rounded-lg bg-app-blue-50 px-16 py-16 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+				class="bg-app-blue-50 dark:bg-app-dark-gray h-80 w-full rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-16"
 				bind:value={$formData.extra_info}
 				placeholder="tell us about yourself..."
 			></textarea>
 		</label>
 	</fieldset>
 	<button
-		class="ml-auto flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
+		class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
 	>
 		{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
 		<CilArrowRight class="h-12 w-12" />
