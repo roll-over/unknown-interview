@@ -62,10 +62,10 @@
 	<Match
 		{matcher}
 		matchData={$userMatchQuery.data}
-		footerClass="gap-9 flex pt-5 text-base"
+		footerClass="gap-9 flex pt-5 text-base dark:text-white"
 	>
 		<svelte:fragment slot="header">
-			<div class="flex items-center gap-1">
+			<div class="flex items-center gap-1 dark:text-white">
 				<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 				<a
 					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"

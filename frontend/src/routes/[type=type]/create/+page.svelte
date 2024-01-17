@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import RadioGroup from '$lib/components/RadioGroup.svelte';
-	import { route } from '$lib/utils/route';
 	import type { CvRequest, StrictOmit, VacancyRequest } from '$lib/utils/types';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { persisted } from 'svelte-local-storage-store';
@@ -9,6 +8,7 @@
 	import MaterialSymbolsSearch from '~icons/material-symbols/search';
 	import Profession from './Profession.svelte';
 	import Skills from './Skills.svelte';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -51,12 +51,21 @@
 			console.log({ res, err });
 		}
 	});
-	function handleSubmit(e: SubmitEvent) {
+	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 
 		const { skillset, ...rest } = $formData;
 
-		$submitMutation.mutate({ ...rest, skillset: skillset.map((name) => ({ name })) });
+		try {
+			// Wait for the mutation to complete
+			await $submitMutation.mutate({ ...rest, skillset: skillset.map((name) => ({ name })) });
+
+			// Navigate to the desired route after successful form submission
+			goto(data.isCvRoute ? '/cv/match' : '/vacancy/match');
+		} catch (error) {
+			// Handle any errors that occurred during the mutation
+			console.error('Form submission error:', error);
+		}
 	}
 
 	// just a showcase that form gets saved
@@ -75,15 +84,15 @@
 	});
 </script>
 
-<div>
+<div class="pl-12 dark:text-white">
 	{JSON.stringify($formInfoQuery.data?.data) ??
 		'Your review will by displayed here after you save it'}
 </div>
 <form
-	class="flex flex-col items-start gap-5 p-3"
+	class="flex flex-col items-start gap-7 px-12 py-7 text-xl dark:text-white"
 	on:submit={handleSubmit}
 >
-	<fieldset class="w-80">
+	<fieldset class="w-2/4">
 		<legend class="pb-2">Profession</legend>
 		<Profession bind:selectedProfession={$formData.profession.name} />
 	</fieldset>
@@ -104,7 +113,7 @@
 		/>
 	</fieldset>
 
-	<fieldset class="w-80">
+	<fieldset class="w-2/4">
 		<legend class="flex items-center gap-0.5 pb-2"
 			>Skills
 			<MaterialSymbolsSearch />
@@ -120,7 +129,7 @@
 				<input
 					type="number"
 					min="0"
-					class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
+					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.min_level}
 				/>
 			</label>
@@ -129,7 +138,7 @@
 				<input
 					type="number"
 					min={$formData.salary.min_level}
-					class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
+					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.max_level}
 				/>
 			</label>
@@ -137,7 +146,7 @@
 		<label>
 			Currency:
 			<select
-				class="rounded-lg bg-app-blue-50 p-1 text-sm focus:border-blue-500 focus:ring-blue-500"
+				class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 				bind:value={$formData.salary.currency}
 			>
 				{#each currencies as currency}
@@ -146,16 +155,20 @@
 			</select>
 		</label>
 	</fieldset>
+	<fieldset class="w-full">
+		<legend class="pb-2">About Me:</legend>
+		<label>
+			<textarea
+				class="h-80 w-full rounded-lg bg-app-blue-50 px-16 py-16 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+				bind:value={$formData.extra_info}
+				placeholder="tell us about yourself..."
+			></textarea>
+		</label>
+	</fieldset>
 	<button
-		class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white shadow-blue-300 focus-within:outline-none focus-within:ring-4 focus-within:ring-blue-300 hover:bg-blue-800"
-	>
-		Submit
-	</button>
-	<a
-		href={route(data.isCvRoute ? '/cv/match' : '/vacancy/match')}
-		class="ml-auto flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white"
+		class="ml-auto flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
 	>
 		{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
 		<CilArrowRight class="h-12 w-12" />
-	</a>
+	</button>
 </form>

@@ -288,17 +288,14 @@ class MatchVacancyCVUoW:
         }
         match_record = await self.matches.get_records(query, limit=1)
 
-        if match_record:
-            updated_record = await self.matches.update_relation(
+        if not match_record:
+            raise ForbiddenAction
+
+        updated_record = await self.matches.update_relation(
                 match_record,
                 relation,
                 new_relation,
             )
-        else:
-            query.update({
-                relation: new_relation,
-            })
-            updated_record = await self.matches.add_records(query)
 
         return updated_record
 

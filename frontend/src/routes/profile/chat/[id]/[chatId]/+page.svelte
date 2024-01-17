@@ -194,9 +194,13 @@
 		groupBy($queryMessagesNotes.data.messages, (msg) => dateFormatter(msg.created_at))
 	)}
 
-	<div class="grid h-full grow grid-rows-5 border-2 border-l-0 border-sky-900">
+	<div
+		class="grid h-full grow grid-rows-5 border-2 border-l-0 border-sky-900 dark:border-app-dark-light"
+	>
 		<div class="row-span-4 flex flex-col transition-opacity">
-			<p class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900">
+			<p
+				class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
+			>
 				{$queryMessagesNotes.data.chat_name}
 			</p>
 			<div class="overflow-y-hidden pb-1 pl-2 pr-1 pt-1">
@@ -210,12 +214,15 @@
 									<div class="max-w-lg {isYourMessage ? 'self-end' : 'self-start'}">
 										<div
 											class="rounded-lg px-4 py-2 {isYourMessage
-												? 'bg-app-blue-50'
-												: 'bg-app-blue-100'}"
+												? 'bg-app-blue-50 dark:bg-app-dark-gray'
+												: 'bg-app-blue-100 dark:bg-app-dark-light'}"
 										>
 											{msg.text}
 										</div>
-										<p class="text-neutral-700/50 {isYourMessage && 'max-2xl text-right'}">
+										<p
+											class="text-neutral-700/50 dark:text-white {isYourMessage &&
+												'max-2xl text-right'}"
+										>
 											{formatTime(msg.created_at)}
 										</p>
 									</div>
@@ -227,20 +234,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex gap-2 px-16 py-10 font-title outline outline-2 outline-sky-900">
+		<div
+			class="flex gap-2 px-16 py-10 font-title outline outline-2 outline-sky-900 dark:outline-app-dark-light"
+		>
 			<div
-				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2"
+				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2 dark:outline-app-dark-blue"
 			>
 				<textarea
 					bind:value={$newMessageText}
 					placeholder="Leave a message..."
-					class="w-full flex-grow resize-none rounded-lg focus:outline-none"
+					class="w-full flex-grow resize-none rounded-lg focus:outline-none dark:bg-black dark:text-white"
 					on:keydown={(event) => event.key === 'Enter' && sendMessage()}
 				/>
 			</div>
 			<button
 				on:click={sendMessage}
-				class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white transition hover:bg-sky-700"
+				class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
 			>
 				SEND
 			</button>
@@ -250,8 +259,14 @@
 	<!-- <div class="row-span-full m-auto">Loading...</div> -->
 {/if}
 
-<div class="flex w-80 flex-col overflow-y-hidden border-2 border-r-0 border-sky-900">
-	<p class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900">Notes</p>
+<div
+	class="flex w-80 flex-col overflow-y-hidden border-2 border-r-0 border-sky-900 dark:border-app-dark-light"
+>
+	<p
+		class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
+	>
+		Notes
+	</p>
 	<div class="flex flex-col justify-between overflow-y-auto pl-5 pr-1 pt-3">
 		<button
 			aria-label={'create notion'}
@@ -262,17 +277,17 @@
 		</button>
 
 		{#if isAddingNote}
-			<div class="mb-2 mr-5 max-w-lg rounded-lg bg-app-blue-50 p-5">
+			<div class="mb-2 mr-5 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
 				<textarea
 					bind:value={newNoteText}
 					placeholder="Type your note..."
-					class="w-full flex-grow rounded-lg bg-app-blue-50 focus:outline-none"
+					class="w-full flex-grow rounded-lg bg-app-blue-50 focus:outline-none dark:bg-app-dark-gray"
 					on:keydown={(event) => event.key === 'Enter' && addNote()}
 				/>
 			</div>
 			<button
 				on:click={addNote}
-				class="mb-5 mr-5 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700"
+				class="mb-5 mr-5 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
 			>
 				SAVE
 			</button>
@@ -281,7 +296,7 @@
 			{#if $queryMessagesNotes.data && $queryMessagesNotes.data.notes && $queryMessagesNotes.data.notes.length > 0}
 				<ul class="flex flex-col gap-3 overflow-y-auto pr-1">
 					{#each $queryMessagesNotes.data.notes as { custom_id, created_at, note_text } (custom_id)}
-						<li class="max-w-lg rounded-lg bg-app-blue-50 p-3">
+						<li class="max-w-lg rounded-lg bg-app-blue-50 p-3 dark:bg-app-dark-gray">
 							<div class="flex flex-col justify-between">
 								<div class="flex justify-between border-b border-black pb-2">
 									<div class="flex">
@@ -296,9 +311,9 @@
 											/></button
 										>
 									</div>
-									<p class="p-1">{formatDate(created_at)}</p>
+									<p class="p-1 dark:text-white">{formatDate(created_at)}</p>
 								</div>
-								<p class="p-1 text-zinc-600">{note_text}</p>
+								<p class="p-1 text-zinc-600 dark:text-white">{note_text}</p>
 							</div>
 						</li>
 					{/each}

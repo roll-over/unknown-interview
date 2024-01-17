@@ -2,7 +2,10 @@
 	import { route } from '$lib/utils/route';
 </script>
 
-<a href={route('/documents')}>Back to documents</a>
+<a
+	class="dark:text-white"
+	href={route('/documents')}>Back to documents</a
+>
 
 <iframe
 	title="privacy policy"
