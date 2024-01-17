@@ -20,8 +20,8 @@
 <QueryClientProvider client={data.queryClient}>
 	<Analytics />
 	<AppShell
-		regionPage="h-full w-full"
-		slotPageContent="h-full w-full"
+		regionPage=" w-full"
+		slotPageContent=" w-full"
 		class="flex flex-col-reverse text-neutral-800 sm:flex-col"
 	>
 		<svelte:fragment slot="header">
