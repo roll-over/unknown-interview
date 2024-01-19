@@ -4,40 +4,32 @@
 	import { route } from '$lib/utils/route';
 </script>
 
-<div class="bg-light-background dark:bg-dark-background flex h-full justify-center dark:text-white">
-	<div class="grid h-full w-full max-w-5xl grid-rows-2">
-		<h1 class="font-title m-auto text-center text-6xl">Visit Purpose</h1>
-		<div class="md:gap-15 flex flex-col items-start justify-around gap-5 md:flex-row md:p-10">
+<div class="flex h-full justify-center bg-light-background dark:bg-dark-background dark:text-white">
+	<div class="grid h-full w-full max-w-xs md:max-w-lg xl:max-w-7xl">
+		<h1 class="m-auto text-center text-3xl md:text-7xl">Visit purpose</h1>
+		<div class="flex flex-col items-start justify-around gap-2 md:p-10 xl:flex-row xl:gap-80">
 			<a
-				class="current:scale-105 flex w-full flex-col items-center gap-4 transition-transform"
+				class="flex w-full flex-col items-center gap-1 transition-transform current:scale-105 md:gap-4"
 				href={route('/vacancy/create')}
 			>
 				<span
-					class="bg-app-blue-100 dark:bg-app-dark-blue dark:hover:bg-app-dark-light w-full rounded-xl px-16 py-6 text-center text-3xl transition-colors hover:bg-sky-400"
-					>Post your vacancy</span
+					class="text-large w-full rounded-xl bg-white px-6 py-3 text-center transition-colors hover:bg-sky-400 dark:bg-app-dark-blue dark:hover:bg-app-dark-light md:px-16 md:py-6 md:text-3xl"
+					>Employees search</span
 				>
 				<MaterialSymbolsLaptopMacOutline
-					class="text-app-blue-500 dark:text-app-dark-gray h-40 w-40"
+					class="h-40 w-40 text-app-blue-500 dark:text-app-dark-gray"
 				/>
 			</a>
 			<a
-				class="current:scale-105 flex w-full flex-col items-center gap-4 transition-transform"
+				class="flex w-full flex-col items-center gap-0 transition-transform current:scale-105 md:gap-4"
 				href={route('/cv/create')}
 			>
 				<span
-					class="bg-app-blue-100 dark:bg-app-dark-blue dark:hover:bg-app-dark-light w-full rounded-xl px-16 py-6 text-center text-3xl transition-colors hover:bg-sky-400"
-					>Post your CV</span
+					class="text-large w-full rounded-xl bg-white px-6 py-3 text-center transition-colors hover:bg-sky-400 dark:bg-app-dark-blue dark:hover:bg-app-dark-light md:px-16 md:py-6 md:text-3xl"
+					>Job search</span
 				>
-				<IcOutlineGroups class="text-app-blue-500 dark:text-app-dark-gray h-40 w-40" />
+				<IcOutlineGroups class="h-40 w-40 text-app-blue-500 dark:text-app-dark-gray" />
 			</a>
 		</div>
 	</div>
 </div>
-
-<style>
-	.go-btn {
-		max-width: 400px;
-		width: 100%;
-		min-width: 320px;
-	}
-</style>
