@@ -33,11 +33,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-	.go-btn {
-		max-width: 400px;
-		width: 100%;
-		min-width: 320px;
-	}
-</style>
