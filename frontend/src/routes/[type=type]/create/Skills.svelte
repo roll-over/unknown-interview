@@ -32,7 +32,7 @@
 				</button>
 			{/each}
 			<input
-				class="caret-app-blue-600 w-24 rounded p-2 text-xl"
+				class="caret-app-blue-600 w-28 rounded pl-3 p-2 text-xl"
 				bind:value={newSkill}
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {

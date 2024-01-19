@@ -84,7 +84,7 @@
 	});
 </script>
 
-<div class="pl-12 dark:text-white">
+<div class="pl-2 dark:text-white">
 	{JSON.stringify($formInfoQuery.data?.data) ??
 		'Your review will by displayed here after you save it'}
 </div>
@@ -177,7 +177,7 @@
 		<button
 			class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
 		>
-			{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
+			{data.isCvRoute ? 'View vacancies' : 'View resume'}
 			<CilArrowRight class="h-12 w-12" />
 		</button>
 	</form>
