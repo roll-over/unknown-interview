@@ -131,7 +131,7 @@
 						type="number"
 						id="from"
 						min="0"
-						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.min_level}
 					/>
 				</div>
@@ -141,7 +141,7 @@
 						type="number"
 						id="to"
 						min={$formData.salary.min_level}
-						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.max_level}
 					/>
 				</div>
@@ -155,7 +155,7 @@
 				</label>
 				<select
 					id="currency"
-					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.currency}
 				>
 					{#each currencies as currency}
@@ -168,14 +168,14 @@
 			<legend class="pb-2">About Me:</legend>
 			<label>
 				<textarea
-					class="bg-app-blue-50 dark:bg-app-dark-gray h-80 w-full rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
+					class="h-80 w-full rounded-lg bg-app-blue-50 p-2 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
 					bind:value={$formData.extra_info}
 					placeholder="tell us about yourself..."
 				></textarea>
 			</label>
 		</fieldset>
 		<button
-			class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
+			class="ml-auto flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
 		>
 			{data.isCvRoute ? 'View vacancies' : 'View resume'}
 			<CilArrowRight class="h-12 w-12" />
