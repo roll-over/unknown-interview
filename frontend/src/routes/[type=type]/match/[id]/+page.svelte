@@ -60,9 +60,10 @@
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
 	<Match
+		mainClass="xl:block hidden"
 		{matcher}
 		matchData={$userMatchQuery.data}
-		footerClass="gap-9 flex pt-5 text-base dark:text-white"
+		footerClass="gap-9 xl:block hidden pt-5 text-base dark:text-white"
 	>
 		<svelte:fragment slot="header">
 			<div class="flex items-center gap-1 dark:text-white">
@@ -90,8 +91,10 @@
 		</svelte:fragment>
 
 		<svelte:fragment slot="footer">
-			<span>Views: 16</span>
-			<span>Match: 7</span>
+			<div class="hidden xl:block">
+				<span>Views: 16</span>
+				<span>Match: 7</span>
+			</div>
 		</svelte:fragment>
 	</Match>
 {:else}

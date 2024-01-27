@@ -90,7 +90,7 @@
 </div>
 <div class="flex w-full items-center justify-center">
 	<form
-		class="flex w-full max-w-2xl flex-col items-start gap-7 p-2 text-xl dark:text-white md:px-12 md:py-7"
+		class="flex w-full max-w-3xl flex-col items-start gap-7 text-xl dark:text-white md:px-12 md:py-7"
 		on:submit={handleSubmit}
 	>
 		<fieldset class=" flex flex-col gap-2">
@@ -131,7 +131,7 @@
 						type="number"
 						id="from"
 						min="0"
-						class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.min_level}
 					/>
 				</div>
@@ -141,7 +141,7 @@
 						type="number"
 						id="to"
 						min={$formData.salary.min_level}
-						class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.max_level}
 					/>
 				</div>
@@ -155,7 +155,7 @@
 				</label>
 				<select
 					id="currency"
-					class="rounded-lg bg-app-blue-50 p-1 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.currency}
 				>
 					{#each currencies as currency}
