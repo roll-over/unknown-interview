@@ -90,7 +90,7 @@
 </div>
 <div class="flex w-full items-center justify-center">
 	<form
-		class="flex w-full max-w-3xl flex-col items-start gap-7 text-xl dark:text-white md:px-12 md:py-7"
+		class="flex w-full max-w-3xl flex-col items-start gap-7 p-7 text-xl dark:text-white md:px-12 md:py-7"
 		on:submit={handleSubmit}
 	>
 		<fieldset class=" flex flex-col gap-2">
