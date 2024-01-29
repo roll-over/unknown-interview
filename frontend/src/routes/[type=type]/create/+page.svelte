@@ -84,13 +84,13 @@
 	});
 </script>
 
-<!-- <div class="pl-2 dark:text-white">
+<div class="pl-2 dark:text-white">
 	{JSON.stringify($formInfoQuery.data?.data) ??
-		'Your review will by displayed here after you save it'}
-</div> -->
+		''}
+</div>
 <div class="flex w-full items-center justify-center">
 	<form
-		class="flex w-full max-w-3xl flex-col items-start gap-7 p-4 md:text-xl text-base dark:text-white md:px-12 md:py-7"
+		class="flex w-full max-w-3xl flex-col items-start gap-7 p-4 text-base dark:text-white md:px-12 md:py-7 md:text-xl"
 		on:submit={handleSubmit}
 	>
 		<fieldset class=" flex flex-col gap-2">
@@ -115,7 +115,7 @@
 		</fieldset>
 
 		<fieldset class=" flex flex-col gap-2">
-			<legend class="flex text-xl items-center gap-0.5 pb-2"
+			<legend class="flex items-center gap-0.5 pb-2 text-xl"
 				>Skills
 				<MaterialSymbolsSearch />
 			</legend>
@@ -165,7 +165,7 @@
 			</div>
 		</fieldset>
 		<fieldset class="w-full">
-			<legend class="text-xl pb-2">About Me:</legend>
+			<legend class="pb-2 text-xl">About Me:</legend>
 			<label>
 				<textarea
 					class="h-80 w-full rounded-lg bg-app-blue-50 p-2 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
@@ -175,7 +175,7 @@
 			</label>
 		</fieldset>
 		<button
-			class="w-full justify-center flex items-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
+			class="flex w-full items-center justify-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
 		>
 			{data.isCvRoute ? 'View vacancies' : 'View resume'}
 			<CilArrowRight class="h-12 w-12" />

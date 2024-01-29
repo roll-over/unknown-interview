@@ -31,10 +31,10 @@
 		!professions.includes(selectedProfession);
 </script>
 
-<div class="flex flex-col gap-2 md:text-xl text-base">
+<div class="flex flex-col gap-2 text-base md:text-xl">
 	<input
 		bind:value={selectedProfession}
-		class="w-full rounded-md bg-app-blue-50 px-4 py-0.5 md:text-xl text-base text-black caret-app-blue-600 dark:bg-app-dark-gray dark:text-white dark:outline-white"
+		class="w-full rounded-md bg-app-blue-50 px-4 py-0.5 text-base text-black caret-app-blue-600 dark:bg-app-dark-gray dark:text-white dark:outline-white md:text-xl"
 		placeholder="profession..."
 	/>
 	{#if showAutocomplete}
