@@ -7,10 +7,10 @@
 </script>
 
 <div
-	class="flex h-full flex-col items-center justify-center bg-light-background dark:bg-dark-background"
+	class="flex h-full flex-col items-center md:justify-center justify-between bg-light-background dark:bg-dark-background"
 >
 	<div
-		class="relative z-0 mb-60 mt-8 flex h-48 w-full flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
+		class="relative z-0 mt-36 flex h-48 w-full flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
 	>
 		{#if $modeCurrent}
 			<Logo />
@@ -25,7 +25,7 @@
 	</div>
 	<a
 		href={route('/purpose')}
-		class="group flex items-center justify-end gap-1 rounded-lg bg-white py-3 pl-20 pr-20 text-xs text-black transition-colors current:bg-app-blue-400 dark:bg-app-dark-blue dark:text-white dark:hover:bg-app-dark-light md:gap-16 md:pl-24 md:text-2xl"
+		class="group mb-16 flex items-center justify-end gap-1 rounded-lg bg-white py-3 md:pl-28 pl-20 md:pr-16 pr-20 text-xs text-black transition-colors current:bg-app-blue-400 dark:bg-app-dark-blue dark:text-white dark:hover:bg-app-dark-light md:gap-14 md:text-2xl"
 	>
 		Go to survey
 		<IcOutlineArrowForwardIos

@@ -91,10 +91,10 @@
 		</svelte:fragment>
 
 		<svelte:fragment slot="footer">
-			<div class="hidden xl:block">
+			<!-- <div class="hidden xl:block">
 				<span>Views: 16</span>
 				<span>Match: 7</span>
-			</div>
+			</div> -->
 		</svelte:fragment>
 	</Match>
 {:else}
