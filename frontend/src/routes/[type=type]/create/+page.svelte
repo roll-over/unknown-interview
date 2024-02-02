@@ -85,8 +85,7 @@
 </script>
 
 <div class="pl-2 dark:text-white">
-	{JSON.stringify($formInfoQuery.data?.data) ??
-		''}
+	{JSON.stringify($formInfoQuery.data?.data) ?? ''}
 </div>
 <div class="flex w-full items-center justify-center">
 	<form

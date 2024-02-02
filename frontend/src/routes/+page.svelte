@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { route } from '$lib/utils/route';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
-	import Logo from '~icons/main/logo';
-	import LogoDark from '~icons/main/logo-dark';
 	import { modeCurrent } from '../lib/utils/LightSwitch/index';
 </script>
 
@@ -13,9 +11,17 @@
 		class="relative z-0 mt-36 flex h-48 w-full flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
 	>
 		{#if $modeCurrent}
-			<Logo />
+			<img
+				class="pointer-events-none h-32 md:h-80"
+				src="logo.svg"
+				alt="logotype"
+			/>
 		{:else}
-			<LogoDark />
+			<img
+				class="pointer-events-none h-32 md:h-80"
+				src="logo-dark.svg"
+				alt="logotype dark"
+			/>
 		{/if}
 		<h1 class="block text-center font-body uppercase dark:text-white md:font-title">
 			<span class="text-m32 md:text-3xl">Skills first.</span>
