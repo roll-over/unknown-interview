@@ -33,12 +33,12 @@
 		!selectedSkills.includes(newSkill);
 </script>
 
-<div class="flex flex-col gap-2 text-xl">
+<div class="flex flex-col gap-2 text-base md:text-xl">
 	<div class="rounded-md bg-app-blue-50 px-2 py-1 dark:bg-app-dark-gray">
 		<div class="flex flex-wrap gap-2">
 			{#each selectedSkills as skill, i (skill)}
 				<button
-					class="chip bg-app-blue-100 px-4 py-0.5 text-xl dark:bg-app-dark-light"
+					class="chip bg-app-blue-100 px-4 py-0.5 text-base dark:bg-app-dark-light md:text-xl"
 					type="button"
 					on:click={() => {
 						selectedSkills = selectedSkills.filter((_, index) => index !== i);
@@ -49,7 +49,7 @@
 				</button>
 			{/each}
 			<input
-				class="w-28 rounded bg-transparent px-4 py-0.5 pl-3 text-xl caret-app-blue-600 dark:outline-white"
+				class="w-28 rounded bg-transparent px-4 py-0.5 pl-3 text-base caret-app-blue-600 dark:outline-white md:text-xl"
 				bind:value={newSkill}
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {

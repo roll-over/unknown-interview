@@ -31,10 +31,10 @@
 		!professions.includes(selectedProfession);
 </script>
 
-<div class="flex flex-col gap-2 text-xl">
+<div class="flex flex-col gap-2 text-base md:text-xl">
 	<input
 		bind:value={selectedProfession}
-		class="w-full rounded-md bg-app-blue-50 px-4 py-0.5 text-xl text-black caret-app-blue-600 dark:bg-app-dark-gray dark:text-white dark:outline-white"
+		class="w-full rounded-md bg-app-blue-50 px-4 py-0.5 text-base text-black caret-app-blue-600 dark:bg-app-dark-gray dark:text-white dark:outline-white md:text-xl"
 		placeholder="profession..."
 	/>
 	{#if showAutocomplete}
@@ -48,7 +48,7 @@
 			class="rounded-md bg-app-blue-50 px-4 py-2 dark:bg-app-dark-gray"
 			regionList="flex flex-col gap-2"
 			regionItem="bg-app-blue-600 dark:hover:bg-app-dark-light dark:bg-app-dark-blue hover:bg-app-blue-400 transition-colors rounded-md"
-			regionButton="w-full text-left text-white px-4 py-0.5"
+			regionButton="w-full md:text-xl text-base text-white px-4 py-0.5"
 		/>
 	{/if}
 </div>

@@ -2,6 +2,7 @@
 	import MaterialSymbolsNewWindow from '~icons/material-symbols/new-window';
 	import MaterialSymbolsDeleteForeverOutline from '~icons/material-symbols/delete-forever-outline';
 	import MaterialSymbolsBorderColorOutline from '~icons/material-symbols/border-color-outline';
+	import MaterialSymbolsArrowBackIos from '~icons/material-symbols/arrow-back-ios';
 	import { createGetQuery } from '$lib/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
 	import {
@@ -15,6 +16,13 @@
 	import { tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
+	import { SlideToggle } from '@skeletonlabs/skeleton';
+
+	function goBack() {
+		window.history.back();
+	}
+
+	let checkedValue = false;
 
 	// Инициализация клиента для запросов
 	const queryClient = useQueryClient();
@@ -193,34 +201,48 @@
 	{@const messageGroups = Object.entries(
 		groupBy($queryMessagesNotes.data.messages, (msg) => dateFormatter(msg.created_at))
 	)}
-
 	<div
-		class="grid h-full grow grid-rows-5 border-2 border-l-0 border-sky-900 dark:border-app-dark-light"
+		class="{checkedValue
+			? 'hidden'
+			: ''} grid h-full grow grid-rows-5 border-2 border-l-0 border-sky-900 dark:border-app-dark-light"
 	>
 		<div class="row-span-4 flex flex-col transition-opacity">
-			<p
-				class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
+			<div
+				class="flex justify-center bg-app-blue-50 outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
 			>
-				{$queryMessagesNotes.data.chat_name}
-			</p>
-			<div class="overflow-y-hidden pb-1 pl-2 pr-1 pt-1">
-				<div class="h-full overflow-y-auto px-10 text-xl">
+				<button on:click={goBack}>
+					<MaterialSymbolsArrowBackIos class="ml-2 flex text-2xl md:hidden" /></button
+				>
+				<p class="py-1 text-center text-lg md:py-4 md:text-xl">
+					{$queryMessagesNotes.data.chat_name}
+				</p>
+				<SlideToggle
+					class="mr-2 flex md:hidden"
+					size="sm"
+					name="slider-small"
+					bind:checked={checkedValue}
+				>
+					<span class="inline-block text-right">{checkedValue ? 'Notes' : 'Chats'}</span>
+				</SlideToggle>
+			</div>
+			<div class="overflow-y-hidden pb-1 pl-0 pr-0 pt-1 md:pl-2 md:pr-1">
+				<div class="h-full overflow-y-auto px-2 text-xl md:px-10">
 					{#each messageGroups as [date, messages]}
 						{#if messages.length > 0}
-							<p class="p-3 text-center">{date}</p>
+							<p class="p-3 text-center text-xs md:text-sm">{date}</p>
 							<div class="flex flex-col gap-2">
 								{#each messages as msg (msg.created_at)}
 									{@const isYourMessage = msg.own}
 									<div class="max-w-lg {isYourMessage ? 'self-end' : 'self-start'}">
 										<div
-											class="rounded-lg px-4 py-2 {isYourMessage
+											class="rounded-lg px-4 py-2 text-base {isYourMessage
 												? 'bg-app-blue-50 dark:bg-app-dark-gray'
 												: 'bg-app-blue-100 dark:bg-app-dark-light'}"
 										>
 											{msg.text}
 										</div>
 										<p
-											class="text-neutral-700/50 dark:text-white {isYourMessage &&
+											class="text-xs text-neutral-700/50 dark:text-white md:text-sm {isYourMessage &&
 												'max-2xl text-right'}"
 										>
 											{formatTime(msg.created_at)}
@@ -235,7 +257,7 @@
 			</div>
 		</div>
 		<div
-			class="flex gap-2 px-16 py-10 font-title outline outline-2 outline-sky-900 dark:outline-app-dark-light"
+			class="flex gap-2 px-8 py-8 font-title outline outline-2 outline-sky-900 dark:outline-app-dark-light md:px-16 md:py-10"
 		>
 			<div
 				class="grow rounded-3xl p-4 outline outline-1 outline-app-blue-600 focus-within:outline-2 dark:outline-app-dark-blue"
@@ -249,7 +271,7 @@
 			</div>
 			<button
 				on:click={sendMessage}
-				class="flex items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
+				class="hidden items-center justify-center rounded-3xl bg-app-blue-600 px-12 text-2xl text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light md:flex"
 			>
 				SEND
 			</button>
@@ -260,24 +282,34 @@
 {/if}
 
 <div
-	class="flex w-80 flex-col overflow-y-hidden border-2 border-r-0 border-sky-900 dark:border-app-dark-light"
+	class="{checkedValue
+		? 'md:flex'
+		: 'hidden'} w-full flex-col overflow-y-hidden border-2 border-r-0 border-white dark:border-black md:flex md:w-80 md:border-sky-900 md:dark:border-app-dark-light"
 >
-	<p
-		class="bg-app-blue-50 py-4 text-center text-xl outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
+	<div
+		class="flex justify-center bg-app-blue-50 outline outline-2 outline-sky-900 dark:bg-app-dark-gray dark:outline-app-dark-light"
 	>
-		Notes
-	</p>
-	<div class="flex flex-col justify-between overflow-y-auto pl-5 pr-1 pt-3">
+		<p class="py-4 text-center text-lg md:py-4 md:text-xl">Notes</p>
+		<SlideToggle
+			class="ml-auto mr-2 flex md:hidden"
+			size="sm"
+			name="slider-small"
+			bind:checked={checkedValue}
+		>
+			<span class="inline-block text-left">{checkedValue ? 'Notes' : 'Chats'}</span>
+		</SlideToggle>
+	</div>
+	<div class="flex h-full flex-col justify-between overflow-y-auto pl-2 pr-1 pt-3 md:pl-5">
 		<button
 			aria-label={'create notion'}
 			class="flex items-center pb-5"
 			on:click={toggleAddNote}
 		>
-			<MaterialSymbolsNewWindow class="mr-4 text-3xl" />ADD NEW NOTE
+			<MaterialSymbolsNewWindow class="mr-4 text-lg md:text-3xl" />ADD NEW NOTE
 		</button>
 
 		{#if isAddingNote}
-			<div class="mb-2 mr-5 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
+			<div class="mb-2 mr-1 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
 				<textarea
 					bind:value={newNoteText}
 					placeholder="Type your note..."
@@ -287,16 +319,16 @@
 			</div>
 			<button
 				on:click={addNote}
-				class="mb-5 mr-5 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
+				class="mb-5 mr-1 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
 			>
 				SAVE
 			</button>
 		{/if}
 		{#if $queryMessagesNotes.isSuccess}
 			{#if $queryMessagesNotes.data && $queryMessagesNotes.data.notes && $queryMessagesNotes.data.notes.length > 0}
-				<ul class="flex flex-col gap-3 overflow-y-auto pr-1">
+				<ul class="mb-14 flex h-full flex-col gap-1 overflow-y-auto pr-1 md:mb-0">
 					{#each $queryMessagesNotes.data.notes as { custom_id, created_at, note_text } (custom_id)}
-						<li class="max-w-lg rounded-lg bg-app-blue-50 p-3 dark:bg-app-dark-gray">
+						<li class="mb-4 max-w-lg rounded-lg bg-app-blue-50 p-3 dark:bg-app-dark-gray">
 							<div class="flex flex-col justify-between">
 								<div class="flex justify-between border-b border-black pb-2">
 									<div class="flex">
@@ -311,9 +343,9 @@
 											/></button
 										>
 									</div>
-									<p class="p-1 dark:text-white">{formatDate(created_at)}</p>
+									<p class="p-1 text-xs dark:text-white md:text-sm">{formatDate(created_at)}</p>
 								</div>
-								<p class="p-1 text-zinc-600 dark:text-white">{note_text}</p>
+								<p class="p-1 text-base text-zinc-600 dark:text-white">{note_text}</p>
 							</div>
 						</li>
 					{/each}

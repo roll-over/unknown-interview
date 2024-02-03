@@ -56,12 +56,12 @@
 <Match
 	{matcher}
 	{matchData}
-	mainClass="pb-16"
+	mainClass="pb-16 md:text-3xl text-sm"
 	footerClass="flex -translate-y-full justify-between"
 >
 	<svelte:fragment slot="header">
 		{#if isMatchDataAvailable}
-			<h2 class="mx-auto w-fit text-center font-title text-3xl capitalize">
+			<h2 class="mx-auto w-fit text-center font-title capitalize">
 				{matchData.grade}
 				{matchData.profession.name}
 			</h2>
@@ -73,14 +73,14 @@
 	<svelte:fragment slot="footer">
 		<button
 			aria-label="dislike"
-			class="aspect-square h-32 -scale-100 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-red-400 dark:bg-app-dark-blue dark:current:bg-red-400"
+			class="aspect-square h-20 -scale-100 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-red-400 dark:bg-app-dark-blue dark:current:bg-red-400 md:h-32"
 			on:click={handleDislike}
 		>
 			<ThumbsUpIcon class="h-full w-full" />
 		</button>
 		<button
 			aria-label="like"
-			class="aspect-square h-32 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-green-400 dark:bg-app-dark-blue dark:current:bg-green-400"
+			class="aspect-square h-20 rounded-full bg-app-blue-600 p-4 text-white transition-colors current:bg-green-400 dark:bg-app-dark-blue dark:current:bg-green-400 md:h-32"
 			on:click={handleLike}
 		>
 			<ThumbsUpIcon class="h-full w-full" />

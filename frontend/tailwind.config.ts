@@ -17,6 +17,9 @@ export default {
 				title: ['Inter Variable', ...defaultTheme.fontFamily.sans],
 				body: ['Montserrat Variable', ...defaultTheme.fontFamily.sans]
 			},
+			fontSize: {
+				m32: '2rem'
+			},
 			colors: {
 				app: {
 					blue: {
