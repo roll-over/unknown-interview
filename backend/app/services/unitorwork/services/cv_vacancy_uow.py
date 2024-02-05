@@ -3,7 +3,7 @@ from typing import Any, AsyncContextManager, Awaitable, Callable, List, Tuple, U
 from uuid import UUID
 
 from app.api.schemas.base import RequestBaseSchema as RecordSchema
-from app.db.models import CV, Role, User, Vacancy, Grade, Profession
+from app.db.models import CV, Grade, Profession, Role, User, Vacancy
 from app.exceptions import ForbiddenAction, UserRoleMismatch
 from app.services.repository.repositories import cv_repo, user_repo, vacancy_repo
 

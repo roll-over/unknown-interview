@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pymongo import DESCENDING
 
-from app.db.models import CV, Match, MatchRelation, Role, User, Vacancy, UserRecord
+from app.db.models import CV, Match, MatchRelation, Role, User, UserRecord, Vacancy
 from app.exceptions import ForbiddenAction, InvalidRelationAction
 from app.services.repository.repositories import (
     cv_repo,

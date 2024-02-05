@@ -1,6 +1,6 @@
 from .grade import Grade
 from .match_relation import MatchRelation
-from .mixin import Note, Salary, UUIDMixin, UserRecord
+from .mixin import Note, Salary, UserRecord, UUIDMixin
 from .role import Role
 from .title import Title
 
