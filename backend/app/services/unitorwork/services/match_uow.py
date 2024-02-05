@@ -286,9 +286,7 @@ class MatchVacancyCVUoW:
             "cv_id": cv_id,
             "vacancy_id": vacancy_id,
         }
-        print('!!!!!!', query)
         match_record = await self.matches.get_records(query, limit=1)
-        print('!!!!!!', match_record)
         if not match_record:
             raise ForbiddenAction
 
