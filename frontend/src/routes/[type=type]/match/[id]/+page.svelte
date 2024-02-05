@@ -44,7 +44,7 @@
 	});
 
 	$: randomMatchGet = createGetQuery(
-		data.isCvRoute ? '/api/v1/vacancies/random_vacancy' : '/api/v1/vacancies/random_vacancy'
+		data.isCvRoute ? '/api/v1/vacancies/random_vacancy' : '/api/v1/cvs/random_cv'
 	);
 	$: randomMatchQuery = createQuery({
 		queryKey: randomMatchGet.key,
