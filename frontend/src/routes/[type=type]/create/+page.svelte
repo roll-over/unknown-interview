@@ -84,21 +84,20 @@
 	});
 </script>
 
-<div class="pl-12 dark:text-white">
-	{JSON.stringify($formInfoQuery.data?.data) ??
-		'Your review will by displayed here after you save it'}
+<div class="pl-2 dark:text-white">
+	{JSON.stringify($formInfoQuery.data?.data) ?? ''}
 </div>
 <div class="flex w-full items-center justify-center">
 	<form
-		class="flex w-full max-w-2xl flex-col items-start gap-7 p-2 text-xl dark:text-white md:px-12 md:py-7"
+		class="flex w-full max-w-3xl flex-col items-start gap-7 p-4 text-base dark:text-white md:px-12 md:py-7 md:text-xl"
 		on:submit={handleSubmit}
 	>
 		<fieldset class=" flex flex-col gap-2">
-			<legend class="pb-2">Profession</legend>
+			<legend class="pb-2 text-xl">Profession</legend>
 			<Profession bind:selectedProfession={$formData.profession.name} />
 		</fieldset>
 		<fieldset class=" flex flex-col gap-2">
-			<legend class="pb-2">Grade</legend>
+			<legend class="pb-2 text-xl">Grade</legend>
 			<RadioGroup
 				options={grades}
 				bind:value={$formData.grade}
@@ -106,7 +105,7 @@
 			/>
 		</fieldset>
 		<fieldset class=" flex flex-col gap-2">
-			<legend class="pb-2">Position</legend>
+			<legend class="pb-2 text-xl">Position</legend>
 			<RadioGroup
 				options={titles}
 				bind:value={$formData.title}
@@ -115,7 +114,7 @@
 		</fieldset>
 
 		<fieldset class=" flex flex-col gap-2">
-			<legend class="flex items-center gap-0.5 pb-2"
+			<legend class="flex items-center gap-0.5 pb-2 text-xl"
 				>Skills
 				<MaterialSymbolsSearch />
 			</legend>
@@ -123,7 +122,7 @@
 		</fieldset>
 
 		<fieldset class=" flex flex-col gap-2">
-			<legend>Estimated salary</legend>
+			<legend class="pb-2 text-xl">Estimated salary</legend>
 			<div class="flex flex-col gap-2">
 				<div class="align-center flex content-center items-center justify-center gap-5 pl-2">
 					<label for="from"> from: </label>
@@ -131,7 +130,7 @@
 						type="number"
 						id="from"
 						min="0"
-						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.min_level}
 					/>
 				</div>
@@ -141,7 +140,7 @@
 						type="number"
 						id="to"
 						min={$formData.salary.min_level}
-						class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+						class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 						bind:value={$formData.salary.max_level}
 					/>
 				</div>
@@ -155,7 +154,7 @@
 				</label>
 				<select
 					id="currency"
-					class="bg-app-blue-50 dark:bg-app-dark-gray rounded-lg p-1 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white"
+					class="rounded-lg bg-app-blue-50 px-4 py-0.5 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white"
 					bind:value={$formData.salary.currency}
 				>
 					{#each currencies as currency}
@@ -165,19 +164,19 @@
 			</div>
 		</fieldset>
 		<fieldset class="w-full">
-			<legend class="pb-2">About Me:</legend>
+			<legend class="pb-2 text-xl">About Me:</legend>
 			<label>
 				<textarea
-					class="bg-app-blue-50 dark:bg-app-dark-gray h-80 w-full rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500 dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
+					class="h-80 w-full rounded-lg bg-app-blue-50 p-2 focus:border-blue-500 focus:ring-blue-500 dark:bg-app-dark-gray dark:outline-white dark:focus:border-white dark:focus:ring-white md:p-10"
 					bind:value={$formData.extra_info}
 					placeholder="tell us about yourself..."
 				></textarea>
 			</label>
 		</fieldset>
 		<button
-			class="bg-app-blue-100 current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray ml-auto flex items-center gap-8 rounded-md px-10 py-1.5 text-xl transition-colors"
+			class="flex w-full items-center justify-center gap-8 rounded-md bg-app-blue-100 px-10 py-1.5 text-xl transition-colors current:bg-app-blue-400 current:text-white dark:bg-app-dark-light dark:hover:bg-app-dark-gray"
 		>
-			{data.isCvRoute ? 'View CVs' : 'Your vacancies'}
+			{data.isCvRoute ? 'View vacancies' : 'View resume'}
 			<CilArrowRight class="h-12 w-12" />
 		</button>
 	</form>

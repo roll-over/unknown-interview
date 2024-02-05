@@ -60,13 +60,14 @@
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
 	<Match
+		mainClass="xl:block hidden"
 		{matcher}
 		matchData={$userMatchQuery.data}
-		footerClass="gap-9 flex pt-5 text-base dark:text-white"
+		footerClass="gap-9 xl:block hidden pt-5 text-base dark:text-white"
 	>
 		<svelte:fragment slot="header">
 			<div class="flex items-center gap-1 dark:text-white">
-				<h2 class="font-title text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
+				<h2 class="font-title text-2xl md:text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
 				<a
 					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
 					href={route(data.isCvRoute ? '/cv/create' : '/vacancy/create')}
@@ -90,8 +91,10 @@
 		</svelte:fragment>
 
 		<svelte:fragment slot="footer">
-			<span>Views: 16</span>
-			<span>Match: 7</span>
+			<!-- <div class="hidden xl:block">
+				<span>Views: 16</span>
+				<span>Match: 7</span>
+			</div> -->
 		</svelte:fragment>
 	</Match>
 {:else}

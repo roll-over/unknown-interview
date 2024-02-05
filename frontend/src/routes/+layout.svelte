@@ -21,7 +21,7 @@
 	<Analytics />
 	<AppShell
 		regionPage=" w-full"
-		slotPageContent=" w-full"
+		slotPageContent="h-full w-full"
 		class="flex flex-col-reverse text-neutral-800 sm:flex-col"
 	>
 		<svelte:fragment slot="header">

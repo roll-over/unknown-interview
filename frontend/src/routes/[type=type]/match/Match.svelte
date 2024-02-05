@@ -66,15 +66,15 @@
 	>
 		<slot name="header" />
 		{#if matchData}
-			<div>
+			<div class="flex items-center gap-2">
 				Profession:
 				<Chip highlight={matcher.profession}>{matchData.profession.name}</Chip>
 			</div>
-			<div>
+			<div class="flex items-center gap-2">
 				Grade:
 				<Chip highlight={matcher.grade}>{matchData.grade}</Chip>
 			</div>
-			<div>
+			<div class="flex items-center gap-2">
 				Title:
 				<Chip highlight={matcher.title}>{matchData.title}</Chip>
 			</div>
@@ -89,14 +89,14 @@
 			{/if}
 			{#if matchData.salary}
 				{@const salary = matchData.salary}
-				<div>
+				<div class="leading-[1.8em]">
 					Salary
 					{#if salary.min_level}
-						from <Chip highlight={matcher.salary}>{salary.min_level}{salary.currency}</Chip>
+						from <Chip highlight={matcher.salary}>{salary.min_level} {salary.currency}</Chip>
 					{/if}
 					{#if salary.max_level}
 						to
-						<Chip highlight={matcher.salary}>{salary.max_level}{salary.currency}</Chip>
+						<Chip highlight={matcher.salary}>{salary.max_level} {salary.currency}</Chip>
 					{/if}
 				</div>
 			{/if}
