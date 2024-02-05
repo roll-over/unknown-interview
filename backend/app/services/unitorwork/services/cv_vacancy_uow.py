@@ -3,7 +3,7 @@ from typing import Any, AsyncContextManager, Awaitable, Callable, List, Tuple, U
 from uuid import UUID
 
 from app.api.schemas.base import RequestBaseSchema as RecordSchema
-from app.db.models import CV, Role, User, Vacancy
+from app.db.models import CV, Role, User, Vacancy, Grade, Profession
 from app.exceptions import ForbiddenAction, UserRoleMismatch
 from app.services.repository.repositories import cv_repo, user_repo, vacancy_repo
 
@@ -104,10 +104,32 @@ class UserVacancyCVUoW:
             record_collection,
             owner_collection,
         ):
+            record_name = await self.__prepare_chat_name(
+                grade=data.grade,
+                profession=data.profession,
+            )
             new_data = await record_collection.create_one(data, owner_data=owner_data)
-            owner_collection.append(new_data.custom_id)
+            owner_collection.append({
+                "name": record_name,
+                "record_id": new_data.custom_id,
+            })
 
         return new_data
+
+    @staticmethod
+    async def __prepare_chat_name(grade: Grade, profession: Profession) -> str:
+        """Join grade and profession string.
+
+        Args:
+            grade: Enum value of related field in record.
+            profession: Value of related field in record.
+
+        Returns:
+            Value of the 'name' field for chat.
+        """
+        return ' '.join(
+            value.capitalize() for value in (grade.value, *profession.name.split())
+        )
 
     @__check_existing_record
     async def get(
