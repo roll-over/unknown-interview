@@ -67,9 +67,9 @@
 					{#if $userRecordsQuery.data?.cv_ids}
 						<h3>CV:</h3>
 						<ul class="list pl-2">
-							{#each $userRecordsQuery.data.cv_ids as id}
+							{#each $userRecordsQuery.data.cv_ids as { name, record_id }}
 								<li>
-									<a href={route('/cv/match/' + id)}> {id} </a>
+									<a href={route('/cv/match/' + record_id)}> {name} </a>
 								</li>
 							{/each}
 						</ul>
@@ -77,9 +77,9 @@
 					{#if $userRecordsQuery.data?.vacancy_ids}
 						<h3>Vacancy:</h3>
 						<ul class="list pl-2">
-							{#each $userRecordsQuery.data.vacancy_ids as id}
+							{#each $userRecordsQuery.data.vacancy_ids as { name, record_id }}
 								<li>
-									<a href={route('/vacancy/match/' + id)}> {id} </a>
+									<a href={route('/vacancy/match/' + record_id)}> {name} </a>
 								</li>
 							{/each}
 						</ul>
@@ -97,9 +97,9 @@
 					{#if $userRecordsQuery.data?.cv_ids}
 						<h3>CV:</h3>
 						<ul class="list pl-2">
-							{#each $userRecordsQuery.data.cv_ids as id}
+							{#each $userRecordsQuery.data.cv_ids as { name, record_id }}
 								<li>
-									<a href={route('/profile/chat/' + id)}> {id} </a>
+									<a href={route('/profile/chat/' + record_id)}> {name} </a>
 								</li>
 							{/each}
 						</ul>
@@ -107,9 +107,9 @@
 					{#if $userRecordsQuery.data?.vacancy_ids}
 						<h3>Vacancy:</h3>
 						<ul class="list pl-2">
-							{#each $userRecordsQuery.data.vacancy_ids as id}
+							{#each $userRecordsQuery.data.vacancy_ids as { name, record_id }}
 								<li>
-									<a href={route('/profile/chat/' + id)}> {id} </a>
+									<a href={route('/profile/chat/' + record_id)}> {name} </a>
 								</li>
 							{/each}
 						</ul>
@@ -158,7 +158,7 @@
 					<img
 						src={picture}
 						alt=""
-						class="h-10 w-10 rounded-full"
+						class="h-10 w-10 select-none rounded-full"
 					/>
 				</button>
 			{/if}
