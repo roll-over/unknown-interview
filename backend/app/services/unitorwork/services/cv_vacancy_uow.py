@@ -74,9 +74,10 @@ class UserVacancyCVUoW:
             """
             owner_data = kwargs.get('owner_data')
             record_id = kwargs.get('record_id')
+
             if not any((
-                    record_id in owner_data.vacancies_list,
-                    record_id in owner_data.cvs_list
+                    record_id in (record.record_id for record in owner_data.vacancies_list),
+                    record_id in (record.record_id for record in owner_data.cvs_list)
             )):
                 raise ForbiddenAction
             return await func(self, *args, **kwargs)
@@ -104,7 +105,7 @@ class UserVacancyCVUoW:
             record_collection,
             owner_collection,
         ):
-            record_name = await self.__prepare_chat_name(
+            record_name = await self.__prepare_record_name(
                 grade=data.grade,
                 profession=data.profession,
             )
@@ -117,7 +118,7 @@ class UserVacancyCVUoW:
         return new_data
 
     @staticmethod
-    async def __prepare_chat_name(grade: Grade, profession: Profession) -> str:
+    async def __prepare_record_name(grade: Grade, profession: Profession) -> str:
         """Join grade and profession string.
 
         Args:
