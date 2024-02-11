@@ -8,7 +8,7 @@
 	class="flex h-full flex-col items-center justify-between bg-light-background dark:bg-dark-background md:justify-center"
 >
 	<div
-		class="relative select-none z-0 mt-36 flex h-48 w-full flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
+		class="relative z-0 mt-36 flex h-48 w-full select-none flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
 	>
 		{#if $modeCurrent}
 			<img

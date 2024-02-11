@@ -8,6 +8,7 @@
 	import Loading from '../Loading.svelte';
 	import Match, { constructMatcher } from '../Match.svelte';
 	import RandomMatch from '../RandomMatch.svelte';
+	import Change from '../../create/change.svelte';
 
 	export let data;
 	$: userMatchGet = data.isCvRoute
@@ -56,6 +57,12 @@
 		}
 	});
 	$: matcher = constructMatcher($userMatchQuery.data, $randomMatchQuery.data);
+
+	let showModal = false;
+
+	function toggleModal() {
+		showModal = !showModal;
+	}
 </script>
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
@@ -68,12 +75,21 @@
 		<svelte:fragment slot="header">
 			<div class="flex items-center gap-1 dark:text-white">
 				<h2 class="font-title text-2xl md:text-3xl">{data.isCvRoute ? 'CV' : 'Vacancy'}</h2>
-				<a
+				<button
 					class="ml-auto rounded-full bg-app-blue-600 p-1 text-white transition-colors current:bg-white current:text-app-blue-600"
-					href={route(data.isCvRoute ? '/cv/create' : '/vacancy/create')}
+					on:click={toggleModal}><EditIcon /></button
 				>
-					<EditIcon />
-				</a>
+
+				{#if showModal}
+					<div
+						role="form"
+						class="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center"
+					>
+						<div class="h-full w-full overflow-auto rounded bg-white p-8">
+							<Change {data} />
+						</div>
+					</div>
+				{/if}
 				<button
 					aria-label={data.isCvRoute ? 'delete cv' : 'delete vacancy'}
 					class="rounded-full bg-red-600 p-1 text-white transition-colors current:bg-white current:text-red-600"

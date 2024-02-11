@@ -50,10 +50,14 @@
 		{#if $userRecordsQuery.isSuccess}
 			<div class="flex flex-col overflow-y-auto">
 				{#each $userRecordsQuery.data as { name, record_id }}
-				<a href={route((p) => data.isCvRoute ? `/cv/match/${p(record_id)}` : `/vacancy/match/${p(record_id)}`)}>
-					{data.isCvRoute ? 'CV' : 'Vacancy'}
-					{name}
-			</a>
+					<a
+						href={route((p) =>
+							data.isCvRoute ? `/cv/match/${p(record_id)}` : `/vacancy/match/${p(record_id)}`
+						)}
+					>
+						{data.isCvRoute ? 'CV' : 'Vacancy'}
+						{name}
+					</a>
 				{:else}
 					<a href={route(data.isCvRoute ? '/cv/change' : '/vacancy/change')}>
 						Fill out {data.isCvRoute ? 'CV' : 'Vacancy'}
