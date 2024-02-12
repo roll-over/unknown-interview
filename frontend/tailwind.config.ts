@@ -32,7 +32,8 @@ export default {
 					dark: {
 						gray: '#353535',
 						blue: '#3B4751',
-						light: '#757575'
+						light: '#757575',
+						amber: "#0b0b0b"
 					}
 				}
 			},
