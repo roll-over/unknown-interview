@@ -85,7 +85,7 @@
 						role="form"
 						class="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center"
 					>
-						<div class="h-full w-full overflow-auto rounded dark:bg-app-dark-amber bg-white p-8">
+						<div class="h-full w-full overflow-auto rounded bg-white p-8 dark:bg-app-dark-amber">
 							<Change {data} />
 						</div>
 					</div>

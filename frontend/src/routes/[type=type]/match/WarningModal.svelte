@@ -28,7 +28,7 @@
 </script>
 
 <div
-	class="flex max-w-3xl flex-col items-center justify-center gap-5 rounded-lg bg-app-blue-50 px-20 py-40"
+	class="flex max-w-3xl flex-col items-center justify-center gap-5 rounded-lg bg-app-blue-50 px-20 py-40 dark:bg-app-dark-gray"
 >
 	<p class="text-center text-6xl">
 		{#if hasMatches}
@@ -42,5 +42,5 @@
 			</a>
 		{/if}
 	</p>
-	<CheerIcon class="h-60 w-60 text-app-blue-600" />
+	<CheerIcon class="h-60 w-60 text-app-blue-600 dark:text-white" />
 </div>
