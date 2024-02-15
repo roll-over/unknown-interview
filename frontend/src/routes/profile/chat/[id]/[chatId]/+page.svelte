@@ -169,21 +169,16 @@
 		}
 	}
 
-	async function deleteNote(custom_id: string) {
+	async function deleteNote(note_id: string) {
 		if (confirm('Are you sure you want to delete this note?')) {
 			try {
-				const uuidRegex = /^[0-9a-fA-F-]{36}$/;
-				if (!uuidRegex.test(custom_id)) {
-					console.error('Invalid UUID format');
-					return;
-				}
-				const response = await fetch(`/api/v1/notes/delete_note`, {
+				const response = await fetch(`/api/v1/notes/${note_id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						custom_id
+						note_id
 					})
 				});
 				if (!response.ok) {
