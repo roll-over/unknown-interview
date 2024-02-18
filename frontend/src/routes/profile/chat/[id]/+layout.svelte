@@ -10,7 +10,7 @@
 		<div
 			class="{$page.params.chatId === chat_id
 				? 'md:flex'
-				: 'hidden'} col-span-1 flex-col overflow-y-hidden border-2 border-l-0 border-white bg-white p-5 pr-5 dark:border-black dark:bg-black md:flex md:border-sky-900 md:bg-app-blue-50 md:pr-1 md:dark:border-app-dark-light md:dark:bg-app-dark-gray"
+				: 'hidden'} col-span-1 flex-col overflow-y-hidden border-2 border-l-0 border-white bg-white p-5 pr-5 dark:border-black dark:bg-app-dark-amber md:flex md:border-sky-900 md:bg-app-blue-50 md:pr-1 md:dark:border-app-dark-light md:dark:bg-app-dark-gray"
 		>
 			<h1 class="pb-5 text-center font-title text-lg md:text-xl">Chats</h1>
 			<Chats />

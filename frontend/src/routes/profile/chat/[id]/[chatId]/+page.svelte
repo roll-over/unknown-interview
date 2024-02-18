@@ -138,9 +138,11 @@
 
 	let editingNote = writable(null);
 	async function editNote(custom_id: string, currentNoteText: string) {
+		editedNoteText.set(currentNoteText);
 		editingNote.set({ custom_id, note_text: currentNoteText });
-		saveEditedNote();
+		toggleAddNote(); // Add this line to toggleAddNote function when editNote is called
 	}
+	let editedNoteText = writable('');
 
 	async function saveEditedNote() {
 		const editedNote = $editingNote;
@@ -152,7 +154,7 @@
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						note_text: editedNote.note_text
+						note_text: $editedNoteText
 					})
 				});
 				if (!response.ok) {
@@ -165,25 +167,21 @@
 				console.error('Error editing note:', error);
 			} finally {
 				editingNote.set(null);
+				editedNoteText.set('');
 			}
 		}
 	}
 
-	async function deleteNote(custom_id: string) {
+	async function deleteNote(note_id: string) {
 		if (confirm('Are you sure you want to delete this note?')) {
 			try {
-				const uuidRegex = /^[0-9a-fA-F-]{36}$/;
-				if (!uuidRegex.test(custom_id)) {
-					console.error('Invalid UUID format');
-					return;
-				}
-				const response = await fetch(`/api/v1/notes/delete_note`, {
+				const response = await fetch(`/api/v1/notes/${note_id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						custom_id
+						note_id
 					})
 				});
 				if (!response.ok) {
@@ -309,20 +307,36 @@
 		</button>
 
 		{#if isAddingNote}
-			<div class="mb-2 mr-1 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
-				<textarea
-					bind:value={newNoteText}
-					placeholder="Type your note..."
-					class="w-full flex-grow rounded-lg bg-app-blue-50 focus:outline-none dark:bg-app-dark-gray"
-					on:keydown={(event) => event.key === 'Enter' && addNote()}
-				/>
-			</div>
-			<button
-				on:click={addNote}
-				class="mb-5 mr-1 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
-			>
-				SAVE
-			</button>
+			{#if $editingNote !== null}
+				<div class="mb-2 mr-1 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
+					<textarea
+						bind:value={$editedNoteText}
+						placeholder="Edit your note..."
+						class="w-full flex-grow rounded-lg bg-app-blue-50 focus:outline-none dark:bg-app-dark-gray"
+					/>
+				</div>
+				<button
+					on:click={saveEditedNote}
+					class="mb-5 mr-1 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
+				>
+					CHANGE
+				</button>
+			{:else}
+				<div class="mb-2 mr-1 max-w-lg rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray">
+					<textarea
+						bind:value={newNoteText}
+						placeholder="Type your note..."
+						class="w-full flex-grow rounded-lg bg-app-blue-50 focus:outline-none dark:bg-app-dark-gray"
+						on:keydown={(event) => event.key === 'Enter' && addNote()}
+					/>
+				</div>
+				<button
+					on:click={addNote}
+					class="mb-5 mr-1 rounded-2xl bg-app-blue-600 p-2 text-white transition hover:bg-sky-700 dark:bg-app-dark-blue dark:hover:bg-app-dark-light"
+				>
+					SAVE
+				</button>
+			{/if}
 		{/if}
 		{#if $queryMessagesNotes.isSuccess}
 			{#if $queryMessagesNotes.data && $queryMessagesNotes.data.notes && $queryMessagesNotes.data.notes.length > 0}

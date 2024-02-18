@@ -1,33 +1,35 @@
 <script lang="ts">
 	import { route } from '$lib/utils/route';
+	import { onMount } from 'svelte';
 	import IcOutlineArrowForwardIos from '~icons/ic/outline-arrow-forward-ios';
 	import { modeCurrent } from '../lib/utils/LightSwitch/index';
+
+	$: visibleLogo = false;
+
+	onMount(() => {
+		visibleLogo = true;
+	});
 </script>
 
 <div
 	class="flex h-full flex-col items-center justify-between bg-light-background dark:bg-dark-background md:justify-center"
 >
 	<div
-		class="relative z-0 mt-36 flex h-48 w-full flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
+		class="relative z-0 mt-36 flex h-48 w-full select-none flex-col items-center gap-6 md:mb-28 md:mt-0 md:h-80 md:gap-3"
 	>
-		{#if $modeCurrent}
+		{#if visibleLogo}
 			<img
 				class="pointer-events-none h-32 md:h-80"
-				src="logo.svg"
+				src={$modeCurrent ? 'logo.svg' : 'logo-dark.svg'}
 				alt="logotype"
+				loading="lazy"
 			/>
-		{:else}
-			<img
-				class="pointer-events-none h-32 md:h-80"
-				src="logo-dark.svg"
-				alt="logotype dark"
-			/>
+			<h1 class="block text-center font-body uppercase dark:text-white md:font-title">
+				<span class="text-m32 md:text-3xl">Skills first.</span>
+				<br class="inline md:hidden" />
+				<span class="text-xl md:text-3xl">Unbiased Hiring.</span>
+			</h1>
 		{/if}
-		<h1 class="block text-center font-body uppercase dark:text-white md:font-title">
-			<span class="text-m32 md:text-3xl">Skills first.</span>
-			<br class="inline md:hidden" />
-			<span class="text-xl md:text-3xl">Unbiased Hiring.</span>
-		</h1>
 	</div>
 	<a
 		href={route('/purpose')}

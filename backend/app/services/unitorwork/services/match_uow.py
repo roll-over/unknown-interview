@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pymongo import DESCENDING
 
-from app.db.models import CV, Match, MatchRelation, Role, User, Vacancy
+from app.db.models import CV, Match, MatchRelation, Role, User, UserRecord, Vacancy
 from app.exceptions import ForbiddenAction, InvalidRelationAction
 from app.services.repository.repositories import (
     cv_repo,
@@ -89,7 +89,7 @@ class MatchVacancyCVUoW:
 
     async def __get_match_for_offer(
             self,
-            reference_records: List[UUID],
+            reference_records: List[UserRecord],
             owner_data: User,
             role: Role,
     ) -> Union[CV, Vacancy, None]:
@@ -103,7 +103,7 @@ class MatchVacancyCVUoW:
         Returns:
             The match if found, otherwise None.
         """
-        record_id = reference_records[0]
+        record_id = (reference_records[0]).record_id
         match_record = await self.__check_match_shown_relation(record_id)
 
         if match_record:
@@ -287,7 +287,6 @@ class MatchVacancyCVUoW:
             "vacancy_id": vacancy_id,
         }
         match_record = await self.matches.get_records(query, limit=1)
-
         if not match_record:
             raise ForbiddenAction
 

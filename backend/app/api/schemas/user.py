@@ -4,6 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, EmailStr
 
+from app.db.models import UserRecord
+
 
 class UserResponseSchema(BaseModel):
     custom_id: UUID
@@ -18,8 +20,8 @@ class UserRequestSchema(BaseModel):
 
 
 class UserDataListResponseSchema(BaseModel):
-    vacancy_ids: List[UUID] = None
-    cv_ids: List[UUID] = None
+    vacancy_ids: List[UserRecord] = None
+    cv_ids: List[UserRecord] = None
 
 
 class UserEmailSchema(EmailStr):
