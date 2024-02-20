@@ -1,41 +1,54 @@
 <script lang="ts">
 	import { teamList } from './getTeamList';
 	import { popup } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
+	import { modeCurrent } from '../../lib/utils/LightSwitch/index';
+
+	$: visibleLogo = false;
+
+	onMount(() => {
+		visibleLogo = true;
+	});
 </script>
 
-<div class="flex flex-col items-center justify-center">
+<div class="flex flex-col items-center justify-center text-base dark:text-white xl:text-2xl">
 	<div
-		class="flex w-full items-center justify-between bg-gradient-to-b from-[#8cd1fc] to-[#EAF4FD] px-5 py-16"
+		class="flex w-full flex-col items-center justify-between gap-10 bg-gradient-to-b from-[#8cd1fc] to-[#EAF4FD] px-2 py-4 dark:from-[#353535] dark:to-[#0b0b0b] xl:flex-row xl:px-5 xl:py-16"
 	>
 		<div class="max-w-[690px] space-y-12 xl:flex-row">
-			<p class="text-2xl font-medium">
+			<p class="font-medium">
 				Service for job search and candidates. Project for anonymous job search - where until the
 				first phone call and/or during correspondence.
 			</p>
-			<p class="text-2xl font-medium">
+			<p class="font-medium">
 				The candidate and the employer will not know anything about each other except what is stated
 				in the CV and basic questions about experience, tech stack, level, salary range, and other
 				non-deanonymizing information.
 			</p>
 		</div>
 		<div class="items-cente flex flex-col space-y-8">
-			<img
-				src="hidehire.webp"
-				class=""
-				alt="hide hire"
-			/>
+			{#if visibleLogo}
+				<img
+					class="pointer-events-none h-40 xl:h-64"
+					src={$modeCurrent ? 'logo.svg' : 'logo-dark.svg'}
+					alt="logotype"
+					loading="lazy"
+				/>
+			{/if}
 			<p class="text-center text-2xl uppercase">Skills first<br />Unbiased Hiring</p>
 		</div>
 	</div>
 
-	<div class="flex w-full items-center justify-between bg-[#EAF4FD] px-5 py-16">
-		<div class="space-y-8">
+	<div
+		class="flex w-full flex-col items-center justify-between bg-[#EAF4FD] px-2 py-10 dark:bg-app-dark-amber xl:flex-row xl:px-5 xl:py-16"
+	>
+		<div class="mb-10 space-y-8 xl:mb-0">
 			<div class="max-w-2xl space-y-4">
-				<p class="text-3xl font-normal uppercase">Our mission</p>
-				<p class="text-2xl">Make hiring fair and transparent and fight against discrimination</p>
+				<p class="text-2xl font-normal uppercase">Our mission</p>
+				<p class="">Make hiring fair and transparent and fight against discrimination</p>
 			</div>
 			<div class="flex items-center gap-2">
-				<p class="text-3xl font-normal uppercase">we are here:</p>
+				<p class="font-normal uppercase">we are here:</p>
 				<a
 					class="inline-block"
 					target="_blank"
@@ -60,9 +73,7 @@
 				</a>
 			</div>
 			<div class="flex items-center gap-2">
-				<p class="max-w-sm text-2xl">
-					hide-hire is part of the roll-over group of open source projects
-				</p>
+				<p class="w-60 xl:w-96">hide-hire is part of the roll-over group of open source projects</p>
 				<a
 					class="inline-block"
 					target="_blank"
@@ -78,7 +89,7 @@
 		</div>
 
 		<div class="flex flex-col items-center space-y-8">
-			<p class="max-w-sm text-center text-2xl font-normal uppercase">
+			<p class="max-w-sm text-center font-normal uppercase">
 				the people who created this product for you
 			</p>
 			<ul class="grid max-w-md grid-cols-4 gap-2">

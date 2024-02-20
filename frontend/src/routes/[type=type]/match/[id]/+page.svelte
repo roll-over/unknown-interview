@@ -67,6 +67,7 @@
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
 	<Match
+		hideClass="xl:flex hidden"
 		mainClass=""
 		{matcher}
 		matchData={$userMatchQuery.data}
