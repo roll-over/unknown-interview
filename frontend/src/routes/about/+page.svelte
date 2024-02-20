@@ -7,7 +7,7 @@
 	<div
 		class="flex w-full items-center justify-between bg-gradient-to-b from-[#8cd1fc] to-[#EAF4FD] px-5 py-16"
 	>
-		<div class="max-w-[690px] space-y-12">
+		<div class="max-w-[690px] space-y-12 xl:flex-row">
 			<p class="text-2xl font-medium">
 				Service for job search and candidates. Project for anonymous job search - where until the
 				first phone call and/or during correspondence.
