@@ -67,7 +67,8 @@
 
 {#if $userMatchQuery.isSuccess && $userMatchQuery.data}
 	<Match
-		mainClass="xl:block hidden"
+		hideClass="xl:flex hidden"
+		mainClass=""
 		{matcher}
 		matchData={$userMatchQuery.data}
 		footerClass="gap-9 xl:block hidden pt-5 text-base dark:text-white"

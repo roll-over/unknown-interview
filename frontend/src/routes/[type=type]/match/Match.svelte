@@ -56,13 +56,14 @@
 
 	export let matcher: Matcher = {};
 	export let matchData: MatchData;
+	export let hideClass = '';
 	export let mainClass = '';
 	export let footerClass = '';
 </script>
 
-<div class="flex h-full min-h-0 flex-col">
+<div class="flex h-full min-h-0 flex-col {hideClass}">
 	<div
-		class="h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray {mainClass}"
+		class="mb-8 h-full space-y-5 overflow-y-auto rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray md:mb-0 {mainClass}"
 	>
 		<slot name="header" />
 		{#if matchData}

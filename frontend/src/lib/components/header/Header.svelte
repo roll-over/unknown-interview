@@ -61,7 +61,7 @@
 				<button use:popup={matchPickerPopup}> Match </button>
 				<div
 					data-popup={matchPickerPopup.target}
-					class="w-md rounded-md bg-app-blue-50 px-4 py-2 text-black drop-shadow-md dark:bg-app-dark-gray dark:text-white"
+					class="w-md max-h-36 overflow-auto rounded-md bg-app-blue-50 px-4 py-2 text-black drop-shadow-md dark:bg-app-dark-gray dark:text-white"
 				>
 					<div class="arrow bg-app-blue-50 dark:bg-app-dark-gray"></div>
 					{#if $userRecordsQuery.data?.cv_ids}
@@ -91,7 +91,7 @@
 				<button use:popup={chatPickerPopup}> Chats </button>
 				<div
 					data-popup={chatPickerPopup.target}
-					class="rounded-md bg-app-blue-50 px-4 py-2 text-black drop-shadow-md dark:bg-app-dark-gray dark:text-white"
+					class="max-h-36 overflow-auto rounded-md bg-app-blue-50 px-4 py-2 text-black drop-shadow-md dark:bg-app-dark-gray dark:text-white"
 				>
 					<div class="arrow bg-app-blue-50 dark:bg-app-dark-gray"></div>
 					{#if $userRecordsQuery.data?.cv_ids}

@@ -2,7 +2,7 @@
 	import { createGetQuery, createPostMutation, getQueryKey } from '$lib/api';
 	import RadioGroup from '$lib/components/RadioGroup.svelte';
 	import type { CvRequest, StrictOmit, VacancyRequest } from '$lib/utils/types';
-	import { createMutation, createQuery } from '@tanstack/svelte-query';
+	import { createMutation } from '@tanstack/svelte-query';
 	import { persisted } from 'svelte-local-storage-store';
 	import CilArrowRight from '~icons/cil/arrow-right';
 	import MaterialSymbolsSearch from '~icons/material-symbols/search';
@@ -68,25 +68,25 @@
 		}
 	}
 
-	// just a showcase that form gets saved
-	let savedFormId: string;
-	$: formInfoGet = data.isCvRoute
-		? createGetQuery('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: savedFormId } } })
-		: createGetQuery('/api/v1/vacancies/{vacancy_id}', {
-				params: { path: { vacancy_id: savedFormId } }
-		  });
-	$: formInfoQuery = createQuery({
-		queryKey: formInfoGet.key,
-		async queryFn() {
-			return formInfoGet.runQuery();
-		},
-		enabled: !!savedFormId
-	});
+	// // just a showcase that form gets saved
+	// let savedFormId: string;
+	// $: formInfoGet = data.isCvRoute
+	// 	? createGetQuery('/api/v1/cvs/{cv_id}', { params: { path: { cv_id: savedFormId } } })
+	// 	: createGetQuery('/api/v1/vacancies/{vacancy_id}', {
+	// 			params: { path: { vacancy_id: savedFormId } }
+	// 	  });
+	// $: formInfoQuery = createQuery({
+	// 	queryKey: formInfoGet.key,
+	// 	async queryFn() {
+	// 		return formInfoGet.runQuery();
+	// 	},
+	// 	enabled: !!savedFormId
+	// });
 </script>
 
-<div class="pl-2 dark:text-white">
+<!-- <div class="pl-2 dark:text-white">
 	{JSON.stringify($formInfoQuery.data?.data) ?? ''}
-</div>
+</div> -->
 <div class="flex w-full items-center justify-center">
 	<form
 		class="flex w-full max-w-3xl flex-col items-start gap-7 p-4 text-base dark:text-white md:px-12 md:py-7 md:text-xl"

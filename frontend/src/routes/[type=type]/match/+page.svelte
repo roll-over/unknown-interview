@@ -42,7 +42,7 @@
 	}
 </script>
 
-<div class="overflow-y-hidden pb-16">
+<div class="mb-2 h-52 overflow-y-hidden pb-2 md:mb-0 md:h-auto md:pb-16">
 	<div
 		class="flex max-h-full flex-col space-y-5 rounded-lg bg-app-blue-50 p-5 dark:bg-app-dark-gray"
 	>
